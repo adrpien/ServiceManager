@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "662170608438",
+    "project_id": "servicemanager-c5c83",
+    "storage_bucket": "servicemanager-c5c83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662170608438:android:4f4da228ac860c327fc997",
+        "android_client_info": {
+          "package_name": "com.example.servicemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662170608438-75jthmpdqj3rpfajsgofds7asughj68g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDJMLqUdgx7guIDyR_BBgJzvpoalFwWrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662170608438-75jthmpdqj3rpfajsgofds7asughj68g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
