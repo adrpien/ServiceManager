@@ -1,6 +1,6 @@
-package com.adrpien.tiemed.data.remote.dto
+package com.example.servicemanager.feature_repairs.data.remote.dto
 
-import com.adrpien.tiemed.data.local.entities.RepairEntity
+import com.example.servicemanager.feature_repairs.data.local.entities.RepairEntity
 
 
 data class RepairDto(

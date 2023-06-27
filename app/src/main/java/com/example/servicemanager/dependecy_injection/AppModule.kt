@@ -2,9 +2,10 @@ package com.example.servicemanager.dependecy_injection
 
 import android.app.Application
 import androidx.room.Room
-import com.adrpien.tiemed.data.local.TiemedDatabase
-import com.adrpien.tiemed.data.remote.FirebaseApi
-import com.example.servicemanager.feature_repairs.data.repository.TiemedRepositoryImplementation
+import com.adrpien.tiemed.data.local.AppDatabase
+import com.example.servicemanager.feature_app.data.remote.AppFirebaseApi
+import com.example.servicemanager.feature_app.data.repository.AppRepositoryImplementation
+import com.example.servicemanager.feature_app.domain.repository.AppRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -44,8 +45,8 @@ abstract class AppModule {
             firebaseAuth: FirebaseAuth,
             firebaseFirestore: FirebaseFirestore,
             firebaseStorage: FirebaseStorage
-        ): FirebaseApi {
-            return FirebaseApi(
+        ): AppFirebaseApi {
+            return AppFirebaseApi(
                 firebaseAuth = firebaseAuth,
                 firebaseFirestore = firebaseFirestore,
                 firebaseStorage = firebaseStorage
@@ -54,10 +55,10 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun ProvideTiemedDatabase(app: Application): TiemedDatabase {
+        fun ProvideTiemedDatabase(app: Application): AppDatabase {
             return Room.databaseBuilder(
                 app,
-                TiemedDatabase::class.java,
+                AppDatabase::class.java,
                 "tiemed_db"
             ).build()
         }
@@ -65,12 +66,12 @@ abstract class AppModule {
         @Provides
         @Singleton
         fun ProvideRepository(
-            tiemedDatabase: TiemedDatabase,
-            firebaseApi: FirebaseApi
-        ): TiemedRepository {
-            return TiemedRepositoryImplementation(
-                tiemedDatabase.tiemedDao,
-                firebaseApi
+            appDatabase: AppDatabase,
+            appFirebaseApi: AppFirebaseApi
+        ): AppRepository {
+            return AppRepositoryImplementation(
+                appDatabase.appDatabaseDao,
+                appFirebaseApi
             )
         }
     }
@@ -78,6 +79,6 @@ abstract class AppModule {
     @Binds
     @Singleton
     abstract fun ProvideRepository(
-        TiemedRepositoryImplementation: TiemedRepositoryImplementation
-    ): TiemedRepositoryImplementation
+        RepairRepositoryImplementation: AppRepositoryImplementation
+    ): AppRepositoryImplementation
 }

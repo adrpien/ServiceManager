@@ -1,0 +1,40 @@
+package com.example.servicemanager.feature_inspections.data.local.entities
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.servicemanager.feature_inspections.domain.model.Inspection
+import java.util.*
+
+@Entity
+data class InspectionEntity(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int? = null,
+    var inspectionId: String,
+    var deviceId: String = "",
+    var hospitalId: String = "",
+    var ward: String = "",
+    var comment: String = "",
+    var inspectionDate: String = Calendar.getInstance().timeInMillis.toString(),
+    var recipient: String = "",
+    var recipientSignature: String = "",
+    var technicianId: String = "",
+    var inspectionStateId: String = "",
+    var estStateId: String = ""
+    ) {
+
+    fun toInspection(): Inspection {
+        return Inspection(
+            inspectionId = inspectionId,
+            deviceId = deviceId,
+            hospitalId = hospitalId,
+            ward = ward,
+            comment = comment,
+            inspectionDate = inspectionDate,
+            technicianId = technicianId,
+            recipient = recipient,
+            recipientSignature = recipientSignature,
+            inspectionStateId = inspectionStateId,
+            estStateId = estStateId
+        )
+    }
+}

@@ -1,8 +1,6 @@
-package com.adrpien.tiemed.core.util
+package com.example.servicemanager.core.util
 
-import com.adrpien.tiemed.domain.model.Inspection
 import java.util.*
-import kotlin.reflect.full.memberProperties
 
 class Helper {
 
@@ -31,20 +29,6 @@ class Helper {
                 return dateString
             }
             return dateString
-        }
-
-        // Creating map of inspection fields with their values
-        fun createInspectionMap(inspection: Inspection): Map<String, String> {
-            var map: MutableMap<String, String> = mutableMapOf()
-            for (component in Inspection::class.memberProperties){
-                map.put(component.name, component.get(inspection).toString())
-            }
-            return map
-        }
-
-        // Setting Action Bar Name according to open fragment
-        fun setActionBarTitle(title: String){
-            //(requireActivity() as AppCompatActivity).supportActionBar?.title = title
         }
     }
 

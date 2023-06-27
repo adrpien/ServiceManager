@@ -1,13 +1,14 @@
-package com.adrpien.tiemed.data.local.entities
+package com.example.servicemanager.feature_repairs.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.adrpien.tiemed.domain.model.Repair
+import com.example.servicemanager.feature_repairs.domain.model.Repair
 
 
 @Entity
 data class RepairEntity(
     @PrimaryKey(autoGenerate = false)
+    val id: Int? = null,
     val repairId: String,
     var repairStateId: String = "",
     val deviceId: String = "",

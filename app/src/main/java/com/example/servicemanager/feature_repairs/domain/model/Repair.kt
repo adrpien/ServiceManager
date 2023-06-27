@@ -1,7 +1,8 @@
-package com.adrpien.tiemed.domain.model
+package com.example.servicemanager.feature_repairs.domain.model
 
-import com.adrpien.tiemed.data.local.entities.RepairEntity
-import com.adrpien.tiemed.data.remote.dto.RepairDto
+import com.example.servicemanager.feature_app.domain.model.Device
+import com.example.servicemanager.feature_repairs.data.local.entities.RepairEntity
+import com.example.servicemanager.feature_repairs.data.remote.dto.RepairDto
 
 
 data class Repair(
