@@ -15,7 +15,7 @@ data class  InspectionStateEntity (
     fun toInspectionState(): InspectionState {
         return InspectionState(
             inspectionStateId = inspectionStateId,
-            inspectionState = inspectionState
+            inspectionStateName = inspectionState
         )
     }
 }

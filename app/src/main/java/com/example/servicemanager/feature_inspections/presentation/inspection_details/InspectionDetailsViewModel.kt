@@ -7,16 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adrpien.tiemed.domain.use_case.inspections.GetInspection
 import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
-import com.example.servicemanager.core.util.NoteTextFieldState
+import com.example.servicemanager.core.util.DefaultTextFieldState
 import com.example.servicemanager.core.util.ResourceState
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
 import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDeviceList
 import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
 import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTechnicianList
-import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListState
-import com.example.servicemanager.feature_repairs.domain.repository.RepairRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,6 +28,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private val getHospitalList: GetHospitalList,
     private val getEstStateList: GetEstStateList,
     private val getInspectionStateList: GetInspectionStateList,
+    private val getInspectionList: GetInspectionList,
     private val getDeviceList: GetDeviceList
 ): ViewModel() {
 
@@ -38,11 +36,28 @@ class InspectionDetailsViewModel @Inject constructor(
     private var currentInspectionId: Int? = null
 
     private val _name = mutableStateOf(
-        NoteTextFieldState(
+        DefaultTextFieldState(
         hint = "Name"
         )
     )
-    val name: State<NoteTextFieldState> = _name
+    val name: State<DefaultTextFieldState> = _name
+
+    private val _producer = mutableStateOf(
+        DefaultTextFieldState(
+            hint = "Producer"
+        )
+    )
+    val producer: State<DefaultTextFieldState> = _producer
+
+    private val _hospital = mutableStateOf(DefaultTextFieldState(
+        hint = "Hospital"
+    ))
+    val hospital: State<DefaultTextFieldState> = _hospital
+
+    private val _localization = mutableStateOf(DefaultTextFieldState(
+        hint = "Localization"
+    ))
+    val localization: State<DefaultTextFieldState> = _localization
 
     private val _inspectionDetailsState = mutableStateOf(InspectionDetailsState())
     val inspectionDetailsState: State<InspectionDetailsState> = _inspectionDetailsState
@@ -53,28 +68,12 @@ class InspectionDetailsViewModel @Inject constructor(
     var state = mutableStateOf(InspectionDetailsState())
 
     init {
-        savedStateHandle.get<String>("noteId")?.let { id ->
-            if(id.isNotEmpty()) {
-                CoroutineScope(Dispatchers.IO).launch{
-                    getInspection(id).also {
-
-                    }
-                    noteUseCases.getNote(id)?.also { note ->
-                        currentNoteId = note.id
-                        _noteTitle.value = noteTitle.value.copy(
-                            text = note.title,
-                            isHintVisible = false
-                        )
-                        _noteDescription.value = noteDescription.value.copy(
-                            text = note.description,
-                            isHintVisible = false
-                        )
-                        _noteColor.value = note.color
-                    }
-                }
-            }
-        }
-
+        fetchHospitalList()
+        fetchDeviceList()
+        fetchEstStateList()
+        fetchInspectionList()
+        fetchInspectionStateList()
+        fetchTechnicianList()
     }
 
     private fun fetchInspectionList(

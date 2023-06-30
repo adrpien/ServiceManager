@@ -13,7 +13,6 @@ import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,7 +47,7 @@ class InspectionListViewModel @Inject constructor(
                     launch {
                         delay(500L)
                         fetchInspectionList(
-                            query = event.query,
+                            searchQuery = event.query,
                             false
                         )
                     }
@@ -56,7 +55,7 @@ class InspectionListViewModel @Inject constructor(
             }
             is InspectionListEvent.Refresh -> {
                 fetchInspectionList(
-                    fetchFromApi = true
+                    fetchFromApi = false
                 )
             }
         }
@@ -64,23 +63,28 @@ class InspectionListViewModel @Inject constructor(
 
 
     private fun fetchInspectionList(
-        query: String = state.value.searchQuery.lowercase(),
+        searchQuery: String = state.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getInspectionList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            setIsLoadingStatus()
-                            state.value = state.value.copy(inspectionList = list)
+        if(fetchFromApi) {
+            viewModelScope.launch(Dispatchers.IO) {
+                getInspectionList(searchQuery).collect { result ->
+                    when(result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                setIsLoadingStatus()
+                                state.value = state.value.copy(inspectionList = list)
+                            }
                         }
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> Unit
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
                 }
             }
+        } else {
+            // TODO fetchInspectionList to implement in InspectionListViewModel
         }
+
     }
 
     private fun fetchHospitalList() {

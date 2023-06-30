@@ -4,4 +4,5 @@ sealed class InspectionListEvent {
 
     object Refresh: InspectionListEvent()
     data class onSearchQueryChange(val query: String): InspectionListEvent()
+
 }
