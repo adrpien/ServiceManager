@@ -16,11 +16,15 @@ import com.example.servicemanager.feature_inspections.presentation.inspection_li
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination(start = true)
 @Composable
 fun InspectionListScreen(
     modifier: Modifier = Modifier,
     viewModel: InspectionListViewModel = hiltViewModel(),
+    navigator: DestinationsNavigator
     ) {
 
     val state = viewModel.state

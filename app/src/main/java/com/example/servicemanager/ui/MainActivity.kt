@@ -10,8 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.NavGraphs
 import com.example.servicemanager.ui.theme.ServiceManagerTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

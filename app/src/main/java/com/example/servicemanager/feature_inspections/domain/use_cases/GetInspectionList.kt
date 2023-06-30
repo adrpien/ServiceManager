@@ -14,7 +14,7 @@ class GetInspectionList @Inject constructor (
     private val repository: InspectionRepository
 ) {
 
-    operator fun invoke(searchQuery: String): Flow<Resource<List<Inspection>>> {
+    operator fun invoke(searchQuery: String = ""): Flow<Resource<List<Inspection>>> {
         // TODO searchQuery in GetInspectionList use case to implement
         return repository.getInspectionList()
     }

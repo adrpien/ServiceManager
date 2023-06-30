@@ -47,7 +47,6 @@ abstract class AppModule {
             firebaseStorage: FirebaseStorage
         ): AppFirebaseApi {
             return AppFirebaseApi(
-                firebaseAuth = firebaseAuth,
                 firebaseFirestore = firebaseFirestore,
                 firebaseStorage = firebaseStorage
             )
