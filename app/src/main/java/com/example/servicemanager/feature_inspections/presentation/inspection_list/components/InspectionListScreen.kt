@@ -17,9 +17,11 @@ import com.example.servicemanager.feature_inspections.presentation.inspection_li
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination(start = true)
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun InspectionListScreen(
     modifier: Modifier = Modifier,

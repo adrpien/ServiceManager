@@ -13,7 +13,6 @@ import kotlinx.coroutines.tasks.await
 
 class  InspectionFirebaseApi(
     val firebaseFirestore: FirebaseFirestore,
-    val firebaseAuth: FirebaseAuth,
     val firebaseStorage: FirebaseStorage
 ) {
 

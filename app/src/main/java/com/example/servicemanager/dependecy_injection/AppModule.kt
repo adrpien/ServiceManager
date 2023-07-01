@@ -3,9 +3,23 @@ package com.example.servicemanager.dependecy_injection
 import android.app.Application
 import androidx.room.Room
 import com.adrpien.tiemed.data.local.AppDatabase
+import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
 import com.example.servicemanager.feature_app.data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app.data.repository.AppRepositoryImplementation
 import com.example.servicemanager.feature_app.domain.repository.AppRepository
+import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_app.domain.use_cases.devices.CreateDevice
+import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDevice
+import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDeviceList
+import com.example.servicemanager.feature_app.domain.use_cases.devices.UpdateDevice
+import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
+import com.example.servicemanager.feature_app.domain.use_cases.signatures.CreateSignature
+import com.example.servicemanager.feature_app.domain.use_cases.signatures.GetSignature
+import com.example.servicemanager.feature_app.domain.use_cases.signatures.UpdateSignature
+import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
+import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
+import com.example.servicemanager.feature_app.domain.use_cases.states.GetRepairStateList
+import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTechnicianList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -18,66 +32,78 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule {
+object AppModule {
 
-    companion object {
-        @Provides
-        @Singleton
-        fun ProvideFirebaseStorage(): FirebaseStorage {
-            return FirebaseStorage.getInstance()
-        }
-
-        @Provides
-        @Singleton
-        fun ProvideFirebaseAuthentication(): FirebaseAuth {
-            return FirebaseAuth.getInstance()
-        }
-
-        @Provides
-        @Singleton
-        fun ProvideFirebaseFirestore(): FirebaseFirestore {
-            return FirebaseFirestore.getInstance()
-        }
-
-        @Provides
-        @Singleton
-        fun ProvideFirebaseApi(
-            firebaseAuth: FirebaseAuth,
-            firebaseFirestore: FirebaseFirestore,
-            firebaseStorage: FirebaseStorage
-        ): AppFirebaseApi {
-            return AppFirebaseApi(
-                firebaseFirestore = firebaseFirestore,
-                firebaseStorage = firebaseStorage
-            )
-        }
-
-        @Provides
-        @Singleton
-        fun ProvideTiemedDatabase(app: Application): AppDatabase {
-            return Room.databaseBuilder(
-                app,
-                AppDatabase::class.java,
-                "tiemed_db"
-            ).build()
-        }
-
-        @Provides
-        @Singleton
-        fun ProvideRepository(
-            appDatabase: AppDatabase,
-            appFirebaseApi: AppFirebaseApi
-        ): AppRepository {
-            return AppRepositoryImplementation(
-                appDatabase.appDatabaseDao,
-                appFirebaseApi
-            )
-        }
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
     }
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun ProvideRepository(
-        RepairRepositoryImplementation: AppRepositoryImplementation
-    ): AppRepositoryImplementation
+    fun provideFirebaseAuthentication(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppFirebaseApi(
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore,
+        firebaseStorage: FirebaseStorage
+    ): AppFirebaseApi {
+        return AppFirebaseApi(
+            firebaseFirestore = firebaseFirestore,
+            firebaseStorage = firebaseStorage
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(app: Application): AppDatabase {
+        return Room.databaseBuilder(
+            app,
+            AppDatabase::class.java,
+            "tiemed_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppRepository(
+        appDatabase: AppDatabase,
+        appFirebaseApi: AppFirebaseApi
+    ): AppRepository {
+        return AppRepositoryImplementation(
+            appDatabase.appDatabaseDao,
+            appFirebaseApi
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppUseCases(repository: AppRepository): AppUseCases {
+        return AppUseCases(
+            createDevice = CreateDevice(repository),
+            getDevice = GetDevice(repository),
+            getDeviceList = GetDeviceList(repository),
+            updateDevice = UpdateDevice(repository),
+            getHospitalList = GetHospitalList(repository),
+            createSignature = CreateSignature(repository),
+            getSignature = GetSignature(repository),
+            updateSignature = UpdateSignature(repository),
+            getEstStateList = GetEstStateList(repository),
+            getInspectionStateList = GetInspectionStateList(repository),
+            getRepairStateList = GetRepairStateList(repository),
+            getTechnicianList = GetTechnicianList(repository)
+        )
+    }
 }
+

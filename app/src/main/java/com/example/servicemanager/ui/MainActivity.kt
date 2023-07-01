@@ -13,8 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.NavGraphs
 import com.example.servicemanager.ui.theme.ServiceManagerTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,24 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
 import com.example.servicemanager.core.util.ResourceState
+import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDeviceList
 import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
 import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTechnicianList
+import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class InspectionListViewModel @Inject constructor(
-    private val getInspectionList: GetInspectionList,
-    private val getTechnicianList: GetTechnicianList,
-    private val getHospitalList: GetHospitalList,
-    private val getEstStateList: GetEstStateList,
-    private val getInspectionStateList: GetInspectionStateList,
-    private val getDeviceList: GetDeviceList
+    private val inspectionsUseCases: InspectionUseCases,
+    private val appUseCases: AppUseCases
 ): ViewModel() {
 
     private var searchJob: Job? = null
@@ -68,7 +68,7 @@ class InspectionListViewModel @Inject constructor(
     ) {
         if(fetchFromApi) {
             viewModelScope.launch(Dispatchers.IO) {
-                getInspectionList(searchQuery).collect { result ->
+                inspectionsUseCases.getInspectionList(searchQuery).collect { result ->
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
                             result.data?.let { list ->
@@ -89,7 +89,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchHospitalList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getHospitalList().collect { result ->
+            appUseCases.getHospitalList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -108,7 +108,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchDeviceList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getDeviceList().collect { result ->
+            appUseCases.getDeviceList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -126,7 +126,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchInspectionStateList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getInspectionStateList().collect { result ->
+            appUseCases.getInspectionStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -145,7 +145,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchEstStateList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getEstStateList().collect { result ->
+            appUseCases.getEstStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -164,7 +164,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchTechnicianList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getTechnicianList().collect { result ->
+            appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
