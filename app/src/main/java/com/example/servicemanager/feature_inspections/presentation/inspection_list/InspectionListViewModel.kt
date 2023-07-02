@@ -19,6 +19,12 @@ class InspectionListViewModel @Inject constructor(
     private val appUseCases: AppUseCases
 ): ViewModel() {
 
+    private var inspectionListIsLoading = true
+    private var hospitalListIsLoading = true
+    private var estStateListIsLoading = true
+    private var technicianListIsLoading = true
+    private var inspectionStateListIsLoading = true
+
     private var searchJob: Job? = null
 
     var state = mutableStateOf(InspectionListState())
@@ -59,7 +65,9 @@ class InspectionListViewModel @Inject constructor(
         searchQuery: String = state.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+            inspectionListIsLoading = true
+            setIsLoadingStatus()
+            viewModelScope.launch(Dispatchers.IO) {
             inspectionsUseCases.getInspectionList(
                 searchQuery = searchQuery,
                 fetchFromApi = fetchFromApi
@@ -68,6 +76,7 @@ class InspectionListViewModel @Inject constructor(
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
                             state.value = state.value.copy(inspectionList = list)
+                            inspectionListIsLoading = false
                             setIsLoadingStatus()
                         }
                     }
@@ -87,6 +96,7 @@ class InspectionListViewModel @Inject constructor(
                             state.value = state.value.copy(
                                 hospitalList = list,
                             )
+                            hospitalListIsLoading = false
                             setIsLoadingStatus()
                         }
                     }
@@ -106,6 +116,7 @@ class InspectionListViewModel @Inject constructor(
                             state.value = state.value.copy(
                                 inspectionStateList = list,
                             )
+                            inspectionStateListIsLoading = false
                             setIsLoadingStatus()
                         }
                     }
@@ -125,6 +136,7 @@ class InspectionListViewModel @Inject constructor(
                             state.value = state.value.copy(
                                 estStateList = list,
                             )
+                            estStateListIsLoading = false
                             setIsLoadingStatus()
                         }
                     }
@@ -144,6 +156,7 @@ class InspectionListViewModel @Inject constructor(
                             state.value = state.value.copy(
                                 technicianList = list,
                             )
+                            technicianListIsLoading = false
                             setIsLoadingStatus()
                         }
                     }
@@ -156,11 +169,11 @@ class InspectionListViewModel @Inject constructor(
 
     private fun setIsLoadingStatus() {
         if(
-            state.value.inspectionList.isNotEmpty() &&
-            state.value.hospitalList.isNotEmpty() &&
-            state.value.estStateList.isNotEmpty() &&
-            state.value.technicianList.isNotEmpty() &&
-            state.value.inspectionStateList.isNotEmpty()
+            !inspectionListIsLoading &&
+            !hospitalListIsLoading &&
+            !estStateListIsLoading &&
+            !technicianListIsLoading &&
+            !inspectionStateListIsLoading
         ){
             state.value = state.value.copy(
                 isLoading = false

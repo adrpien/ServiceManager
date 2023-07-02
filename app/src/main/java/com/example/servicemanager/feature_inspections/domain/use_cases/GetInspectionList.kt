@@ -1,6 +1,7 @@
 package com.adrpien.tiemed.domain.use_case.inspections
 
 
+import androidx.compose.ui.text.toLowerCase
 import androidx.room.util.query
 import com.example.servicemanager.core.util.Resource
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
@@ -20,7 +21,7 @@ class GetInspectionList @Inject constructor (
             repository.getInspectionListFromLocal().map { resource ->
                 resource.copy(
                     data = resource.data?.filter { inspection ->
-                        inspection.toString().contains(searchQuery)
+                        inspection.toString().lowercase().contains(searchQuery.lowercase())
                     }
                 )
             }
@@ -28,7 +29,7 @@ class GetInspectionList @Inject constructor (
             repository.getInspectionList().map { resource ->
                 resource.copy(
                     data = resource.data?.filter { inspection ->
-                        inspection.toString().contains(searchQuery)
+                        inspection.toString().lowercase().contains(searchQuery.lowercase())
                     }
                 )
             }
