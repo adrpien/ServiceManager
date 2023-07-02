@@ -10,7 +10,7 @@ data class TechnicianDto(
     fun toTechnicianEntity(): TechnicianEntity {
         return TechnicianEntity(
             technicianId = technicianId,
-            technicianName = name
+            name = name
         )
     }
 

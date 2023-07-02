@@ -7,7 +7,6 @@ import com.example.servicemanager.feature_app.domain.model.RepairState
 @Entity
 data class RepairStateEntity (
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     val repairStateId: String,
     val repairState: String = ""
 ) {

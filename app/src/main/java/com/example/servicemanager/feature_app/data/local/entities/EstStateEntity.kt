@@ -7,15 +7,14 @@ import com.example.servicemanager.feature_app.domain.model.EstState
 @Entity
 data class EstStateEntity (
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     val estStateId: String,
-    val estState: String = ""
+    val name: String = ""
 ){
 
     fun toEstState(): EstState {
         return EstState(
             estStateId = estStateId,
-            estState = estState
+            estState = name
         )
     }
 }

@@ -8,7 +8,6 @@ import java.util.*
 @Entity
 data class InspectionEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     var inspectionId: String,
     var deviceId: String = "",
     var hospitalId: String = "",

@@ -4,12 +4,12 @@ import com.example.servicemanager.feature_app.data.local.entities.InspectionStat
 
 data class  InspectionState (
     var inspectionStateId: String = "",
-    var inspectionStateName: String =  ""
+    var inspectionState: String =  ""
         ){
     fun toInspectionStateEntity(): InspectionStateEntity {
         return InspectionStateEntity(
             inspectionStateId = inspectionStateId,
-            inspectionState = inspectionStateName
+            inspectionState = inspectionState
         )
     }
 

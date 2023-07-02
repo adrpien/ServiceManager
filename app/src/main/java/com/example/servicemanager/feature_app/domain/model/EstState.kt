@@ -9,7 +9,7 @@ data class EstState (
     fun toEstStateEntity(): EstStateEntity {
         return EstStateEntity(
             estStateId = estStateId,
-            estState = estState
+            name = estState
         )
     }
 

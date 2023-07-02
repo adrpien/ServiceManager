@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -26,7 +27,9 @@ fun InspectionListItem(
     inspectionStateList: List<InspectionState> = emptyList()
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .padding(8.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
         Column(
@@ -123,63 +126,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = device.serialNumber,
-                    fontSize = 16.sp,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-
-                )
-                Text(
-                    text = device.inventoryNumber,
-                    fontSize = 16.sp,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-
-                )
-            }
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Text(
-                    text = device.serialNumber,
-                    fontSize = 16.sp,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-
-                )
-                Text(
-                    text = device.inventoryNumber,
-                    fontSize = 16.sp,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-
-                )
-            }
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Text(
-                    text = hospitalList.find { inspection.hospitalId == it.hospitalId }?.hospitalName ?: "",
+                    text = hospitalList.find { inspection.hospitalId == it.hospitalId }?.hospital ?: "",
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -207,7 +154,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = inspectionStateList.find { inspection.inspectionStateId == it.inspectionStateId }?.inspectionStateName ?: "",
+                    text = inspectionStateList.find { inspection.inspectionStateId == it.inspectionStateId }?.inspectionState ?: "",
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -218,7 +165,7 @@ fun InspectionListItem(
 
                 )
                 Text(
-                    text = technicianList.find { inspection.technicianId == it.technicianId }?.technicianName ?: "",
+                    text = technicianList.find { inspection.technicianId == it.technicianId }?.name ?: "",
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

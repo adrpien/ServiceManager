@@ -4,12 +4,12 @@ import com.example.servicemanager.feature_app.data.local.entities.TechnicianEnti
 
 data class Technician(
     var technicianId: String = "",
-    var technicianName: String = ""
+    var name: String = ""
 ) {
     fun toTechnicianEntity(): TechnicianEntity {
         return TechnicianEntity(
             technicianId = technicianId,
-            technicianName = technicianName
+            name = name
         )
     }
 }

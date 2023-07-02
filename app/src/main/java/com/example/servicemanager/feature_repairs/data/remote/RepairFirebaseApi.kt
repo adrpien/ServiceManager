@@ -65,7 +65,7 @@ class  RepairFirebaseApi(
             "defectDescription" to repair.defectDescription,
             "repairDescription" to repair.repairDescription,
             "partDescription" to repair.partDescription,
-            "estTestId" to repair.estStateId,
+            "estStateId" to repair.estStateId,
             "closingDate" to repair.closingDate,
             "openingDate" to repair.openingDate,
             "repairingDate" to repair.repairingDate,

@@ -30,12 +30,12 @@ class InspectionListViewModel @Inject constructor(
     var state = mutableStateOf(InspectionListState())
 
     init {
+        fetchDeviceList()
         fetchHospitalList()
         fetchTechnicianList()
         fetchInspectionStateList()
         fetchEstStateList()
-        fetchDeviceList()
-        fetchInspectionList()
+        fetchInspectionList(fetchFromApi = true)
     }
 
     fun onEvent(event: InspectionListEvent) {
@@ -47,15 +47,14 @@ class InspectionListViewModel @Inject constructor(
                     launch {
                         delay(500L)
                         fetchInspectionList(
-                            searchQuery = event.query,
-                            false
+                            fetchFromApi = false
                         )
                     }
                 }
             }
             is InspectionListEvent.Refresh -> {
                 fetchInspectionList(
-                    fetchFromApi = false
+                    fetchFromApi = true
                 )
             }
         }
@@ -72,8 +71,8 @@ class InspectionListViewModel @Inject constructor(
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
                             result.data?.let { list ->
-                                setIsLoadingStatus()
                                 state.value = state.value.copy(inspectionList = list)
+                                setIsLoadingStatus()
                             }
                         }
                         ResourceState.LOADING -> Unit
@@ -93,10 +92,10 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            setIsLoadingStatus()
                             state.value = state.value.copy(
                                 hospitalList = list,
                             )
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -112,10 +111,11 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            setIsLoadingStatus()
                             state.value = state.value.copy(
                                 deviceList = list,
                             )
+                            setIsLoadingStatus()
+
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -130,10 +130,10 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            setIsLoadingStatus()
                             state.value = state.value.copy(
                                 inspectionStateList = list,
                             )
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -149,10 +149,10 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            setIsLoadingStatus()
                             state.value = state.value.copy(
                                 estStateList = list,
                             )
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -168,10 +168,10 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            setIsLoadingStatus()
                             state.value = state.value.copy(
                                 technicianList = list,
                             )
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit

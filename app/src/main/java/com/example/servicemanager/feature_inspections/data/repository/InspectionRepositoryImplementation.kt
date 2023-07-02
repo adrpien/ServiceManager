@@ -16,12 +16,12 @@ class  InspectionRepositoryImplementation(
     val inspectionFirebaseApi: InspectionFirebaseApi
 ): InspectionRepository {
 
-    private val INSPECTION_REPOSITORY_IMPLEMENTATION = "TIEMED REPOSITORY IMPLEMENTATION"
+    private val APP_REPOSITORY_IMPLEMENTATION = "APP REPOSITORY IMPLEMENTATION"
 
 
     /* ********************************* INSPECTIONS ******************************************** */
     override fun getInspectionList() = flow {
-        Log.d(INSPECTION_REPOSITORY_IMPLEMENTATION, "Inspection list fetching started")
+        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection list fetching started")
         emit(Resource(ResourceState.LOADING, null, "Inspection list fetching started"))
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
         emit(Resource(ResourceState.LOADING, inspectionList, "Locally cached list"))
@@ -38,7 +38,7 @@ class  InspectionRepositoryImplementation(
 
 
     override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow{
-        Log.d(INSPECTION_REPOSITORY_IMPLEMENTATION, "Inspection record fetching started")
+        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection record fetching started")
         emit(Resource(ResourceState.LOADING, null, "Inspection record fetching started"))
         var inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
         emit(Resource(ResourceState.LOADING, inspection, "Locally cached record"))
@@ -60,7 +60,7 @@ class  InspectionRepositoryImplementation(
     }
 
     override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
-        Log.d(INSPECTION_REPOSITORY_IMPLEMENTATION, "Inspection list fetching from local started")
+        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection list fetching from local started")
         emit(Resource(ResourceState.LOADING, null, "Inspection list fetching form local started"))
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
         emit(Resource(ResourceState.SUCCESS, inspectionList, "Locally storaged list"))

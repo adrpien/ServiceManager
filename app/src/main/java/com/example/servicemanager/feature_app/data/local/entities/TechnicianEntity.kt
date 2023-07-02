@@ -7,15 +7,14 @@ import com.example.servicemanager.feature_app.domain.model.Technician
 @Entity
 data class TechnicianEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     val technicianId: String,
-    val technicianName: String = ""
+    val name: String = ""
 ) {
 
     fun toTechnician(): Technician {
         return Technician(
             technicianId = technicianId,
-            technicianName = technicianName
+            name = name
         )
     }
 }

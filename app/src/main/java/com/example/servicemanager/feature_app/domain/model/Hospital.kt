@@ -5,19 +5,19 @@ import com.example.servicemanager.feature_app.data.remote.dto.HospitalDto
 
 data class Hospital(
     val hospitalId: String = "",
-    val hospitalName: String = ""
+    val hospital: String = ""
 ){
     fun toHospitalEntity(): HospitalEntity {
         return HospitalEntity(
             hospitalId = hospitalId,
-            name = hospitalName
+            hospital = hospital
         )
     }
 
     fun toHospitalDto(): HospitalDto {
         return HospitalDto(
             hospitalId = hospitalId,
-            name = hospitalName
+            name = hospital
         )
     }
 }

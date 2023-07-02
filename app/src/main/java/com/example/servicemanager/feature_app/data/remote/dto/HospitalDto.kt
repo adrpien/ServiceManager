@@ -9,7 +9,7 @@ data class HospitalDto(
     fun toHospitalEntity(): HospitalEntity {
         return HospitalEntity(
             hospitalId = hospitalId,
-            name = name
+            hospital = name
         )
     }
 

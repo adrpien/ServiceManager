@@ -8,7 +8,6 @@ import com.example.servicemanager.feature_repairs.domain.model.Repair
 @Entity
 data class RepairEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     val repairId: String,
     var repairStateId: String = "",
     val deviceId: String = "",

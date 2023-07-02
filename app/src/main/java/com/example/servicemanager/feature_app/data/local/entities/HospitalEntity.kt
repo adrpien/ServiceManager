@@ -7,14 +7,13 @@ import com.example.servicemanager.feature_app.domain.model.Hospital
 @Entity
 data class HospitalEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     val hospitalId: String,
-    val name: String = ""
+    val hospital: String = ""
 ){
     fun toHospital(): Hospital {
         return Hospital(
             hospitalId = hospitalId,
-            hospitalName = name
+            hospital = hospital
         )
     }
 }

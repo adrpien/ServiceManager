@@ -7,7 +7,6 @@ import com.example.servicemanager.feature_app.domain.model.InspectionState
 @Entity
 data class  InspectionStateEntity (
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
     val inspectionStateId: String,
     val inspectionState: String =  ""
     ){
@@ -15,7 +14,7 @@ data class  InspectionStateEntity (
     fun toInspectionState(): InspectionState {
         return InspectionState(
             inspectionStateId = inspectionStateId,
-            inspectionStateName = inspectionState
+            inspectionState = inspectionState
         )
     }
 }
