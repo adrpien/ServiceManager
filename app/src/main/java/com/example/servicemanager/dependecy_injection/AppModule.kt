@@ -8,10 +8,6 @@ import com.example.servicemanager.feature_app.data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app.data.repository.AppRepositoryImplementation
 import com.example.servicemanager.feature_app.domain.repository.AppRepository
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_app.domain.use_cases.devices.CreateDevice
-import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDevice
-import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDeviceList
-import com.example.servicemanager.feature_app.domain.use_cases.devices.UpdateDevice
 import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app.domain.use_cases.signatures.CreateSignature
 import com.example.servicemanager.feature_app.domain.use_cases.signatures.GetSignature
@@ -91,10 +87,6 @@ object AppModule {
     @Singleton
     fun provideAppUseCases(repository: AppRepository): AppUseCases {
         return AppUseCases(
-            createDevice = CreateDevice(repository),
-            getDevice = GetDevice(repository),
-            getDeviceList = GetDeviceList(repository),
-            updateDevice = UpdateDevice(repository),
             getHospitalList = GetHospitalList(repository),
             createSignature = CreateSignature(repository),
             getSignature = GetSignature(repository),

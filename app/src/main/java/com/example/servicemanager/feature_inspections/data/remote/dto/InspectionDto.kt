@@ -14,13 +14,17 @@ data class InspectionDto(
     var recipient: String = "",
     var recipientSignature: String = "",
     var inspectionStateId: String = "",
-    var estStateId: String = ""
+    var estStateId: String = "",
+    var deviceName: String = "",
+    var deviceManufacturer: String = "",
+    var deviceModel: String = "",
+    var deviceSN: String = "",
+    var deviceIN: String = "",
 ) {
 
     fun toInspectionEntity(): InspectionEntity {
         return InspectionEntity(
             inspectionId = inspectionId,
-            deviceId = deviceId,
             hospitalId = hospitalId,
             ward = ward,
             comment = comment,
@@ -29,8 +33,12 @@ data class InspectionDto(
             recipient = recipient,
             recipientSignature = recipientSignature,
             inspectionStateId = inspectionStateId,
-            estStateId = estStateId
-
+            estStateId = estStateId,
+            deviceName = deviceName,
+            deviceManufacturer = deviceManufacturer,
+            deviceModel = deviceModel,
+            deviceSN = deviceSN,
+            deviceIN = deviceIN
         )
     }
 
@@ -46,7 +54,12 @@ data class InspectionDto(
             recipient = recipient,
             recipientSignature = recipientSignature,
             inspectionStateId = inspectionStateId,
-            estStateId = estStateId
+            estStateId = estStateId,
+            deviceName = deviceName,
+            deviceManufacturer = deviceManufacturer,
+            deviceModel = deviceModel,
+            deviceSN = deviceSN,
+            deviceIN = deviceIN
 
         )
     }

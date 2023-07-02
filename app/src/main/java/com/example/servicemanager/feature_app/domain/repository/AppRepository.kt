@@ -5,11 +5,6 @@ import com.example.servicemanager.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
-    /* ***** Devices **************************************************************************** */
-    fun getDevice(deviceId: String): Flow<Resource<Device>>
-    fun getDeviceList(): Flow<Resource<List<Device>>>
-    fun insertDevice (device: Device): Flow<Resource<Boolean>>
-    fun updateDevice (device: Device): Flow<Resource<Boolean>>
 
     /* ***** Signatures ************************************************************************* */
     fun getSignature(signatureId: String): Flow<Resource<ByteArray>>

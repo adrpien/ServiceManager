@@ -3,17 +3,15 @@ package com.example.servicemanager.feature_inspections.presentation.inspection_l
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.servicemanager.feature_app.domain.model.Device
+import com.example.servicemanager.feature_inspections.presentation.destinations.InspectionDetailsScreenDestination
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -31,52 +29,92 @@ fun InspectionListScreen(
     navigator: DestinationsNavigator
     ) {
 
+
     val state = viewModel.state
 
     val swipeRefreshState = rememberSwipeRefreshState(
-    isRefreshing = state.value.isRefreshing
+        isRefreshing = state.value.isRefreshing
     )
+    val scaffoldState = rememberScaffoldState()
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        SwipeRefresh(state = swipeRefreshState, onRefresh = { viewModel.onEvent(InspectionListEvent.Refresh) }) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(state.value.inspectionList.size) {index ->
-                    InspectionListItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                // TODO Navigation to InspectionDetailsScreen in InspectionScreen to implement
-                            },
-                        inspection = state.value.inspectionList[index],
-                        device = state.value.deviceList.find { it.deviceId == state.value.inspectionList[index].deviceId } ?: Device(),
-                        hospitalList = state.value.hospitalList,
-                        technicianList = state.value.technicianList,
-                        inspectionStateList = state.value.inspectionStateList
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navigator.navigate(InspectionDetailsScreenDestination(""))
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            )
+            {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add inspection"
+                )
+            }
+        },
+        scaffoldState = scaffoldState
+    ) { padding ->
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            OutlinedTextField(
+                value = state.value.searchQuery,
+                onValueChange = {
+                    viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                placeholder = {
+                    Text(text = "Search...")
+                },
+                maxLines = 1,
+                singleLine = true
+            )
 
-                    )
-                    if(index < state.value.inspectionList.size) {
-                        Divider(
-                            modifier = Modifier
-                                .padding(13.dp)
-                        )
-                    }
+
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    viewModel.onEvent(InspectionListEvent.Refresh)
                 }
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(state.value.inspectionList.size) { index ->
+                        InspectionListItem(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    // TODO Navigation to InspectionDetailsScreen in InspectionScreen to implement
+                                    navigator.navigate(InspectionDetailsScreenDestination(state.value.inspectionList[index].inspectionId))
+                                },
+                            inspection = state.value.inspectionList[index],
+                            hospitalList = state.value.hospitalList,
+                            technicianList = state.value.technicianList,
+                            inspectionStateList = state.value.inspectionStateList
 
+                        )
+                        if (index < state.value.inspectionList.size) {
+                            Divider(
+                                modifier = Modifier
+                                    .padding(13.dp)
+                            )
+                        }
+                    }
+
+                }
+            }
+        }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (state.value.isLoading) {
+                CircularProgressIndicator()
             }
         }
     }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        if(state.value.isLoading) {
-            CircularProgressIndicator()
-        }
-    }
-
 }
+

@@ -9,7 +9,6 @@ import com.example.servicemanager.feature_app.data.local.entities.*
 
 @Database (
     entities = [
-        DeviceEntity::class,
         EstStateEntity::class,
         HospitalEntity::class,
         InspectionStateEntity::class,

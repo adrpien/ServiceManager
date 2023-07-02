@@ -3,6 +3,5 @@ package com.example.servicemanager.feature_inspections.presentation.inspection_l
 sealed class InspectionListEvent {
 
     object Refresh: InspectionListEvent()
-    data class onSearchQueryChange(val query: String): InspectionListEvent()
-
+    data class onSearchQueryChange(val searchQuery: String): InspectionListEvent()
 }

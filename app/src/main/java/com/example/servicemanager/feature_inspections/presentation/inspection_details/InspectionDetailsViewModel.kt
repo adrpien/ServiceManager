@@ -10,7 +10,6 @@ import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
 import com.example.servicemanager.core.util.DefaultTextFieldState
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_app.domain.use_cases.devices.GetDeviceList
 import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
@@ -69,7 +68,6 @@ class InspectionDetailsViewModel @Inject constructor(
 
     init {
         fetchHospitalList()
-        fetchDeviceList()
         fetchEstStateList()
         fetchInspectionList()
         fetchInspectionStateList()
@@ -114,24 +112,6 @@ class InspectionDetailsViewModel @Inject constructor(
             }
         }
     }
-
-    private fun fetchDeviceList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            appUseCases.getDeviceList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            setIsLoadingStatus()
-                            state.value = state.value.copy(
-                                deviceList = list,
-                            )
-                        }
-                    }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
-                }
-            }
-        }    }
 
     private fun fetchInspectionStateList() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -195,7 +175,6 @@ class InspectionDetailsViewModel @Inject constructor(
             state.value.inspection.inspectionId.isNotEmpty() &&
             state.value.hospitalList.isNotEmpty() &&
             state.value.estStateList.isNotEmpty() &&
-            state.value.deviceList.isNotEmpty() &&
             state.value.technicianList.isNotEmpty() &&
             state.value.inspectionStateList.isNotEmpty()
         ){

@@ -7,28 +7,6 @@ import com.example.servicemanager.feature_app.data.local.entities.*
 @Dao
 interface AppDatabaseDao {
 
-
-    /* ***** Devices **************************************************************************** */
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDevice(deviceEntity: DeviceEntity)
-
-    @Transaction
-    @Query("SELECT * FROM deviceentity WHERE deviceId LIKE :deviceId")
-    suspend fun getDevice(deviceId: String): DeviceEntity
-
-    @Transaction
-    @Query("SELECT * FROM deviceentity")
-    suspend fun getDeviceList(): List<DeviceEntity>
-
-    @Transaction
-    @Query("DELETE FROM deviceentity WHERE deviceId LIKE :deviceId")
-    suspend fun deleteDevice(deviceId: String)
-
-    @Transaction
-    @Query("DELETE FROM deviceentity")
-    suspend fun deleteAllDevices()
-
     /* ***** Hospitals ************************************************************************** */
     @Transaction
     @Query("SELECT * FROM hospitalentity")

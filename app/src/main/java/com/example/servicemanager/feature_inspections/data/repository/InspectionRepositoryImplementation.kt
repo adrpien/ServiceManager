@@ -24,6 +24,9 @@ class  InspectionRepositoryImplementation(
         Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection list fetching started")
         emit(Resource(ResourceState.LOADING, null, "Inspection list fetching started"))
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
+        inspectionList.forEach { inspection ->
+
+        }
         emit(Resource(ResourceState.LOADING, inspectionList, "Locally cached list"))
         val list = inspectionFirebaseApi.getInspectionList()?: emptyList()
         if(list.isNotEmpty()) {

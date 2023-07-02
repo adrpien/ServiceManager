@@ -1,6 +1,5 @@
 package com.example.servicemanager.feature_repairs.domain.model
 
-import com.example.servicemanager.feature_app.domain.model.Device
 import com.example.servicemanager.feature_repairs.data.local.entities.RepairEntity
 import com.example.servicemanager.feature_repairs.data.remote.dto.RepairDto
 
@@ -25,8 +24,6 @@ data class Repair(
     var rate: String = "",
     var recipient: String = "",
     var recipientSignatureId: String = "",
-
-    var device: Device = Device()
     ) {
     fun toRepairEntity(): RepairEntity {
         return RepairEntity(

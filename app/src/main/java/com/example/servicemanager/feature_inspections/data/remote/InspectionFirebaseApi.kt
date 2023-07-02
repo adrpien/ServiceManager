@@ -57,7 +57,6 @@ class  InspectionFirebaseApi(
         var map = mapOf<String, String>(
             "inspectionId" to documentReference.id,
             "inspectionStateId" to inspection.inspectionStateId,
-            "deviceId" to inspection.deviceId,
             "hospitalId" to inspection.hospitalId,
             "ward" to inspection.ward,
             "estStateId" to inspection.estStateId,
@@ -65,7 +64,12 @@ class  InspectionFirebaseApi(
             "inspectionDate" to inspection.inspectionDate,
             "recipient" to inspection.recipient,
             "signatureId" to inspection.recipientSignature,
-            "technicianId" to inspection.technicianId
+            "technicianId" to inspection.technicianId,
+            "deviceName" to inspection.deviceName,
+            "deviceManufacturer" to inspection.deviceManufacturer,
+            "deviceModel" to inspection.deviceModel,
+            "deviceSN" to inspection.deviceSN,
+            "deviceIN" to inspection.deviceIN
         )
         val result = documentReference.set(map)
         result.await()
@@ -85,7 +89,6 @@ class  InspectionFirebaseApi(
         var map = mapOf<String, String>(
             "inspectionId" to inspection.inspectionId,
             "inspectionStateId" to inspection.inspectionStateId,
-            "deviceId" to inspection.deviceId,
             "hospitalId" to inspection.hospitalId,
             "ward" to inspection.ward,
             "estStateId" to inspection.estStateId,
@@ -93,7 +96,12 @@ class  InspectionFirebaseApi(
             "inspectionDate" to inspection.inspectionDate,
             "recipient" to inspection.recipient,
             "signatureId" to inspection.recipientSignature,
-            "technicianId" to inspection.technicianId
+            "technicianId" to inspection.technicianId,
+            "deviceName" to inspection.deviceName,
+            "deviceManufacturer" to inspection.deviceManufacturer,
+            "deviceModel" to inspection.deviceModel,
+            "deviceSN" to inspection.deviceSN,
+            "deviceIN" to inspection.deviceIN
         )
         val documentReference = firebaseFirestore.collection("inspections").document(inspection.inspectionId)
         val result = documentReference.update(map)

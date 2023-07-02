@@ -11,7 +11,6 @@ data class InspectionListState(
     val inspectionStateList: List<InspectionState> = emptyList(),
     val technicianList: List<Technician> = emptyList(),
     val estStateList: List<EstState> = emptyList(),
-    val deviceList: List<Device> = emptyList(),
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val searchQuery: String = ""
