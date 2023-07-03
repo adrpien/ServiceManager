@@ -1,11 +1,13 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +32,7 @@ fun InspectionListScreen(
     ) {
 
 
-    val state = viewModel.state
+    val state = viewModel.inspectionListstate
 
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = state.value.isRefreshing
@@ -57,21 +59,43 @@ fun InspectionListScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            OutlinedTextField(
-                value = state.value.searchQuery,
-                onValueChange = {
-                    viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                placeholder = {
-                    Text(text = "Search...")
-                },
-                maxLines = 1,
-                singleLine = true
-            )
 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                OutlinedTextField(
+                    value = state.value.searchQuery,
+                    onValueChange = {
+                        viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
+                    },
+                    modifier = Modifier
+                        .padding(8.dp),
+
+                    placeholder = {
+                        Text(text = "Search...")
+                    },
+                    maxLines = 1,
+                    singleLine = true,
+                )
+            IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }) {
+                Icon(
+                    imageVector = Icons.Default.Sort,
+                    contentDescription = "Sort")
+            }
+            }
+            AnimatedVisibility(
+                visible = state.value.isSortSectionVisible,
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically()
+            ) {
+                SortSection(
+                    onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
+                    orderType = state.value.orderType,
+                    onToggleMonotonicity = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }
+                )
+            }
+            // TODO Animatable something
 
             SwipeRefresh(
                 state = swipeRefreshState,

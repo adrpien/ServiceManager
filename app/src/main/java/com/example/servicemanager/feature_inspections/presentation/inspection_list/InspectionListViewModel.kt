@@ -1,8 +1,10 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.adrpien.noteapp.feature_notes.domain.util.OrderType
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
@@ -10,6 +12,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +31,10 @@ class InspectionListViewModel @Inject constructor(
 
     private var searchJob: Job? = null
 
-    var state = mutableStateOf(InspectionListState())
+    private var getInspectionListJob: Job? = null
+
+    val _inspectionListstate = mutableStateOf(InspectionListState())
+    val inspectionListstate: State<InspectionListState> = _inspectionListstate
 
     init {
         fetchHospitalList()
@@ -40,7 +47,7 @@ class InspectionListViewModel @Inject constructor(
     fun onEvent(event: InspectionListEvent) {
         when(event) {
             is InspectionListEvent.onSearchQueryChange -> {
-                state.value = state.value.copy(searchQuery = event.searchQuery)
+                _inspectionListstate.value = _inspectionListstate.value.copy(searchQuery = event.searchQuery)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
                     launch {
@@ -57,12 +64,29 @@ class InspectionListViewModel @Inject constructor(
                     fetchFromApi = true
                 )
             }
+            is InspectionListEvent.orderInspectionList -> {
+
+                // TODO orderInspectionList in InspectionListViewModel
+                fetchInspectionList(
+                    fetchFromApi = false
+                )
+
+                _inspectionListstate.value = _inspectionListstate.value.copy(
+                    orderType = event.orderType
+                )
+            }
+
+            is InspectionListEvent.ToggleSortSectionVisibility -> {
+                _inspectionListstate.value = _inspectionListstate.value.copy(
+                    isSortSectionVisible = !_inspectionListstate.value.isSortSectionVisible
+                )
+            }
         }
     }
 
 
     private fun fetchInspectionList(
-        searchQuery: String = state.value.searchQuery.lowercase(),
+        searchQuery: String = _inspectionListstate.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false
     ) {
             inspectionListIsLoading = true
@@ -75,7 +99,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            state.value = state.value.copy(inspectionList = list)
+                            _inspectionListstate.value = _inspectionListstate.value.copy(inspectionList = list)
                             inspectionListIsLoading = false
                             setIsLoadingStatus()
                         }
@@ -93,7 +117,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            state.value = state.value.copy(
+                            _inspectionListstate.value = _inspectionListstate.value.copy(
                                 hospitalList = list,
                             )
                             hospitalListIsLoading = false
@@ -113,7 +137,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            state.value = state.value.copy(
+                            _inspectionListstate.value = _inspectionListstate.value.copy(
                                 inspectionStateList = list,
                             )
                             inspectionStateListIsLoading = false
@@ -133,7 +157,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            state.value = state.value.copy(
+                            _inspectionListstate.value = _inspectionListstate.value.copy(
                                 estStateList = list,
                             )
                             estStateListIsLoading = false
@@ -153,7 +177,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            state.value = state.value.copy(
+                            _inspectionListstate.value = _inspectionListstate.value.copy(
                                 technicianList = list,
                             )
                             technicianListIsLoading = false
@@ -175,12 +199,12 @@ class InspectionListViewModel @Inject constructor(
             !technicianListIsLoading &&
             !inspectionStateListIsLoading
         ){
-            state.value = state.value.copy(
+            _inspectionListstate.value = _inspectionListstate.value.copy(
                 isLoading = false
             )
         }
         else {
-            state.value = state.value.copy(
+            _inspectionListstate.value = _inspectionListstate.value.copy(
                 isLoading = true
             )
         }
