@@ -81,6 +81,10 @@ class InspectionListViewModel @Inject constructor(
                     isSortSectionVisible = !_inspectionListstate.value.isSortSectionVisible
                 )
             }
+
+            is InspectionListEvent.ToggleOrderMonotonicity -> {
+                // TODO ToggleOrderMonotonicity in InspectionListViewModel
+            }
         }
     }
 
