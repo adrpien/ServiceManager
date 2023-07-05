@@ -24,72 +24,13 @@ class GetInspectionList @Inject constructor (
     ): Flow<Resource<List<Inspection>>> {
         return if(fetchFromApi == false) {
             repository.getInspectionListFromLocal().map { resource ->
-                when(orderType.orderMonotonicity) {
-                    is OrderMonotonicity.Ascending -> {
-                        when(orderType) {
-                            is OrderType.Date -> {
-                                resource.copy(
-                                    data = resource.data
-                                        ?.filter { inspection ->
-                                            inspection.toString().lowercase().contains(searchQuery.lowercase())
-                                        }
-                                        ?.sortedBy { inspection -> inspection.inspectionDate }
-                                )
-                            }
-                            is OrderType.Hospital -> {
-                                resource.copy(
-                                    data = resource.data
-                                        ?.filter { inspection ->
-                                            inspection.toString().lowercase().contains(searchQuery.lowercase())
-                                        }
-                                        ?.sortedBy { inspection -> inspection.hospitalId }
-                                )
-                            }
-                            is OrderType.State -> {
-                                resource.copy(
-                                    data = resource.data
-                                        ?.filter { inspection ->
-                                            inspection.toString().lowercase().contains(searchQuery.lowercase())
-                                        }
-                                        ?.sortedBy { inspection -> inspection.inspectionStateId }
-                                )
-                            }
+                resource.copy(
+                    data = resource.data
+                        ?.filter { inspection ->
+                            inspection.toString().lowercase().contains(searchQuery.lowercase())
                         }
-
-                    }
-                    is OrderMonotonicity.Descending -> {
-                        when(orderType) {
-                            is OrderType.Date -> {
-                                resource.copy(
-                                    data = resource.data
-                                        ?.filter { inspection ->
-                                            inspection.toString().lowercase().contains(searchQuery.lowercase())
-                                        }
-                                        ?.sortedByDescending { inspection -> inspection.inspectionDate }
-                                )
-                            }
-                            is OrderType.Hospital -> {
-                                resource.copy(
-                                    data = resource.data
-                                        ?.filter { inspection ->
-                                            inspection.toString().lowercase().contains(searchQuery.lowercase())
-                                        }
-                                        ?.sortedByDescending { inspection -> inspection.hospitalId }
-                                )
-                            }
-                            is OrderType.State -> {
-                                resource.copy(
-                                    data = resource.data
-                                        ?.filter { inspection ->
-                                            inspection.toString().lowercase().contains(searchQuery.lowercase())
-                                        }
-                                        ?.sortedByDescending { inspection -> inspection.inspectionStateId }
-                                )
-                            }
-                        }
-
-                    }
-                }
+                        ?.orderInspectionList(orderType)
+                )
             }
         } else {
             repository.getInspectionList().map { resource ->

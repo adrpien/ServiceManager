@@ -36,6 +36,8 @@ class InspectionListViewModel @Inject constructor(
     val _inspectionListstate = mutableStateOf(InspectionListState())
     val inspectionListstate: State<InspectionListState> = _inspectionListstate
 
+
+
     init {
         fetchHospitalList()
         fetchTechnicianList()
@@ -65,14 +67,10 @@ class InspectionListViewModel @Inject constructor(
                 )
             }
             is InspectionListEvent.orderInspectionList -> {
-
-                // TODO orderInspectionList in InspectionListViewModel
                 fetchInspectionList(
-                    fetchFromApi = false
-                )
-
-                _inspectionListstate.value = _inspectionListstate.value.copy(
-                    orderType = event.orderType
+                    fetchFromApi = false,
+                    orderType = inspectionListstate.value.orderType,
+                    searchQuery = inspectionListstate.value.searchQuery
                 )
             }
 
@@ -91,19 +89,24 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchInspectionList(
         searchQuery: String = _inspectionListstate.value.searchQuery.lowercase(),
-        fetchFromApi: Boolean = false
+        fetchFromApi: Boolean = false,
+        orderType: OrderType = _inspectionListstate.value.orderType
     ) {
-            inspectionListIsLoading = true
+            inspectionStateListIsLoading = true
             setIsLoadingStatus()
             viewModelScope.launch(Dispatchers.IO) {
             inspectionsUseCases.getInspectionList(
                 searchQuery = searchQuery,
-                fetchFromApi = fetchFromApi
+                fetchFromApi = fetchFromApi,
+                orderType = orderType
             ).collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _inspectionListstate.value = _inspectionListstate.value.copy(inspectionList = list)
+                            _inspectionListstate.value = _inspectionListstate.value.copy(
+                                inspectionList = list,
+
+                            )
                             inspectionListIsLoading = false
                             setIsLoadingStatus()
                         }
