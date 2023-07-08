@@ -15,28 +15,22 @@ sealed class OrderType(val orderMonotonicity: OrderMonotonicity) {
     }
 
     fun toggleOrderMonotonicity() : OrderType {
-        return when(this) {
-            is OrderType.Hospital -> {
-                if (this.orderMonotonicity == OrderMonotonicity.Descending) {
-                    OrderType.Hospital(OrderMonotonicity.Ascending)
-                } else {
-                    OrderType.Hospital(OrderMonotonicity.Ascending)
+        return when(this.orderMonotonicity) {
+            is OrderMonotonicity.Descending -> {
+                when (this) {
+                    is OrderType.Hospital -> OrderType.Hospital(OrderMonotonicity.Ascending)
+                    is OrderType.Date -> OrderType.Date(OrderMonotonicity.Ascending)
+                    is OrderType.State -> OrderType.State(OrderMonotonicity.Ascending)
                 }
             }
-            is OrderType.Date -> {
-                if (this.orderMonotonicity == OrderMonotonicity.Descending) {
-                    OrderType.Date(OrderMonotonicity.Ascending)
-                } else {
-                    OrderType.Date(OrderMonotonicity.Ascending)
+            is OrderMonotonicity.Ascending -> {
+                when (this) {
+                    is OrderType.Hospital -> OrderType.Hospital(OrderMonotonicity.Descending)
+                    is OrderType.Date -> OrderType.Date(OrderMonotonicity.Descending)
+                    is OrderType.State -> OrderType.State(OrderMonotonicity.Descending)
                 }
             }
-            is OrderType.State -> {
-                if (this.orderMonotonicity == OrderMonotonicity.Descending) {
-                    OrderType.State(OrderMonotonicity.Ascending)
-                } else {
-                    OrderType.State(OrderMonotonicity.Ascending)
-                }
-            }
+
         }
     }
 

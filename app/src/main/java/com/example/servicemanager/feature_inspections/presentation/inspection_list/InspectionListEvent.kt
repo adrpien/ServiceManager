@@ -11,7 +11,7 @@ sealed class InspectionListEvent {
     data class orderInspectionList(val orderType: OrderType): InspectionListEvent()
     object  ToggleSortSectionVisibility : InspectionListEvent()
 
-    object  ToggleOrderMonotonicity : InspectionListEvent()
+    data class  ToggleOrderMonotonicity(val orderType: OrderType) : InspectionListEvent()
 
 
 }

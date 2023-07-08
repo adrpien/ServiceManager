@@ -63,13 +63,18 @@ class InspectionListViewModel @Inject constructor(
             }
             is InspectionListEvent.Refresh -> {
                 fetchInspectionList(
-                    fetchFromApi = true
+                    fetchFromApi = true,
+                    orderType = inspectionListstate.value.orderType,
+                    searchQuery = inspectionListstate.value.searchQuery,
                 )
             }
             is InspectionListEvent.orderInspectionList -> {
+                _inspectionListstate.value = _inspectionListstate.value.copy(
+                    orderType = event.orderType
+                )
                 fetchInspectionList(
                     fetchFromApi = false,
-                    orderType = inspectionListstate.value.orderType,
+                    orderType = event.orderType,
                     searchQuery = inspectionListstate.value.searchQuery
                 )
             }
@@ -81,7 +86,14 @@ class InspectionListViewModel @Inject constructor(
             }
 
             is InspectionListEvent.ToggleOrderMonotonicity -> {
-                // TODO ToggleOrderMonotonicity in InspectionListViewModel
+                _inspectionListstate.value = _inspectionListstate.value.copy(
+                    orderType = event.orderType
+                )
+                fetchInspectionList(
+                    fetchFromApi = false,
+                    orderType = event.orderType,
+                    searchQuery = inspectionListstate.value.searchQuery
+                )
             }
         }
     }
@@ -92,7 +104,7 @@ class InspectionListViewModel @Inject constructor(
         fetchFromApi: Boolean = false,
         orderType: OrderType = _inspectionListstate.value.orderType
     ) {
-            inspectionStateListIsLoading = true
+            inspectionListIsLoading = true
             setIsLoadingStatus()
             viewModelScope.launch(Dispatchers.IO) {
             inspectionsUseCases.getInspectionList(

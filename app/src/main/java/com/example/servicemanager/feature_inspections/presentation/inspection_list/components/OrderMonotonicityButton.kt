@@ -1,12 +1,20 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
 
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowCircleDown
 import androidx.compose.material.icons.filled.ArrowCircleUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.adrpien.noteapp.feature_notes.domain.util.OrderType
+import kotlinx.coroutines.launch
 
 @Composable
 fun OrderMonotonicityButton(
@@ -15,9 +23,14 @@ fun OrderMonotonicityButton(
     onClick: () -> Unit,
 ) {
 
+    val coroutineScope = rememberCoroutineScope()
+    val animatable = remember { androidx.compose.animation.core.Animatable(1F) }
+
+
     Button(
-        onClick = { onClick },
-        modifier = modifier
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape
     ) {
         if(isAscending){
             Icon(

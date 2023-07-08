@@ -92,10 +92,13 @@ fun InspectionListScreen(
                 SortSection(
                     onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
                     orderType = state.value.orderType,
-                    onToggleMonotonicity = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }
+                    onToggleMonotonicity = {
+                        viewModel.onEvent(InspectionListEvent.ToggleOrderMonotonicity(it))
+                    }
                 )
             }
-            // TODO Animatable something
+
+            val groupedInspectionLists = state.value.inspectionList.groupBy { it.hospitalId }
 
             SwipeRefresh(
                 state = swipeRefreshState,
@@ -111,7 +114,6 @@ fun InspectionListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    // TODO Navigation to InspectionDetailsScreen in InspectionScreen to implement
                                     navigator.navigate(InspectionDetailsScreenDestination(state.value.inspectionList[index].inspectionId))
                                 },
                             inspection = state.value.inspectionList[index],

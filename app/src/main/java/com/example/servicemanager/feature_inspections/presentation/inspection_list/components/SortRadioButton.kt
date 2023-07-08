@@ -32,8 +32,6 @@ fun SortRadioButton(
                 unselectedColor = MaterialTheme.colors.onBackground
             )
         )
-        Spacer(modifier = Modifier
-            .width(5.dp))
         Text(
             text = title,
             style = MaterialTheme.typography.body1)
