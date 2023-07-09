@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adrpien.noteapp.feature_notes.domain.util.OrderType
 import com.example.servicemanager.core.util.ResourceState
+import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,8 +32,8 @@ class InspectionListViewModel @Inject constructor(
 
     private var getInspectionListJob: Job? = null
 
-    val _inspectionListstate = mutableStateOf(InspectionListState())
-    val inspectionListstate: State<InspectionListState> = _inspectionListstate
+    val _inspectionListState = mutableStateOf(InspectionListState())
+    val inspectionListState: State<InspectionListState> = _inspectionListState
 
 
 
@@ -49,14 +48,16 @@ class InspectionListViewModel @Inject constructor(
     fun onEvent(event: InspectionListEvent) {
         when(event) {
             is InspectionListEvent.onSearchQueryChange -> {
-                _inspectionListstate.value = _inspectionListstate.value.copy(searchQuery = event.searchQuery)
+                _inspectionListState.value = _inspectionListState.value.copy(searchQuery = event.searchQuery)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
                     launch {
                         delay(500L)
                         fetchInspectionList(
                             searchQuery = event.searchQuery,
-                            fetchFromApi = false
+                            fetchFromApi = false,
+                            hospitalFilter = inspectionListState.value.hospital,
+                            orderType = inspectionListState.value.orderType,
                         )
                     }
                 }
@@ -64,35 +65,63 @@ class InspectionListViewModel @Inject constructor(
             is InspectionListEvent.Refresh -> {
                 fetchInspectionList(
                     fetchFromApi = true,
-                    orderType = inspectionListstate.value.orderType,
-                    searchQuery = inspectionListstate.value.searchQuery,
+                    orderType = inspectionListState.value.orderType,
+                    searchQuery = inspectionListState.value.searchQuery,
+                    hospitalFilter = inspectionListState.value.hospital
                 )
             }
             is InspectionListEvent.orderInspectionList -> {
-                _inspectionListstate.value = _inspectionListstate.value.copy(
+                _inspectionListState.value = _inspectionListState.value.copy(
                     orderType = event.orderType
                 )
                 fetchInspectionList(
                     fetchFromApi = false,
                     orderType = event.orderType,
-                    searchQuery = inspectionListstate.value.searchQuery
+                    searchQuery = inspectionListState.value.searchQuery,
+                    hospitalFilter = inspectionListState.value.hospital
                 )
             }
 
             is InspectionListEvent.ToggleSortSectionVisibility -> {
-                _inspectionListstate.value = _inspectionListstate.value.copy(
-                    isSortSectionVisible = !_inspectionListstate.value.isSortSectionVisible
+                _inspectionListState.value = _inspectionListState.value.copy(
+                    isSortSectionVisible = !_inspectionListState.value.isSortSectionVisible
                 )
+                if(_inspectionListState.value.isHospitalFilterSectionVisible) {
+                    _inspectionListState.value = _inspectionListState.value.copy(
+                        isHospitalFilterSectionVisible = false
+                    )
+                }
             }
 
             is InspectionListEvent.ToggleOrderMonotonicity -> {
-                _inspectionListstate.value = _inspectionListstate.value.copy(
+                _inspectionListState.value = _inspectionListState.value.copy(
                     orderType = event.orderType
                 )
                 fetchInspectionList(
                     fetchFromApi = false,
                     orderType = event.orderType,
-                    searchQuery = inspectionListstate.value.searchQuery
+                    searchQuery = inspectionListState.value.searchQuery,
+                    hospitalFilter = inspectionListState.value.hospital
+                )
+            }
+            is InspectionListEvent.ToggleHospitalFilterSectionVisibility -> {
+                _inspectionListState.value = _inspectionListState.value.copy(
+                    isHospitalFilterSectionVisible = !_inspectionListState.value.isHospitalFilterSectionVisible
+                )
+                if(_inspectionListState.value.isSortSectionVisible) {
+                    _inspectionListState.value = _inspectionListState.value.copy(
+                        isSortSectionVisible = false)
+                }
+            }
+            is InspectionListEvent.filterInspectionListByHospital -> {
+                _inspectionListState.value = _inspectionListState.value.copy(
+                    hospital = event.hospital
+                )
+                fetchInspectionList(
+                    fetchFromApi = false,
+                    orderType = inspectionListState.value.orderType,
+                    searchQuery = inspectionListState.value.searchQuery,
+                    hospitalFilter = inspectionListState.value.hospital
                 )
             }
         }
@@ -100,9 +129,10 @@ class InspectionListViewModel @Inject constructor(
 
 
     private fun fetchInspectionList(
-        searchQuery: String = _inspectionListstate.value.searchQuery.lowercase(),
+        searchQuery: String = _inspectionListState.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false,
-        orderType: OrderType = _inspectionListstate.value.orderType
+        orderType: OrderType = _inspectionListState.value.orderType,
+        hospitalFilter: Hospital = _inspectionListState.value.hospital
     ) {
             inspectionListIsLoading = true
             setIsLoadingStatus()
@@ -110,12 +140,13 @@ class InspectionListViewModel @Inject constructor(
             inspectionsUseCases.getInspectionList(
                 searchQuery = searchQuery,
                 fetchFromApi = fetchFromApi,
-                orderType = orderType
+                orderType = orderType,
+                hospitalFilter = hospitalFilter
             ).collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _inspectionListstate.value = _inspectionListstate.value.copy(
+                            _inspectionListState.value = _inspectionListState.value.copy(
                                 inspectionList = list,
 
                             )
@@ -136,7 +167,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _inspectionListstate.value = _inspectionListstate.value.copy(
+                            _inspectionListState.value = _inspectionListState.value.copy(
                                 hospitalList = list,
                             )
                             hospitalListIsLoading = false
@@ -156,7 +187,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _inspectionListstate.value = _inspectionListstate.value.copy(
+                            _inspectionListState.value = _inspectionListState.value.copy(
                                 inspectionStateList = list,
                             )
                             inspectionStateListIsLoading = false
@@ -176,7 +207,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _inspectionListstate.value = _inspectionListstate.value.copy(
+                            _inspectionListState.value = _inspectionListState.value.copy(
                                 estStateList = list,
                             )
                             estStateListIsLoading = false
@@ -196,7 +227,7 @@ class InspectionListViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _inspectionListstate.value = _inspectionListstate.value.copy(
+                            _inspectionListState.value = _inspectionListState.value.copy(
                                 technicianList = list,
                             )
                             technicianListIsLoading = false
@@ -218,12 +249,12 @@ class InspectionListViewModel @Inject constructor(
             !technicianListIsLoading &&
             !inspectionStateListIsLoading
         ){
-            _inspectionListstate.value = _inspectionListstate.value.copy(
+            _inspectionListState.value = _inspectionListState.value.copy(
                 isLoading = false
             )
         }
         else {
-            _inspectionListstate.value = _inspectionListstate.value.copy(
+            _inspectionListState.value = _inspectionListState.value.copy(
                 isLoading = true
             )
         }

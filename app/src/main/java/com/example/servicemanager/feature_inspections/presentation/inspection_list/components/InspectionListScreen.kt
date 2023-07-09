@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,8 +20,6 @@ import com.example.servicemanager.feature_inspections.presentation.inspection_li
 import com.example.servicemanager.navigation.Screen
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 
 @Composable
 fun InspectionListScreen(
@@ -30,7 +29,7 @@ fun InspectionListScreen(
     ) {
 
 
-    val state = viewModel.inspectionListstate
+    val state = viewModel.inspectionListState
 
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = state.value.isRefreshing
@@ -76,12 +75,30 @@ fun InspectionListScreen(
                     maxLines = 1,
                     singleLine = true,
                 )
+
             IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }) {
                 Icon(
                     imageVector = Icons.Default.Sort,
                     contentDescription = "Sort")
             }
+                IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
+                    Icon(
+                        imageVector = Icons.Default.House,
+                        contentDescription = "Hospital")
+                }
             }
+            AnimatedVisibility(
+                visible = state.value.isHospitalFilterSectionVisible,
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically()
+            ) {
+                HospitalFilterSection(
+                    hospitalList = state.value.hospitalList,
+                    hospital = state.value.hospital,
+                    onHospitalChange = { viewModel.onEvent(InspectionListEvent.filterInspectionListByHospital(hospital = it)) }
+                )
+            }
+
             AnimatedVisibility(
                 visible = state.value.isSortSectionVisible,
                 enter = fadeIn() + slideInVertically(),
@@ -95,6 +112,8 @@ fun InspectionListScreen(
                     }
                 )
             }
+
+
 
             val groupedInspectionLists = state.value.inspectionList.groupBy { it.hospitalId }
 

@@ -3,10 +3,13 @@ package com.example.servicemanager.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.servicemanager.navigation.BottomNavigationBar
 import com.example.servicemanager.navigation.BottomNavigationItem
@@ -44,9 +47,11 @@ class MainActivity : ComponentActivity() {
                         })
                  }
             ) {
-                Navigation(
-                    navHostController = navHostController
-                )
+                Column(modifier = Modifier.padding(it)) {
+                    Navigation(
+                        navHostController = navHostController
+                    )
+                }
             }
         }
     }

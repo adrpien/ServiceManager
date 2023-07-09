@@ -15,7 +15,9 @@ data class InspectionListState(
     val isRefreshing: Boolean = false,
     val searchQuery: String = "",
     val isSortSectionVisible: Boolean = false,
-    val orderType: OrderType = OrderType.State(OrderMonotonicity.Ascending)
+    val isHospitalFilterSectionVisible: Boolean = false,
+    val orderType: OrderType = OrderType.State(OrderMonotonicity.Ascending),
+    val hospital: Hospital = Hospital()
 ) {
 
 }
