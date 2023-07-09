@@ -2,21 +2,13 @@ package com.example.servicemanager.feature_inspections.presentation.inspection_d
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adrpien.tiemed.domain.use_case.inspections.GetInspection
-import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
 import com.example.servicemanager.core.util.DefaultTextFieldState
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
-import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
-import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
-import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTechnicianList
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -25,28 +17,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InspectionDetailsViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val inspectionUseCases: InspectionUseCases,
     private val appUseCases: AppUseCases
-
 ): ViewModel() {
-
 
     private var currentInspectionId: Int? = null
 
-    private val _name = mutableStateOf(
+    private val _deviceName = mutableStateOf(
         DefaultTextFieldState(
         hint = "Name"
         )
     )
-    val name: State<DefaultTextFieldState> = _name
+    val deviceName: State<DefaultTextFieldState> = _deviceName
 
-    private val _producer = mutableStateOf(
+    private val _deviceProducer = mutableStateOf(
         DefaultTextFieldState(
             hint = "Producer"
         )
     )
-    val producer: State<DefaultTextFieldState> = _producer
+    val deviceProducer: State<DefaultTextFieldState> = _deviceProducer
 
     private val _hospital = mutableStateOf(DefaultTextFieldState(
         hint = "Hospital"
@@ -64,32 +53,20 @@ class InspectionDetailsViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    var state = mutableStateOf(InspectionDetailsState())
-
     init {
         fetchHospitalList()
         fetchEstStateList()
-        fetchInspectionList()
         fetchInspectionStateList()
         fetchTechnicianList()
     }
 
-    private fun fetchInspectionList(
-        query: String = state.value.searchQuery.lowercase(),
-        fetchFromApi: Boolean = false
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            inspectionUseCases.getInspectionList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            setIsLoadingStatus()
-                            state.value = state.value.copy(inspectionList = list)
-                        }
-                    }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
-                }
+    fun onEvent(inspectionDetailsEvent: InspectionDetailsEvent) {
+        when(inspectionDetailsEvent) {
+            is InspectionDetailsEvent.saveInspection -> {
+
+            }
+            is InspectionDetailsEvent.updateInspection -> {
+
             }
         }
     }
@@ -101,7 +78,7 @@ class InspectionDetailsViewModel @Inject constructor(
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
                             setIsLoadingStatus()
-                            state.value = state.value.copy(
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 hospitalList = list,
                             )
                         }
@@ -120,7 +97,7 @@ class InspectionDetailsViewModel @Inject constructor(
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
                             setIsLoadingStatus()
-                            state.value = state.value.copy(
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 inspectionStateList = list,
                             )
                         }
@@ -139,7 +116,7 @@ class InspectionDetailsViewModel @Inject constructor(
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
                             setIsLoadingStatus()
-                            state.value = state.value.copy(
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 estStateList = list,
                             )
                         }
@@ -158,7 +135,7 @@ class InspectionDetailsViewModel @Inject constructor(
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
                             setIsLoadingStatus()
-                            state.value = state.value.copy(
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 technicianList = list,
                             )
                         }
@@ -172,25 +149,24 @@ class InspectionDetailsViewModel @Inject constructor(
 
     private fun setIsLoadingStatus() {
         if(
-            state.value.inspection.inspectionId.isNotEmpty() &&
-            state.value.hospitalList.isNotEmpty() &&
-            state.value.estStateList.isNotEmpty() &&
-            state.value.technicianList.isNotEmpty() &&
-            state.value.inspectionStateList.isNotEmpty()
+            _inspectionDetailsState.value.inspection.inspectionId.isNotEmpty() &&
+            _inspectionDetailsState.value.hospitalList.isNotEmpty() &&
+            _inspectionDetailsState.value.estStateList.isNotEmpty() &&
+            _inspectionDetailsState.value.technicianList.isNotEmpty() &&
+            _inspectionDetailsState.value.inspectionStateList.isNotEmpty()
         ){
-            state.value = state.value.copy(
+            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                 isLoading = false
             )
         }
         else {
-            state.value = state.value.copy(
+            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                 isLoading = true
             )
         }
     }
 
     sealed class UiEvent {
-        object SaveInspection: UiEvent()
         data class ShowSnackBar(val messege: String): UiEvent()
     }
 }
