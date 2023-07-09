@@ -13,22 +13,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.servicemanager.feature_inspections.presentation.destinations.InspectionDetailsScreenDestination
+import androidx.navigation.NavHostController
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
+import com.example.servicemanager.navigation.Screen
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@RootNavGraph(start = true)
-@Destination
 @Composable
 fun InspectionListScreen(
+    navHostController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: InspectionListViewModel = hiltViewModel(),
-    navigator: DestinationsNavigator
     ) {
 
 
@@ -43,7 +41,7 @@ fun InspectionListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navigator.navigate(InspectionDetailsScreenDestination(""))
+                    navHostController.navigate(Screen.InspectionDetailsScreen.route)
                 },
                 backgroundColor = MaterialTheme.colors.primary
             )
@@ -107,14 +105,14 @@ fun InspectionListScreen(
                 }
             ) {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     items(state.value.inspectionList.size) { index ->
                         InspectionListItem(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    navigator.navigate(InspectionDetailsScreenDestination(state.value.inspectionList[index].inspectionId))
+                                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs(state.value.inspectionList[index].inspectionId))
                                 },
                             inspection = state.value.inspectionList[index],
                             hospitalList = state.value.hospitalList,
@@ -122,12 +120,6 @@ fun InspectionListScreen(
                             inspectionStateList = state.value.inspectionStateList
 
                         )
-                        if (index < state.value.inspectionList.size) {
-                            Divider(
-                                modifier = Modifier
-                                    .padding(13.dp)
-                            )
-                        }
                     }
 
                 }

@@ -2,6 +2,7 @@ package com.example.servicemanager.feature_inspections.presentation.inspection_l
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -27,22 +28,25 @@ fun OrderMonotonicityButton(
     val animatable = remember { androidx.compose.animation.core.Animatable(1F) }
 
 
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        shape = CircleShape
+    Column(
+        modifier = modifier
     ) {
-        if(isAscending){
-            Icon(
-                imageVector = Icons.Default.ArrowCircleUp,
-                contentDescription = "Ascending"
-            )
-        } else {
-            Icon(
-                imageVector = Icons.Default.ArrowCircleDown,
-                contentDescription = "Descending"
-            )
+        Button(
+            onClick = onClick,
+            modifier = Modifier,
+            shape = CircleShape
+        ) {
+            if(isAscending){
+                Icon(
+                    imageVector = Icons.Default.ArrowCircleUp,
+                    contentDescription = "Ascending"
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Default.ArrowCircleDown,
+                    contentDescription = "Descending"
+                )
+            }
         }
     }
-
 }

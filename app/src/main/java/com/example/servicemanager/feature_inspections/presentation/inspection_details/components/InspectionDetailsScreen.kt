@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 
-@Destination
 @Composable
 fun InspectionDetailsScreen(
+    navHostController: NavHostController,
     inspectionId: String,
     modifier: Modifier = Modifier
 ) {
