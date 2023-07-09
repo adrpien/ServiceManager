@@ -40,7 +40,7 @@ fun InspectionListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screen.InspectionDetailsScreen.route)
+                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs("0"))
                 },
                 backgroundColor = MaterialTheme.colors.primary
             )
@@ -59,7 +59,8 @@ fun InspectionListScreen(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
                     value = state.value.searchQuery,

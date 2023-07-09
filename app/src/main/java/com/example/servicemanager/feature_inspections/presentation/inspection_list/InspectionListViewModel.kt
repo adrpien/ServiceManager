@@ -169,6 +169,7 @@ class InspectionListViewModel @Inject constructor(
                         result.data?.let { list ->
                             _inspectionListState.value = _inspectionListState.value.copy(
                                 hospitalList = list,
+                                hospital = list[0]
                             )
                             hospitalListIsLoading = false
                             setIsLoadingStatus()
