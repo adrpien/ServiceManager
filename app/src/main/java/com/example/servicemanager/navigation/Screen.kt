@@ -7,7 +7,7 @@ sealed class Screen(val route: String){
     object InspectionListScreen: Screen("inspection_list")
     object InspectionDetailsScreen: Screen("inspection_details")
     object RepairScreen: Screen("repair_details")
-    object RepairsScreen: Screen("repair_list")
+    object RepairListScreen: Screen("repair_list")
 
     fun withArgs(vararg args: String): String {
         return buildString {
