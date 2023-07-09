@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
 import com.example.servicemanager.navigation.Screen
@@ -95,7 +96,7 @@ fun InspectionListScreen(
             ) {
                 HospitalFilterSection(
                     hospitalList = state.value.hospitalList,
-                    hospital = state.value.hospital,
+                    hospital = state.value.hospital ?: Hospital(),
                     onHospitalChange = { viewModel.onEvent(InspectionListEvent.filterInspectionListByHospital(hospital = it)) }
                 )
             }

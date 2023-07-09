@@ -19,7 +19,7 @@ class GetInspectionList @Inject constructor (
 
     // TODO GetInspectionList use case look really messy, need to work on it
     operator fun invoke(
-        hospitalFilter: Hospital = Hospital(),
+        hospitalFilter: Hospital? = null,
         searchQuery: String = "",
         orderType: OrderType = OrderType.State(OrderMonotonicity.Ascending),
         fetchFromApi: Boolean = false
@@ -31,7 +31,7 @@ class GetInspectionList @Inject constructor (
                         ?.filter { inspection ->
                             inspection.toString().lowercase().contains(searchQuery.lowercase())
                         }
-                        ?.filter { it.hospitalId == hospitalFilter.hospitalId }
+                        ?.filter { it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId) }
                         ?.orderInspectionList(orderType)
                 )
             }
@@ -42,7 +42,7 @@ class GetInspectionList @Inject constructor (
                         ?.filter { inspection ->
                             inspection.toString().lowercase().contains(searchQuery.lowercase())
                         }
-                        ?.filter { it.hospitalId == hospitalFilter.hospitalId }
+                        ?.filter { it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId) }
                         ?.orderInspectionList(orderType)
                 )
                 }

@@ -23,9 +23,9 @@ fun Navigation(navHostController: NavHostController = rememberNavController()) {
             )
         }
         composable(
-            route = Screen.InspectionDetailsScreen.route + "/{deviceId}",
+            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}",
             arguments = listOf(
-                navArgument(name = "deviceId") {
+                navArgument(name = "inspectionId") {
                     type = NavType.StringType
                     defaultValue = "0"
                     nullable = false
@@ -34,7 +34,7 @@ fun Navigation(navHostController: NavHostController = rememberNavController()) {
         ){
             InspectionDetailsScreen(
                 navHostController = navHostController,
-                inspectionId = it.arguments?.getString("deviceId") ?: "0"
+                inspectionId = it.arguments?.getString("inspectionId") ?: "0"
             )
         }
         composable(

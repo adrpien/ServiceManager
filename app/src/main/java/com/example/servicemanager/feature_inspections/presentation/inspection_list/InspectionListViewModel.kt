@@ -132,7 +132,7 @@ class InspectionListViewModel @Inject constructor(
         searchQuery: String = _inspectionListState.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false,
         orderType: OrderType = _inspectionListState.value.orderType,
-        hospitalFilter: Hospital = _inspectionListState.value.hospital
+        hospitalFilter: Hospital? = null
     ) {
             inspectionListIsLoading = true
             setIsLoadingStatus()
@@ -147,8 +147,7 @@ class InspectionListViewModel @Inject constructor(
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
                             _inspectionListState.value = _inspectionListState.value.copy(
-                                inspectionList = list,
-
+                                inspectionList = list
                             )
                             inspectionListIsLoading = false
                             setIsLoadingStatus()
@@ -169,7 +168,6 @@ class InspectionListViewModel @Inject constructor(
                         result.data?.let { list ->
                             _inspectionListState.value = _inspectionListState.value.copy(
                                 hospitalList = list,
-                                hospital = list[0]
                             )
                             hospitalListIsLoading = false
                             setIsLoadingStatus()
