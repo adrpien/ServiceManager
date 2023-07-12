@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.servicemanager.core.util.DefaultTextFieldState
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
@@ -14,9 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,30 +32,6 @@ class InspectionDetailsViewModel @Inject constructor(
     private var currentInspectionId: String? = null
     private var currentInspection: Inspection? = null
 
-    private val _deviceName = mutableStateOf(
-        DefaultTextFieldState(
-        hint = "Name"
-        )
-    )
-    val deviceName: State<DefaultTextFieldState> = _deviceName
-
-    private val _deviceProducer = mutableStateOf(
-        DefaultTextFieldState(
-            hint = "Producer"
-        )
-    )
-    val deviceProducer: State<DefaultTextFieldState> = _deviceProducer
-
-    private val _hospital = mutableStateOf(DefaultTextFieldState(
-        hint = "Hospital"
-    ))
-    val hospital: State<DefaultTextFieldState> = _hospital
-
-    private val _localization = mutableStateOf(DefaultTextFieldState(
-        hint = "Localization"
-    ))
-    val localization: State<DefaultTextFieldState> = _localization
-
     private val _inspectionDetailsState = mutableStateOf(InspectionDetailsState())
     val inspectionDetailsState: State<InspectionDetailsState> = _inspectionDetailsState
 
@@ -75,13 +48,19 @@ class InspectionDetailsViewModel @Inject constructor(
 
     fun onEvent(inspectionDetailsEvent: InspectionDetailsEvent) {
         when(inspectionDetailsEvent) {
-            is InspectionDetailsEvent.saveInspection -> {
+            is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.createInspection(inspectionDetailsEvent.inspection)
                     currentInspection = inspectionDetailsEvent.inspection
                 }
             }
-            is InspectionDetailsEvent.updateInspection -> {
+            is InspectionDetailsEvent.UpdateInspection -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    inspectionUseCases.updateInspection(inspectionDetailsEvent.inspection)
+                    currentInspection = inspectionDetailsEvent.inspection
+                }
+            }
+            is InspectionDetailsEvent.UpdateHospital -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.updateInspection(inspectionDetailsEvent.inspection)
                     currentInspection = inspectionDetailsEvent.inspection
@@ -102,6 +81,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                     inspection = inspection
                                 )
+                                _eventFlow.emit(UiEvent.UpdateInspection(inspection))
                             }
                         }
                         ResourceState.LOADING -> Unit
@@ -220,5 +200,7 @@ class InspectionDetailsViewModel @Inject constructor(
 
     sealed class UiEvent {
         data class ShowSnackBar(val messege: String): UiEvent()
+
+        data class UpdateInspection(val text: Inspection): UiEvent()
     }
 }

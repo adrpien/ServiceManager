@@ -15,6 +15,4 @@ sealed class InspectionListEvent {
     object  ToggleHospitalFilterSectionVisibility : InspectionListEvent()
 
     data class  ToggleOrderMonotonicity(val orderType: OrderType) : InspectionListEvent()
-
-
 }

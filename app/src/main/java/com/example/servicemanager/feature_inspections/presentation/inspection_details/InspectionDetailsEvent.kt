@@ -4,8 +4,10 @@ import com.example.servicemanager.feature_inspections.domain.model.Inspection
 
 sealed class InspectionDetailsEvent {
 
-    data class saveInspection(val inspection: Inspection): InspectionDetailsEvent()
+    data class SaveInspection(val inspection: Inspection): InspectionDetailsEvent()
 
-    data class updateInspection(val inspection: Inspection): InspectionDetailsEvent()
+    data class UpdateInspection(val inspection: Inspection): InspectionDetailsEvent()
+
+    data class UpdateHospital(val hospitalId: String): InspectionDetailsEvent()
 
 }
