@@ -38,19 +38,19 @@ fun InspectionDetailsScreen(
 
     val inspectionDetailsState = viewModel.inspectionDetailsState
 
-    //val inspectionDateState = remember {
-    //    mutableStateOf(LocalDate.now())
-    //}
-//
-    //val formattedInspectionDate = remember {
-    //    derivedStateOf {
-    //        DateTimeFormatter
-    //            .ofPattern(
-    //                "dd/MM/yyyy"
-    //            )
-    //            .format(inspectionDateState.value)
-    //    }
-    //}
+    val inspectionDateState = remember {
+        mutableStateOf(LocalDate.now())
+    }
+
+    val formattedInspectionDate = remember {
+        derivedStateOf {
+            DateTimeFormatter
+                .ofPattern(
+                    "dd/MM/yyyy"
+                )
+                .format(inspectionDateState.value)
+        }
+    }
 
     val dateDialogState = rememberMaterialDialogState()
 
@@ -117,8 +117,6 @@ fun InspectionDetailsScreen(
         modifier = modifier
             .fillMaxSize()
     ){
-
-
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)) {
@@ -175,7 +173,7 @@ fun InspectionDetailsScreen(
                 onClick = { dateDialogState.show() }
             ) {
                 Text(
-                    text = "Inspection date: " + formattedInspectionDate.value
+                    text = "Inspection date: " + formattedInspectionDate.value.toString()
                 )
             }
             MaterialDialog(
@@ -198,7 +196,7 @@ fun InspectionDetailsScreen(
                         localDate < LocalDate.now()
                     }
                 ) { date ->
-                    //inspectionDateState.value = date
+                    inspectionDateState.value = date
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(inspectionDate = date.toEpochDay().toString())))
                 }
             }
