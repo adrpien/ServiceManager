@@ -8,6 +8,6 @@ sealed class InspectionDetailsEvent {
 
     data class UpdateInspection(val inspection: Inspection): InspectionDetailsEvent()
 
-    data class UpdateHospital(val hospitalId: String): InspectionDetailsEvent()
+    data class UpdateState(val inspection: Inspection): InspectionDetailsEvent()
 
 }

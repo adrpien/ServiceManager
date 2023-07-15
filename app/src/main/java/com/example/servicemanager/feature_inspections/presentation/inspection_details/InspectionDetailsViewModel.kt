@@ -56,10 +56,9 @@ class InspectionDetailsViewModel @Inject constructor(
                     inspectionUseCases.updateInspection(inspectionDetailsEvent.inspection)
                 }
             }
-            is InspectionDetailsEvent.UpdateHospital -> {
+            is InspectionDetailsEvent.UpdateState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                    inspection = _inspectionDetailsState.value.inspection
-                        .copy(hospitalId = inspectionDetailsEvent.hospitalId)
+                    inspection = inspectionDetailsEvent.inspection
                 )
             }
 

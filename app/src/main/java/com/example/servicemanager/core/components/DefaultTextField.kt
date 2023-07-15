@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
+package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,17 +12,17 @@ import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.util.DefaultTextFieldState
 
 @Composable
-fun MutableState<DefaultTextFieldState>.InspectionTextField() {
+fun DefaultTextField(
+    modifier: Modifier = Modifier,
+    onValueChanged: (String) -> Unit,
+    state: MutableState<DefaultTextFieldState>,
+) {
     TextField(
-        value = this.value.text,
+        value = state.value.text,
         label = {
-            Text(text = this.value.hint)
+            Text(text = state.value.hint)
         },
-        onValueChange = {
-            this.value = this.value.copy(
-                text = it
-            )
-        },
+        onValueChange = onValueChanged,
         singleLine = true,
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         shape = RoundedCornerShape(8.dp)
