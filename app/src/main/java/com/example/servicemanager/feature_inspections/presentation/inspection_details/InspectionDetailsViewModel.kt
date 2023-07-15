@@ -23,14 +23,12 @@ class InspectionDetailsViewModel @Inject constructor(
     private val appUseCases: AppUseCases
 ): ViewModel() {
 
-    private var inspectionIsLoading = true
     private var hospitalListIsLoading = true
     private var estStateListIsLoading = true
     private var technicianListIsLoading = true
     private var inspectionStateListIsLoading = true
 
     private var currentInspectionId: String? = null
-    private var currentInspection: Inspection? = null
 
     private val _inspectionDetailsState = mutableStateOf(InspectionDetailsState())
     val inspectionDetailsState: State<InspectionDetailsState> = _inspectionDetailsState
@@ -51,21 +49,20 @@ class InspectionDetailsViewModel @Inject constructor(
             is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.createInspection(inspectionDetailsEvent.inspection)
-                    currentInspection = inspectionDetailsEvent.inspection
                 }
             }
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.updateInspection(inspectionDetailsEvent.inspection)
-                    currentInspection = inspectionDetailsEvent.inspection
                 }
             }
             is InspectionDetailsEvent.UpdateHospital -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.updateInspection(inspectionDetailsEvent.inspection)
-                    currentInspection = inspectionDetailsEvent.inspection
-                }
+                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                    inspection = _inspectionDetailsState.value.inspection
+                        .copy(hospitalId = inspectionDetailsEvent.hospitalId)
+                )
             }
+
         }
     }
 
