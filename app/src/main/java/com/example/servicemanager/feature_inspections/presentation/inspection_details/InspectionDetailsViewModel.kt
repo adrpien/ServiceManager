@@ -61,6 +61,11 @@ class InspectionDetailsViewModel @Inject constructor(
                     inspection = inspectionDetailsEvent.inspection
                 )
             }
+            is InspectionDetailsEvent.UpdateSignature -> {
+                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                    signature = inspectionDetailsEvent.signature
+                )
+            }
 
         }
     }

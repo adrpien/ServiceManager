@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,19 +14,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.servicemanager.core.components.SignatureArea
 import com.example.servicemanager.core.util.DefaultTextFieldState
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
 import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import io.ak1.drawbox.DrawBox
+import io.ak1.drawbox.rememberDrawController
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -41,7 +47,6 @@ fun InspectionDetailsScreen(
 ) {
 
     val inspectionDetailsState = viewModel.inspectionDetailsState
-
     val inspectionDateState = remember {
         mutableStateOf(LocalDate.now())
     }
@@ -57,7 +62,7 @@ fun InspectionDetailsScreen(
     }
 
     val dateDialogState = rememberMaterialDialogState()
-
+    val signatureDialogState = rememberMaterialDialogState()
     val scrollState = rememberScrollState()
 
     val deviceName = remember {
@@ -281,6 +286,20 @@ fun InspectionDetailsScreen(
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = it)))
                 },
                 state = recipient)
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { signatureDialogState.show()},
+                shape = RectangleShape,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White,
+                    contentColor = Color.Blue
+                ),
+                border = BorderStroke(2.dp, Color.Blue)
+            ) {
+                Image(
+                    bitmap = inspectionDetailsState.value.signature,
+                    contentDescription = "Signature")
+            }
             MaterialDialog(
                 dialogState = dateDialogState,
                 properties = DialogProperties(
@@ -289,8 +308,15 @@ fun InspectionDetailsScreen(
                 ),
                 backgroundColor = Color.LightGray,
                 buttons = {
-                    positiveButton("Confirm")
-                    negativeButton("Cancel")
+                    button(
+                        text = "Refresh",
+                        onClick = {
+                            // TODO Refresh date
+                        })
+                    positiveButton(
+                        text = "Confirm")
+                    negativeButton(
+                        text = "Cancel")
                 }
             ) {
                 datepicker(
@@ -303,6 +329,27 @@ fun InspectionDetailsScreen(
                 ) { date ->
                     inspectionDateState.value = date
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(inspectionDate = date.toEpochDay().toString())))
+                }
+            }
+            MaterialDialog(
+                dialogState = signatureDialogState,
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                ),
+                backgroundColor = Color.LightGray,
+                buttons = {
+                    button("Save"){
+                    }
+                    positiveButton("Confirm"){
+                    }
+                    negativeButton("Cancel")
+                }
+            ) {
+                customView {
+                    SignatureArea() { bitmap ->
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateSignature(bitmap))
+                    }
                 }
             }
         }
