@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 
 
@@ -29,7 +30,7 @@ fun SelectRadioButton(
             modifier = Modifier
                 .padding(8.dp),
             onClick = onClick,
-            shape = CircleShape,
+            shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = if (selected) Color.Blue else Color.White,
                 contentColor = if (!selected) Color.Blue else Color.White,

@@ -12,7 +12,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -173,9 +175,15 @@ fun InspectionDetailsScreen(
                 .verticalScroll(scrollState)) {
             Text(
                 text = "Device",
+                fontSize = 20.sp,
+                color = Color.Blue
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Divider()
+            Divider(
+                color = Color.Blue,
+                modifier = Modifier.height(4.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
                 onValueChanged =  {
                     deviceName.value= deviceName.value.copy(text = it)
@@ -208,9 +216,15 @@ fun InspectionDetailsScreen(
                 state = deviceIn)
             Text(
                 text = "Localization",
+                fontSize = 20.sp,
+                color = Color.Blue
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Divider()
+            Divider(
+                color = Color.Blue,
+                modifier = Modifier.height(4.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             HospitalFilterSection(
                 hospitalList = hospitalList,
                 hospital = hospitalList.find { (it.hospitalId == inspectionDetailsState.value.inspection.hospitalId ) } ?: Hospital(),
@@ -238,13 +252,19 @@ fun InspectionDetailsScreen(
                 state = comment)
             Text(
                 text = "Result",
+                fontSize = 20.sp,
+                color = Color.Blue
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Divider()
+            Divider(
+                color = Color.Blue,
+                modifier = Modifier.height(4.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { dateDialogState.show()},
-                shape = RoundedCornerShape(16.dp),
+                shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.White,
                     contentColor = Color.Blue
