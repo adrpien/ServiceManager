@@ -74,7 +74,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "SN: " + inspection.deviceSN,
+                    text = "SN: " + inspection.deviceSn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -85,7 +85,7 @@ fun InspectionListItem(
 
                 )
                 Text(
-                    text = "IN: " + inspection.deviceIN,
+                    text = "IN: " + inspection.deviceIn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

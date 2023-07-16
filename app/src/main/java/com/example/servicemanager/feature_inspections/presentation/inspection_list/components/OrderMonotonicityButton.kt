@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowCircleDown
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.adrpien.noteapp.feature_notes.domain.util.OrderType
 import kotlinx.coroutines.launch
@@ -34,7 +36,11 @@ fun OrderMonotonicityButton(
         Button(
             onClick = onClick,
             modifier = Modifier,
-            shape = CircleShape
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Blue,
+                contentColor = Color.White
+            )
         ) {
             if(isAscending){
                 Icon(

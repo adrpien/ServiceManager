@@ -68,8 +68,8 @@ class  InspectionFirebaseApi(
             "deviceName" to inspection.deviceName,
             "deviceManufacturer" to inspection.deviceManufacturer,
             "deviceModel" to inspection.deviceModel,
-            "deviceSN" to inspection.deviceSN,
-            "deviceIN" to inspection.deviceIN
+            "deviceSN" to inspection.deviceSn,
+            "deviceIN" to inspection.deviceIn
         )
         val result = documentReference.set(map)
         result.await()
@@ -100,8 +100,8 @@ class  InspectionFirebaseApi(
             "deviceName" to inspection.deviceName,
             "deviceManufacturer" to inspection.deviceManufacturer,
             "deviceModel" to inspection.deviceModel,
-            "deviceSN" to inspection.deviceSN,
-            "deviceIN" to inspection.deviceIN
+            "deviceSN" to inspection.deviceSn,
+            "deviceIN" to inspection.deviceIn
         )
         val documentReference = firebaseFirestore.collection("inspections").document(inspection.inspectionId)
         val result = documentReference.update(map)

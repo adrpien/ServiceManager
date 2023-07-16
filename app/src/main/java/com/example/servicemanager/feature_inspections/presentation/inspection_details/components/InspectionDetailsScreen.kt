@@ -1,8 +1,12 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
-import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -18,8 +22,6 @@ import com.example.servicemanager.feature_inspections.presentation.inspection_de
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
 import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.date.DatePickerColors
-import com.vanpra.composematerialdialogs.datetime.date.DatePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.Instant
@@ -54,6 +56,8 @@ fun InspectionDetailsScreen(
 
     val dateDialogState = rememberMaterialDialogState()
 
+    val scrollState = rememberScrollState()
+
     val deviceName = remember {
         mutableStateOf(
             DefaultTextFieldState(
@@ -78,11 +82,43 @@ fun InspectionDetailsScreen(
             )
         )
     }
+    val deviceSn = remember {
+        mutableStateOf(
+            DefaultTextFieldState(
+                hint = "Serial number",
+                text =  inspectionDetailsState.value.inspection.deviceSn
+            )
+        )
+    }
+    val deviceIn = remember {
+        mutableStateOf(
+            DefaultTextFieldState(
+                hint = "Inventory number",
+                text =  inspectionDetailsState.value.inspection.deviceIn
+            )
+        )
+    }
     val ward = remember {
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Ward",
                 text =  inspectionDetailsState.value.inspection.ward
+            )
+        )
+    }
+    val comment = remember {
+        mutableStateOf(
+            DefaultTextFieldState(
+                hint = "Comment",
+                text =  inspectionDetailsState.value.inspection.comment
+            )
+        )
+    }
+    val recipient = remember {
+        mutableStateOf(
+            DefaultTextFieldState(
+                hint = "Recipient",
+                text =  inspectionDetailsState.value.inspection.recipient
             )
         )
     }
@@ -92,7 +128,7 @@ fun InspectionDetailsScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect { event ->
             when(event) {
-                is UiEvent.UpdateInspection -> {
+                is UiEvent.UpdateTextFields -> {
                     deviceName.value = deviceName.value.copy(
                         text = event.text.deviceName
                     )
@@ -104,6 +140,18 @@ fun InspectionDetailsScreen(
                     )
                     ward.value = ward.value.copy(
                         text = event.text.ward
+                    )
+                    comment.value = comment.value.copy(
+                        text = event.text.comment
+                    )
+                    deviceSn.value = deviceSn.value.copy(
+                            text = event.text.deviceSn
+                            )
+                    deviceIn.value = deviceIn.value.copy(
+                            text = event.text.deviceIn
+                            )
+                    recipient.value = deviceIn.value.copy(
+                        text = event.text.deviceIn
                     )
                 }
                 is UiEvent.ShowSnackBar -> {
@@ -117,9 +165,12 @@ fun InspectionDetailsScreen(
         modifier = modifier
             .fillMaxSize()
     ){
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+                .verticalScroll(scrollState)) {
             Text(
                 text = "Device",
             )
@@ -143,7 +194,18 @@ fun InspectionDetailsScreen(
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceModel = it)))
                 },
                 state = deviceModel)
-            Spacer(modifier = Modifier.height(8.dp))
+            DefaultTextField(
+                onValueChanged =  {
+                    deviceSn.value= deviceSn.value.copy(text = it)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceSn = it)))
+                },
+                state = deviceSn)
+            DefaultTextField(
+                onValueChanged =  {
+                    deviceIn.value= deviceIn.value.copy(text = it)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceIn = it)))
+                },
+                state = deviceIn)
             Text(
                 text = "Localization",
             )
@@ -168,14 +230,37 @@ fun InspectionDetailsScreen(
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(ward = it)))
                 },
                 state = ward)
-            //DefaultDateButton()
+            DefaultTextField(
+                onValueChanged =  {
+                    comment.value= comment.value.copy(text = it)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(comment = it)))
+                },
+                state = comment)
+            Text(
+                text = "Result",
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Divider()
             Button(
-                onClick = { dateDialogState.show() }
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { dateDialogState.show()},
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White,
+                    contentColor = Color.Blue
+                ),
+                border = BorderStroke(2.dp, Color.Blue)
             ) {
                 Text(
                     text = "Inspection date: " + formattedInspectionDate.value.toString()
                 )
             }
+            DefaultTextField(
+                onValueChanged =  {
+                    recipient.value= recipient.value.copy(text = it)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = it)))
+                },
+                state = recipient)
             MaterialDialog(
                 dialogState = dateDialogState,
                 properties = DialogProperties(

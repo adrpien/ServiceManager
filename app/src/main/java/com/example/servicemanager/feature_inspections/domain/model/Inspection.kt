@@ -18,8 +18,8 @@ data class Inspection(
     var deviceName: String = "",
     var deviceManufacturer: String = "",
     var deviceModel: String = "",
-    var deviceSN: String = "",
-    var deviceIN: String = "",
+    var deviceSn: String = "",
+    var deviceIn: String = "",
     ) {
 
     fun toInspectionEntity(): InspectionEntity {
@@ -37,8 +37,8 @@ data class Inspection(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSN = deviceSN,
-            deviceIN = deviceIN
+            deviceSN = deviceSn,
+            deviceIN = deviceIn
         )
     }
 
@@ -57,8 +57,8 @@ data class Inspection(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSN = deviceSN,
-            deviceIN = deviceIN
+            deviceSN = deviceSn,
+            deviceIN = deviceIn
         )
     }
 }

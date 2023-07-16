@@ -67,7 +67,7 @@ class InspectionDetailsViewModel @Inject constructor(
 
     private fun fetchInspection() {
             currentInspectionId = savedStateHandle.get<String?>("inspectionId")
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             inspectionUseCases
                 .getInspection(inspectionId = currentInspectionId ?: "0")
                 .collect { result ->
@@ -77,7 +77,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                     inspection = inspection
                                 )
-                                _eventFlow.emit(UiEvent.UpdateInspection(inspection))
+                                _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
                             }
                         }
                         ResourceState.LOADING -> Unit
@@ -197,6 +197,6 @@ class InspectionDetailsViewModel @Inject constructor(
     sealed class UiEvent {
         data class ShowSnackBar(val messege: String): UiEvent()
 
-        data class UpdateInspection(val text: Inspection): UiEvent()
+        data class UpdateTextFields(val text: Inspection): UiEvent()
     }
 }

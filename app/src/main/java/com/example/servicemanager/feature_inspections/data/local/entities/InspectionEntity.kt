@@ -40,8 +40,8 @@ data class InspectionEntity(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSN = deviceSN,
-            deviceIN = deviceIN
+            deviceSn = deviceSN,
+            deviceIn = deviceIN
         )
     }
 }

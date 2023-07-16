@@ -23,7 +23,8 @@ fun SortSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
                 modifier = Modifier,
@@ -45,9 +46,9 @@ fun SortSection(
 
             }
             Row(
-                modifier = Modifier
-                    .weight(1f),
-                horizontalArrangement = Arrangement.End
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 OrderMonotonicityButton(
                     isAscending = orderType.orderMonotonicity is OrderMonotonicity.Ascending,
