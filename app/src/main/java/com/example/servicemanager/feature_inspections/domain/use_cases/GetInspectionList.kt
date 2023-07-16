@@ -1,15 +1,13 @@
 package com.adrpien.tiemed.domain.use_case.inspections
 
 
-import androidx.compose.ui.text.toLowerCase
-import androidx.room.util.query
 import com.adrpien.noteapp.feature_notes.domain.util.OrderMonotonicity
 import com.adrpien.noteapp.feature_notes.domain.util.OrderType
 import com.example.servicemanager.core.util.Resource
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.feature_inspections.domain.repository.InspectionRepository
-import com.example.servicemanager.feature_inspections.domain.util.ListExtensionFunctions.Companion.orderInspectionList
+import com.example.servicemanager.feature_inspections.domain.util.InspectionListExtensionFunctions.Companion.orderInspectionList
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

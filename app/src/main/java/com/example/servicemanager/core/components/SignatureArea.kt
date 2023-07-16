@@ -14,6 +14,9 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.servicemanager.core.util.Helper.Companion.toDp
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -39,8 +42,9 @@ fun SignatureArea(
             ){
         Box(
             modifier = Modifier
-                .height(100.px.to)
-                .width(200.dp)) {
+                .width(700.toDp.dp)
+                .height(350.toDp.dp)
+        ) {
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
@@ -81,16 +85,21 @@ fun SignatureArea(
                                 width = 4.dp.toPx()
                             )
                         )
-                    }
-                    val imageBitmap = Bitmap.createBitmap(100, 50, Bitmap.Config.ARGB_8888).asImageBitmap()
-                    val canvas = Canvas(imageBitmap)
-                    path.value?.let {
+                        val imageBitmap = Bitmap.createBitmap(700, 350, Bitmap.Config.ARGB_8888).asImageBitmap()
+                        val paint = Paint()
+                        paint.apply {
+                            color = Color.Red
+                            style = PaintingStyle.Stroke
+                            strokeWidth = 12f
+                        }
+                        paint.strokeWidth = 2f
+                        val canvas = Canvas(imageBitmap)
                         canvas.drawPath(
-                        path  = it,
-                        paint = Paint()
+                            path  = path,
+                            paint = paint
                         )
+                        saveImageBitmap(imageBitmap)
                     }
-                    saveImageBitmap(imageBitmap)
                 },
             )
         }

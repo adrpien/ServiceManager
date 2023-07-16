@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -14,14 +13,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.servicemanager.core.components.SignatureArea
-import com.example.servicemanager.core.util.DefaultTextFieldState
+import com.example.servicemanager.core.components.DefaultTextFieldState
+import com.example.servicemanager.core.util.Helper.Companion.toDp
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
@@ -30,8 +29,6 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
-import io.ak1.drawbox.DrawBox
-import io.ak1.drawbox.rememberDrawController
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -267,7 +264,9 @@ fun InspectionDetailsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Button(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                 onClick = { dateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
@@ -287,7 +286,10 @@ fun InspectionDetailsScreen(
                 },
                 state = recipient)
             Button(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    // .height(600.toDp.dp)
+                    // .width(1200.toDp.dp)
+                    .padding(8.dp),
                 onClick = { signatureDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
@@ -297,6 +299,7 @@ fun InspectionDetailsScreen(
                 border = BorderStroke(2.dp, Color.Blue)
             ) {
                 Image(
+                    modifier = Modifier.fillMaxSize(),
                     bitmap = inspectionDetailsState.value.signature,
                     contentDescription = "Signature")
             }
@@ -347,8 +350,8 @@ fun InspectionDetailsScreen(
                 }
             ) {
                 customView {
-                    SignatureArea() { bitmap ->
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateSignature(bitmap))
+                    SignatureArea() { imageBitmap ->
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateSignature(imageBitmap))
                     }
                 }
             }

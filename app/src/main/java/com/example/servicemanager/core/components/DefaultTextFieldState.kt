@@ -1,4 +1,4 @@
-package com.example.servicemanager.core.util
+package com.example.servicemanager.core.components
 
 data class DefaultTextFieldState(
     val isHintVisible: Boolean = true,

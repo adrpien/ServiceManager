@@ -1,5 +1,6 @@
 package com.example.servicemanager.core.util
 
+import android.content.res.Resources.*
 import java.util.*
 
 class Helper {
@@ -30,6 +31,11 @@ class Helper {
             }
             return dateString
         }
+
+        val Int.toDp: Int
+            get() = (this / getSystem().displayMetrics.density).toInt()
+        val Int.toPx: Int
+            get() = (this * getSystem().displayMetrics.density).toInt()
     }
 
 }

@@ -4,7 +4,7 @@ import com.adrpien.noteapp.feature_notes.domain.util.OrderMonotonicity
 import com.adrpien.noteapp.feature_notes.domain.util.OrderType
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 
-class ListExtensionFunctions() {
+class InspectionListExtensionFunctions() {
 
     companion object {
 
