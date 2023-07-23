@@ -17,6 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.adrpien.noteapp.feature_notes.domain.util.OrderType
+import com.example.servicemanager.ui.theme.TiemedLightBeige
+import com.example.servicemanager.ui.theme.TiemedLightBlue
+import com.example.servicemanager.ui.theme.TiemedMediumBlue
+import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 import kotlinx.coroutines.launch
 
 @Composable
@@ -38,8 +42,8 @@ fun OrderMonotonicityButton(
             modifier = Modifier,
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Blue,
-                contentColor = Color.White
+                backgroundColor = TiemedMediumBlue,
+                contentColor = TiemedVeryLightBeige
             )
         ) {
             if(isAscending){

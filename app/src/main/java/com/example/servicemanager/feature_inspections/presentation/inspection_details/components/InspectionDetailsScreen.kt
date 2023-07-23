@@ -1,10 +1,7 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
@@ -25,6 +22,7 @@ import com.example.servicemanager.feature_inspections.presentation.inspection_de
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
 import com.example.servicemanager.navigation.Screen
+import com.example.servicemanager.ui.theme.*
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -167,20 +165,21 @@ fun InspectionDetailsScreen(
     }
 
     Scaffold(
-        modifier = modifier
-            .fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                          // TODO Save/Update Inspection
-                          viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
+                    // TODO Save/Update Inspection
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
+                    viewModel.onEvent(InspectionDetailsEvent.SaveSignature)
                     navHostController.navigate(Screen.InspectionListScreen.route)
                 },
-                backgroundColor = Color.Blue
+                backgroundColor = TiemedMediumBlue
             ) {
                 Icon(
                     imageVector = Icons.Default.Save,
-                    contentDescription = "Save")
+                    contentDescription = "Save",
+                    modifier = Modifier,
+                tint = TiemedLightBeige)
             }
         },
         scaffoldState = scaffoldState
@@ -189,16 +188,18 @@ fun InspectionDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
+                .background(TiemedVeryLightBeige)
                 .padding(8.dp)
-                .verticalScroll(scrollState)) {
+                .verticalScroll(scrollState)
+                ) {
             Text(
                 text = "Device",
                 fontSize = 20.sp,
-                color = Color.Blue
+                color = TiemedLightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = Color.Blue,
+                color = TiemedMediumBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -236,11 +237,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
-                color = Color.Blue
+                color = TiemedMediumBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = Color.Blue,
+                color = TiemedMediumBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -272,11 +273,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Result",
                 fontSize = 20.sp,
-                color = Color.Blue
+                color = TiemedMediumBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = Color.Blue,
+                color = TiemedMediumBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -287,10 +288,10 @@ fun InspectionDetailsScreen(
                 onClick = { dateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = Color.Blue
+                    backgroundColor = TiemedVeryLightBeige,
+                    contentColor = TiemedMediumBlue
                 ),
-                border = BorderStroke(2.dp, Color.Blue)
+                border = BorderStroke(2.dp, TiemedMediumBlue)
             ) {
                 Text(
                     text = "Inspection date: " + formattedInspectionDate.value.toString()
@@ -310,10 +311,10 @@ fun InspectionDetailsScreen(
                 onClick = { signatureDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = Color.Blue
+                    backgroundColor = TiemedVeryLightBeige,
+                    contentColor = TiemedMediumBlue
                 ),
-                border = BorderStroke(2.dp, Color.Blue)
+                border = BorderStroke(2.dp, TiemedMediumBlue)
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),

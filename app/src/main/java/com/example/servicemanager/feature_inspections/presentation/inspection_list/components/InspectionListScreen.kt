@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -19,6 +21,7 @@ import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
 import com.example.servicemanager.navigation.Screen
+import com.example.servicemanager.ui.theme.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -43,19 +46,20 @@ fun InspectionListScreen(
                 onClick = {
                     navHostController.navigate(Screen.InspectionDetailsScreen.withArgs("0"))
                 },
-                backgroundColor = MaterialTheme.colors.primary
+                backgroundColor = TiemedLightBlue
             )
             {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add inspection"
+                    contentDescription = "Add inspection",
+                    tint = TiemedLightBeige
                 )
             }
         },
         scaffoldState = scaffoldState
     ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().background(TiemedVeryLightBeige)
         ) {
 
             Row(
@@ -65,6 +69,9 @@ fun InspectionListScreen(
             ) {
                 OutlinedTextField(
                     value = state.value.searchQuery,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = TiemedMediumBlue,
+                        unfocusedBorderColor = TiemedMediumBlue),
                     onValueChange = {
                         viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
                     },
@@ -81,12 +88,14 @@ fun InspectionListScreen(
             IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }) {
                 Icon(
                     imageVector = Icons.Default.Sort,
-                    contentDescription = "Sort")
+                    contentDescription = "Sort",
+                tint = TiemedMediumBlue)
             }
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
-                        contentDescription = "Hospital")
+                        contentDescription = "Hospital",
+                    tint = TiemedMediumBlue)
                 }
             }
             AnimatedVisibility(

@@ -82,26 +82,35 @@ class InspectionDetailsViewModel @Inject constructor(
     }
 
     private fun fetchInspection() {
-            currentInspectionId = savedStateHandle.get<String?>("inspectionId")
-        viewModelScope.launch(Dispatchers.Main) {
-            inspectionUseCases
-                .getInspection(inspectionId = currentInspectionId ?: "0")
-                .collect { result ->
-                    when (result.resourceState) {
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { inspection ->
-                                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection = inspection
-                                )
-                                _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
+        currentInspectionId = savedStateHandle.get<String?>("inspectionId")
+        if (currentInspectionId != "0") {
+            viewModelScope.launch(Dispatchers.Main) {
+                inspectionUseCases
+                    .getInspection(inspectionId = currentInspectionId.toString())
+                    .collect { result ->
+                        when (result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                result.data?.let { inspection ->
+                                    _inspectionDetailsState.value =
+                                        _inspectionDetailsState.value.copy(
+                                            inspection = inspection
+                                        )
+                                    _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
+                                }
                             }
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> Unit
                         }
-                        ResourceState.LOADING -> Unit
-                        ResourceState.ERROR -> Unit
                     }
-                }
+            }
+        } else {
+            _inspectionDetailsState.value =
+                _inspectionDetailsState.value.copy(
+                    inspection = Inspection()
+                )
         }
     }
+
 
     private fun fetchHospitalList() {
         viewModelScope.launch(Dispatchers.Main) {

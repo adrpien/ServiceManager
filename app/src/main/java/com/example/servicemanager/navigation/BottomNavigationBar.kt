@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.servicemanager.ui.theme.*
 
 @Composable
 fun BottomNavigationBar(
@@ -23,7 +24,7 @@ fun BottomNavigationBar(
 
     BottomNavigation(
         modifier = modifier,
-        backgroundColor = Color.DarkGray,
+        backgroundColor = TiemedLightBlue,
         elevation = 4.dp
         ) {
         itemList.forEach {  item ->
@@ -31,8 +32,8 @@ fun BottomNavigationBar(
             val selected = item.route == backStackEntry.value?.destination?.route
             BottomNavigationItem(
                 selected = selected,
-                selectedContentColor = Color.Blue,
-                unselectedContentColor = Color.LightGray ,
+                selectedContentColor = TiemedLightBeige,
+                unselectedContentColor =TiemedVeryLightBlue,
                 onClick = { onItemClick(item) },
                 icon = {
                     Column(horizontalAlignment = CenterHorizontally) {
