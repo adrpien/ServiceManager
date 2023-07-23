@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.servicemanager.core.util.Helper.Companion.convertToBitmap
 import com.example.servicemanager.core.util.Helper.Companion.convertToByteArray
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
@@ -40,6 +41,7 @@ class InspectionDetailsViewModel @Inject constructor(
 
     init {
         fetchInspection()
+        fetchSignature()
         fetchHospitalList()
         fetchEstStateList()
         fetchInspectionStateList()
@@ -108,6 +110,29 @@ class InspectionDetailsViewModel @Inject constructor(
                 _inspectionDetailsState.value.copy(
                     inspection = Inspection()
                 )
+        }
+    }
+
+    private fun fetchSignature() {
+        if (currentInspectionId != "0") {
+            viewModelScope.launch(Dispatchers.Main) {
+                appUseCases
+                    .getSignature(currentInspectionId.toString())
+                    .collect { result ->
+                        when (result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                result.data?.let { signature ->
+                                    _inspectionDetailsState.value =
+                                        _inspectionDetailsState.value.copy(
+                                            signature = convertToBitmap(signature)
+                                        )
+                                }
+                            }
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> Unit
+                        }
+                    }
+            }
         }
     }
 

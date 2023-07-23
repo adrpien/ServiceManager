@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
@@ -168,7 +169,7 @@ fun InspectionDetailsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO Save/Update Inspection
+                    // TODO Save/Update Inspection Small bug here to repair, when creating new record and saving signature at the same time, signature is saved as "0.jpg"
                     viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
                     viewModel.onEvent(InspectionDetailsEvent.SaveSignature)
                     navHostController.navigate(Screen.InspectionListScreen.route)
@@ -179,7 +180,7 @@ fun InspectionDetailsScreen(
                     imageVector = Icons.Default.Save,
                     contentDescription = "Save",
                     modifier = Modifier,
-                tint = TiemedLightBeige)
+                tint = TiemedVeryLightBeige)
             }
         },
         scaffoldState = scaffoldState
@@ -327,7 +328,7 @@ fun InspectionDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = Color.LightGray,
+                backgroundColor = TiemedLightBeige,
                 buttons = {
                     button(
                         text = "Refresh",
@@ -358,13 +359,16 @@ fun InspectionDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = Color.LightGray,
+                backgroundColor = TiemedVeryLightBeige,
                 buttons = {
-                    button("Save"){
-                    }
-                    positiveButton("Confirm"){
-                    }
-                    negativeButton("Cancel")
+                    positiveButton(
+                        text = "Confirm",
+                        textStyle = TextStyle(color = TiemedMediumBlue)
+                    ){}
+                    negativeButton(
+                        text = "Cancel",
+                        textStyle = TextStyle(color = TiemedMediumBlue)
+                    )
                 }
             ) {
                 customView {

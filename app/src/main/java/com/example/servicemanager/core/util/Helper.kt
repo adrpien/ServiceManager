@@ -46,7 +46,7 @@ class Helper {
             return signatureByteArrayOutputStream.toByteArray()
         }
 
-        fun convertToImageBitmap(byteArray: ByteArray): Bitmap {
+        fun convertToBitmap(byteArray: ByteArray): Bitmap {
             val options = BitmapFactory.Options()
             options.inMutable = true
             val bitmap = BitmapFactory.decodeByteArray(

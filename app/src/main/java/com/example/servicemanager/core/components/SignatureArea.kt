@@ -3,6 +3,8 @@ package com.example.servicemanager.core.components
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -16,6 +18,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.util.Helper.Companion.toDp
+import com.example.servicemanager.ui.theme.TiemedMediumBlue
+import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -37,7 +41,7 @@ fun SignatureArea(
     }
 
     Surface(
-        modifier = Modifier,
+        modifier = Modifier.border(2.dp, TiemedMediumBlue),
         color = Color.White
             ){
         Box(
@@ -48,6 +52,7 @@ fun SignatureArea(
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(TiemedVeryLightBeige)
                     .pointerInteropFilter { motionEvent ->
                         when (motionEvent.action) {
                             MotionEvent.ACTION_DOWN -> {
@@ -80,7 +85,7 @@ fun SignatureArea(
                     path.value?.let { path ->
                         drawPath(
                             path = path,
-                            color = Color.Blue,
+                            color = TiemedMediumBlue,
                             style = Stroke(
                                 width = 4.dp.toPx()
                             )
@@ -89,13 +94,13 @@ fun SignatureArea(
                         val paint = Paint()
                         paint.apply {
 
-                            color = Color.Red
+                            color = TiemedMediumBlue
                             style = PaintingStyle.Stroke
-                            strokeWidth = 12f
+                            strokeWidth = 8f
                         }
                         val backgroundPaint = Paint()
                         backgroundPaint.apply {
-                            color = Color.White
+                            color = TiemedVeryLightBeige
                             style = PaintingStyle.Fill
                         }
                         val canvas = Canvas(bitmap.asImageBitmap())

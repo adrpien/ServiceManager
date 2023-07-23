@@ -52,7 +52,7 @@ fun InspectionListScreen(
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add inspection",
-                    tint = TiemedLightBeige
+                    tint = TiemedVeryLightBeige
                 )
             }
         },

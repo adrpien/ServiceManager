@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Checklist
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.ui.Modifier
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
                             BottomNavigationItem(
                                 name = "Home",
                                 route = Screen.HomeScreen.route,
-                                icon = Icons.Default.VerifiedUser,
+                                icon = Icons.Default.Home,
                                 badgeCount = 0
                             )
 
