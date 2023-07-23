@@ -8,21 +8,21 @@ import java.util.*
 @Entity
 data class InspectionEntity(
     @PrimaryKey(autoGenerate = false)
-    var inspectionId: String,
-    var hospitalId: String = "",
-    var ward: String = "",
-    var comment: String = "",
-    var inspectionDate: String = Calendar.getInstance().timeInMillis.toString(),
-    var recipient: String = "",
-    var recipientSignature: String = "",
-    var technicianId: String = "",
-    var inspectionStateId: String = "",
-    var estStateId: String = "",
-    var deviceName: String = "",
-    var deviceManufacturer: String = "",
-    var deviceModel: String = "",
-    var deviceSN: String = "",
-    var deviceIN: String = "",
+    val inspectionId: String,
+    val hospitalId: String = "",
+    val ward: String = "",
+    val comment: String = "",
+    val inspectionDate: String = Calendar.getInstance().timeInMillis.toString(),
+    val recipient: String = "",
+    val recipientSignature: String = "",
+    val technicianId: String = "",
+    val inspectionStateId: String = "",
+    val estStateId: String = "",
+    val deviceName: String = "",
+    val deviceManufacturer: String = "",
+    val deviceModel: String = "",
+    val deviceSn: String = "",
+    val deviceIn: String = "",
     ) {
 
     fun toInspection(): Inspection {
@@ -40,8 +40,8 @@ data class InspectionEntity(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSn = deviceSN,
-            deviceIn = deviceIN
+            deviceSn = deviceSn,
+            deviceIn = deviceIn
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
+package com.example.servicemanager.core.compose.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -8,9 +8,8 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.servicemanager.core.components.DefaultTextFieldState
+import com.example.servicemanager.core.compose.DefaultTextFieldState
 import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 

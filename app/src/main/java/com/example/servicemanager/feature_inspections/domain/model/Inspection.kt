@@ -37,8 +37,8 @@ data class Inspection(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSN = deviceSn,
-            deviceIN = deviceIn
+            deviceSn = deviceSn,
+            deviceIn = deviceIn
         )
     }
 

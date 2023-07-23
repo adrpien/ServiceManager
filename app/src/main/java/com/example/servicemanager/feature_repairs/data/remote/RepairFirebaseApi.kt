@@ -13,7 +13,6 @@ import kotlinx.coroutines.tasks.await
 
 class  RepairFirebaseApi(
     val firebaseFirestore: FirebaseFirestore,
-    val firebaseAuth: FirebaseAuth,
     val firebaseStorage: FirebaseStorage
 ) {
 
@@ -59,7 +58,6 @@ class  RepairFirebaseApi(
         var map = mapOf<String, String>(
             "repairId" to documentReference.id,
             "repairStateId" to repair.repairStateId,
-            "deviceId" to repair.deviceId,
             "hospitalId" to repair.hospitalId,
             "ward" to repair.ward,
             "defectDescription" to repair.defectDescription,
@@ -94,7 +92,6 @@ class  RepairFirebaseApi(
         var map = mapOf<String, String>(
             "repairId" to repair.repairId,
             "repairStateId" to repair.repairStateId,
-            "deviceId" to repair.deviceId,
             "hospitalId" to repair.hospitalId,
             "ward" to repair.ward,
             "defectDescription" to repair.defectDescription,

@@ -1,4 +1,4 @@
-package com.example.servicemanager.core.components
+package com.example.servicemanager.core.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

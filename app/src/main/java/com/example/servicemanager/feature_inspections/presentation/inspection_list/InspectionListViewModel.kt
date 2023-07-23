@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adrpien.noteapp.feature_notes.domain.util.OrderType
+import com.example.servicemanager.feature_inspections.domain.util.InspectionOrderType
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
@@ -57,7 +57,7 @@ class InspectionListViewModel @Inject constructor(
                             searchQuery = event.searchQuery,
                             fetchFromApi = false,
                             hospitalFilter = inspectionListState.value.hospital,
-                            orderType = inspectionListState.value.orderType,
+                            inspectionOrderType = inspectionListState.value.inspectionOrderType,
                         )
                     }
                 }
@@ -65,18 +65,18 @@ class InspectionListViewModel @Inject constructor(
             is InspectionListEvent.Refresh -> {
                 fetchInspectionList(
                     fetchFromApi = true,
-                    orderType = inspectionListState.value.orderType,
+                    inspectionOrderType = inspectionListState.value.inspectionOrderType,
                     searchQuery = inspectionListState.value.searchQuery,
                     hospitalFilter = inspectionListState.value.hospital
                 )
             }
             is InspectionListEvent.orderInspectionList -> {
                 _inspectionListState.value = _inspectionListState.value.copy(
-                    orderType = event.orderType
+                    inspectionOrderType = event.inspectionOrderType
                 )
                 fetchInspectionList(
                     fetchFromApi = false,
-                    orderType = event.orderType,
+                    inspectionOrderType = event.inspectionOrderType,
                     searchQuery = inspectionListState.value.searchQuery,
                     hospitalFilter = inspectionListState.value.hospital
                 )
@@ -95,11 +95,11 @@ class InspectionListViewModel @Inject constructor(
 
             is InspectionListEvent.ToggleOrderMonotonicity -> {
                 _inspectionListState.value = _inspectionListState.value.copy(
-                    orderType = event.orderType
+                    inspectionOrderType = event.inspectionOrderType
                 )
                 fetchInspectionList(
                     fetchFromApi = false,
-                    orderType = event.orderType,
+                    inspectionOrderType = event.inspectionOrderType,
                     searchQuery = inspectionListState.value.searchQuery,
                     hospitalFilter = inspectionListState.value.hospital
                 )
@@ -119,7 +119,7 @@ class InspectionListViewModel @Inject constructor(
                 )
                 fetchInspectionList(
                     fetchFromApi = false,
-                    orderType = inspectionListState.value.orderType,
+                    inspectionOrderType = inspectionListState.value.inspectionOrderType,
                     searchQuery = inspectionListState.value.searchQuery,
                     hospitalFilter = inspectionListState.value.hospital
                 )
@@ -131,7 +131,7 @@ class InspectionListViewModel @Inject constructor(
     private fun fetchInspectionList(
         searchQuery: String = _inspectionListState.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false,
-        orderType: OrderType = _inspectionListState.value.orderType,
+        inspectionOrderType: InspectionOrderType = _inspectionListState.value.inspectionOrderType,
         hospitalFilter: Hospital? = null
     ) {
             inspectionListIsLoading = true
@@ -140,7 +140,7 @@ class InspectionListViewModel @Inject constructor(
             inspectionsUseCases.getInspectionList(
                 searchQuery = searchQuery,
                 fetchFromApi = fetchFromApi,
-                orderType = orderType,
+                inspectionOrderType = inspectionOrderType,
                 hospitalFilter = hospitalFilter
             ).collect { result ->
                 when(result.resourceState) {

@@ -5,21 +5,21 @@ import java.util.*
 
 data class InspectionDto(
     val inspectionId: String,
-    var deviceId: String = "",
-    var hospitalId: String = "",
-    var ward: String = "",
-    var comment: String = "",
-    var inspectionDate: String = Calendar.getInstance().timeInMillis.toString(),
-    var technicianId: String = "",
-    var recipient: String = "",
-    var recipientSignature: String = "",
-    var inspectionStateId: String = "",
-    var estStateId: String = "",
-    var deviceName: String = "",
-    var deviceManufacturer: String = "",
-    var deviceModel: String = "",
-    var deviceSN: String = "",
-    var deviceIN: String = "",
+    val deviceId: String = "",
+    val hospitalId: String = "",
+    val ward: String = "",
+    val comment: String = "",
+    val inspectionDate: String = Calendar.getInstance().timeInMillis.toString(),
+    val technicianId: String = "",
+    val recipient: String = "",
+    val recipientSignature: String = "",
+    val inspectionStateId: String = "",
+    val estStateId: String = "",
+    val deviceName: String = "",
+    val deviceManufacturer: String = "",
+    val deviceModel: String = "",
+    val deviceSN: String = "",
+    val deviceIN: String = "",
 ) {
 
     fun toInspectionEntity(): InspectionEntity {
@@ -37,8 +37,8 @@ data class InspectionDto(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSN = deviceSN,
-            deviceIN = deviceIN
+            deviceSn = deviceSN,
+            deviceIn = deviceIN
         )
     }
 

@@ -7,7 +7,7 @@ import com.example.servicemanager.feature_repairs.domain.repository.RepairReposi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CreateRepair @Inject constructor (
+class SaveRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 

@@ -1,7 +1,7 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list
 
-import com.adrpien.noteapp.feature_notes.domain.util.OrderMonotonicity
-import com.adrpien.noteapp.feature_notes.domain.util.OrderType
+import com.example.servicemanager.feature_inspections.domain.util.InspectionOrderMonotonicity
+import com.example.servicemanager.feature_inspections.domain.util.InspectionOrderType
 import com.example.servicemanager.feature_app.domain.model.*
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 
@@ -16,7 +16,7 @@ data class InspectionListState(
     val searchQuery: String = "",
     val isSortSectionVisible: Boolean = false,
     val isHospitalFilterSectionVisible: Boolean = false,
-    val orderType: OrderType = OrderType.State(OrderMonotonicity.Ascending),
+    val inspectionOrderType: InspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending),
     val hospital: Hospital? = null
 ) {
 

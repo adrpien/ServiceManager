@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
 
+import InspectionSortSection
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,10 +14,10 @@ import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.servicemanager.core.compose.components.HospitalFilterSection
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
@@ -115,9 +116,9 @@ fun InspectionListScreen(
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                SortSection(
+                InspectionSortSection(
                     onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
-                    orderType = state.value.orderType,
+                    inspectionOrderType = state.value.inspectionOrderType,
                     onToggleMonotonicity = {
                         viewModel.onEvent(InspectionListEvent.ToggleOrderMonotonicity(it))
                     }

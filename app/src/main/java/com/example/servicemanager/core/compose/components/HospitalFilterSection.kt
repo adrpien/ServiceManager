@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
+package com.example.servicemanager.core.compose.components
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.feature_app.domain.model.Hospital
+
 
 @Composable
 fun HospitalFilterSection(

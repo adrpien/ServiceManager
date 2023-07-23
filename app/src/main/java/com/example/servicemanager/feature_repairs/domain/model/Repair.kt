@@ -7,7 +7,6 @@ import com.example.servicemanager.feature_repairs.data.remote.dto.RepairDto
 data class Repair(
     var repairId: String = "",
     var repairStateId: String = "",
-    var deviceId: String = "",
     var hospitalId: String = "",
     var ward: String = "",
     var defectDescription: String = "",
@@ -24,12 +23,16 @@ data class Repair(
     var rate: String = "",
     var recipient: String = "",
     var recipientSignatureId: String = "",
+    val deviceName: String = "",
+    val deviceManufacturer: String = "",
+    val deviceModel: String = "",
+    val deviceSn: String = "",
+    val deviceIn: String = "",
     ) {
     fun toRepairEntity(): RepairEntity {
         return RepairEntity(
             repairId = repairId,
             repairStateId = repairStateId,
-            deviceId = deviceId,
             hospitalId = hospitalId,
             ward = ward,
             //photoList = photoList,
@@ -47,7 +50,12 @@ data class Repair(
             returnTechnicianId = returnTechnicianId,
             rate = rate,
             recipient = recipient,
-            recipientSignatureId = recipientSignatureId
+            recipientSignatureId = recipientSignatureId,
+            deviceName = deviceName,
+            deviceManufacturer = deviceManufacturer,
+            deviceModel = deviceModel,
+            deviceSn = deviceSn,
+            deviceIn = deviceIn
         )
     }
 
@@ -55,7 +63,6 @@ data class Repair(
         return RepairDto(
             repairId = repairId,
             repairStateId = repairStateId,
-            deviceId = deviceId,
             hospitalId = hospitalId,
             ward = ward,
             //photoList = photoList,
@@ -73,7 +80,12 @@ data class Repair(
             returnTechnicianId = returnTechnicianId,
             rate = rate,
             recipient = recipient,
-            recipientSignatureId = recipientSignatureId
+            recipientSignatureId = recipientSignatureId,
+            deviceName = deviceName,
+            deviceManufacturer = deviceManufacturer,
+            deviceModel = deviceModel,
+            deviceSn = deviceSn,
+            deviceIn = deviceIn
         )
     }
 }

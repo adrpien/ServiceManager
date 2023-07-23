@@ -1,7 +1,4 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
 
-import androidx.compose.animation.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
@@ -14,14 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.adrpien.noteapp.feature_notes.domain.util.OrderType
-import com.example.servicemanager.ui.theme.TiemedLightBeige
-import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
-import kotlinx.coroutines.launch
 
 @Composable
 fun OrderMonotonicityButton(

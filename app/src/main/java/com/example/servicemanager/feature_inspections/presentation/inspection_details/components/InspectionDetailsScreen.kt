@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
+import SignatureArea
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -7,7 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.TextStyle
@@ -16,8 +16,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.servicemanager.core.components.SignatureArea
-import com.example.servicemanager.core.components.DefaultTextFieldState
+import com.example.servicemanager.core.compose.DefaultTextFieldState
+import com.example.servicemanager.core.compose.components.DefaultTextField
+import com.example.servicemanager.core.compose.components.HospitalFilterSection
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
@@ -306,8 +307,7 @@ fun InspectionDetailsScreen(
                 state = recipient)
             Button(
                 modifier = Modifier
-                    // .height(600.toDp.dp)
-                    // .width(1200.toDp.dp)
+
                     .padding(8.dp),
                 onClick = { signatureDialogState.show()},
                 shape = RectangleShape,

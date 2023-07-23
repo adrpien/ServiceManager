@@ -5,26 +5,29 @@ import com.example.servicemanager.feature_repairs.data.local.entities.RepairEnti
 
 data class RepairDto(
     val repairId: String,
-    var repairStateId: String = "",
+    val repairStateId: String = "",
     val deviceId: String = "",
-    var hospitalId: String = "",
-    var ward: String = "",
-    //var photoList: List<String> = emptyList<String>(),
-    var defectDescription: String = "",
-    var repairDescription: String = "",
-    // var partList: List<String> = emptyList(),
-    var partDescription: String = "",
-    var comment: String = "",
-    var estTestId: String = "",
-    var closingDate: String = "",
-    var openingDate: String = "",
-    var repairingDate: String = "",
-    var pickupTechnicianId: String = "",
-    var repairTechnicianId: String = "",
-    var returnTechnicianId: String = "",
-    var rate: String = "",
-    var recipient: String = "",
-    var recipientSignatureId: String = "",
+    val hospitalId: String = "",
+    val ward: String = "",
+    val defectDescription: String = "",
+    val repairDescription: String = "",
+    val partDescription: String = "",
+    val comment: String = "",
+    val estTestId: String = "",
+    val closingDate: String = "",
+    val openingDate: String = "",
+    val repairingDate: String = "",
+    val pickupTechnicianId: String = "",
+    val repairTechnicianId: String = "",
+    val returnTechnicianId: String = "",
+    val rate: String = "",
+    val recipient: String = "",
+    val recipientSignatureId: String = "",
+    val deviceName: String = "",
+    val deviceManufacturer: String = "",
+    val deviceModel: String = "",
+    val deviceSn: String = "",
+    val deviceIn: String = "",
     ) {
 
     fun toRepairEntity(): RepairEntity {
@@ -49,7 +52,12 @@ data class RepairDto(
         returnTechnicianId = returnTechnicianId,
         rate = rate,
         recipient = recipient,
-        recipientSignatureId = recipientSignatureId
+        recipientSignatureId = recipientSignatureId,
+        deviceName = deviceName,
+        deviceManufacturer = deviceManufacturer,
+        deviceModel = deviceModel,
+        deviceSn = deviceSn,
+        deviceIn = deviceIn
     )
     }
 
@@ -75,7 +83,12 @@ data class RepairDto(
             returnTechnicianId = returnTechnicianId,
             rate = rate,
             recipient = recipient,
-            recipientSignatureId = recipientSignatureId
+            recipientSignatureId = recipientSignatureId,
+            deviceName = deviceName,
+            deviceManufacturer = deviceManufacturer,
+            deviceModel = deviceModel,
+            deviceSn = deviceSn,
+            deviceIn = deviceIn
         )
     }
 }

@@ -1,5 +1,6 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
+package com.example.servicemanager.core.compose.components
 
+import SelectRadioButton
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -7,10 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.feature_app.domain.model.Hospital
-import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.SortRadioButton
 
 @Composable
-fun HospitalFilterSection(
+fun HospitalSelectionSection(
     modifier: Modifier = Modifier,
     hospitalList: List<Hospital>,
     hospital: Hospital,

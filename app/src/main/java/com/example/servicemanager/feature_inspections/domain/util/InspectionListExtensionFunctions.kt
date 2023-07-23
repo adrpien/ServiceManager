@@ -1,38 +1,36 @@
 package com.example.servicemanager.feature_inspections.domain.util
 
-import com.adrpien.noteapp.feature_notes.domain.util.OrderMonotonicity
-import com.adrpien.noteapp.feature_notes.domain.util.OrderType
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 
 class InspectionListExtensionFunctions() {
 
     companion object {
 
-        fun List<Inspection>.orderInspectionList(orderType: OrderType): List<Inspection> {
-            when (orderType.orderMonotonicity) {
-                is OrderMonotonicity.Ascending -> {
-                    when (orderType) {
-                        is OrderType.Date -> {
+        fun List<Inspection>.orderInspectionList(inspectionOrderType: InspectionOrderType): List<Inspection> {
+            when (inspectionOrderType.orderMonotonicity) {
+                is InspectionOrderMonotonicity.Ascending -> {
+                    when (inspectionOrderType) {
+                        is InspectionOrderType.Date -> {
                             return this.sortedBy { it.inspectionDate }
                         }
-                        is OrderType.Hospital -> {
+                        is InspectionOrderType.Hospital -> {
                             return this.sortedBy { it.hospitalId }
                         }
-                        is OrderType.State -> {
+                        is InspectionOrderType.State -> {
                             return this.sortedBy { it.inspectionStateId }
                         }
                     }
 
                 }
-                is OrderMonotonicity.Descending -> {
-                    when (orderType) {
-                        is OrderType.Date -> {
+                is InspectionOrderMonotonicity.Descending -> {
+                    when (inspectionOrderType) {
+                        is InspectionOrderType.Date -> {
                             return this.sortedByDescending { it.inspectionDate }
                         }
-                        is OrderType.Hospital -> {
+                        is InspectionOrderType.Hospital -> {
                             return this.sortedByDescending { it.hospitalId }
                         }
-                        is OrderType.State -> {
+                        is InspectionOrderType.State -> {
                             return this.sortedByDescending { it.inspectionStateId }
                         }
                     }
