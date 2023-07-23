@@ -6,7 +6,7 @@ import com.example.servicemanager.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CreateSignature @Inject constructor (
+class SaveSignature @Inject constructor (
     private val repository: AppRepository
     ) {
 

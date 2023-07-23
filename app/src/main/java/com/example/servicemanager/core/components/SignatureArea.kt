@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.servicemanager.core.util.Helper.Companion.toDp
 
 
@@ -22,7 +21,7 @@ import com.example.servicemanager.core.util.Helper.Companion.toDp
 @Composable
 fun SignatureArea(
     modifier: Modifier = Modifier,
-    saveImageBitmap: (ImageBitmap) -> Unit
+    updateImageBitmap: (Bitmap) -> Unit
 ) {
 
     val lastTouchX = remember {
@@ -85,20 +84,20 @@ fun SignatureArea(
                                 width = 4.dp.toPx()
                             )
                         )
-                        val imageBitmap = Bitmap.createBitmap(700, 350, Bitmap.Config.ARGB_8888).asImageBitmap()
+                        val bitmap = Bitmap.createBitmap(700, 350, Bitmap.Config.ARGB_8888)
                         val paint = Paint()
                         paint.apply {
                             color = Color.Red
                             style = PaintingStyle.Stroke
                             strokeWidth = 12f
                         }
-                        paint.strokeWidth = 2f
-                        val canvas = Canvas(imageBitmap)
+                        // paint.strokeWidth = 2f
+                        val canvas = Canvas(bitmap.asImageBitmap())
                         canvas.drawPath(
                             path  = path,
                             paint = paint
                         )
-                        saveImageBitmap(imageBitmap)
+                        updateImageBitmap(bitmap)
                     }
                 },
             )

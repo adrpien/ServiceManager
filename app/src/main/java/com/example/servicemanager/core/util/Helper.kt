@@ -1,6 +1,9 @@
 package com.example.servicemanager.core.util
 
 import android.content.res.Resources.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class Helper {
@@ -36,6 +39,23 @@ class Helper {
             get() = (this / getSystem().displayMetrics.density).toInt()
         val Int.toPx: Int
             get() = (this * getSystem().displayMetrics.density).toInt()
-    }
 
+        fun convertToByteArray(bitmap: Bitmap): ByteArray {
+            val signatureByteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, signatureByteArrayOutputStream)
+            return signatureByteArrayOutputStream.toByteArray()
+        }
+
+        fun convertToImageBitmap(byteArray: ByteArray): Bitmap {
+            val options = BitmapFactory.Options()
+            options.inMutable = true
+            val bitmap = BitmapFactory.decodeByteArray(
+                byteArray,
+                0,
+                byteArray.size,
+                options
+            )
+            return bitmap
+        }
+    }
 }

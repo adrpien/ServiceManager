@@ -6,7 +6,7 @@ import com.example.servicemanager.feature_inspections.domain.repository.Inspecti
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CreateInspection @Inject constructor (
+class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
     operator fun invoke(inspection: Inspection): Flow<Resource<Boolean>> {

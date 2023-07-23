@@ -3,13 +3,12 @@ package com.example.servicemanager.dependecy_injection
 import android.app.Application
 import androidx.room.Room
 import com.adrpien.tiemed.data.local.AppDatabase
-import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
 import com.example.servicemanager.feature_app.data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app.data.repository.AppRepositoryImplementation
 import com.example.servicemanager.feature_app.domain.repository.AppRepository
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
-import com.example.servicemanager.feature_app.domain.use_cases.signatures.CreateSignature
+import com.example.servicemanager.feature_app.domain.use_cases.signatures.SaveSignature
 import com.example.servicemanager.feature_app.domain.use_cases.signatures.GetSignature
 import com.example.servicemanager.feature_app.domain.use_cases.signatures.UpdateSignature
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
@@ -19,7 +18,6 @@ import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTe
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -88,7 +86,7 @@ object AppModule {
     fun provideAppUseCases(repository: AppRepository): AppUseCases {
         return AppUseCases(
             getHospitalList = GetHospitalList(repository),
-            createSignature = CreateSignature(repository),
+            saveSignature = SaveSignature(repository),
             getSignature = GetSignature(repository),
             updateSignature = UpdateSignature(repository),
             getEstStateList = GetEstStateList(repository),

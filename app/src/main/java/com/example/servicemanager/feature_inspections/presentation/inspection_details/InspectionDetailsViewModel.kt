@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.servicemanager.core.util.Helper.Companion.convertToByteArray
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
@@ -13,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,27 +48,36 @@ class InspectionDetailsViewModel @Inject constructor(
 
     fun onEvent(inspectionDetailsEvent: InspectionDetailsEvent) {
         when(inspectionDetailsEvent) {
-            is InspectionDetailsEvent.SaveInspection -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.createInspection(inspectionDetailsEvent.inspection)
-                }
-            }
-            is InspectionDetailsEvent.UpdateInspection -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.updateInspection(inspectionDetailsEvent.inspection)
-                }
-            }
             is InspectionDetailsEvent.UpdateState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                     inspection = inspectionDetailsEvent.inspection
                 )
             }
-            is InspectionDetailsEvent.UpdateSignature -> {
+            is InspectionDetailsEvent.UpdateSignatureState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                     signature = inspectionDetailsEvent.signature
                 )
             }
-
+            is InspectionDetailsEvent.SaveSignature -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
+                }
+            }
+            is InspectionDetailsEvent.SaveInspection -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection).collect()
+                }
+            }
+            is InspectionDetailsEvent.UpdateSignature -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
+                }
+            }
+            is InspectionDetailsEvent.UpdateInspection -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection).collect()
+                }
+            }
         }
     }
 

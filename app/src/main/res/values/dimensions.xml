@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="signature_dialog_width">300</integer>
+    <integer name="signature_dialog_height">200</integer>
+</resources>

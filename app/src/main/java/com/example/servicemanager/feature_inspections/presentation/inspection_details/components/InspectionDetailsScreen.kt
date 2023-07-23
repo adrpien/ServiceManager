@@ -5,14 +5,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
@@ -20,11 +20,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.servicemanager.core.components.SignatureArea
 import com.example.servicemanager.core.components.DefaultTextFieldState
-import com.example.servicemanager.core.util.Helper.Companion.toDp
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
+import com.example.servicemanager.navigation.Screen
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -61,6 +61,7 @@ fun InspectionDetailsScreen(
     val dateDialogState = rememberMaterialDialogState()
     val signatureDialogState = rememberMaterialDialogState()
     val scrollState = rememberScrollState()
+    val scaffoldState = rememberScaffoldState()
 
     val deviceName = remember {
         mutableStateOf(
@@ -165,14 +166,29 @@ fun InspectionDetailsScreen(
         }
     }
 
-    Box(
+    Scaffold(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                          // TODO Save/Update Inspection
+                          viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
+                    navHostController.navigate(Screen.InspectionListScreen.route)
+                },
+                backgroundColor = Color.Blue
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = "Save")
+            }
+        },
+        scaffoldState = scaffoldState
     ){
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues = it)
                 .padding(8.dp)
                 .verticalScroll(scrollState)) {
             Text(
@@ -187,33 +203,34 @@ fun InspectionDetailsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
-                onValueChanged =  {
-                    deviceName.value= deviceName.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceName = it)))
+                onValueChanged =  { name ->
+                    deviceName.value= deviceName.value.copy(text = name)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceName = name)))
                 },
                 state = deviceName)
             DefaultTextField(
-                onValueChanged =  {
-                    deviceManufacturer.value= deviceManufacturer.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceManufacturer = it)))
+                onValueChanged =  {manufacturer ->
+                    deviceManufacturer.value= deviceManufacturer.value.copy(text = manufacturer)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceManufacturer = manufacturer)))
                 },
                 state = deviceManufacturer)
             DefaultTextField(
-                onValueChanged =  {
-                    deviceModel.value= deviceModel.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceModel = it)))
+                onValueChanged =  { model ->
+                    deviceModel.value= deviceModel.value.copy(text = model)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceModel = model)))
                 },
                 state = deviceModel)
             DefaultTextField(
-                onValueChanged =  {
-                    deviceSn.value= deviceSn.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceSn = it)))
+                onValueChanged =  { serialNumber ->
+                    deviceSn.value= deviceSn.value.copy(text = serialNumber)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceSn = serialNumber)))
                 },
-                state = deviceSn)
+                state = deviceSn
+            )
             DefaultTextField(
-                onValueChanged =  {
-                    deviceIn.value= deviceIn.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceIn = it)))
+                onValueChanged =  { inventoryNumber ->
+                    deviceIn.value= deviceIn.value.copy(text = inventoryNumber)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceIn = inventoryNumber)))
                 },
                 state = deviceIn)
             Text(
@@ -241,15 +258,15 @@ fun InspectionDetailsScreen(
                 }
             )
             DefaultTextField(
-                onValueChanged =  {
-                    ward.value= ward.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(ward = it)))
+                onValueChanged =  {string ->
+                    ward.value= ward.value.copy(text = string)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(ward = string)))
                 },
                 state = ward)
             DefaultTextField(
-                onValueChanged =  {
-                    comment.value= comment.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(comment = it)))
+                onValueChanged =  {string ->
+                    comment.value= comment.value.copy(text = string)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(comment = string)))
                 },
                 state = comment)
             Text(
@@ -280,9 +297,9 @@ fun InspectionDetailsScreen(
                 )
             }
             DefaultTextField(
-                onValueChanged =  {
-                    recipient.value= recipient.value.copy(text = it)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = it)))
+                onValueChanged =  {string ->
+                    recipient.value= recipient.value.copy(text = string)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = string)))
                 },
                 state = recipient)
             Button(
@@ -300,7 +317,7 @@ fun InspectionDetailsScreen(
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
-                    bitmap = inspectionDetailsState.value.signature,
+                    bitmap = inspectionDetailsState.value.signature.asImageBitmap(),
                     contentDescription = "Signature")
             }
             MaterialDialog(
@@ -350,8 +367,8 @@ fun InspectionDetailsScreen(
                 }
             ) {
                 customView {
-                    SignatureArea() { imageBitmap ->
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateSignature(imageBitmap))
+                    SignatureArea() { bitmap ->
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateSignatureState(bitmap))
                     }
                 }
             }
