@@ -1,3 +1,4 @@
+package com.example.servicemanager.core.compose.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.CircleShape

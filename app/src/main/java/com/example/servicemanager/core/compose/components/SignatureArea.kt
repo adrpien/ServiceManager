@@ -1,3 +1,4 @@
+package com.example.servicemanager.core.compose.components
 
 import android.graphics.Bitmap
 import android.view.MotionEvent

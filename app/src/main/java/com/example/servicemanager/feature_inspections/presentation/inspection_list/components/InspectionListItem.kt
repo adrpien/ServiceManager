@@ -8,6 +8,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -17,6 +19,7 @@ import com.example.servicemanager.feature_app.domain.model.InspectionState
 import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.ui.theme.TiemedLightBeige
+import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
@@ -46,9 +49,10 @@ fun InspectionListItem(
                 Text(
                     text = inspection.deviceName,
                     fontSize = 16.sp,
+                    fontStyle = FontStyle.Italic,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = TiemedLightBeige,
+                    color = TiemedMediumBlue,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)

@@ -1,12 +1,12 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
-import SignatureArea
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
@@ -17,9 +17,10 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.servicemanager.core.compose.DefaultTextFieldState
-import com.example.servicemanager.core.compose.components.DefaultTextField
-import com.example.servicemanager.core.compose.components.HospitalFilterSection
+import com.example.servicemanager.core.compose.components.*
+import com.example.servicemanager.feature_app.domain.model.EstState
 import com.example.servicemanager.feature_app.domain.model.Hospital
+import com.example.servicemanager.feature_app.domain.model.InspectionState
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
@@ -129,6 +130,9 @@ fun InspectionDetailsScreen(
     }
 
     val hospitalList = viewModel.inspectionDetailsState.value.hospitalList
+    val estStateList = viewModel.inspectionDetailsState.value.estStateList
+    val inspectionStateList = viewModel.inspectionDetailsState.value.inspectionStateList
+
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect { event ->
@@ -155,8 +159,8 @@ fun InspectionDetailsScreen(
                     deviceIn.value = deviceIn.value.copy(
                             text = event.text.deviceIn
                             )
-                    recipient.value = deviceIn.value.copy(
-                        text = event.text.deviceIn
+                    recipient.value = recipient.value.copy(
+                        text = event.text.recipient
                     )
                 }
                 is UiEvent.ShowSnackBar -> {
@@ -247,7 +251,7 @@ fun InspectionDetailsScreen(
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
-            HospitalFilterSection(
+            HospitalSelectionSection(
                 hospitalList = hospitalList,
                 hospital = hospitalList.find { (it.hospitalId == inspectionDetailsState.value.inspection.hospitalId ) } ?: Hospital(),
                 onHospitalChange = {
@@ -283,6 +287,50 @@ fun InspectionDetailsScreen(
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "EstState:",
+                    color = TiemedMediumBlue
+                    )
+
+                EstStateSelectionSection(
+                    estStateList = estStateList,
+                    estState = estStateList.find { (it.estStateId == inspectionDetailsState.value.inspection.estStateId ) } ?: EstState(),
+                    onEstStateChange = {
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
+                            inspection = inspectionDetailsState.value.inspection.copy(
+                                estStateId = it.estStateId
+                            )
+                        ).inspection
+                        )
+                        )
+                    }
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "InspectionState:",
+                    color = TiemedMediumBlue
+                )
+                InspectionStateSelectionSection(
+                    inspectionStateList = inspectionStateList,
+                    inspectionState = inspectionStateList.find { (it.inspectionStateId == inspectionDetailsState.value.inspection.inspectionStateId ) } ?: InspectionState(),
+                    onInspectionStateChange = {
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
+                            inspection = inspectionDetailsState.value.inspection.copy(
+                                inspectionStateId = it.inspectionStateId
+                            )
+                        ).inspection
+                        )
+                        )
+                    }
+                )
+            }
+
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -300,7 +348,7 @@ fun InspectionDetailsScreen(
                 )
             }
             DefaultTextField(
-                onValueChanged =  {string ->
+                onValueChanged =  { string ->
                     recipient.value= recipient.value.copy(text = string)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = string)))
                 },
