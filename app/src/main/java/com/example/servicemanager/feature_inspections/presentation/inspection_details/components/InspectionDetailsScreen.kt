@@ -21,6 +21,7 @@ import com.example.servicemanager.core.compose.components.*
 import com.example.servicemanager.feature_app.domain.model.EstState
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.model.InspectionState
+import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
@@ -132,6 +133,7 @@ fun InspectionDetailsScreen(
     val hospitalList = viewModel.inspectionDetailsState.value.hospitalList
     val estStateList = viewModel.inspectionDetailsState.value.estStateList
     val inspectionStateList = viewModel.inspectionDetailsState.value.inspectionStateList
+    val technicianList = viewModel.inspectionDetailsState.value.technicianList
 
 
     LaunchedEffect(key1 = true) {
@@ -330,7 +332,27 @@ fun InspectionDetailsScreen(
                     }
                 )
             }
-
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Technician:",
+                    color = TiemedMediumBlue
+                )
+                TechnicianSelectionSection(
+                    technicianList = technicianList,
+                    technician = technicianList.find { (it.technicianId == inspectionDetailsState.value.inspection.technicianId) } ?: Technician(),
+                    onTechnicianChange = {
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
+                            inspection = inspectionDetailsState.value.inspection.copy(
+                                technicianId = it.technicianId
+                            )
+                        ).inspection
+                        )
+                        )
+                    }
+                )
+            }
             Button(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.InspectionListScreen
+import com.example.servicemanager.feature_repairs.presentation.repair_details.components.RepairDetailsScreen
 import com.example.servicemanager.feature_repairs.presentation.repair_list.components.RepairListScreen
 
 @Composable
@@ -43,6 +44,21 @@ fun Navigation(navHostController: NavHostController = rememberNavController()) {
         ){
             RepairListScreen(
                 navHostController = navHostController
+            )
+        }
+        composable(
+            route = Screen.RepairDetailsScreen.route + "/{repairId}",
+            arguments = listOf(
+                navArgument(name = "repairId") {
+                    type = NavType.StringType
+                    defaultValue = "0"
+                    nullable = false
+                }
+            )
+        ){
+            RepairDetailsScreen(
+                navHostController = navHostController,
+                repairId = it.arguments?.getString("repairId") ?: "0"
             )
         }
     }

@@ -110,7 +110,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Lozalization: " + (hospitalList.find { inspection.hospitalId == it.hospitalId }?.hospital ?: "") + ", " +  inspection.ward,
+                    text = "Localization: " + (hospitalList.find { inspection.hospitalId == it.hospitalId }?.hospital ?: "") + ", " +  inspection.ward,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

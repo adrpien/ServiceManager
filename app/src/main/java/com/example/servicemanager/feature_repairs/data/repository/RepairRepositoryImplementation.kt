@@ -21,7 +21,6 @@ class  RepairRepositoryImplementation(
 
     /* ********************************* REPAIRS ******************************************** */
     override fun getRepairList() = flow {
-        Log.d(REPAIR_REPOSITORY_IMPLEMENTATION, "Repair list fetching started")
         emit(Resource(ResourceState.LOADING, null, "Repair list fetching started"))
         var repairList: List<Repair> = repairDatabaseDao.getRepairList().map { it.toRepair() }
         emit(Resource(ResourceState.LOADING, repairList, "Locally cached list"))
@@ -38,7 +37,6 @@ class  RepairRepositoryImplementation(
 
 
     override fun getRepair(repairId: String): Flow<Resource<Repair>> = flow{
-        Log.d(REPAIR_REPOSITORY_IMPLEMENTATION, "Repair record fetching started")
         emit(Resource(ResourceState.LOADING, null, "Repair record fetching started"))
         var repair = repairDatabaseDao.getRepair(repairId).toRepair()
         emit(Resource(ResourceState.LOADING, repair, "Locally cached record"))
@@ -60,7 +58,6 @@ class  RepairRepositoryImplementation(
     }
 
     override fun getRepairListFromLocal(): Flow<Resource<List<Repair>>> = flow {
-        Log.d(REPAIR_REPOSITORY_IMPLEMENTATION, "Repair list fetching from local started")
         emit(Resource(ResourceState.LOADING, null, "Repair list fetching form local started"))
         var repairList: List<Repair> = repairDatabaseDao.getRepairList().map { it.toRepair() }
         emit(Resource(ResourceState.SUCCESS, repairList, "Locally storaged list"))

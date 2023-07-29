@@ -21,7 +21,6 @@ class  InspectionRepositoryImplementation(
 
     /* ********************************* INSPECTIONS ******************************************** */
     override fun getInspectionList() = flow {
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection list fetching started")
         emit(Resource(ResourceState.LOADING, null, "Inspection list fetching started"))
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
         inspectionList.forEach { inspection ->
@@ -41,7 +40,6 @@ class  InspectionRepositoryImplementation(
 
 
     override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow{
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection record fetching started")
         emit(Resource(ResourceState.LOADING, null, "Inspection record fetching started"))
         var inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
         emit(Resource(ResourceState.LOADING, inspection, "Locally cached record"))
@@ -63,7 +61,6 @@ class  InspectionRepositoryImplementation(
     }
 
     override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection list fetching from local started")
         emit(Resource(ResourceState.LOADING, null, "Inspection list fetching form local started"))
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
         emit(Resource(ResourceState.SUCCESS, inspectionList, "Locally storaged list"))
