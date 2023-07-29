@@ -1,0 +1,118 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "2252c5ac48f5bc6bd5e13c38e6dd2e06",
+    "entities": [
+      {
+        "tableName": "InspectionEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`inspectionId` TEXT NOT NULL, `hospitalId` TEXT NOT NULL, `ward` TEXT NOT NULL, `comment` TEXT NOT NULL, `inspectionDate` TEXT NOT NULL, `recipient` TEXT NOT NULL, `recipientSignature` TEXT NOT NULL, `technicianId` TEXT NOT NULL, `inspectionStateId` TEXT NOT NULL, `estStateId` TEXT NOT NULL, `deviceName` TEXT NOT NULL, `deviceManufacturer` TEXT NOT NULL, `deviceModel` TEXT NOT NULL, `deviceSn` TEXT NOT NULL, `deviceIn` TEXT NOT NULL, PRIMARY KEY(`inspectionId`))",
+        "fields": [
+          {
+            "fieldPath": "inspectionId",
+            "columnName": "inspectionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hospitalId",
+            "columnName": "hospitalId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ward",
+            "columnName": "ward",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inspectionDate",
+            "columnName": "inspectionDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipient",
+            "columnName": "recipient",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipientSignature",
+            "columnName": "recipientSignature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "technicianId",
+            "columnName": "technicianId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inspectionStateId",
+            "columnName": "inspectionStateId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estStateId",
+            "columnName": "estStateId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceName",
+            "columnName": "deviceName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceManufacturer",
+            "columnName": "deviceManufacturer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceModel",
+            "columnName": "deviceModel",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceSn",
+            "columnName": "deviceSn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceIn",
+            "columnName": "deviceIn",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "inspectionId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2252c5ac48f5bc6bd5e13c38e6dd2e06')"
+    ]
+  }
+}

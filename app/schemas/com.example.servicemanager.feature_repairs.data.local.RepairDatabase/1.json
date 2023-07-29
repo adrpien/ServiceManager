@@ -1,0 +1,172 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "3d1beab98e904df11bf4e02693c3c5ea",
+    "entities": [
+      {
+        "tableName": "RepairEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`repairId` TEXT NOT NULL, `repairStateId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `hospitalId` TEXT NOT NULL, `ward` TEXT NOT NULL, `defectDescription` TEXT NOT NULL, `repairDescription` TEXT NOT NULL, `partDescription` TEXT NOT NULL, `comment` TEXT NOT NULL, `estTestId` TEXT NOT NULL, `closingDate` TEXT NOT NULL, `openingDate` TEXT NOT NULL, `repairingDate` TEXT NOT NULL, `pickupTechnicianId` TEXT NOT NULL, `repairTechnicianId` TEXT NOT NULL, `returnTechnicianId` TEXT NOT NULL, `rate` TEXT NOT NULL, `recipient` TEXT NOT NULL, `recipientSignatureId` TEXT NOT NULL, `deviceName` TEXT NOT NULL, `deviceManufacturer` TEXT NOT NULL, `deviceModel` TEXT NOT NULL, `deviceSn` TEXT NOT NULL, `deviceIn` TEXT NOT NULL, PRIMARY KEY(`repairId`))",
+        "fields": [
+          {
+            "fieldPath": "repairId",
+            "columnName": "repairId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repairStateId",
+            "columnName": "repairStateId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceId",
+            "columnName": "deviceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hospitalId",
+            "columnName": "hospitalId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ward",
+            "columnName": "ward",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defectDescription",
+            "columnName": "defectDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repairDescription",
+            "columnName": "repairDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "partDescription",
+            "columnName": "partDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comment",
+            "columnName": "comment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estTestId",
+            "columnName": "estTestId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "closingDate",
+            "columnName": "closingDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "openingDate",
+            "columnName": "openingDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repairingDate",
+            "columnName": "repairingDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pickupTechnicianId",
+            "columnName": "pickupTechnicianId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repairTechnicianId",
+            "columnName": "repairTechnicianId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "returnTechnicianId",
+            "columnName": "returnTechnicianId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rate",
+            "columnName": "rate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipient",
+            "columnName": "recipient",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipientSignatureId",
+            "columnName": "recipientSignatureId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceName",
+            "columnName": "deviceName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceManufacturer",
+            "columnName": "deviceManufacturer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceModel",
+            "columnName": "deviceModel",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceSn",
+            "columnName": "deviceSn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceIn",
+            "columnName": "deviceIn",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "repairId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d1beab98e904df11bf4e02693c3c5ea')"
+    ]
+  }
+}

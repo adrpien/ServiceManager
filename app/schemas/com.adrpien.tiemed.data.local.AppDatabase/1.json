@@ -1,0 +1,144 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e59de25f0ae6f7c1dc2a127d38e6cdc9",
+    "entities": [
+      {
+        "tableName": "EstStateEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`estStateId` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`estStateId`))",
+        "fields": [
+          {
+            "fieldPath": "estStateId",
+            "columnName": "estStateId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "estStateId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "HospitalEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`hospitalId` TEXT NOT NULL, `hospital` TEXT NOT NULL, PRIMARY KEY(`hospitalId`))",
+        "fields": [
+          {
+            "fieldPath": "hospitalId",
+            "columnName": "hospitalId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hospital",
+            "columnName": "hospital",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "hospitalId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "InspectionStateEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`inspectionStateId` TEXT NOT NULL, `inspectionState` TEXT NOT NULL, PRIMARY KEY(`inspectionStateId`))",
+        "fields": [
+          {
+            "fieldPath": "inspectionStateId",
+            "columnName": "inspectionStateId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inspectionState",
+            "columnName": "inspectionState",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "inspectionStateId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RepairStateEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`repairStateId` TEXT NOT NULL, `repairState` TEXT NOT NULL, PRIMARY KEY(`repairStateId`))",
+        "fields": [
+          {
+            "fieldPath": "repairStateId",
+            "columnName": "repairStateId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "repairState",
+            "columnName": "repairState",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "repairStateId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "TechnicianEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`technicianId` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`technicianId`))",
+        "fields": [
+          {
+            "fieldPath": "technicianId",
+            "columnName": "technicianId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "technicianId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e59de25f0ae6f7c1dc2a127d38e6cdc9')"
+    ]
+  }
+}
