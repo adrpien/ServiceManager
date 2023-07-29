@@ -36,7 +36,7 @@ fun Navigation(navHostController: NavHostController = rememberNavController()) {
         ){
             InspectionDetailsScreen(
                 navHostController = navHostController,
-                inspectionId = it.arguments?.getString("inspectionId") ?: "0"
+                inspectionId = it.arguments?.getString("inspectionId") ?: ""
             )
         }
         composable(
