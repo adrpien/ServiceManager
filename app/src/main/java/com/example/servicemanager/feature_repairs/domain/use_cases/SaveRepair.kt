@@ -11,7 +11,7 @@ class SaveRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
-    operator fun invoke(repair: Repair): Flow<Resource<Boolean>> {
+    operator fun invoke(repair: Repair): Flow<Resource<String>> {
         return repository.insertRepair(repair)
     }
 }

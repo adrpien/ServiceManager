@@ -49,9 +49,9 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    fun createInspection(inspection: Inspection): Flow<Resource<Boolean>> = flow {
+    fun createInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in createInspection fun for InspectionFirebaseApi
-        emit(Resource(ResourceState.LOADING, false, null))
+        emit(Resource(ResourceState.LOADING, "0", null))
         var documentReference = firebaseFirestore.collection("inspections")
             .document()
         var map = mapOf<String, String>(
@@ -74,11 +74,11 @@ class  InspectionFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, true, documentReference.id))
+            emit(Resource(ResourceState.SUCCESS, documentReference.id, documentReference.id))
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
 
         } else {
-            emit(Resource(ResourceState.ERROR, false, null))
+            emit(Resource(ResourceState.ERROR, "0", null))
             Log.d(INSPECTION_FIREBASE_API, "Inspection record creation error")
 
         }

@@ -50,9 +50,9 @@ class  RepairFirebaseApi(
             }
         return repair
     }
-    fun createRepair(repair: Repair): Flow<Resource<Boolean>> = flow {
+    fun createRepair(repair: Repair): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in createRepair fun for RepairFirebaseApi
-        emit(Resource(ResourceState.LOADING, false, null))
+        emit(Resource(ResourceState.LOADING, "0", null))
         var documentReference = firebaseFirestore.collection("repairs")
             .document()
         var map = mapOf<String, String>(
@@ -73,15 +73,20 @@ class  RepairFirebaseApi(
             "rate" to repair.rate,
             "recipient" to repair.recipient,
             "signatureId" to repair.repairId,
+            "deviceName" to repair.deviceName,
+            "deviceManufacturer" to repair.deviceManufacturer,
+            "deviceModel" to repair.deviceModel,
+            "deviceSn" to repair.deviceSn,
+            "deviceIn" to repair.deviceIn
         )
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, true, documentReference.id))
+            emit(Resource(ResourceState.SUCCESS, documentReference.id, documentReference.id))
             Log.d(REPAIR_REPOSITORY, "Repair record created")
 
         } else {
-            emit(Resource(ResourceState.ERROR, false, null))
+            emit(Resource(ResourceState.ERROR, "0", null))
             Log.d(REPAIR_REPOSITORY, "Repair record creation error")
 
         }
@@ -107,6 +112,11 @@ class  RepairFirebaseApi(
             "rate" to repair.rate,
             "recipient" to repair.recipient,
             "signatureId" to repair.repairId,
+            "deviceName" to repair.deviceName,
+            "deviceManufacturer" to repair.deviceManufacturer,
+            "deviceModel" to repair.deviceModel,
+            "deviceSn" to repair.deviceSn,
+            "deviceIn" to repair.deviceIn
         )
         val documentReference = firebaseFirestore.collection("repairs").document(repair.repairId)
         val result = documentReference.update(map)

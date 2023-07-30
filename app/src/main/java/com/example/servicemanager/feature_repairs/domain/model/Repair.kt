@@ -5,7 +5,7 @@ import com.example.servicemanager.feature_repairs.data.remote.dto.RepairDto
 
 
 data class Repair(
-    var repairId: String = "",
+    var repairId: String = "0",
     var repairStateId: String = "",
     var hospitalId: String = "",
     var ward: String = "",

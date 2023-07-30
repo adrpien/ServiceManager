@@ -52,7 +52,7 @@ class  InspectionRepositoryImplementation(
         }
     }
 
-    override fun insertInspection(inspection: Inspection): Flow<Resource<Boolean>> {
+    override fun insertInspection(inspection: Inspection): Flow<Resource<String>> {
         return inspectionFirebaseApi.createInspection(inspection)
     }
 

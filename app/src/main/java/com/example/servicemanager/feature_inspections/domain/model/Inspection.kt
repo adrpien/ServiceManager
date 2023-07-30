@@ -5,7 +5,7 @@ import com.example.servicemanager.feature_inspections.data.remote.dto.Inspection
 import java.util.*
 
 data class Inspection(
-    val inspectionId: String = "",
+    val inspectionId: String = "0",
     val hospitalId: String = "",
     val ward: String = "",
     val comment: String = "",

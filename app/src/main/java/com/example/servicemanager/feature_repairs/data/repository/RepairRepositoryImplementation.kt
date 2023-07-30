@@ -49,7 +49,7 @@ class  RepairRepositoryImplementation(
         }
     }
 
-    override fun insertRepair(repair: Repair): Flow<Resource<Boolean>> {
+    override fun insertRepair(repair: Repair): Flow<Resource<String>> {
         return repairFirebaseApi.createRepair(repair)
     }
 

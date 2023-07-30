@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.util.Helper.Companion.toDp
 import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
+import com.example.servicemanager.ui.theme.signatureHeight
+import com.example.servicemanager.ui.theme.signatureWidth
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -28,6 +30,17 @@ fun SignatureArea(
     modifier: Modifier = Modifier,
     updateImageBitmap: (Bitmap) -> Unit,
 ) {
+    var bitmap = Bitmap.createBitmap(signatureWidth, signatureHeight, Bitmap.Config.ARGB_8888)
+    val backgroundPaint = Paint()
+    backgroundPaint.apply {
+        color = TiemedVeryLightBeige
+        style = PaintingStyle.Fill
+    }
+    val canvas = Canvas(bitmap.asImageBitmap())
+    canvas.drawRect(
+        rect = Rect(0F,0F,bitmap.width.toFloat(), bitmap.height.toFloat()),
+        paint = backgroundPaint)
+
 
     val lastTouchX = remember {
         mutableStateOf(0f)
@@ -90,21 +103,12 @@ fun SignatureArea(
                                 width = 4.dp.toPx()
                             )
                         )
-                        val bitmap = Bitmap.createBitmap(700, 350, Bitmap.Config.ARGB_8888)
                         val paint = Paint()
                         paint.apply {
-
                             color = TiemedMediumBlue
                             style = PaintingStyle.Stroke
                             strokeWidth = 8f
                         }
-                        val backgroundPaint = Paint()
-                        backgroundPaint.apply {
-                            color = TiemedVeryLightBeige
-                            style = PaintingStyle.Fill
-                        }
-                        val canvas = Canvas(bitmap.asImageBitmap())
-                        canvas.drawRect(Rect(0F,0F,bitmap.width.toFloat(), bitmap.height.toFloat()), backgroundPaint)
                         canvas.drawPath(
                             path  = path,
                             paint = paint

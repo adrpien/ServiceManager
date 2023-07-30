@@ -25,6 +25,7 @@ import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
+import com.example.servicemanager.feature_repairs.presentation.repair_details.RepairDetailsEvent
 import com.example.servicemanager.navigation.Screen
 import com.example.servicemanager.ui.theme.*
 import com.vanpra.composematerialdialogs.MaterialDialog
@@ -176,9 +177,11 @@ fun InspectionDetailsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO Save/Update Inspection Small bug here to repair, when creating new record and saving signature at the same time, signature is saved as "0.jpg"
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
-                    viewModel.onEvent(InspectionDetailsEvent.SaveSignature)
+                    if(inspectionDetailsState.value.inspection.inspectionId != "0") {
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
+                    } else {
+                        viewModel.onEvent(InspectionDetailsEvent.SaveInspection)
+                    }
                     navHostController.navigate(Screen.InspectionListScreen.route)
                 },
                 backgroundColor = TiemedMediumBlue

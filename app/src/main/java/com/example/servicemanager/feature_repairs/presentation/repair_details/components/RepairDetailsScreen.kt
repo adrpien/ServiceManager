@@ -200,9 +200,12 @@ fun RepairDetailsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO Save/Update Repair Small bug here to repair, when creating new record and saving signature at the same time, signature is saved as "0.jpg"
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepair)
-                    viewModel.onEvent(RepairDetailsEvent.SaveSignature)
+
+                    if(repairDetailsState.value.repair.repairId != "0") {
+                        viewModel.onEvent(RepairDetailsEvent.UpdateRepair)
+                    } else {
+                        viewModel.onEvent(RepairDetailsEvent.SaveRepair)
+                    }
                     navHostController.navigate(Screen.RepairListScreen.route)
                 },
                 backgroundColor = TiemedMediumBlue

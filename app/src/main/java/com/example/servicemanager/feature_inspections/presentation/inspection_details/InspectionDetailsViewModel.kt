@@ -60,24 +60,32 @@ class InspectionDetailsViewModel @Inject constructor(
                     signature = inspectionDetailsEvent.signature
                 )
             }
-            is InspectionDetailsEvent.SaveSignature -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
-                }
-            }
+
             is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection).collect()
+                    inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection).collect() { result ->
+                        when(result.resourceState) {
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> Unit
+                            ResourceState.SUCCESS ->  {
+                                result.data?.let { inspectionId ->
+                                    _inspectionDetailsState.value = _inspectionDetailsState.value.copy(inspection = _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId))
+                                }
+                                viewModelScope.launch(Dispatchers.IO) {
+                                    appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            is InspectionDetailsEvent.UpdateSignature -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
-                }
-            }
+
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection).collect()
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
                 }
             }
         }

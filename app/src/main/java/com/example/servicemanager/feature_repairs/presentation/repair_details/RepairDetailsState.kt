@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_repairs.presentation.repair_details
 import android.graphics.Bitmap
 import com.example.servicemanager.feature_app.domain.model.*
 import com.example.servicemanager.feature_repairs.domain.model.Repair
+import com.example.servicemanager.ui.theme.signatureHeight
+import com.example.servicemanager.ui.theme.signatureWidth
 
 data class RepairDetailsState(
     val isInEditMode: Boolean = false,
@@ -12,7 +14,7 @@ data class RepairDetailsState(
     val repairStateList: List<RepairState> = emptyList(),
     val technicianList: List<Technician> = emptyList(),
     val estStateList: List<EstState> = emptyList(),
-    val signature: Bitmap = Bitmap.createBitmap(400, 200, Bitmap.Config.ARGB_8888)
+    val signature: Bitmap = Bitmap.createBitmap(signatureWidth, signatureHeight, Bitmap.Config.ARGB_8888)
     ) {
 
 }

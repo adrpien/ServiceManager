@@ -9,7 +9,7 @@ import javax.inject.Inject
 class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
-    operator fun invoke(inspection: Inspection): Flow<Resource<Boolean>> {
+    operator fun invoke(inspection: Inspection): Flow<Resource<String>> {
         return repository.insertInspection(inspection)
     }
 }

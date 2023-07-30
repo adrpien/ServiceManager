@@ -60,24 +60,30 @@ class RepairDetailsViewModel @Inject constructor(
                     signature = repairDetailsEvent.signature
                 )
             }
-            is RepairDetailsEvent.SaveSignature -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.saveSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
-                }
-            }
             is RepairDetailsEvent.SaveRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    repairUseCases.saveRepair(repairDetailsState.value.repair).collect()
-                }
-            }
-            is RepairDetailsEvent.UpdateSignature -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
+                    repairUseCases.saveRepair(repairDetailsState.value.repair).collect() { result ->
+                        when(result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                result.data?.let { repairId ->
+                                    _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
+                                }
+                                viewModelScope.launch(Dispatchers.IO) {
+                                    appUseCases.saveSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
+                                }
+                            }
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> Unit
+                        }
+                    }
                 }
             }
             is RepairDetailsEvent.UpdateRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     repairUseCases.updateRepair(repairDetailsState.value.repair).collect()
+                    viewModelScope.launch(Dispatchers.IO) {
+                        appUseCases.updateSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
+                    }
                 }
             }
         }
@@ -112,7 +118,7 @@ class RepairDetailsViewModel @Inject constructor(
                 )
         }
     }
-
+    // TODO Bug needs to be fixed - fetches signature even if there no signature
     private fun fetchSignature() {
         if (currentRepairId != "0") {
             viewModelScope.launch(Dispatchers.Main) {
@@ -135,8 +141,6 @@ class RepairDetailsViewModel @Inject constructor(
             }
         }
     }
-
-
     private fun fetchHospitalList() {
         viewModelScope.launch(Dispatchers.Main) {
             hospitalListIsLoading = true
@@ -158,7 +162,6 @@ class RepairDetailsViewModel @Inject constructor(
             }
         }
     }
-
     private fun fetchRepairStateList() {
         repairStateListIsLoading = true
         setIsLoadingStatus()
@@ -180,7 +183,6 @@ class RepairDetailsViewModel @Inject constructor(
             }
         }
     }
-
     private fun fetchEstStateList() {
         estStateListIsLoading = true
         setIsLoadingStatus()
@@ -202,7 +204,6 @@ class RepairDetailsViewModel @Inject constructor(
             }
         }
     }
-
     private fun fetchTechnicianList() {
         technicianListIsLoading = true
         setIsLoadingStatus()
@@ -224,7 +225,6 @@ class RepairDetailsViewModel @Inject constructor(
             }
         }
     }
-
     private fun setIsLoadingStatus() {
         if(
             _repairDetailsState.value.repair.repairId.isNotEmpty() &&
@@ -243,7 +243,6 @@ class RepairDetailsViewModel @Inject constructor(
             )
         }
     }
-
     sealed class UiEvent {
         data class ShowSnackBar(val messege: String): UiEvent()
 
