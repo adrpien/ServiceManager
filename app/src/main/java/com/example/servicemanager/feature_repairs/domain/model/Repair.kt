@@ -2,6 +2,7 @@ package com.example.servicemanager.feature_repairs.domain.model
 
 import com.example.servicemanager.feature_repairs.data.local.entities.RepairEntity
 import com.example.servicemanager.feature_repairs.data.remote.dto.RepairDto
+import java.time.LocalDate
 
 
 data class Repair(
@@ -14,9 +15,9 @@ data class Repair(
     var partDescription: String = "",
     var comment: String = "",
     var estStateId: String = "",
-    var closingDate: String = "",
-    var openingDate: String = "",
-    var repairingDate: String = "",
+    var closingDate: String = LocalDate.now().toEpochDay().toString(),
+    var openingDate: String = LocalDate.now().toEpochDay().toString(),
+    var repairingDate: String = LocalDate.now().toEpochDay().toString(),
     var pickupTechnicianId: String = "",
     var repairTechnicianId: String = "",
     var returnTechnicianId: String = "",

@@ -17,6 +17,7 @@ import com.example.servicemanager.feature_app.domain.model.RepairState
 import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_repairs.domain.model.Repair
 import com.example.servicemanager.ui.theme.TiemedLightBeige
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Preview
@@ -49,7 +50,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = TiemedLightBeige,
+                    color = TiemedLightBlue,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
