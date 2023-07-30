@@ -11,7 +11,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.servicemanager.core.util.Helper.Companion.getDateString
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.model.RepairState
 import com.example.servicemanager.feature_app.domain.model.Technician

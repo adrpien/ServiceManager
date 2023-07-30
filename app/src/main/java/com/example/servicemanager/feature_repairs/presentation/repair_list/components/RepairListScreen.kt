@@ -87,18 +87,21 @@ fun RepairListScreen(
                     singleLine = true,
                 )
 
-            IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleSortSectionVisibility) }) {
-                Icon(
-                    imageVector = Icons.Default.Sort,
-                    contentDescription = "Sort",
-                tint = TiemedLightBlue)
-            }
+                IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleSortSectionVisibility) }) {
+                    Icon(
+                        imageVector = Icons.Default.Sort,
+                        contentDescription = "Sort",
+                    tint = TiemedLightBlue)
+                }
+                // TODO All Hospitals filter in RepairListScreen
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
                     tint = TiemedLightBlue)
                 }
+                // TODO Import repairs in RepairListScreen
+
             }
             AnimatedVisibility(
                 visible = state.value.isHospitalFilterSectionVisible,

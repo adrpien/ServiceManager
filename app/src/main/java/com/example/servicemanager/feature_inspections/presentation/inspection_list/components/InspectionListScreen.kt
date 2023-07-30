@@ -85,19 +85,21 @@ fun InspectionListScreen(
                     maxLines = 1,
                     singleLine = true,
                 )
-
-            IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }) {
-                Icon(
-                    imageVector = Icons.Default.Sort,
-                    contentDescription = "Sort",
-                tint = TiemedLightBlue)
-            }
+                IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }) {
+                    Icon(
+                        imageVector = Icons.Default.Sort,
+                        contentDescription = "Sort",
+                    tint = TiemedLightBlue)
+                }
+                // TODO All Hospitals filter in InspectionListScreen
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
                     tint = TiemedLightBlue)
                 }
+                // TODO Import inspections in InspectionListScreen
+
             }
             AnimatedVisibility(
                 visible = state.value.isHospitalFilterSectionVisible,
@@ -124,11 +126,6 @@ fun InspectionListScreen(
                     }
                 )
             }
-
-
-
-            val groupedInspectionLists = state.value.inspectionList.groupBy { it.hospitalId }
-
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = {
