@@ -52,7 +52,6 @@ data class RepairDto(
         returnTechnicianId = returnTechnicianId,
         rate = rate,
         recipient = recipient,
-        recipientSignatureId = recipientSignatureId,
         deviceName = deviceName,
         deviceManufacturer = deviceManufacturer,
         deviceModel = deviceModel,

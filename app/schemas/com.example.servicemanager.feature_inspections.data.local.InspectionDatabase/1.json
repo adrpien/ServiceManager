@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2252c5ac48f5bc6bd5e13c38e6dd2e06",
+    "identityHash": "5b423908069ab05b03641ffb0d998408",
     "entities": [
       {
         "tableName": "InspectionEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`inspectionId` TEXT NOT NULL, `hospitalId` TEXT NOT NULL, `ward` TEXT NOT NULL, `comment` TEXT NOT NULL, `inspectionDate` TEXT NOT NULL, `recipient` TEXT NOT NULL, `recipientSignature` TEXT NOT NULL, `technicianId` TEXT NOT NULL, `inspectionStateId` TEXT NOT NULL, `estStateId` TEXT NOT NULL, `deviceName` TEXT NOT NULL, `deviceManufacturer` TEXT NOT NULL, `deviceModel` TEXT NOT NULL, `deviceSn` TEXT NOT NULL, `deviceIn` TEXT NOT NULL, PRIMARY KEY(`inspectionId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`inspectionId` TEXT NOT NULL, `hospitalId` TEXT NOT NULL, `ward` TEXT NOT NULL, `comment` TEXT NOT NULL, `inspectionDate` TEXT NOT NULL, `recipient` TEXT NOT NULL, `technicianId` TEXT NOT NULL, `inspectionStateId` TEXT NOT NULL, `estStateId` TEXT NOT NULL, `deviceName` TEXT NOT NULL, `deviceManufacturer` TEXT NOT NULL, `deviceModel` TEXT NOT NULL, `deviceSn` TEXT NOT NULL, `deviceIn` TEXT NOT NULL, PRIMARY KEY(`inspectionId`))",
         "fields": [
           {
             "fieldPath": "inspectionId",
@@ -41,12 +41,6 @@
           {
             "fieldPath": "recipient",
             "columnName": "recipient",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "recipientSignature",
-            "columnName": "recipientSignature",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -112,7 +106,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2252c5ac48f5bc6bd5e13c38e6dd2e06')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5b423908069ab05b03641ffb0d998408')"
     ]
   }
 }

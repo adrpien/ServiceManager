@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3d1beab98e904df11bf4e02693c3c5ea",
+    "identityHash": "aa0aeddaee47619b3c6431154589160f",
     "entities": [
       {
         "tableName": "RepairEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`repairId` TEXT NOT NULL, `repairStateId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `hospitalId` TEXT NOT NULL, `ward` TEXT NOT NULL, `defectDescription` TEXT NOT NULL, `repairDescription` TEXT NOT NULL, `partDescription` TEXT NOT NULL, `comment` TEXT NOT NULL, `estTestId` TEXT NOT NULL, `closingDate` TEXT NOT NULL, `openingDate` TEXT NOT NULL, `repairingDate` TEXT NOT NULL, `pickupTechnicianId` TEXT NOT NULL, `repairTechnicianId` TEXT NOT NULL, `returnTechnicianId` TEXT NOT NULL, `rate` TEXT NOT NULL, `recipient` TEXT NOT NULL, `recipientSignatureId` TEXT NOT NULL, `deviceName` TEXT NOT NULL, `deviceManufacturer` TEXT NOT NULL, `deviceModel` TEXT NOT NULL, `deviceSn` TEXT NOT NULL, `deviceIn` TEXT NOT NULL, PRIMARY KEY(`repairId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`repairId` TEXT NOT NULL, `repairStateId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `hospitalId` TEXT NOT NULL, `ward` TEXT NOT NULL, `defectDescription` TEXT NOT NULL, `repairDescription` TEXT NOT NULL, `partDescription` TEXT NOT NULL, `comment` TEXT NOT NULL, `estTestId` TEXT NOT NULL, `closingDate` TEXT NOT NULL, `openingDate` TEXT NOT NULL, `repairingDate` TEXT NOT NULL, `pickupTechnicianId` TEXT NOT NULL, `repairTechnicianId` TEXT NOT NULL, `returnTechnicianId` TEXT NOT NULL, `rate` TEXT NOT NULL, `recipient` TEXT NOT NULL, `deviceName` TEXT NOT NULL, `deviceManufacturer` TEXT NOT NULL, `deviceModel` TEXT NOT NULL, `deviceSn` TEXT NOT NULL, `deviceIn` TEXT NOT NULL, PRIMARY KEY(`repairId`))",
         "fields": [
           {
             "fieldPath": "repairId",
@@ -117,12 +117,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "recipientSignatureId",
-            "columnName": "recipientSignatureId",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "deviceName",
             "columnName": "deviceName",
             "affinity": "TEXT",
@@ -166,7 +160,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d1beab98e904df11bf4e02693c3c5ea')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa0aeddaee47619b3c6431154589160f')"
     ]
   }
 }
