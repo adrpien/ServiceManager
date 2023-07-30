@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
@@ -17,7 +18,7 @@ fun DefaultDateButton(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .background(TiemedVeryLightBeige)
+            .background(TiemedLightBlue)
     ) {
         Text(
             text = "21/07/2022"

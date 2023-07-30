@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.servicemanager.ui.theme.TiemedMediumBlue
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
@@ -34,7 +34,7 @@ fun OrderMonotonicityButton(
             modifier = Modifier,
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = TiemedMediumBlue,
+                backgroundColor = TiemedLightBlue,
                 contentColor = TiemedVeryLightBeige
             )
         ) {

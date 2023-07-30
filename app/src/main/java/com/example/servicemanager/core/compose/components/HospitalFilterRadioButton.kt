@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
@@ -30,12 +31,12 @@ fun SortRadioButton(
             onClick = onClick,
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = if (selected) TiemedMediumBlue else TiemedVeryLightBeige,
-                contentColor = if (!selected) TiemedMediumBlue else TiemedVeryLightBeige,
+                backgroundColor = if (selected) TiemedLightBlue else TiemedVeryLightBeige,
+                contentColor = if (!selected) TiemedLightBlue else TiemedVeryLightBeige,
             ),
             border = BorderStroke(
                 width = 2.dp,
-                color = TiemedMediumBlue)
+                color = TiemedLightBlue)
         ) {
             Text(text = title)
         }

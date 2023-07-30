@@ -10,6 +10,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.compose.DefaultTextFieldState
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
@@ -30,14 +31,14 @@ fun DefaultTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .border(2.dp, TiemedMediumBlue),
+                .border(2.dp, TiemedLightBlue),
             colors = TextFieldDefaults.textFieldColors(
-                textColor = TiemedMediumBlue,
+                textColor = TiemedLightBlue,
                 backgroundColor = TiemedVeryLightBeige,
-                unfocusedLabelColor = TiemedMediumBlue,
-                focusedLabelColor = TiemedMediumBlue,
-                disabledLabelColor = TiemedMediumBlue,
-                errorLabelColor = TiemedMediumBlue
+                unfocusedLabelColor = TiemedLightBlue,
+                focusedLabelColor = TiemedLightBlue,
+                disabledLabelColor = TiemedLightBlue,
+                errorLabelColor = TiemedLightBlue
             )
         )
         Spacer(modifier = Modifier.height(8.dp))

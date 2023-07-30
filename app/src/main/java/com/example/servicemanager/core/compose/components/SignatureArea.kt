@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.util.Helper.Companion.toDp
-import com.example.servicemanager.ui.theme.TiemedMediumBlue
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 import com.example.servicemanager.ui.theme.signatureHeight
 import com.example.servicemanager.ui.theme.signatureWidth
@@ -54,7 +54,7 @@ fun SignatureArea(
     }
 
     Surface(
-        modifier = Modifier.border(2.dp, TiemedMediumBlue),
+        modifier = Modifier.border(2.dp, TiemedLightBlue),
         color = Color.White
             ){
         Box(
@@ -98,14 +98,14 @@ fun SignatureArea(
                     path.value?.let { path ->
                         drawPath(
                             path = path,
-                            color = TiemedMediumBlue,
+                            color = TiemedLightBlue,
                             style = Stroke(
                                 width = 4.dp.toPx()
                             )
                         )
                         val paint = Paint()
                         paint.apply {
-                            color = TiemedMediumBlue
+                            color = TiemedLightBlue
                             style = PaintingStyle.Stroke
                             strokeWidth = 8f
                         }

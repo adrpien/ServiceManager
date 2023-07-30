@@ -184,7 +184,7 @@ fun InspectionDetailsScreen(
                     }
                     navHostController.navigate(Screen.InspectionListScreen.route)
                 },
-                backgroundColor = TiemedMediumBlue
+                backgroundColor = TiemedLightBlue
             ) {
                 Icon(
                     imageVector = Icons.Default.Save,
@@ -210,7 +210,7 @@ fun InspectionDetailsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedMediumBlue,
+                color = TiemedLightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -248,11 +248,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
-                color = TiemedMediumBlue
+                color = TiemedLightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedMediumBlue,
+                color = TiemedLightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -284,11 +284,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Result",
                 fontSize = 20.sp,
-                color = TiemedMediumBlue
+                color = TiemedLightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedMediumBlue,
+                color = TiemedLightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -297,7 +297,7 @@ fun InspectionDetailsScreen(
             ) {
                 Text(
                     text = "EstState:",
-                    color = TiemedMediumBlue
+                    color = TiemedLightBlue
                     )
 
                 EstStateSelectionSection(
@@ -319,7 +319,7 @@ fun InspectionDetailsScreen(
             ) {
                 Text(
                     text = "InspectionState:",
-                    color = TiemedMediumBlue
+                    color = TiemedLightBlue
                 )
                 InspectionStateSelectionSection(
                     inspectionStateList = inspectionStateList,
@@ -340,7 +340,7 @@ fun InspectionDetailsScreen(
             ) {
                 Text(
                     text = "Technician:",
-                    color = TiemedMediumBlue
+                    color = TiemedLightBlue
                 )
                 TechnicianSelectionSection(
                     technicianList = technicianList,
@@ -364,9 +364,9 @@ fun InspectionDetailsScreen(
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = TiemedVeryLightBeige,
-                    contentColor = TiemedMediumBlue
+                    contentColor = TiemedLightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedMediumBlue)
+                border = BorderStroke(2.dp, TiemedLightBlue)
             ) {
                 Text(
                     text = "Inspection date: " + formattedInspectionDate.value.toString()
@@ -386,9 +386,9 @@ fun InspectionDetailsScreen(
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = TiemedVeryLightBeige,
-                    contentColor = TiemedMediumBlue
+                    contentColor = TiemedLightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedMediumBlue)
+                border = BorderStroke(2.dp, TiemedLightBlue)
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
@@ -436,11 +436,11 @@ fun InspectionDetailsScreen(
                 buttons = {
                     positiveButton(
                         text = "Confirm",
-                        textStyle = TextStyle(color = TiemedMediumBlue)
+                        textStyle = TextStyle(color = TiemedLightBlue)
                     ){}
                     negativeButton(
                         text = "Cancel",
-                        textStyle = TextStyle(color = TiemedMediumBlue)
+                        textStyle = TextStyle(color = TiemedLightBlue)
                     )
                 }
             ) {

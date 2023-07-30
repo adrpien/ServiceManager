@@ -71,8 +71,8 @@ fun InspectionListScreen(
                 OutlinedTextField(
                     value = state.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = TiemedMediumBlue,
-                        unfocusedBorderColor = TiemedMediumBlue),
+                        focusedBorderColor = TiemedLightBlue,
+                        unfocusedBorderColor = TiemedLightBlue),
                     onValueChange = {
                         viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
                     },
@@ -90,13 +90,13 @@ fun InspectionListScreen(
                 Icon(
                     imageVector = Icons.Default.Sort,
                     contentDescription = "Sort",
-                tint = TiemedMediumBlue)
+                tint = TiemedLightBlue)
             }
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
-                    tint = TiemedMediumBlue)
+                    tint = TiemedLightBlue)
                 }
             }
             AnimatedVisibility(
@@ -161,7 +161,9 @@ fun InspectionListScreen(
             contentAlignment = Alignment.Center
         ) {
             if (state.value.isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    color = TiemedLightBlue
+                )
             }
         }
     }

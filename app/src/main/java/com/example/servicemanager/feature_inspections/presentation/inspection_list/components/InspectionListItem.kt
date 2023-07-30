@@ -19,7 +19,7 @@ import com.example.servicemanager.feature_app.domain.model.InspectionState
 import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.ui.theme.TiemedLightBeige
-import com.example.servicemanager.ui.theme.TiemedMediumBlue
+import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
@@ -52,7 +52,7 @@ fun InspectionListItem(
                     fontStyle = FontStyle.Italic,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = TiemedMediumBlue,
+                    color = TiemedLightBlue,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
