@@ -17,7 +17,7 @@ class UserViewModel @Inject constructor(
     private val getUserUseCase: GetUser
 ): ViewModel() {
 
-    var _userLoginState = mutableStateOf(UserLoginState())
+    private var _userLoginState = mutableStateOf(UserLoginState())
     val userLoginState: State<UserLoginState> = _userLoginState
 
     fun onEvent(userLoginEvent: UserLoginEvent) {

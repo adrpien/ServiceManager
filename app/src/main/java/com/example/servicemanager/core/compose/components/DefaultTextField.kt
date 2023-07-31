@@ -21,7 +21,7 @@ fun DefaultTextField(
 ) {
     Column() {
         TextField(
-            value = state.value.inspection,
+            value = state.value.value,
             label = {
                 Text(text = state.value.hint)
             },

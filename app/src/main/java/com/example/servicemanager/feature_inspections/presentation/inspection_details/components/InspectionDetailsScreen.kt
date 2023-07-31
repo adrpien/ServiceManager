@@ -46,10 +46,10 @@ fun InspectionDetailsScreen(
 ) {
 
     val inspectionDetailsState = viewModel.inspectionDetailsState
+
     val inspectionDateState = remember {
         mutableStateOf(LocalDate.now())
     }
-
     val formattedInspectionDate = remember {
         derivedStateOf {
             DateTimeFormatter
@@ -69,7 +69,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Name",
-                inspection =  inspectionDetailsState.value.inspection.deviceName
+                value =  inspectionDetailsState.value.inspection.deviceName
             )
         )
     }
@@ -77,7 +77,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Manufacturer",
-                inspection =  inspectionDetailsState.value.inspection.deviceManufacturer
+                value =  inspectionDetailsState.value.inspection.deviceManufacturer
             )
         )
     }
@@ -85,7 +85,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Model",
-                inspection =  inspectionDetailsState.value.inspection.deviceModel
+                value =  inspectionDetailsState.value.inspection.deviceModel
             )
         )
     }
@@ -93,7 +93,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Serial number",
-                inspection =  inspectionDetailsState.value.inspection.deviceSn
+                value =  inspectionDetailsState.value.inspection.deviceSn
             )
         )
     }
@@ -101,7 +101,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Inventory number",
-                inspection =  inspectionDetailsState.value.inspection.deviceIn
+                value =  inspectionDetailsState.value.inspection.deviceIn
             )
         )
     }
@@ -109,7 +109,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Ward",
-                inspection =  inspectionDetailsState.value.inspection.ward
+                value =  inspectionDetailsState.value.inspection.ward
             )
         )
     }
@@ -117,7 +117,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Comment",
-                inspection =  inspectionDetailsState.value.inspection.comment
+                value =  inspectionDetailsState.value.inspection.comment
             )
         )
     }
@@ -125,7 +125,7 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Recipient",
-                inspection =  inspectionDetailsState.value.inspection.recipient
+                value =  inspectionDetailsState.value.inspection.recipient
             )
         )
     }
@@ -141,28 +141,28 @@ fun InspectionDetailsScreen(
             when(event) {
                 is UiEvent.UpdateTextFields -> {
                     deviceName.value = deviceName.value.copy(
-                        inspection = event.text.deviceName
+                        value = event.text.deviceName
                     )
                     deviceManufacturer.value = deviceManufacturer.value.copy(
-                        inspection = event.text.deviceManufacturer
+                        value = event.text.deviceManufacturer
                     )
                     deviceModel.value = deviceModel.value.copy(
-                        inspection = event.text.deviceModel
+                        value = event.text.deviceModel
                     )
                     ward.value = ward.value.copy(
-                        inspection = event.text.ward
+                        value = event.text.ward
                     )
                     comment.value = comment.value.copy(
-                        inspection = event.text.comment
+                        value = event.text.comment
                     )
                     deviceSn.value = deviceSn.value.copy(
-                            inspection = event.text.deviceSn
+                            value = event.text.deviceSn
                             )
                     deviceIn.value = deviceIn.value.copy(
-                            inspection = event.text.deviceIn
+                            value = event.text.deviceIn
                             )
                     recipient.value = recipient.value.copy(
-                        inspection = event.text.recipient
+                        value = event.text.recipient
                     )
                 }
                 is UiEvent.ShowSnackBar -> {
@@ -215,32 +215,32 @@ fun InspectionDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
                 onValueChanged =  { name ->
-                    deviceName.value= deviceName.value.copy(inspection = name)
+                    deviceName.value= deviceName.value.copy(value = name)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceName = name)))
                 },
                 state = deviceName)
             DefaultTextField(
                 onValueChanged =  {manufacturer ->
-                    deviceManufacturer.value= deviceManufacturer.value.copy(inspection = manufacturer)
+                    deviceManufacturer.value= deviceManufacturer.value.copy(value = manufacturer)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceManufacturer = manufacturer)))
                 },
                 state = deviceManufacturer)
             DefaultTextField(
                 onValueChanged =  { model ->
-                    deviceModel.value= deviceModel.value.copy(inspection = model)
+                    deviceModel.value= deviceModel.value.copy(value = model)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceModel = model)))
                 },
                 state = deviceModel)
             DefaultTextField(
                 onValueChanged =  { serialNumber ->
-                    deviceSn.value= deviceSn.value.copy(inspection = serialNumber)
+                    deviceSn.value= deviceSn.value.copy(value = serialNumber)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceSn = serialNumber)))
                 },
                 state = deviceSn
             )
             DefaultTextField(
                 onValueChanged =  { inventoryNumber ->
-                    deviceIn.value= deviceIn.value.copy(inspection = inventoryNumber)
+                    deviceIn.value= deviceIn.value.copy(value = inventoryNumber)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceIn = inventoryNumber)))
                 },
                 state = deviceIn)
@@ -270,13 +270,13 @@ fun InspectionDetailsScreen(
             )
             DefaultTextField(
                 onValueChanged =  {string ->
-                    ward.value= ward.value.copy(inspection = string)
+                    ward.value= ward.value.copy(value = string)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(ward = string)))
                 },
                 state = ward)
             DefaultTextField(
                 onValueChanged =  {string ->
-                    comment.value= comment.value.copy(inspection = string)
+                    comment.value= comment.value.copy(value = string)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(comment = string)))
                 },
                 state = comment)
@@ -373,7 +373,7 @@ fun InspectionDetailsScreen(
             }
             DefaultTextField(
                 onValueChanged =  { string ->
-                    recipient.value= recipient.value.copy(inspection = string)
+                    recipient.value= recipient.value.copy(value = string)
                     viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = string)))
                 },
                 state = recipient)

@@ -97,7 +97,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Name",
-                inspection =  repairDetailsState.value.repair.deviceName
+                value =  repairDetailsState.value.repair.deviceName
             )
         )
     }
@@ -105,7 +105,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Manufacturer",
-                inspection =  repairDetailsState.value.repair.deviceManufacturer
+                value =  repairDetailsState.value.repair.deviceManufacturer
             )
         )
     }
@@ -113,7 +113,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Model",
-                inspection =  repairDetailsState.value.repair.deviceModel
+                value =  repairDetailsState.value.repair.deviceModel
             )
         )
     }
@@ -121,7 +121,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Serial number",
-                inspection =  repairDetailsState.value.repair.deviceSn
+                value =  repairDetailsState.value.repair.deviceSn
             )
         )
     }
@@ -129,7 +129,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Inventory number",
-                inspection =  repairDetailsState.value.repair.deviceIn
+                value =  repairDetailsState.value.repair.deviceIn
             )
         )
     }
@@ -137,7 +137,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Ward",
-                inspection =  repairDetailsState.value.repair.ward
+                value =  repairDetailsState.value.repair.ward
             )
         )
     }
@@ -145,7 +145,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Comment",
-                inspection =  repairDetailsState.value.repair.comment
+                value =  repairDetailsState.value.repair.comment
             )
         )
     }
@@ -153,7 +153,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Recipient",
-                inspection =  repairDetailsState.value.repair.recipient
+                value =  repairDetailsState.value.repair.recipient
             )
         )
     }
@@ -161,7 +161,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Defect description",
-                inspection =  repairDetailsState.value.repair.defectDescription
+                value =  repairDetailsState.value.repair.defectDescription
             )
         )
     }
@@ -169,7 +169,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Repair description",
-                inspection =  repairDetailsState.value.repair.repairDescription
+                value =  repairDetailsState.value.repair.repairDescription
             )
         )
     }
@@ -177,7 +177,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Part description",
-                inspection =  repairDetailsState.value.repair.partDescription
+                value =  repairDetailsState.value.repair.partDescription
             )
         )
     }
@@ -193,37 +193,37 @@ fun RepairDetailsScreen(
             when(event) {
                 is UiEvent.UpdateTextFields -> {
                     deviceName.value = deviceName.value.copy(
-                        inspection = event.text.deviceName
+                        value = event.text.deviceName
                     )
                     deviceManufacturer.value = deviceManufacturer.value.copy(
-                        inspection = event.text.deviceManufacturer
+                        value = event.text.deviceManufacturer
                     )
                     deviceModel.value = deviceModel.value.copy(
-                        inspection = event.text.deviceModel
+                        value = event.text.deviceModel
                     )
                     ward.value = ward.value.copy(
-                        inspection = event.text.ward
+                        value = event.text.ward
                     )
                     comment.value = comment.value.copy(
-                        inspection = event.text.comment
+                        value = event.text.comment
                     )
                     deviceSn.value = deviceSn.value.copy(
-                            inspection = event.text.deviceSn
+                            value = event.text.deviceSn
                             )
                     deviceIn.value = deviceIn.value.copy(
-                            inspection = event.text.deviceIn
+                            value = event.text.deviceIn
                             )
                     recipient.value = recipient.value.copy(
-                        inspection = event.text.recipient
+                        value = event.text.recipient
                     )
                     defectDescription.value = defectDescription.value.copy(
-                        inspection = event.text.defectDescription
+                        value = event.text.defectDescription
                     )
                     repairDescription.value = repairDescription.value.copy(
-                        inspection = event.text.repairDescription
+                        value = event.text.repairDescription
                     )
                     partDescription.value = partDescription.value.copy(
-                        inspection = event.text.partDescription
+                        value = event.text.partDescription
                     )
                 }
                 is UiEvent.ShowSnackBar -> {
@@ -314,32 +314,32 @@ fun RepairDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
                 onValueChanged =  { name ->
-                    deviceName.value= deviceName.value.copy(inspection = name)
+                    deviceName.value= deviceName.value.copy(value = name)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(deviceName = name)))
                 },
                 state = deviceName)
             DefaultTextField(
                 onValueChanged =  {manufacturer ->
-                    deviceManufacturer.value= deviceManufacturer.value.copy(inspection = manufacturer)
+                    deviceManufacturer.value= deviceManufacturer.value.copy(value = manufacturer)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(deviceManufacturer = manufacturer)))
                 },
                 state = deviceManufacturer)
             DefaultTextField(
                 onValueChanged =  { model ->
-                    deviceModel.value= deviceModel.value.copy(inspection = model)
+                    deviceModel.value= deviceModel.value.copy(value = model)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(deviceModel = model)))
                 },
                 state = deviceModel)
             DefaultTextField(
                 onValueChanged =  { serialNumber ->
-                    deviceSn.value= deviceSn.value.copy(inspection = serialNumber)
+                    deviceSn.value= deviceSn.value.copy(value = serialNumber)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(deviceSn = serialNumber)))
                 },
                 state = deviceSn
             )
             DefaultTextField(
                 onValueChanged =  { inventoryNumber ->
-                    deviceIn.value= deviceIn.value.copy(inspection = inventoryNumber)
+                    deviceIn.value= deviceIn.value.copy(value = inventoryNumber)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(deviceIn = inventoryNumber)))
                 },
                 state = deviceIn)
@@ -369,13 +369,13 @@ fun RepairDetailsScreen(
             )
             DefaultTextField(
                 onValueChanged =  {string ->
-                    ward.value= ward.value.copy(inspection = string)
+                    ward.value= ward.value.copy(value = string)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(ward = string)))
                 },
                 state = ward)
             DefaultTextField(
                 onValueChanged =  {string ->
-                    comment.value= comment.value.copy(inspection = string)
+                    comment.value= comment.value.copy(value = string)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(comment = string)))
                 },
                 state = comment)
@@ -392,21 +392,21 @@ fun RepairDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
                 onValueChanged =  { defect ->
-                    defectDescription.value= defectDescription.value.copy(inspection = defect)
+                    defectDescription.value= defectDescription.value.copy(value = defect)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(defectDescription = defect)))
                 },
                 state = defectDescription
             )
             DefaultTextField(
                 onValueChanged =  { repair ->
-                    repairDescription.value= repairDescription.value.copy(inspection = repair)
+                    repairDescription.value= repairDescription.value.copy(value = repair)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(repairDescription = repair)))
                 },
                 state = repairDescription
             )
             DefaultTextField(
                 onValueChanged =  { part ->
-                    partDescription.value= partDescription.value.copy(inspection = part)
+                    partDescription.value= partDescription.value.copy(value = part)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(partDescription = part)))
                 },
                 state = partDescription
@@ -541,7 +541,7 @@ fun RepairDetailsScreen(
             }
             DefaultTextField(
                 onValueChanged =  { string ->
-                    recipient.value= recipient.value.copy(inspection = string)
+                    recipient.value= recipient.value.copy(value = string)
                     viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.repair.copy(recipient = string)))
                 },
                 state = recipient)
