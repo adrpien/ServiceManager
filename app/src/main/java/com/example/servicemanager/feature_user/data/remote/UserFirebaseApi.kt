@@ -17,16 +17,19 @@ class UserFirebaseApi(
 
     private val USER_FIREBASE_API: String = "USER_FIREBASE_API"
 
-    fun authenticate(mail: String, password: String): Flow<Resource<Boolean>> = flow {
+    fun authenticate(mail: String, password: String): Flow<Resource<String>> = flow {
+        var userUid: String? = null
+        emit(Resource(ResourceState.LOADING, userUid, "Authentication started"))
         val reference = firebaseAuth.signInWithEmailAndPassword(mail, password)
         val result = reference.await()
+        userUid = result.user?.uid
         if (result.user?.isEmailVerified == true) {
             Log.d(USER_FIREBASE_API, "Authentication successful")
-            emit(Resource(ResourceState.SUCCESS, true, "Authentication successful"))
+            emit(Resource(ResourceState.SUCCESS, userUid, "Authentication successful"))
 
         } else {
             Log.d(USER_FIREBASE_API, "Authentication failure")
-            emit(Resource(ResourceState.ERROR, false, "Authentication failure"))
+            emit(Resource(ResourceState.ERROR, userUid, "Authentication failure"))
         }
     }
 

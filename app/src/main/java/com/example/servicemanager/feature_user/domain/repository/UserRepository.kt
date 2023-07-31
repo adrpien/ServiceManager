@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun authenticate(mail: String, password: String): Flow<Resource<Boolean>>
+    fun authenticate(mail: String, password: String): Flow<Resource<String>>
 
     fun getUser(userId: String): Flow<Resource<User>>
 
