@@ -22,6 +22,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepairModule {
+
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
     @Provides
     @Singleton
     fun provideRepairFirebaseApi(

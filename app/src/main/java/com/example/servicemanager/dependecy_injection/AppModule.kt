@@ -34,11 +34,6 @@ object AppModule {
         return FirebaseStorage.getInstance()
     }
 
-    @Provides
-    @Singleton
-    fun provideFirebaseAuthentication(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
-    }
 
     @Provides
     @Singleton
