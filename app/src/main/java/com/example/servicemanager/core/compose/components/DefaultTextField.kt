@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.compose.DefaultTextFieldState
 import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
@@ -22,7 +21,7 @@ fun DefaultTextField(
 ) {
     Column() {
         TextField(
-            value = state.value.text,
+            value = state.value.inspection,
             label = {
                 Text(text = state.value.hint)
             },
