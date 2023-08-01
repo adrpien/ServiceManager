@@ -15,7 +15,7 @@ import com.example.servicemanager.feature_user.presentation.login.components.Log
 import com.example.servicemanager.ui.components.ContentComposable
 
 @Composable
-fun ContentNavigation(navHostController: NavHostController = rememberNavController()) {
+fun ContentNavigation(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
         startDestination = Screen.RepairListScreen.route) {
@@ -62,16 +62,6 @@ fun ContentNavigation(navHostController: NavHostController = rememberNavControll
                 navHostController = navHostController,
                 repairId = it.arguments?.getString("repairId") ?: "0"
             )
-        }
-        composable(
-            route = Screen.UserLoginScreen.route
-        ) {
-            LoginScreen(navHostController = navHostController)
-        }
-        composable(
-            route = Screen.ContentComposable.route
-        ) {
-            ContentComposable()
         }
     }
 }

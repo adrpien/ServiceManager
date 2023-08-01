@@ -63,6 +63,7 @@ fun LoginScreen(
                 state = userPassword
             )
             Button(
+                // TODO Delete this screen from BackStack
                 onClick = { navHostController.navigate(Screen.ContentComposable.route)}
             ) {
                 Icon(imageVector = Icons.Default.Check, contentDescription = "button")

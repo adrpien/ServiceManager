@@ -15,54 +15,11 @@ import com.example.servicemanager.feature_user.presentation.login.components.Log
 import com.example.servicemanager.ui.components.ContentComposable
 
 @Composable
-fun Navigation(navHostController: NavHostController = rememberNavController()) {
+fun Navigation(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.UserLoginScreen.route) {
-        composable(
-            route = Screen.InspectionListScreen.route,
-        ){
-            InspectionListScreen(
-                navHostController = navHostController
-            )
-        }
-        composable(
-            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}",
-            arguments = listOf(
-                navArgument(name = "inspectionId") {
-                    type = NavType.StringType
-                    defaultValue = "0"
-                    nullable = false
-                }
-            )
-        ){
-            InspectionDetailsScreen(
-                navHostController = navHostController,
-                inspectionId = it.arguments?.getString("inspectionId") ?: "0"
-            )
-        }
-        composable(
-            route = Screen.RepairListScreen.route,
-        ){
-            RepairListScreen(
-                navHostController = navHostController
-            )
-        }
-        composable(
-            route = Screen.RepairDetailsScreen.route + "/{repairId}",
-            arguments = listOf(
-                navArgument(name = "repairId") {
-                    type = NavType.StringType
-                    defaultValue = "0"
-                    nullable = false
-                }
-            )
-        ){
-            RepairDetailsScreen(
-                navHostController = navHostController,
-                repairId = it.arguments?.getString("repairId") ?: "0"
-            )
-        }
+        startDestination = Screen.UserLoginScreen.route)
+    {
         composable(
             route = Screen.UserLoginScreen.route
         ) {
