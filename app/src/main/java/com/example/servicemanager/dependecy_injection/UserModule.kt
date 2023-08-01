@@ -7,6 +7,10 @@ import com.example.servicemanager.feature_user.data.local.UserDatabase
 import com.example.servicemanager.feature_user.data.local.UserDatabaseDao
 import com.example.servicemanager.feature_user.data.remote.UserFirebaseApi
 import com.example.servicemanager.feature_user.data.repository.UserRepositoryImplementation
+import com.example.servicemanager.feature_user.domain.repository.UserRepository
+import com.example.servicemanager.feature_user.domain.use_cases.Authenticate
+import com.example.servicemanager.feature_user.domain.use_cases.GetUser
+import com.example.servicemanager.feature_user.domain.use_cases.UserUseCases
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -35,11 +39,11 @@ object UserModule {
         return FirebaseAuth.getInstance()
     }
 
-    @Provides
-    @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
+    //@Provides
+    //@Singleton
+    //fun provideFirebaseFirestore(): FirebaseFirestore {
+    //    return FirebaseFirestore.getInstance()
+    //}
 
     @Provides
     @Singleton
@@ -58,10 +62,20 @@ object UserModule {
     fun provideUserRepository(
         userFirebaseApi: UserFirebaseApi,
         userDatabaseDatabase: UserDatabase
-    ): UserRepositoryImplementation {
+    ): UserRepository {
         return UserRepositoryImplementation(
             userFirebaseApi = userFirebaseApi,
             userDatabaseDao = userDatabaseDatabase.userDatabaseDao
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideUserUseCases(userRepository: UserRepository): UserUseCases {
+        return UserUseCases(
+            getUser = GetUser(userRepository),
+            authenticate = Authenticate(userRepository)
+        )
+    }
+
 }

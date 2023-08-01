@@ -16,7 +16,7 @@ class UserRepositoryImplementation(
     override fun authenticate(
         mail: String,
         password: String,
-    ): Flow<Resource<Boolean>> {
+    ): Flow<Resource<String>> {
     return userFirebaseApi.authenticate(mail, password)
     }
 

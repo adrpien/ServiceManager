@@ -23,18 +23,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object InspectionModule {
 
-    @Provides
-    @Singleton
-    fun provideFirebaseStorage(): FirebaseStorage {
-        return FirebaseStorage.getInstance()
-    }
-
-
-    @Provides
-    @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
+    //@Provides
+    //@Singleton
+    //fun provideFirebaseStorage(): FirebaseStorage {
+    //    return FirebaseStorage.getInstance()
+    //}
+//
+//
+    //@Provides
+    //@Singleton
+    //fun provideFirebaseFirestore(): FirebaseFirestore {
+    //    return FirebaseFirestore.getInstance()
+    //}
 
     @Provides
     @Singleton

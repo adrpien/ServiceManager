@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.servicemanager.navigation.BottomNavigationBar
 import com.example.servicemanager.navigation.BottomNavigationItem
@@ -24,43 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navHostController = rememberNavController()
-            Scaffold(
-                bottomBar = {
-                    BottomNavigationBar(
-                        itemList = listOf(
-                            BottomNavigationItem(
-                                name = "Inspections",
-                                route = Screen.InspectionListScreen.route,
-                                icon = Icons.Default.Checklist,
-                                badgeCount = 0
-                            ),
-                            BottomNavigationItem(
-                                name = "Repairs",
-                                route = Screen.RepairListScreen.route,
-                                icon = Icons.Default.Settings,
-                                badgeCount = 0
-                            ),
-                            BottomNavigationItem(
-                                name = "Home",
-                                route = Screen.HomeScreen.route,
-                                icon = Icons.Default.Home,
-                                badgeCount = 0
-                            )
-
-                        ),
-                        navHostController = navHostController,
-                        onItemClick = {
-                            navHostController.navigate(it.route)
-                        })
-                 }
-            ) {
-                Column(modifier = Modifier.padding(it)) {
-                    Navigation(
-                        navHostController = navHostController
-                    )
-                }
-            }
+            Navigation()
         }
     }
 }

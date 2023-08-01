@@ -15,10 +15,10 @@ import com.example.servicemanager.feature_user.presentation.login.components.Log
 import com.example.servicemanager.ui.components.ContentComposable
 
 @Composable
-fun Navigation(navHostController: NavHostController = rememberNavController()) {
+fun ContentNavigation(navHostController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.UserLoginScreen.route) {
+        startDestination = Screen.RepairListScreen.route) {
         composable(
             route = Screen.InspectionListScreen.route,
         ){

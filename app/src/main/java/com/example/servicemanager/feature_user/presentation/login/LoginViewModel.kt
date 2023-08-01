@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.servicemanager.feature_user.domain.use_cases.Authenticate
 import com.example.servicemanager.feature_user.domain.use_cases.GetUser
+import com.example.servicemanager.feature_user.domain.use_cases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
+    private val userUseCases: UserUseCases,
     private val authenticateUseCase: Authenticate,
     private val getUserUseCase: GetUser
 ): ViewModel() {
@@ -24,7 +26,7 @@ class UserViewModel @Inject constructor(
         when(userLoginEvent){
             is UserLoginEvent.Authenticate -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    authenticateUseCase(userLoginEvent.mail, userLoginEvent.mail)
+                    userUseCases.authenticate(userLoginEvent.mail, userLoginEvent.password)
                 }
             }
             is UserLoginEvent.UpdateState -> {
