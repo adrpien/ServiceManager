@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_user.presentation.login.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -13,10 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.servicemanager.core.compose.DefaultTextFieldState
+import com.example.servicemanager.core.compose.components.DefaultButton
 import com.example.servicemanager.core.compose.components.DefaultTextField
+import com.example.servicemanager.core.compose.components.PasswordTextField
 import com.example.servicemanager.feature_user.presentation.login.UserLoginEvent
 import com.example.servicemanager.feature_user.presentation.login.UserLoginViewModel
 import com.example.servicemanager.navigation.Screen
+import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -29,17 +33,16 @@ fun LoginScreen(
 
     val userLoginState = viewModel.userLoginState
 
-    val userMail = remember {
-        mutableStateOf(DefaultTextFieldState(
-            hint = "Mail",
-            value = userLoginState.value.mail
-        ))
-    }
-
     val userPassword = remember {
         mutableStateOf(DefaultTextFieldState(
             hint = "Password",
             value = userLoginState.value.password
+        ))
+    }
+    val userMail = remember {
+        mutableStateOf(DefaultTextFieldState(
+            hint = "Mail",
+            value = userLoginState.value.mail
         ))
     }
 
@@ -66,6 +69,7 @@ fun LoginScreen(
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
+            .background(TiemedVeryLightBeige)
             .padding(it)) {
             Column(
                 modifier = Modifier
@@ -79,22 +83,25 @@ fun LoginScreen(
                     },
                     state = userMail
                 )
-                DefaultTextField(
-                    onValueChanged =  { password ->
-                        userPassword.value= userPassword.value.copy(value = password)
-                        viewModel.onEvent(UserLoginEvent.UpdateState(password = password, mail = userLoginState.value.mail))
-                    },
+                PasswordTextField(
                     state = userPassword
-                )
-                Button(
+                ) { password ->
+                    userPassword.value= userPassword.value.copy(value = password)
+                    viewModel.onEvent(UserLoginEvent.UpdateState(
+                        password = password,
+                        mail = userLoginState.value.mail
+                    )
+                    )
+                }
+                DefaultButton(
+                    title = "Authenticate",
                     onClick = {
                         viewModel.onEvent(UserLoginEvent.Authenticate(
                             mail = userLoginState.value.mail,
                             password = userLoginState.value.password))
                     }
-                ) {
-                    Icon(imageVector = Icons.Default.Check, contentDescription = "button")
-                }
+                )
+
             }
         }
     }
