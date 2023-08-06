@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 class UserFirebaseApi(
     val firebaseAuth: FirebaseAuth,
@@ -18,24 +19,25 @@ class UserFirebaseApi(
     private val USER_FIREBASE_API: String = "USER_FIREBASE_API"
 
     fun authenticate(mail: String, password: String): Flow<Resource<String>> = flow {
-        var userUid: String? = null
-        emit(Resource(ResourceState.LOADING, userUid, "Authentication started"))
+        var userId: String? = "0"
+        emit(Resource(ResourceState.LOADING, userId, "Authentication started"))
         val reference = firebaseAuth.signInWithEmailAndPassword(mail, password)
         val result = reference.await()
-        userUid = result.user?.uid
+        userId = result.user?.uid
         if (result.user?.isEmailVerified == true) {
             Log.d(USER_FIREBASE_API, "Authentication successful")
-            emit(Resource(ResourceState.SUCCESS, userUid, "Authentication successful"))
+            emit(Resource(ResourceState.SUCCESS, userId, "Authentication successful"))
 
         } else {
             Log.d(USER_FIREBASE_API, "Authentication failure")
-            emit(Resource(ResourceState.ERROR, userUid, "Authentication failure"))
+            emit(Resource(ResourceState.ERROR, userId, "Authentication failure"))
+            result.user?.sendEmailVerification()
         }
     }
 
     suspend fun getUser(userId: String): User? {
         Log.d(USER_FIREBASE_API,  "User fetching started")
-        var user: User? = null
+        var user: User? = User()
         val documentReference = firebaseFirestore.collection("users").document(userId)
         val result = documentReference.get()
         result.await()

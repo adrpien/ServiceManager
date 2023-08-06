@@ -5,6 +5,8 @@ import com.example.servicemanager.feature_app.domain.model.*
 import com.example.servicemanager.feature_repairs.domain.model.Repair
 import com.example.servicemanager.feature_repairs.domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs.domain.util.RepairOrderType
+import com.google.firebase.firestore.auth.User
+import javax.inject.Inject
 
 data class RepairListState(
     val repairList: List<Repair> = emptyList(),
@@ -18,7 +20,7 @@ data class RepairListState(
     val isSortSectionVisible: Boolean = false,
     val isHospitalFilterSectionVisible: Boolean = false,
     val repairOrderType: RepairOrderType = RepairOrderType.State(RepairOrderMonotonicity.Ascending),
-    val hospital: Hospital? = null
+    val hospital: Hospital? = null,
 ) {
 
 }

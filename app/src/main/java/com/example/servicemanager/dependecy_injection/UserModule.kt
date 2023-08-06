@@ -7,6 +7,7 @@ import com.example.servicemanager.feature_user.data.local.UserDatabase
 import com.example.servicemanager.feature_user.data.local.UserDatabaseDao
 import com.example.servicemanager.feature_user.data.remote.UserFirebaseApi
 import com.example.servicemanager.feature_user.data.repository.UserRepositoryImplementation
+import com.example.servicemanager.feature_user.domain.model.User
 import com.example.servicemanager.feature_user.domain.repository.UserRepository
 import com.example.servicemanager.feature_user.domain.use_cases.Authenticate
 import com.example.servicemanager.feature_user.domain.use_cases.GetUser
@@ -75,6 +76,16 @@ object UserModule {
         return UserUseCases(
             getUser = GetUser(userRepository),
             authenticate = Authenticate(userRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideUser(): User {
+        return User(
+            userId = "0",
+            userName = "",
+            userType = ""
         )
     }
 
