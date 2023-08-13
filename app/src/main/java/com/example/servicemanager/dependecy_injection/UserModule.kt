@@ -40,11 +40,6 @@ object UserModule {
         return FirebaseAuth.getInstance()
     }
 
-    //@Provides
-    //@Singleton
-    //fun provideFirebaseFirestore(): FirebaseFirestore {
-    //    return FirebaseFirestore.getInstance()
-    //}
 
     @Provides
     @Singleton
@@ -76,16 +71,6 @@ object UserModule {
         return UserUseCases(
             getUser = GetUser(userRepository),
             authenticate = Authenticate(userRepository)
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideUser(): User {
-        return User(
-            userId = "0",
-            userName = "",
-            userType = ""
         )
     }
 

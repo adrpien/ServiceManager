@@ -21,11 +21,9 @@ class  InspectionRepositoryImplementation(
 
     /* ********************************* INSPECTIONS ******************************************** */
     override fun getInspectionList() = flow {
-        emit(Resource(ResourceState.LOADING, null, "Inspection list fetching started"))
-        var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
-        inspectionList.forEach { inspection ->
-
-        }
+        var inspectionList: List<Inspection> = listOf<Inspection>()
+        emit(Resource(ResourceState.LOADING, inspectionList, "Inspection list fetching started"))
+        inspectionList = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
         emit(Resource(ResourceState.LOADING, inspectionList, "Locally cached list"))
         val list = inspectionFirebaseApi.getInspectionList()?: emptyList()
         if(list.isNotEmpty()) {
@@ -40,8 +38,9 @@ class  InspectionRepositoryImplementation(
 
 
     override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow{
-        emit(Resource(ResourceState.LOADING, null, "Inspection record fetching started"))
-        var inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
+        var inspection = Inspection()
+        emit(Resource(ResourceState.LOADING, inspection, "Inspection record fetching started"))
+        inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
         emit(Resource(ResourceState.LOADING, inspection, "Locally cached record"))
         val record = inspectionFirebaseApi.getInspection(inspectionId)
         if(record != null) {
@@ -49,6 +48,8 @@ class  InspectionRepositoryImplementation(
             inspectionDatabaseDao.insertInspection(record.toInspectionEntity())
             inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
             emit(Resource(ResourceState.SUCCESS, inspection, "Inspection record fetching finished"))
+        } else {
+            emit(Resource(ResourceState.ERROR, inspection, "Inspection record fetching error"))
         }
     }
 

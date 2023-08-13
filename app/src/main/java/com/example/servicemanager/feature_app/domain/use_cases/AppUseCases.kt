@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_app.domain.use_cases
 
+import com.example.servicemanager.feature_app.domain.repository.AppRepository
 import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app.domain.use_cases.signatures.SaveSignature
 import com.example.servicemanager.feature_app.domain.use_cases.signatures.GetSignature

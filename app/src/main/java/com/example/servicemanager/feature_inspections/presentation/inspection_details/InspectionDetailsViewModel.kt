@@ -255,6 +255,6 @@ class InspectionDetailsViewModel @Inject constructor(
     sealed class UiEvent {
         data class ShowSnackBar(val messege: String): UiEvent()
 
-        data class UpdateTextFields(val text: Inspection): UiEvent()
+        data class UpdateTextFields(val inspection: Inspection): UiEvent()
     }
 }

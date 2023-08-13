@@ -141,28 +141,28 @@ fun InspectionDetailsScreen(
             when(event) {
                 is UiEvent.UpdateTextFields -> {
                     deviceName.value = deviceName.value.copy(
-                        value = event.text.deviceName
+                        value = event.inspection.deviceName
                     )
                     deviceManufacturer.value = deviceManufacturer.value.copy(
-                        value = event.text.deviceManufacturer
+                        value = event.inspection.deviceManufacturer
                     )
                     deviceModel.value = deviceModel.value.copy(
-                        value = event.text.deviceModel
+                        value = event.inspection.deviceModel
                     )
                     ward.value = ward.value.copy(
-                        value = event.text.ward
+                        value = event.inspection.ward
                     )
                     comment.value = comment.value.copy(
-                        value = event.text.comment
+                        value = event.inspection.comment
                     )
                     deviceSn.value = deviceSn.value.copy(
-                            value = event.text.deviceSn
+                            value = event.inspection.deviceSn
                             )
                     deviceIn.value = deviceIn.value.copy(
-                            value = event.text.deviceIn
+                            value = event.inspection.deviceIn
                             )
                     recipient.value = recipient.value.copy(
-                        value = event.text.recipient
+                        value = event.inspection.recipient
                     )
                 }
                 is UiEvent.ShowSnackBar -> {
@@ -177,9 +177,9 @@ fun InspectionDetailsScreen(
             FloatingActionButton(
                 onClick = {
                     if(inspectionDetailsState.value.inspection.inspectionId != "0") {
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateInspection)
+                        viewModel.onEvent(InspectionDetailsEvent.UpdateInspection(inspectionDetailsState.value.inspection))
                     } else {
-                        viewModel.onEvent(InspectionDetailsEvent.SaveInspection)
+                        viewModel.onEvent(InspectionDetailsEvent.SaveInspection(inspectionDetailsState.value.inspection))
                     }
                     navHostController.navigate(Screen.InspectionListScreen.route)
                 },
