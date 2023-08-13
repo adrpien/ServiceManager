@@ -31,9 +31,13 @@ class UserLoginViewModel @Inject constructor(
                     userUseCases.authenticate(userLoginEvent.mail, userLoginEvent.password).collect() { result ->
                         when(result.resourceState) {
                             ResourceState.LOADING -> Unit
-                            // TODO Show CircularProgressButton
-                            ResourceState.ERROR -> Unit
-                            // TODO Show SnackBar "Uknown error"
+                            ResourceState.ERROR -> {
+                                _eventFlow.emit(
+                                    UiEvent.ShowSnackbar(
+                                        messege = result.data ?: "Uknown error"
+                                    )
+                                )
+                            }
                             ResourceState.SUCCESS -> {
                                 if (result.data != null) {
                                     _userLoginState.value = _userLoginState.value.copy(

@@ -16,7 +16,7 @@ class SaveInspection @Inject constructor (
             repository.insertInspection(inspection)
         } else {
             flow<Resource<String>> {
-                emit(Resource(ResourceState.ERROR, "TextFields deviceSn and deviceIn are empty", "SaveInspection use case: empty SN and IN TextField, ResourceState Error"))
+                emit(Resource(ResourceState.ERROR, "TextFields deviceSn and deviceIn are empty", "TextFields deviceSn and deviceIn are empty"))
             }
         }
     }

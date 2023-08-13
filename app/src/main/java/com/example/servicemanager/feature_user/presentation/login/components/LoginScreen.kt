@@ -47,8 +47,8 @@ fun LoginScreen(
     }
 
     LaunchedEffect(true) {
-        viewModel.eventFlow.collectLatest { result ->
-            when(result) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
                 is UserLoginViewModel.UiEvent.Authenticate -> {
                     navHostController.navigate(Screen.ContentComposable.route) {
                         popUpTo(Screen.UserLoginScreen.route) {
@@ -58,7 +58,7 @@ fun LoginScreen(
                 }
                 is UserLoginViewModel.UiEvent.ShowSnackbar -> {
                         scaffoldState.snackbarHostState.showSnackbar(
-                            message = result.messege
+                            message = event.messege
                         )
                     }
             }
