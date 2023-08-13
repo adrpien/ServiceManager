@@ -10,6 +10,7 @@ import com.example.servicemanager.feature_user.data.repository.UserRepositoryImp
 import com.example.servicemanager.feature_user.domain.model.User
 import com.example.servicemanager.feature_user.domain.repository.UserRepository
 import com.example.servicemanager.feature_user.domain.use_cases.Authenticate
+import com.example.servicemanager.feature_user.domain.use_cases.GetCurrentUser
 import com.example.servicemanager.feature_user.domain.use_cases.GetUser
 import com.example.servicemanager.feature_user.domain.use_cases.UserUseCases
 import com.google.firebase.auth.FirebaseAuth
@@ -70,6 +71,7 @@ object UserModule {
     fun provideUserUseCases(userRepository: UserRepository): UserUseCases {
         return UserUseCases(
             getUser = GetUser(userRepository),
+            getCurrentUser = GetCurrentUser(userRepository),
             authenticate = Authenticate(userRepository)
         )
     }

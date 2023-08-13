@@ -46,6 +46,10 @@ fun LoginScreen(
         ))
     }
 
+    LaunchedEffect(key1 = true) {
+        viewModel.onEvent(UserLoginEvent.GetCurrentUser())
+    }
+
     LaunchedEffect(true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
@@ -60,6 +64,13 @@ fun LoginScreen(
                         scaffoldState.snackbarHostState.showSnackbar(
                             message = event.messege
                         )
+                    }
+                is UserLoginViewModel.UiEvent.NavigateTo -> {
+                        navHostController.navigate(Screen.ContentComposable.route) {
+                            popUpTo(Screen.UserLoginScreen.route) {
+                                inclusive = true
+                            }
+                        }
                     }
             }
         }

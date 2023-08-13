@@ -10,4 +10,7 @@ interface UserRepository {
 
     fun getUser(userId: String): Flow<Resource<User>>
 
+    fun getCurrentUser(): Flow<Resource<String>>
+
+
 }

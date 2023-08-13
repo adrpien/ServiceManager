@@ -2,14 +2,17 @@ package com.example.servicemanager.feature_user.presentation.login
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.Constraints
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.servicemanager.core.util.Constans
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_user.domain.use_cases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,11 +65,25 @@ class UserLoginViewModel @Inject constructor(
                     password = userLoginEvent.password
                 )
             }
+            is UserLoginEvent.GetCurrentUser -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    userUseCases.getCurrentUser().collect() {result ->
+                        when(result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                _eventFlow.emit(UiEvent.NavigateTo(Constans.ROUTE_CONTENT_COMPOSABLE))
+                            }
+                            ResourceState.ERROR -> Unit
+                            ResourceState.LOADING -> Unit
+                        }
+                    }
+                }
+            }
         }
     }
     sealed class UiEvent() {
         data class Authenticate(val userId: String): UiEvent()
         data class ShowSnackbar(val messege: String): UiEvent()
+        data class NavigateTo(val route: String): UiEvent()
     }
 }
 

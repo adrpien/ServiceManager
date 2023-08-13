@@ -69,4 +69,8 @@ class UserFirebaseApi(
         }
         return user
     }
+
+    suspend fun getCurrentUser(): String? {
+        return firebaseAuth.currentUser?.uid
+    }
 }

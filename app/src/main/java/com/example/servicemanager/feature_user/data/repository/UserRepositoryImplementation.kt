@@ -32,4 +32,16 @@ class UserRepositoryImplementation(
             emit(Resource(ResourceState.ERROR, user, "User fetching error"))
         }
     }
+
+    override fun getCurrentUser(): Flow<Resource<String>> = flow {
+        var data: String  = ""
+        emit(Resource(ResourceState.LOADING, data, "Current user fetching started"))
+        data = userFirebaseApi.getCurrentUser() ?: "0"
+        if (data != null){
+            emit(Resource(ResourceState.SUCCESS, data, "Current user logged in"))
+        } else {
+            emit(Resource(ResourceState.ERROR, "Current user not logged in", "Current user not logged in"))
+        }
+    }
+
 }
