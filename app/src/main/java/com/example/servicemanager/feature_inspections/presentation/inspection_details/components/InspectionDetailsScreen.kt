@@ -31,6 +31,7 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -64,6 +65,8 @@ fun InspectionDetailsScreen(
     val signatureDialogState = rememberMaterialDialogState()
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
+
 
     val deviceName = remember {
         mutableStateOf(
@@ -166,7 +169,14 @@ fun InspectionDetailsScreen(
                     )
                 }
                 is UiEvent.ShowSnackBar -> {
-                    //
+                    coroutineScope.launch {
+                        val result = scaffoldState.snackbarHostState.showSnackbar(
+                            message = event.messege,
+                        )
+                    }
+                }
+                is UiEvent.NavigateTo -> {
+                    navHostController.navigate(event.route)
                 }
             }
         }
@@ -181,7 +191,7 @@ fun InspectionDetailsScreen(
                     } else {
                         viewModel.onEvent(InspectionDetailsEvent.SaveInspection(inspectionDetailsState.value.inspection))
                     }
-                    navHostController.navigate(Screen.InspectionListScreen.route)
+                    //navHostController.navigate(Screen.InspectionListScreen.route)
                 },
                 backgroundColor = TiemedLightBlue
             ) {

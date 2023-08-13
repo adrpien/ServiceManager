@@ -5,12 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+import com.example.servicemanager.core.util.Constans
 import com.example.servicemanager.core.util.Helper.Companion.convertToBitmap
 import com.example.servicemanager.core.util.Helper.Companion.convertToByteArray
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
+import com.example.servicemanager.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -66,7 +69,10 @@ class InspectionDetailsViewModel @Inject constructor(
                     inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection).collect() { result ->
                         when(result.resourceState) {
                             ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
+                            ResourceState.ERROR -> {
+                                // TODO Show Snackbar
+                                _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
+                            }
                             ResourceState.SUCCESS ->  {
                                 result.data?.let { inspectionId ->
                                     _inspectionDetailsState.value = _inspectionDetailsState.value.copy(inspection = _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId))
@@ -74,6 +80,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 viewModelScope.launch(Dispatchers.IO) {
                                     appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
                                 }
+                                _eventFlow.emit(UiEvent.NavigateTo(Constans.ROUTE_INSPECTION_LIST_SCREEN))
                             }
                         }
                     }
@@ -254,7 +261,7 @@ class InspectionDetailsViewModel @Inject constructor(
 
     sealed class UiEvent {
         data class ShowSnackBar(val messege: String): UiEvent()
-
         data class UpdateTextFields(val inspection: Inspection): UiEvent()
+        data class NavigateTo(val route: String): UiEvent()
     }
 }
