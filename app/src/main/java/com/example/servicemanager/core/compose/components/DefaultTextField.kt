@@ -26,6 +26,7 @@ fun DefaultTextField(
                 Text(text = state.value.hint)
             },
             onValueChange = onValueChanged,
+            enabled = state.value.clickable,
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
@@ -38,7 +39,7 @@ fun DefaultTextField(
                 focusedLabelColor = TiemedLightBlue,
                 disabledLabelColor = TiemedLightBlue,
                 errorLabelColor = TiemedLightBlue
-            )
+            ),
         )
         Spacer(modifier = Modifier.height(8.dp))
     }
