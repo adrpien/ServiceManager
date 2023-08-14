@@ -53,7 +53,7 @@ class  AppFirebaseApi(
                         emit(Resource(ResourceState.SUCCESS, data))
                         Log.d(APP_REPOSITORY, "Signature fetched")
                     } else {
-                        emit(Resource(ResourceState.LOADING, null))
+                        emit(Resource(ResourceState.ERROR, null))
                         Log.d(APP_REPOSITORY, "Signature fetching error")
                     }
     }

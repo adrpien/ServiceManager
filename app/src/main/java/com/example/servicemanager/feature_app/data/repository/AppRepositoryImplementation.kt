@@ -30,9 +30,10 @@ class  AppRepositoryImplementation(
     /* ********************************* HOSPITALS ********************************************* */
 
     override fun getHospitalList() = flow<Resource<List<Hospital>>> {
+        var hospitalList = listOf<Hospital>()
         Log.d(APP_REPOSITORY_IMPLEMENTATION, "Hospital list fetching started")
-        emit(Resource(ResourceState.LOADING, null, "Hospital list fetching started"))
-        var hospitalList: List<Hospital> = appDatabaseDao.getHospitalList().map { it.toHospital() }
+        emit(Resource(ResourceState.LOADING, hospitalList, "Hospital list fetching started"))
+        hospitalList = appDatabaseDao.getHospitalList().map { it.toHospital() }
         emit(Resource(ResourceState.LOADING, hospitalList, "Locally cached list"))
         val list = firebaseApi.getHospitalList()?: emptyList()
         if(list.isNotEmpty()) {
@@ -48,9 +49,10 @@ class  AppRepositoryImplementation(
     /* ********************************* TECHNICIANS ******************************************** */
 
     override fun getTechnicianList() = flow {
+        var technicianList = listOf<Technician>()
         Log.d(APP_REPOSITORY_IMPLEMENTATION, "Technician list fetching started")
-        emit(Resource(ResourceState.LOADING, null, "Technician list fetching started"))
-        var technicianList: List<Technician> = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
+        emit(Resource(ResourceState.LOADING, technicianList, "Technician list fetching started"))
+        technicianList = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
         emit(Resource(ResourceState.LOADING, technicianList, "Locally cached list"))
         val list = firebaseApi.getTechnicianList()?: emptyList()
         if(list.isNotEmpty()) {
@@ -65,9 +67,10 @@ class  AppRepositoryImplementation(
 
     /* ********************************* INSPECTION STATES ************************************** */
     override fun getInspectionStateList() = flow<Resource<List<InspectionState>>> {
+        var inspectionStateList = listOf<InspectionState>()
         Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection state list fetching started")
-        emit(Resource(ResourceState.LOADING, null, "Inspection state list fetching started"))
-        var inspectionStateList: List<InspectionState> = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
+        emit(Resource(ResourceState.LOADING, inspectionStateList, "Inspection state list fetching started"))
+        inspectionStateList = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
         emit(Resource(ResourceState.LOADING, inspectionStateList, "Locally cached list"))
         val list = firebaseApi.getInspectionStateList()?: emptyList()
         if(list.isNotEmpty()) {
@@ -82,9 +85,10 @@ class  AppRepositoryImplementation(
 
     /* ********************************* REPAIR STATES ****************************************** */
     override fun getRepairStateList() = flow<Resource<List<RepairState>>> {
+        var repairStateList = listOf<RepairState>()
         Log.d(APP_REPOSITORY_IMPLEMENTATION, "Repair state list fetching started")
-        emit(Resource(ResourceState.LOADING, null, "Repair state list fetching started"))
-        var repairStateList: List<RepairState> = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
+        emit(Resource(ResourceState.LOADING, repairStateList, "Repair state list fetching started"))
+        repairStateList = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
         emit(Resource(ResourceState.LOADING, repairStateList, "Locally cached list"))
         val list = firebaseApi.getRepairStateList()?: emptyList()
         if(list.isNotEmpty()) {
@@ -99,9 +103,10 @@ class  AppRepositoryImplementation(
 
     /* ********************************* EST STATES ********************************************* */
     override fun getEstStateList() = flow<Resource<List<EstState>>> {
+        var estStateList = listOf<EstState>()
         Log.d(APP_REPOSITORY_IMPLEMENTATION, "Est state list fetching started")
-        emit(Resource(ResourceState.LOADING, null, "Est state list fetching started"))
-        var estStateList: List<EstState> = appDatabaseDao.getEstStateList().map { it.toEstState() }
+        emit(Resource(ResourceState.LOADING, estStateList, "Est state list fetching started"))
+        estStateList = appDatabaseDao.getEstStateList().map { it.toEstState() }
         emit(Resource(ResourceState.LOADING, estStateList, "Locally cached list"))
         val list = firebaseApi.getEstStateList()?: emptyList()
         if(list.isNotEmpty()) {

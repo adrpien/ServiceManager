@@ -13,7 +13,7 @@ class UpdateInspection @Inject constructor (
 ) {
 
     operator fun invoke(inspection: Inspection): Flow<Resource<String>> {
-        return if(inspection.inspectionId == "0") repository.updateInspection(inspection)
+        return if(inspection.inspectionId != "0") repository.updateInspection(inspection)
         else {
             flow<Resource<String>> {
                 emit(
