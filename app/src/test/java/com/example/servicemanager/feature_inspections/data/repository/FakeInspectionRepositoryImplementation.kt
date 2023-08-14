@@ -32,25 +32,39 @@ class FakeInspectionRepositoryImplementation() : InspectionRepository {
 
     override fun getInspectionList(): Flow<Resource<List<Inspection>>> = flow {
         val inspectionList: List<Inspection> = localInspectionList
-        emit(Resource(ResourceState.LOADING, inspectionList, "FakeInspectionRepositoryImplementation: getInspectionList emits inspectionList"))
+        emit(Resource(ResourceState.LOADING, inspectionList, "FakeInspectionRepositoryImplementation: getInspectionList loading"))
         if(returnErrorState) {
-            emit(Resource(ResourceState.ERROR, inspectionList, "FakeInspectionRepositoryImplementation: getInspectionList emits inspectionList"))
+            emit(Resource(ResourceState.ERROR, inspectionList, "FakeInspectionRepositoryImplementation: getInspectionList error"))
         } else {
-            emit(Resource(ResourceState.SUCCESS, inspectionList, "FakeInspectionRepositoryImplementation: getInspectionList emits inspectionList"))
+            emit(Resource(ResourceState.SUCCESS, inspectionList, "FakeInspectionRepositoryImplementation: getInspectionList success"))
         }
     }
 
     override fun insertInspection(inspection: Inspection): Flow<Resource<String>> =  flow {
-        remoteInspectionList.add(inspection)
-        localInspectionList.removeAll(localInspectionList)
-        localInspectionList.addAll(remoteInspectionList)
+        emit(Resource(ResourceState.LOADING, "0", "FakeInspectionRepositoryImplementation: insert inspection loading"))
+        if (returnErrorState) {
+            emit(Resource(ResourceState.ERROR, "0", "FakeInspectionRepositoryImplementation: insert inspection error"))
+        } else {
+            remoteInspectionList.add(inspection)
+            localInspectionList.removeAll(localInspectionList)
+            localInspectionList.addAll(remoteInspectionList)
+            emit(Resource(ResourceState.SUCCESS, "0", "FakeInspectionRepositoryImplementation: insert inspection success"))
+        }
+
     }
 
-    override fun updateInspection(inspection: Inspection): Flow<Resource<Boolean>> = flow {
-        remoteInspectionList.remove(inspection)
-        remoteInspectionList.add(inspection)
-        localInspectionList.removeAll(localInspectionList)
-        localInspectionList.addAll(remoteInspectionList)
+    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+        emit(Resource(ResourceState.LOADING, "0", "FakeInspectionRepositoryImplementation: update inspection loading"))
+        if (returnErrorState) {
+            emit(Resource(ResourceState.ERROR, "0", "FakeInspectionRepositoryImplementation: update inspection error"))
+        } else {
+            remoteInspectionList.remove(inspection)
+            remoteInspectionList.add(inspection)
+            localInspectionList.removeAll(localInspectionList)
+            localInspectionList.addAll(remoteInspectionList)
+            emit(Resource(ResourceState.SUCCESS, "0", "FakeInspectionRepositoryImplementation: update inspection success"))
+        }
+
     }
 
     override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>>  = flow {

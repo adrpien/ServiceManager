@@ -51,7 +51,7 @@ class  InspectionFirebaseApi(
     }
     fun createInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in createInspection fun for InspectionFirebaseApi
-        emit(Resource(ResourceState.LOADING, "0", null))
+        emit(Resource(ResourceState.LOADING, "0", "Inspection record creating started"))
         var documentReference = firebaseFirestore.collection("inspections")
             .document()
         var map = mapOf<String, String>(
@@ -83,9 +83,9 @@ class  InspectionFirebaseApi(
 
         }
     }
-    fun updateInspection(inspection: Inspection): Flow<Resource<Boolean>> = flow {
+    fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
-        emit(Resource(ResourceState.LOADING, false))
+        emit(Resource(ResourceState.LOADING, "", "Inspection record updateing started"))
         var map = mapOf<String, String>(
             "inspectionId" to inspection.inspectionId,
             "inspectionStateId" to inspection.inspectionStateId,
@@ -107,10 +107,11 @@ class  InspectionFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, true))
+            emit(Resource(ResourceState.SUCCESS, "Inspection record updated", "Inspection record updated"))
             Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
         } else {
-            emit(Resource(ResourceState.ERROR, false))
+
+            emit(Resource(ResourceState.ERROR, result.exception?.message ?: "Update inspection unknown error", ))
             Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
         }
 

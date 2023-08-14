@@ -1,6 +1,7 @@
 package com.adrpien.tiemed.domain.use_case.inspections
 
 import com.example.servicemanager.core.util.Resource
+import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.feature_inspections.domain.repository.InspectionRepository
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +13,10 @@ class GetInspection @Inject constructor (
 ) {
 
     operator fun invoke(inspectionId: String): Flow<Resource<Inspection>> {
-        if(inspectionId.isBlank()) {
-            return flow {  }
+        if(inspectionId.isEmpty()) {
+            return flow {
+                emit(Resource(ResourceState.ERROR, Inspection(), "Get inspection unknown error"))
+            }
         }
         return repository.getInspection(inspectionId)
     }

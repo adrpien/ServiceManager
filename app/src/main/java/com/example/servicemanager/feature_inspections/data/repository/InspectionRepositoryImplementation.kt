@@ -57,7 +57,7 @@ class  InspectionRepositoryImplementation(
         return inspectionFirebaseApi.createInspection(inspection)
     }
 
-    override fun updateInspection(inspection: Inspection): Flow<Resource<Boolean>> {
+    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> {
         return inspectionFirebaseApi.updateInspection(inspection)
     }
 
