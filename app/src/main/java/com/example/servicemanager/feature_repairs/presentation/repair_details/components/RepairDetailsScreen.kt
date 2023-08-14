@@ -298,7 +298,8 @@ fun RepairDetailsScreen(
                         ).repair
                         )
                         )
-                    }
+                    },
+                    isClickable = true
                 )
             }
             Text(
@@ -365,7 +366,8 @@ fun RepairDetailsScreen(
                     ).repair
                     )
                     )
-                }
+                },
+                isClickable = true
             )
             DefaultTextField(
                 onValueChanged =  {string ->
@@ -429,7 +431,8 @@ fun RepairDetailsScreen(
                         ).repair
                         )
                         )
-                    }
+                    },
+                    isClickable = true
                 )
             }
             Button(
@@ -474,11 +477,10 @@ fun RepairDetailsScreen(
                         viewModel.onEvent(RepairDetailsEvent.UpdateState(repairDetailsState.value.copy(
                             repair = repairDetailsState.value.repair.copy(
                                 estStateId = it.estStateId
-                            )
-                        ).repair
-                        )
-                        )
-                    }
+                            ))
+                            .repair))
+                    },
+                    isClickable = true
                 )
             }
             Row(
@@ -520,7 +522,8 @@ fun RepairDetailsScreen(
                         ).repair
                         )
                         )
-                    }
+                    },
+                    isClickable = true
                 )
             }
             Button(

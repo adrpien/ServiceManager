@@ -4,6 +4,6 @@ data class DefaultTextFieldState(
     val isHintVisible: Boolean = true,
     val hint: String = "",
     val value: String = "",
-    val clickable: Boolean = false
+    val clickable: Boolean = true
 ) {
 }

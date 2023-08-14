@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedMediumBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
+import com.example.servicemanager.ui.theme.TiemedVeryLightBlue
 
 
 @Composable
@@ -23,7 +24,8 @@ fun SelectRadioButton(
     title: String,
     selected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isClickable: Boolean
 ){
     Row(
         modifier = modifier,
@@ -37,10 +39,13 @@ fun SelectRadioButton(
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = if (selected) TiemedLightBlue else TiemedVeryLightBeige,
                 contentColor = if (!selected) TiemedLightBlue else TiemedVeryLightBeige,
+                disabledBackgroundColor = if(selected) TiemedVeryLightBlue else TiemedVeryLightBeige,
+                disabledContentColor = if (selected) TiemedVeryLightBeige else TiemedVeryLightBlue
             ),
             border = BorderStroke(
                 width = 2.dp,
-                color = TiemedLightBlue)
+                color = TiemedLightBlue),
+            enabled = isClickable
         ) {
             Text(text = title)
         }

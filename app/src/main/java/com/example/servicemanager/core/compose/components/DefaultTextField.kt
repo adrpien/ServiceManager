@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.compose.DefaultTextFieldState
 import com.example.servicemanager.ui.theme.TiemedLightBlue
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
+import com.example.servicemanager.ui.theme.TiemedVeryLightBlue
 
 @Composable
 fun DefaultTextField(
@@ -38,7 +39,8 @@ fun DefaultTextField(
                 unfocusedLabelColor = TiemedLightBlue,
                 focusedLabelColor = TiemedLightBlue,
                 disabledLabelColor = TiemedLightBlue,
-                errorLabelColor = TiemedLightBlue
+                errorLabelColor = TiemedLightBlue,
+                disabledTextColor = TiemedVeryLightBlue
             ),
         )
         Spacer(modifier = Modifier.height(8.dp))

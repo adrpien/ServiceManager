@@ -1,5 +1,6 @@
 package com.example.servicemanager.core.compose.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,6 +15,7 @@ fun HospitalSelectionSection(
     hospitalList: List<Hospital>,
     hospital: Hospital,
     onHospitalChange: (Hospital) -> Unit,
+    isClickable: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -32,7 +34,9 @@ fun HospitalSelectionSection(
                 SelectRadioButton(
                     title = item.hospital,
                     selected = item.hospitalId == hospital.hospitalId,
-                    onClick = { onHospitalChange(item) })
+                    onClick = { onHospitalChange(item) },
+                    isClickable = isClickable
+                )
             }
         }
     }

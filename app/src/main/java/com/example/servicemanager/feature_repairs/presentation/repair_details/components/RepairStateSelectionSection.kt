@@ -33,7 +33,8 @@ fun RepairStateSelectionSection(
                 SelectRadioButton(
                     title = item.repairState,
                     selected = item.repairStateId == repairState.repairStateId,
-                    onClick = { onRepairStateChange(item) })
+                    onClick = { onRepairStateChange(item) },
+                isClickable = true)
             }
         }
     }

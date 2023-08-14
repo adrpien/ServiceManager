@@ -15,6 +15,7 @@ fun EstStateSelectionSection(
     estStateList: List<EstState>,
     estState: EstState,
     onEstStateChange: (EstState) -> Unit,
+    isClickable: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -33,7 +34,9 @@ fun EstStateSelectionSection(
                 SelectRadioButton(
                     title = item.estState,
                     selected = item.estStateId == estState.estStateId,
-                    onClick = { onEstStateChange(item) })
+                    onClick = { onEstStateChange(item) },
+                    isClickable = isClickable
+                )
             }
         }
     }

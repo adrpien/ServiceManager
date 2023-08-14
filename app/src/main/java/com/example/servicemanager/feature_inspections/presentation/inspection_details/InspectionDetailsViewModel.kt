@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.example.servicemanager.core.util.Constans
 import com.example.servicemanager.core.util.Helper.Companion.convertToBitmap
 import com.example.servicemanager.core.util.Helper.Companion.convertToByteArray
@@ -13,7 +12,6 @@ import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
-import com.example.servicemanager.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,7 +51,7 @@ class InspectionDetailsViewModel @Inject constructor(
 
     fun onEvent(inspectionDetailsEvent: InspectionDetailsEvent) {
         when(inspectionDetailsEvent) {
-            is InspectionDetailsEvent.UpdateState -> {
+            is InspectionDetailsEvent.UpdateInspectionState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                     inspection = inspectionDetailsEvent.inspection
                 )
@@ -63,14 +61,12 @@ class InspectionDetailsViewModel @Inject constructor(
                     signature = inspectionDetailsEvent.signature
                 )
             }
-
             is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection).collect() { result ->
                         when(result.resourceState) {
                             ResourceState.LOADING -> Unit
                             ResourceState.ERROR -> {
-                                // TODO Show Snackbar
                                 _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
                             }
                             ResourceState.SUCCESS ->  {
@@ -86,13 +82,20 @@ class InspectionDetailsViewModel @Inject constructor(
                     }
                 }
             }
-
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection).collect()
                 }
                 viewModelScope.launch(Dispatchers.IO) {
                     appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
+                }
+            }
+            is InspectionDetailsEvent.SetIsInEditMode -> {
+                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                    isInEditMode = inspectionDetailsEvent.value
+                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _eventFlow.emit(UiEvent.SetFieldsIsEditable(inspectionDetailsState.value.isInEditMode))
                 }
             }
         }
@@ -263,5 +266,6 @@ class InspectionDetailsViewModel @Inject constructor(
         data class ShowSnackBar(val messege: String): UiEvent()
         data class UpdateTextFields(val inspection: Inspection): UiEvent()
         data class NavigateTo(val route: String): UiEvent()
+        data class SetFieldsIsEditable(val value: Boolean): UiEvent()
     }
 }

@@ -14,6 +14,7 @@ fun TechnicianSelectionSection(
     technicianList: List<Technician>,
     technician: Technician,
     onTechnicianChange: (Technician) -> Unit,
+    isClickable: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -32,7 +33,8 @@ fun TechnicianSelectionSection(
                 SelectRadioButton(
                     title = item.name,
                     selected = item.technicianId == technician.technicianId,
-                    onClick = { onTechnicianChange(item) })
+                    onClick = { onTechnicianChange(item) },
+                isClickable = isClickable)
             }
         }
     }

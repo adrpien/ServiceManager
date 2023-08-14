@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,7 +26,6 @@ import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel.*
-import com.example.servicemanager.navigation.Screen
 import com.example.servicemanager.ui.theme.*
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
@@ -72,7 +72,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Name",
-                value =  inspectionDetailsState.value.inspection.deviceName
+                value =  inspectionDetailsState.value.inspection.deviceName,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -80,7 +81,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Manufacturer",
-                value =  inspectionDetailsState.value.inspection.deviceManufacturer
+                value =  inspectionDetailsState.value.inspection.deviceManufacturer,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -88,7 +90,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Model",
-                value =  inspectionDetailsState.value.inspection.deviceModel
+                value =  inspectionDetailsState.value.inspection.deviceModel,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -96,7 +99,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Serial number",
-                value =  inspectionDetailsState.value.inspection.deviceSn
+                value =  inspectionDetailsState.value.inspection.deviceSn,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -104,7 +108,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Inventory number",
-                value =  inspectionDetailsState.value.inspection.deviceIn
+                value =  inspectionDetailsState.value.inspection.deviceIn,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -112,7 +117,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Ward",
-                value =  inspectionDetailsState.value.inspection.ward
+                value =  inspectionDetailsState.value.inspection.ward,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -120,7 +126,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Comment",
-                value =  inspectionDetailsState.value.inspection.comment
+                value =  inspectionDetailsState.value.inspection.comment,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -128,7 +135,8 @@ fun InspectionDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Recipient",
-                value =  inspectionDetailsState.value.inspection.recipient
+                value =  inspectionDetailsState.value.inspection.recipient,
+                clickable = inspectionDetailsState.value.isInEditMode
             )
         )
     }
@@ -137,6 +145,7 @@ fun InspectionDetailsScreen(
     val estStateList = viewModel.inspectionDetailsState.value.estStateList
     val inspectionStateList = viewModel.inspectionDetailsState.value.inspectionStateList
     val technicianList = viewModel.inspectionDetailsState.value.technicianList
+    val isInEditMode = viewModel.inspectionDetailsState.value.isInEditMode
 
 
     LaunchedEffect(key1 = true) {
@@ -178,6 +187,16 @@ fun InspectionDetailsScreen(
                 is UiEvent.NavigateTo -> {
                     navHostController.navigate(event.route)
                 }
+                is UiEvent.SetFieldsIsEditable -> {
+                    deviceName.value = deviceName.value.copy(clickable = event.value)
+                    deviceManufacturer.value = deviceManufacturer.value.copy(clickable = event.value)
+                    deviceModel.value = deviceModel.value.copy(clickable = event.value)
+                    deviceSn.value = deviceSn.value.copy(clickable = event.value)
+                    deviceIn.value = deviceIn.value.copy(clickable = event.value)
+                    ward.value = ward.value.copy(clickable = event.value)
+                    comment.value = comment.value.copy(clickable = event.value)
+                    recipient.value = recipient.value.copy(clickable = event.value)
+                }
             }
         }
     }
@@ -186,20 +205,32 @@ fun InspectionDetailsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    if(inspectionDetailsState.value.inspection.inspectionId != "0") {
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateInspection(inspectionDetailsState.value.inspection))
-                    } else {
-                        viewModel.onEvent(InspectionDetailsEvent.SaveInspection(inspectionDetailsState.value.inspection))
+                    if(isInEditMode) {
+                        if(inspectionDetailsState.value.inspection.inspectionId != "0") {
+                            viewModel.onEvent(InspectionDetailsEvent.UpdateInspection(inspectionDetailsState.value.inspection))
+                        } else {
+                            viewModel.onEvent(InspectionDetailsEvent.SaveInspection(inspectionDetailsState.value.inspection))
+                        }
                     }
-                    //navHostController.navigate(Screen.InspectionListScreen.route)
+                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
+
                 },
                 backgroundColor = TiemedLightBlue
             ) {
-                Icon(
-                    imageVector = Icons.Default.Save,
-                    contentDescription = "Save",
-                    modifier = Modifier,
-                tint = TiemedVeryLightBeige)
+                if (isInEditMode){
+                    Icon(
+                        imageVector = Icons.Default.Save,
+                        contentDescription = "Save",
+                        modifier = Modifier,
+                        tint = TiemedVeryLightBeige)
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit",
+                        modifier = Modifier,
+                        tint = TiemedVeryLightBeige)
+                }
+
             }
         },
         scaffoldState = scaffoldState
@@ -225,33 +256,33 @@ fun InspectionDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
                 onValueChanged =  { name ->
-                    deviceName.value= deviceName.value.copy(value = name)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceName = name)))
+                    deviceName.value = deviceName.value.copy(value = name)
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(deviceName = name)))
                 },
                 state = deviceName)
             DefaultTextField(
                 onValueChanged =  {manufacturer ->
                     deviceManufacturer.value= deviceManufacturer.value.copy(value = manufacturer)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceManufacturer = manufacturer)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(deviceManufacturer = manufacturer)))
                 },
                 state = deviceManufacturer)
             DefaultTextField(
                 onValueChanged =  { model ->
                     deviceModel.value= deviceModel.value.copy(value = model)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceModel = model)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(deviceModel = model)))
                 },
                 state = deviceModel)
             DefaultTextField(
                 onValueChanged =  { serialNumber ->
                     deviceSn.value= deviceSn.value.copy(value = serialNumber)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceSn = serialNumber)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(deviceSn = serialNumber)))
                 },
                 state = deviceSn
             )
             DefaultTextField(
                 onValueChanged =  { inventoryNumber ->
                     deviceIn.value= deviceIn.value.copy(value = inventoryNumber)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(deviceIn = inventoryNumber)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(deviceIn = inventoryNumber)))
                 },
                 state = deviceIn)
             Text(
@@ -269,25 +300,26 @@ fun InspectionDetailsScreen(
                 hospitalList = hospitalList,
                 hospital = hospitalList.find { (it.hospitalId == inspectionDetailsState.value.inspection.hospitalId ) } ?: Hospital(),
                 onHospitalChange = {
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.copy(
                         inspection = inspectionDetailsState.value.inspection.copy(
                             hospitalId = it.hospitalId
                         )
                     ).inspection
                     )
                     )
-                }
+                },
+                isClickable = inspectionDetailsState.value.isInEditMode
             )
             DefaultTextField(
                 onValueChanged =  {string ->
                     ward.value= ward.value.copy(value = string)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(ward = string)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(ward = string)))
                 },
                 state = ward)
             DefaultTextField(
                 onValueChanged =  {string ->
                     comment.value= comment.value.copy(value = string)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(comment = string)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(comment = string)))
                 },
                 state = comment)
             Text(
@@ -301,75 +333,73 @@ fun InspectionDetailsScreen(
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "EstState:",
-                    color = TiemedLightBlue
-                    )
+            Text(
+                modifier = Modifier
+                    .padding(8.dp),
+                text = "EstState:",
+                color = TiemedLightBlue
+            )
 
-                EstStateSelectionSection(
-                    estStateList = estStateList,
-                    estState = estStateList.find { (it.estStateId == inspectionDetailsState.value.inspection.estStateId ) } ?: EstState(),
-                    onEstStateChange = {
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
-                            inspection = inspectionDetailsState.value.inspection.copy(
-                                estStateId = it.estStateId
-                            )
-                        ).inspection
+            EstStateSelectionSection(
+                estStateList = estStateList,
+                estState = estStateList.find { (it.estStateId == inspectionDetailsState.value.inspection.estStateId ) } ?: EstState(),
+                onEstStateChange = {
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.copy(
+                        inspection = inspectionDetailsState.value.inspection.copy(
+                            estStateId = it.estStateId
                         )
+                    ).inspection
+                    )
+                    )
+                },
+                isClickable = inspectionDetailsState.value.isInEditMode
+            )
+            Text(
+                modifier = Modifier
+                    .padding(8.dp),
+                text = "InspectionState:",
+                color = TiemedLightBlue
+            )
+            InspectionStateSelectionSection(
+                inspectionStateList = inspectionStateList,
+                inspectionState = inspectionStateList.find { (it.inspectionStateId == inspectionDetailsState.value.inspection.inspectionStateId ) } ?: InspectionState(),
+                onInspectionStateChange = {
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.copy(
+                        inspection = inspectionDetailsState.value.inspection.copy(
+                            inspectionStateId = it.inspectionStateId
                         )
-                    }
-                )
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "InspectionState:",
-                    color = TiemedLightBlue
-                )
-                InspectionStateSelectionSection(
-                    inspectionStateList = inspectionStateList,
-                    inspectionState = inspectionStateList.find { (it.inspectionStateId == inspectionDetailsState.value.inspection.inspectionStateId ) } ?: InspectionState(),
-                    onInspectionStateChange = {
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
-                            inspection = inspectionDetailsState.value.inspection.copy(
-                                inspectionStateId = it.inspectionStateId
-                            )
-                        ).inspection
+                    ).inspection
+                    )
+                    )
+                },
+                isClickable = inspectionDetailsState.value.isInEditMode
+            )
+            Text(
+                modifier = Modifier
+                    .padding(8.dp),
+                text = "Technician:",
+                color = TiemedLightBlue
+            )
+            TechnicianSelectionSection(
+                technicianList = technicianList,
+                technician = technicianList.find { (it.technicianId == inspectionDetailsState.value.inspection.technicianId) } ?: Technician(),
+                onTechnicianChange = {
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.copy(
+                        inspection = inspectionDetailsState.value.inspection.copy(
+                            technicianId = it.technicianId
                         )
-                        )
-                    }
-                )
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Technician:",
-                    color = TiemedLightBlue
-                )
-                TechnicianSelectionSection(
-                    technicianList = technicianList,
-                    technician = technicianList.find { (it.technicianId == inspectionDetailsState.value.inspection.technicianId) } ?: Technician(),
-                    onTechnicianChange = {
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.copy(
-                            inspection = inspectionDetailsState.value.inspection.copy(
-                                technicianId = it.technicianId
-                            )
-                        ).inspection
-                        )
-                        )
-                    }
-                )
-            }
+                    ).inspection
+                    )
+                    )
+                },
+                isClickable = inspectionDetailsState.value.isInEditMode
+            )
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 onClick = { dateDialogState.show()},
+                enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = TiemedVeryLightBeige,
@@ -384,7 +414,7 @@ fun InspectionDetailsScreen(
             DefaultTextField(
                 onValueChanged =  { string ->
                     recipient.value= recipient.value.copy(value = string)
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(recipient = string)))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(recipient = string)))
                 },
                 state = recipient)
             Button(
@@ -392,6 +422,7 @@ fun InspectionDetailsScreen(
 
                     .padding(8.dp),
                 onClick = { signatureDialogState.show()},
+                enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = TiemedVeryLightBeige,
@@ -432,7 +463,7 @@ fun InspectionDetailsScreen(
                     }
                 ) { date ->
                     inspectionDateState.value = date
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateState(inspectionDetailsState.value.inspection.copy(inspectionDate = date.toEpochDay().toString())))
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(inspectionDate = date.toEpochDay().toString())))
                 }
             }
             MaterialDialog(

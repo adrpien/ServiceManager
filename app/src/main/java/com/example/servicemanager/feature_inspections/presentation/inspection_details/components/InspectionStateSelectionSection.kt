@@ -17,6 +17,7 @@ fun InspectionStateSelectionSection(
     inspectionStateList: List<InspectionState>,
     inspectionState: InspectionState,
     onInspectionStateChange: (InspectionState) -> Unit,
+    isClickable: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -35,7 +36,9 @@ fun InspectionStateSelectionSection(
                 SelectRadioButton(
                     title = item.inspectionState,
                     selected = item.inspectionStateId == inspectionState.inspectionStateId,
-                    onClick = { onInspectionStateChange(item) })
+                    onClick = { onInspectionStateChange(item) },
+                    isClickable = isClickable
+                )
             }
         }
     }
