@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections.presentation.inspection_details.components
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -150,14 +151,10 @@ fun InspectionDetailsScreen(
     val technicianList = viewModel.inspectionDetailsState.value.technicianList
     val isInEditMode = viewModel.inspectionDetailsState.value.isInEditMode
 
-
-
-    BackPressHandler() {
-        if(isInEditMode) {
-        }
+    BackHandler(isInEditMode) {
         showExitDialog.value = true
-
     }
+
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect { event ->
             when (event) {
