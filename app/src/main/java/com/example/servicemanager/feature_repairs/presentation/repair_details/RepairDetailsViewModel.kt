@@ -5,13 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.servicemanager.core.util.Constans
 import com.example.servicemanager.core.util.Helper.Companion.convertToBitmap
 import com.example.servicemanager.core.util.Helper.Companion.convertToByteArray
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_repairs.domain.model.Repair
 import com.example.servicemanager.feature_repairs.domain.use_cases.RepairUseCases
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -51,7 +52,7 @@ class RepairDetailsViewModel @Inject constructor(
 
     fun onEvent(repairDetailsEvent: RepairDetailsEvent) {
         when(repairDetailsEvent) {
-            is RepairDetailsEvent.UpdateState -> {
+            is RepairDetailsEvent.UpdateRepairState -> {
                 _repairDetailsState.value = _repairDetailsState.value.copy(
                     repair = repairDetailsEvent.repair
                 )
@@ -72,9 +73,14 @@ class RepairDetailsViewModel @Inject constructor(
                                 viewModelScope.launch(Dispatchers.IO) {
                                     appUseCases.saveSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
                                 }
+                                _eventFlow.emit(UiEvent.NavigateTo(
+                                        Constans.ROUTE_INSPECTION_LIST_SCREEN))
+
                             }
                             ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
+                            ResourceState.ERROR -> {
+                                _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
+                            }
                         }
                     }
                 }
@@ -82,9 +88,17 @@ class RepairDetailsViewModel @Inject constructor(
             is RepairDetailsEvent.UpdateRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     repairUseCases.updateRepair(repairDetailsState.value.repair).collect()
-                    viewModelScope.launch(Dispatchers.IO) {
-                        appUseCases.updateSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
-                    }
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
+                }
+            }
+            is RepairDetailsEvent.SetIsInEditMode -> {
+                _repairDetailsState.value = _repairDetailsState.value.copy(
+                    isInEditMode = repairDetailsEvent.value
+                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _eventFlow.emit(UiEvent.SetFieldsIsEditable(repairDetailsState.value.isInEditMode))
                 }
             }
         }
@@ -248,5 +262,9 @@ class RepairDetailsViewModel @Inject constructor(
         data class ShowSnackBar(val messege: String): UiEvent()
 
         data class UpdateTextFields(val text: Repair): UiEvent()
+        data class NavigateTo(val route: String): UiEvent()
+
+        data class SetFieldsIsEditable(val value: Boolean): UiEvent()
+
     }
 }

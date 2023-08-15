@@ -19,42 +19,46 @@ import com.example.servicemanager.ui.theme.TiemedVeryLightBlue
 @Composable
 fun ExitAlertDialog(
     modifier: Modifier = Modifier,
+    isVisible: Boolean,
     title: String,
     contentText: String,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
-        shape = RectangleShape,
-        containerColor = TiemedVeryLightBeige,
-        titleContentColor = TiemedLightBlue,
-        textContentColor = TiemedLightBlue,
-        onDismissRequest = { onDismiss() },
-        title = { Text(text = title) },
-        text = { Text(text = contentText) },
-        confirmButton = {
-            Button(
-                shape = RectangleShape,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = TiemedVeryLightBlue,
-                    contentColor = TiemedLightBlue
-                ),
-                onClick = { onConfirm() },
-            ) {
-                Text(text = "Confirm")
+    if (isVisible){
+        AlertDialog(
+            shape = RectangleShape,
+            containerColor = TiemedVeryLightBeige,
+            titleContentColor = TiemedLightBlue,
+            textContentColor = TiemedLightBlue,
+            onDismissRequest = { onDismiss() },
+            title = { Text(text = title) },
+            text = { Text(text = contentText) },
+            confirmButton = {
+                Button(
+                    shape = RectangleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = TiemedVeryLightBlue,
+                        contentColor = TiemedLightBlue
+                    ),
+                    onClick = { onConfirm() },
+                ) {
+                    Text(text = "Confirm")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { onDismiss() },
+                    shape = RectangleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = TiemedVeryLightBlue,
+                        contentColor = TiemedLightBlue
+                    )
+                ) {
+                    Text(text = "Dissmiss")
+                }
             }
-        },
-        dismissButton = {
-            Button(
-                onClick = { onDismiss() },
-                shape = RectangleShape,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = TiemedVeryLightBlue,
-                    contentColor = TiemedLightBlue
-                )
-            ) {
-                Text(text = "Dissmiss")
-            }
-        }
-    )
+        )
+    }
+
 }

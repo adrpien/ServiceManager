@@ -24,11 +24,16 @@ fun ContentNavigation(navHostController: NavHostController) {
             )
         }
         composable(
-            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}",
+            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}" + "/{showAlertDialog}",
             arguments = listOf(
                 navArgument(name = "inspectionId") {
                     type = NavType.StringType
                     defaultValue = "0"
+                    nullable = false
+                },
+                navArgument(name = "showAlertDialog") {
+                    type = NavType.BoolType
+                    defaultValue = false
                     nullable = false
                 }
             )

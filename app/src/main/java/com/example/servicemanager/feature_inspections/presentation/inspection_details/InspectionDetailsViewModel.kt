@@ -130,7 +130,7 @@ class InspectionDetailsViewModel @Inject constructor(
                 )
         }
     }
-
+    // TODO Bug needs to be fixed - fetches signature even if there no signature
     private fun fetchSignature() {
         if (currentInspectionId != "0") {
             viewModelScope.launch(Dispatchers.Main) {
@@ -153,7 +153,6 @@ class InspectionDetailsViewModel @Inject constructor(
             }
         }
     }
-
 
     private fun fetchHospitalList() {
         viewModelScope.launch(Dispatchers.Main) {

@@ -4,7 +4,7 @@ import com.example.servicemanager.feature_inspections.data.local.entities.Inspec
 import java.util.*
 
 data class InspectionDto(
-    val inspectionId: String,
+    val inspectionId: String = "0",
     val deviceId: String = "",
     val hospitalId: String = "",
     val ward: String = "",

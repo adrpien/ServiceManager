@@ -78,14 +78,14 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
 
         } else {
-            emit(Resource(ResourceState.ERROR, "0", null))
+            emit(Resource(ResourceState.ERROR, "Inspection record creation error", "Inspection record creation error"))
             Log.d(INSPECTION_FIREBASE_API, "Inspection record creation error")
 
         }
     }
     fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
-        emit(Resource(ResourceState.LOADING, "", "Inspection record updateing started"))
+        emit(Resource(ResourceState.LOADING, "", "Inspection record updating started"))
         var map = mapOf<String, String>(
             "inspectionId" to inspection.inspectionId,
             "inspectionStateId" to inspection.inspectionStateId,

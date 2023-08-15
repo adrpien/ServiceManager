@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.servicemanager.core.util.Resource
 import com.example.servicemanager.core.util.ResourceState
 import com.example.servicemanager.feature_repairs.domain.model.Repair
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
@@ -16,37 +15,37 @@ class  RepairFirebaseApi(
     val firebaseStorage: FirebaseStorage
 ) {
 
-    private val REPAIR_REPOSITORY = "REPAIR_REPOSITORY"
+    private val REPAIR_REPOSITORY_API = "REPAIR_REPOSITORY_API"
 
     /* ********************************* REPAIRS ********************************* */
     suspend fun getRepairList(): List<Repair> {
-        Log.d(REPAIR_REPOSITORY, "Repair list fetching started")
+        Log.d(REPAIR_REPOSITORY_API, "Repair list fetching started")
         var repairList: List<Repair> = emptyList()
         val documentReference = firebaseFirestore.collection("repairs")
         val result = documentReference.get()
         result.await()
         if (result.isSuccessful) {
             repairList =  result.result.toObjects(Repair::class.java)
-            Log.d(REPAIR_REPOSITORY, "Repair list fetched")
+            Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
 
         } else {
-            Log.d(REPAIR_REPOSITORY, "Repair list fetch error")
+            Log.d(REPAIR_REPOSITORY_API, "Repair list fetch error")
         }
         return repairList
     }
     suspend fun getRepair(repairId: String): Repair? {
-        Log.d(REPAIR_REPOSITORY, "Repair record fetching started")
-        var repair: Repair? = null
+        Log.d(REPAIR_REPOSITORY_API, "Repair record fetching started")
+        var repair: Repair? = Repair()
         val documentReference = firebaseFirestore.collection("repairs")
             .document(repairId)
             val result = documentReference.get()
             result.await()
             if (result.isSuccessful) {
                 repair =  result.result.toObject(Repair::class.java)
-                Log.d(REPAIR_REPOSITORY, "Repair list fetched")
+                Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
 
             } else {
-                Log.d(REPAIR_REPOSITORY, "Repair list fetch error")
+                Log.d(REPAIR_REPOSITORY_API, "Repair list fetch error")
             }
         return repair
     }
@@ -82,18 +81,18 @@ class  RepairFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, documentReference.id, documentReference.id))
-            Log.d(REPAIR_REPOSITORY, "Repair record created")
+            emit(Resource(ResourceState.SUCCESS, documentReference.id, "Repair record created"))
+            Log.d(REPAIR_REPOSITORY_API, "Repair record created")
 
         } else {
-            emit(Resource(ResourceState.ERROR, "0", null))
-            Log.d(REPAIR_REPOSITORY, "Repair record creation error")
+            emit(Resource(ResourceState.ERROR, "Repair record creation error", "Repair record creation error"))
+            Log.d(REPAIR_REPOSITORY_API, "Repair record creation error")
 
         }
     }
-    fun updateRepair(repair: Repair): Flow<Resource<Boolean>> = flow {
+    fun updateRepair(repair: Repair): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in updateRepair fun for RepairFirebaseApi
-        emit(Resource(ResourceState.LOADING, false))
+        emit(Resource(ResourceState.LOADING, "Reapir record updating started"))
         var map = mapOf<String, String>(
             "repairId" to repair.repairId,
             "repairStateId" to repair.repairStateId,
@@ -122,11 +121,11 @@ class  RepairFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, true))
-            Log.d(REPAIR_REPOSITORY, "Repair record updated")
+            emit(Resource(ResourceState.SUCCESS, "Repair record updated", "Repair record updated"))
+            Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
         } else {
-            emit(Resource(ResourceState.ERROR, false))
-            Log.d(REPAIR_REPOSITORY, "Repair record update error")
+            emit(Resource(ResourceState.ERROR, "Repair record update error", "Repair record update error"))
+            Log.d(REPAIR_REPOSITORY_API, "Repair record update error")
         }
 
     }

@@ -503,39 +503,39 @@ fun InspectionDetailsScreen(
                     contentDescription = "Signature"
                 )
             }
-            if (showExitDialog.value) {
-                ExitAlertDialog(
-                    title = "Save?",
-                    contentText = "Do you want save changes?",
-                    onConfirm = {
-                        if (showExitDialog.value) {
-                            if (inspectionDetailsState.value.inspection.inspectionId != "0") {
-                                viewModel.onEvent(
-                                    InspectionDetailsEvent.UpdateInspection(
-                                        inspectionDetailsState.value.inspection
-                                    )
+            ExitAlertDialog(
+                isVisible = showExitDialog.value,
+                title = "Save?",
+                contentText = "Do you want save changes?",
+                onConfirm = {
+                    if (showExitDialog.value) {
+                        if (inspectionDetailsState.value.inspection.inspectionId != "0") {
+                            viewModel.onEvent(
+                                InspectionDetailsEvent.UpdateInspection(
+                                    inspectionDetailsState.value.inspection
                                 )
-                            } else {
-                                viewModel.onEvent(
-                                    InspectionDetailsEvent.SaveInspection(
-                                        inspectionDetailsState.value.inspection
-                                    )
+                            )
+                        } else {
+                            viewModel.onEvent(
+                                InspectionDetailsEvent.SaveInspection(
+                                    inspectionDetailsState.value.inspection
                                 )
-                            }
+                            )
                         }
-                        viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                        showExitDialog.value = false
-                        navHostController.popBackStack()
-
-                    },
-                    onDismiss = {
-                        viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                        showExitDialog.value = false
-                        navHostController.popBackStack()
-
                     }
-                )
-            }
+                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
+                    showExitDialog.value = false
+                    navHostController.popBackStack()
+
+                },
+                onDismiss = {
+                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
+                    showExitDialog.value = false
+                    navHostController.popBackStack()
+
+                }
+            )
+
             MaterialDialog(
                 dialogState = dateDialogState,
                 properties = DialogProperties(

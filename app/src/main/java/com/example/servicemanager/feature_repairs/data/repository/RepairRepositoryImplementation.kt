@@ -4,6 +4,7 @@ package com.example.servicemanager.feature_repairs.data.repository
 import android.util.Log
 import com.example.servicemanager.core.util.Resource
 import com.example.servicemanager.core.util.ResourceState
+import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.feature_repairs.data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs.data.remote.RepairFirebaseApi
 import com.example.servicemanager.feature_repairs.domain.model.Repair
@@ -21,8 +22,9 @@ class  RepairRepositoryImplementation(
 
     /* ********************************* REPAIRS ******************************************** */
     override fun getRepairList() = flow {
+        var repairList: List<Repair> = listOf<Repair>()
         emit(Resource(ResourceState.LOADING, null, "Repair list fetching started"))
-        var repairList: List<Repair> = repairDatabaseDao.getRepairList().map { it.toRepair() }
+        repairList = repairDatabaseDao.getRepairList().map { it.toRepair() }
         emit(Resource(ResourceState.LOADING, repairList, "Locally cached list"))
         val list = repairFirebaseApi.getRepairList()?: emptyList()
         if(list.isNotEmpty()) {
@@ -37,8 +39,9 @@ class  RepairRepositoryImplementation(
 
 
     override fun getRepair(repairId: String): Flow<Resource<Repair>> = flow{
+        var repair = Repair()
         emit(Resource(ResourceState.LOADING, null, "Repair record fetching started"))
-        var repair = repairDatabaseDao.getRepair(repairId).toRepair()
+        repair = repairDatabaseDao.getRepair(repairId).toRepair()
         emit(Resource(ResourceState.LOADING, repair, "Locally cached record"))
         val record = repairFirebaseApi.getRepair(repairId)
         if(record != null) {
@@ -53,7 +56,7 @@ class  RepairRepositoryImplementation(
         return repairFirebaseApi.createRepair(repair)
     }
 
-    override fun updateRepair(repair: Repair): Flow<Resource<Boolean>> {
+    override fun updateRepair(repair: Repair): Flow<Resource<String>> {
         return repairFirebaseApi.updateRepair(repair)
     }
 

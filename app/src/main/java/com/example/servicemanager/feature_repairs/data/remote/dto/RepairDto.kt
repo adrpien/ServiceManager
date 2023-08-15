@@ -4,7 +4,7 @@ import com.example.servicemanager.feature_repairs.data.local.entities.RepairEnti
 
 
 data class RepairDto(
-    val repairId: String,
+    val repairId: String = "0",
     val repairStateId: String = "",
     val deviceId: String = "",
     val hospitalId: String = "",
