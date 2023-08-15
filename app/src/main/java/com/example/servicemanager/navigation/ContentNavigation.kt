@@ -5,14 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.servicemanager.feature_inspections.presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.InspectionListScreen
 import com.example.servicemanager.feature_repairs.presentation.repair_details.components.RepairDetailsScreen
 import com.example.servicemanager.feature_repairs.presentation.repair_list.components.RepairListScreen
-import com.example.servicemanager.feature_user.presentation.login.components.LoginScreen
-import com.example.servicemanager.ui.components.ContentComposable
 
 @Composable
 fun ContentNavigation(navHostController: NavHostController) {

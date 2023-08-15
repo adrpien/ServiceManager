@@ -1,7 +1,7 @@
-package com.example.servicemanager.feature_user.domain.repository
+package com.example.servicemanager.feature_authentication.domain.repository
 
 import com.example.servicemanager.core.util.Resource
-import com.example.servicemanager.feature_user.domain.model.User
+import com.example.servicemanager.feature_authentication.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

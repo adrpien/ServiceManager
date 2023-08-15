@@ -2,17 +2,14 @@ package com.example.servicemanager.dependecy_injection
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.servicemanager.feature_user.data.local.UserDatabase
-import com.example.servicemanager.feature_user.data.local.UserDatabaseDao
-import com.example.servicemanager.feature_user.data.remote.UserFirebaseApi
-import com.example.servicemanager.feature_user.data.repository.UserRepositoryImplementation
-import com.example.servicemanager.feature_user.domain.model.User
-import com.example.servicemanager.feature_user.domain.repository.UserRepository
-import com.example.servicemanager.feature_user.domain.use_cases.Authenticate
-import com.example.servicemanager.feature_user.domain.use_cases.GetCurrentUser
-import com.example.servicemanager.feature_user.domain.use_cases.GetUser
-import com.example.servicemanager.feature_user.domain.use_cases.UserUseCases
+import com.example.servicemanager.feature_authentication.data.local.UserDatabase
+import com.example.servicemanager.feature_authentication.data.remote.UserFirebaseApi
+import com.example.servicemanager.feature_authentication.data.repository.UserRepositoryImplementation
+import com.example.servicemanager.feature_authentication.domain.repository.UserRepository
+import com.example.servicemanager.feature_authentication.domain.use_cases.Authenticate
+import com.example.servicemanager.feature_authentication.domain.use_cases.GetCurrentUser
+import com.example.servicemanager.feature_authentication.domain.use_cases.GetUser
+import com.example.servicemanager.feature_authentication.domain.use_cases.UserUseCases
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

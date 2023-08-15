@@ -1,18 +1,16 @@
-package com.example.servicemanager.feature_user.data.remote
+package com.example.servicemanager.feature_authentication.data.remote
 
 import android.util.Log
 import com.example.servicemanager.core.util.Resource
 import com.example.servicemanager.core.util.ResourceState
-import com.example.servicemanager.feature_user.domain.model.User
+import com.example.servicemanager.feature_authentication.domain.model.User
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 class UserFirebaseApi(
     val firebaseAuth: FirebaseAuth,

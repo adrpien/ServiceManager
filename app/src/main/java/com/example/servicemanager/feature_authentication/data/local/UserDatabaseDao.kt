@@ -1,7 +1,7 @@
-package com.example.servicemanager.feature_user.data.local
+package com.example.servicemanager.feature_authentication.data.local
 
 import androidx.room.*
-import com.example.servicemanager.feature_user.data.local.entities.UserEntity
+import com.example.servicemanager.feature_authentication.data.local.entities.UserEntity
 
 @Dao
 interface UserDatabaseDao {

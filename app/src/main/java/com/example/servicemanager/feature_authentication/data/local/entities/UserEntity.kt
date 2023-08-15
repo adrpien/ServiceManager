@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_user.data.local.entities
+package com.example.servicemanager.feature_authentication.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

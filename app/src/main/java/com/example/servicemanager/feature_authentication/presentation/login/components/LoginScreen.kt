@@ -1,12 +1,8 @@
-package com.example.servicemanager.feature_user.presentation.login.components
+package com.example.servicemanager.feature_authentication.presentation.login.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -17,8 +13,8 @@ import com.example.servicemanager.core.compose.DefaultTextFieldState
 import com.example.servicemanager.core.compose.components.DefaultButton
 import com.example.servicemanager.core.compose.components.DefaultTextField
 import com.example.servicemanager.core.compose.components.PasswordTextField
-import com.example.servicemanager.feature_user.presentation.login.UserLoginEvent
-import com.example.servicemanager.feature_user.presentation.login.UserLoginViewModel
+import com.example.servicemanager.feature_authentication.presentation.login.UserLoginEvent
+import com.example.servicemanager.feature_authentication.presentation.login.UserLoginViewModel
 import com.example.servicemanager.navigation.Screen
 import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 import kotlinx.coroutines.flow.collectLatest

@@ -1,11 +1,11 @@
-package com.example.servicemanager.feature_user.data.repository
+package com.example.servicemanager.feature_authentication.data.repository
 
 import com.example.servicemanager.core.util.Resource
 import com.example.servicemanager.core.util.ResourceState
-import com.example.servicemanager.feature_user.data.local.UserDatabaseDao
-import com.example.servicemanager.feature_user.data.remote.UserFirebaseApi
-import com.example.servicemanager.feature_user.domain.model.User
-import com.example.servicemanager.feature_user.domain.repository.UserRepository
+import com.example.servicemanager.feature_authentication.data.local.UserDatabaseDao
+import com.example.servicemanager.feature_authentication.data.remote.UserFirebaseApi
+import com.example.servicemanager.feature_authentication.domain.model.User
+import com.example.servicemanager.feature_authentication.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

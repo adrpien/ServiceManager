@@ -1,18 +1,16 @@
-package com.example.servicemanager.feature_user.presentation.login
+package com.example.servicemanager.feature_authentication.presentation.login
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.unit.Constraints
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.servicemanager.core.util.Constans
 import com.example.servicemanager.core.util.ResourceState
-import com.example.servicemanager.feature_user.domain.use_cases.UserUseCases
+import com.example.servicemanager.feature_authentication.domain.use_cases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

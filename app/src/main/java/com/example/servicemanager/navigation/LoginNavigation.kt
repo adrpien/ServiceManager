@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.servicemanager.feature_user.presentation.login.components.LoginScreen
+import com.example.servicemanager.feature_authentication.presentation.login.components.LoginScreen
 import com.example.servicemanager.ui.components.ContentComposable
 
 @Composable
