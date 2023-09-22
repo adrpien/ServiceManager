@@ -49,7 +49,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = Compose.composeCompilerVersion
     }
 
     packaging {
@@ -60,6 +60,21 @@ android {
 }
 
 dependencies {
+
+    // Modules
+    // implementation(project(Modules.core))
+    // implementation(project(Modules.app))
+    implementation(project(Modules.featureAppData))
+    implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.featureAuthenticationDomain))
+    implementation(project(Modules.featureAuthenticationData))
+    implementation(project(Modules.featureAuthenticationPresentation))
+    implementation(project(Modules.featureInspectionsData))
+    implementation(project(Modules.featureInspectionsDomain))
+    implementation(project(Modules.featureInspectionsPresentation))
+    implementation(project(Modules.featureRepairsData))
+    implementation(project(Modules.featureRepairsDomain))
+    implementation(project(Modules.featureRepairsPresentation))
 
     // AndroidX
     implementation(AndroidX.coreKtx)

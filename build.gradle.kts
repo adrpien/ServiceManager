@@ -6,6 +6,8 @@
     dependencies {
         classpath(Build.googleServices)
         classpath(Build.hiltAndroidGradlePlugin)
+        classpath(Build.androidBuildTools)
+        classpath(Build.kotlinGradlePlugin)
     }
 }
 

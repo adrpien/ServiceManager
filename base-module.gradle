@@ -1,0 +1,83 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+
+
+android {
+    namespace  'com.example.servicemanager'
+    compileSdk ProjectConfig.compileSdk
+    defaultConfig {
+        minSdk ProjectConfig.minSdk
+        targetSdk ProjectConfig.targetSdk
+        versionCode ProjectConfig.versionCode
+        versionName ProjectConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Compose.composeCompilerVersion
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+dependencies {
+
+    // AndroidX
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.lifecycleRuntimeKtx)
+    implementation(AndroidX.lifecycleViewModelKtx)
+
+    //Dagger - Hilt
+    kapt(DaggerHilt.kaptHiltAndroidCompiler)
+    implementation(DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.kaptHiltCompiler)
+
+    // Local unit tests
+    testImplementation(Testing.coreKtxTesting)
+    testImplementation(Testing.junit4)
+    testImplementation(Testing.coreTesting)
+    testImplementation(Testing.truth)
+    testImplementation(Testing.coroutines)
+    testImplementation(Testing.mockWebServer)
+    testImplementation(Testing.mockk)
+    debugImplementation(Testing.testManifest)
+
+    // Instrumentation tests
+    androidTestImplementation(Testing.coreTesting)
+    androidTestImplementation(Testing.coreKtxTesting)
+    androidTestImplementation(Testing.testRunner)
+    androidTestImplementation(Testing.junit4)
+    androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(Testing.truth)
+    androidTestImplementation(Testing.hiltTesting)
+    androidTestImplementation(Testing.coroutines)
+    androidTestImplementation(Testing.mockWebServer)
+    androidTestImplementation(Testing.mockk)
+    androidTestImplementation(Testing.mockkAndroid)
+    androidTestImplementation(Testing.composeUiTest)
+    androidTestImplementation(Testing.espresso)
+    kaptAndroidTest(Testing.hiltTesting)
+}
