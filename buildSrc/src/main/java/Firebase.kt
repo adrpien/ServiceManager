@@ -5,6 +5,6 @@ object Firebase {
     private const val firebaseStorageVersion = "20.2.0"
     const val firebaseStorage = "com.google.firebase:firebase-storage-ktx:$firebaseStorageVersion"
 
-    private const val firebaseFirestoreVersion = "24.6.1"
+    private const val firebaseFirestoreVersion = "20.2.1"
     const val firebaseFirestore = "com.google.firebase:firebase-storage-ktx:$firebaseFirestoreVersion"
 }

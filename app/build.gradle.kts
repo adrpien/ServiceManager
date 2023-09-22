@@ -10,15 +10,15 @@ plugins {
 
 android {
     namespace  = "com.example.servicemanager"
-    compileSdk = 33
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
-        compileSdkPreview = "UpsideDownCake"
-        applicationId  = "com.example.servicemanager"
-        minSdk = 26
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        compileSdkPreview = ProjectConfig.compileSdkPreview
+        applicationId  = ProjectConfig.appId
+        minSdk = ProjectConfig.minSdk
+        targetSdk = ProjectConfig.targetSdk
+        versionCode = ProjectConfig.versionCode
+        versionName = ProjectConfig.versionName
 
         testInstrumentationRunner = "com.example.servicemanager.core.HiltTestRunner"
         vectorDrawables {
@@ -60,14 +60,11 @@ android {
 }
 
 dependencies {
+
+    // AndroidX
     implementation(AndroidX.coreKtx)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.compose.ui:ui:1.4.2")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.2")
-    implementation("androidx.compose.material:material:1.2.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.2")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.2")
+    implementation(AndroidX.lifecycleRuntimeKtx)
+    implementation(AndroidX.lifecycleViewModelKtx)
 
     // Firebase
     implementation(Firebase.firebaseAuth)
@@ -79,29 +76,30 @@ dependencies {
     kapt(Glide.glideCompiler)
 
     // Compose dependencies
-    implementation(Compose.viewModelCompose)
-    implementation(Compose.activityCompose)
+    implementation(Compose.ui)
+    implementation(Compose.uiToolingPreview)
+    implementation(Compose.material)
     implementation(Compose.material3)
+    implementation(Compose.activityCompose)
+    implementation(Compose.viewModelCompose)
     implementation(Compose.hiltNavigationCompose)
     implementation(Compose.materialIconExtended)
     implementation(Compose.swipeRefresh)
+    debugImplementation(Compose.uiTooling)
 
     // Compose Nav Destinations
     implementation (RaamCostaNavigation.composeDestinationsCore)
     ksp(RaamCostaNavigation.ksp)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation(Coroutines.coroutinesCore)
+    implementation(Coroutines.coroutinesAndroid)
+    implementation(Coroutines.coroutinesPlayServices)
 
     //Dagger - Hilt
     kapt(DaggerHilt.kaptHiltAndroidCompiler)
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
-    implementation(DaggerHilt.hiltNavigationCompose)
 
     // Room
     kapt(Room.roomCompiler)

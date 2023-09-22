@@ -2,7 +2,7 @@ object Testing {
     private const val junitVersion = "4.13.2"
     const val junit4 = "junit:junit:$junitVersion"
 
-    private const val testManifestVersion = "1.1.0-alpha04"
+    private const val testManifestVersion = "1.4.2"
     const val testManifest = "androidx.compose.ui:ui-test-manifest:$testManifestVersion"
 
     private const val junitAndroidExtVersion = "1.1.3"
@@ -27,14 +27,14 @@ object Testing {
     private const val composeUiTestVersion = "1.4.2"
     const val composeUiTest = "androidx.compose.ui:ui-test-junit4:${composeUiTestVersion}"
 
-    private const val hiltTestingVersion = "2.3.7"
+    private const val hiltTestingVersion = "2.44"
     const val hiltTesting = "com.google.dagger:hilt-android-testing:${hiltTestingVersion}"
 
     private const val testRunnerVersion = "1.4.0"
     const val testRunner = "androidx.test:runner:$testRunnerVersion"
 
     private const val espressoVersion = "3.4.0"
-    const val espresso = "androidx.test.espresso:espresso-core$espressoVersion"
+    const val espresso = "androidx.test.espresso:espresso-core:$espressoVersion"
 
     private const val coreTestingVersion = "2.1.0"
     const val coreTesting = "androidx.arch.core:core-testing:$coreTestingVersion"
