@@ -39,11 +39,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -60,7 +60,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.0")
+    implementation(AndroidX.coreKtx)
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("androidx.activity:activity-compose:1.3.1")
     implementation("androidx.compose.ui:ui:1.4.2")
@@ -70,27 +70,27 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.2")
 
     // Firebase
-    implementation("com.google.firebase:firebase-auth-ktx:21.0.3")
-    implementation("com.google.firebase:firebase-storage-ktx:20.2.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.6.1")
+    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseFirestore)
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.13.2")
-    kapt("com.github.bumptech.glide:compiler:4.13.2")
+    implementation(Glide.glide)
+    kapt(Glide.glideCompiler)
 
     // Compose dependencies
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-    implementation("androidx.compose.material:material-icons-extended:1.4.2")
-    implementation("androidx.activity:activity-compose:1.8.0-alpha04")
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
-    implementation("androidx.navigation:navigation-compose:2.4.0-alha04")
-    implementation("androidx.compose.material3:material3:1.0.0-beta03")
+    implementation(Compose.viewModelCompose)
+    implementation(Compose.activityCompose)
+    implementation(Compose.material3)
+    implementation(Compose.hiltNavigationCompose)
+    implementation(Compose.materialIconExtended)
+    implementation(Compose.swipeRefresh)
 
     // Compose Nav Destinations
-    implementation ("io.github.raamcosta.compose-destinations:core:1.8.42-beta")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.8.42-beta")
+    implementation (RaamCostaNavigation.composeDestinationsCore)
+    ksp(RaamCostaNavigation.ksp)
 
-    // Coroutines"
+    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
@@ -98,43 +98,42 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
     //Dagger - Hilt
-    kapt("com.google.dagger:hilt-android-compiler:2.40.5")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("com.google.dagger:hilt-android:2.40.5")
+    kapt(DaggerHilt.kaptHiltAndroidCompiler)
+    implementation(DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.kaptHiltCompiler)
+    implementation(DaggerHilt.hiltNavigationCompose)
 
     // Room
-    kapt("androidx.room:room-compiler:2.5.1")
-    implementation("androidx.room:room-ktx:2.4.2")
-    implementation("androidx.room:room-runtime:2.5.1")
+    kapt(Room.roomCompiler)
+    implementation(Room.roomRuntime)
+    implementation(Room.roomKtx)
 
     // Date AlertDialog
-    implementation("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+    implementation(DateAlertDialog.dateTime)
 
     // Local unit tests
-    testImplementation("androidx.test:core:1.4.0")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
-    testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
-    testImplementation("io.mockk:mockk:1.10.5")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.0-alpha04")
+    testImplementation(Testing.coreKtxTesting)
+    testImplementation(Testing.junit4)
+    testImplementation(Testing.coreTesting)
+    testImplementation(Testing.truth)
+    testImplementation(Testing.coroutines)
+    testImplementation(Testing.mockWebServer)
+    testImplementation(Testing.mockk)
+    debugImplementation(Testing.testManifest)
 
     // Instrumentation tests
-    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.37")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.37")
-    androidTestImplementation("junit:junit:4.13.2")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
-    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
-    androidTestImplementation("com.google.truth:truth:1.1.3")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test:core-ktx:1.4.0")
-    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
-    androidTestImplementation("io.mockk:mockk-android:1.10.5")
-    androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.2")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.37")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.37")
+    androidTestImplementation(Testing.coreTesting)
+    androidTestImplementation(Testing.coreKtxTesting)
+    androidTestImplementation(Testing.testRunner)
+    androidTestImplementation(Testing.junit4)
+    androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(Testing.truth)
+    androidTestImplementation(Testing.hiltTesting)
+    androidTestImplementation(Testing.coroutines)
+    androidTestImplementation(Testing.mockWebServer)
+    androidTestImplementation(Testing.mockk)
+    androidTestImplementation(Testing.mockkAndroid)
+    androidTestImplementation(Testing.composeUiTest)
+    androidTestImplementation(Testing.espresso)
+    kaptAndroidTest(Testing.hiltTesting)
 }
