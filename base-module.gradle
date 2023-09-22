@@ -80,4 +80,9 @@ dependencies {
     androidTestImplementation(Testing.composeUiTest)
     androidTestImplementation(Testing.espresso)
     kaptAndroidTest(Testing.hiltTesting)
+
+    // Coroutines
+    implementation(Coroutines.coroutinesCore)
+    implementation(Coroutines.coroutinesAndroid)
+    implementation(Coroutines.coroutinesPlayServices)
 }
