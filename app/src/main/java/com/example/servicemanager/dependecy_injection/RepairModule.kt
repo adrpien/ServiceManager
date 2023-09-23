@@ -6,11 +6,11 @@ import com.adrpien.tiemed.domain.use_case.repairs.SaveRepair
 import com.adrpien.tiemed.domain.use_case.repairs.GetRepair
 import com.adrpien.tiemed.domain.use_case.repairs.GetRepairList
 import com.adrpien.tiemed.domain.use_case.repairs.UpdateRepair
-import com.example.servicemanager.feature_repairs.data.local.RepairDatabase
-import com.example.servicemanager.feature_repairs.data.remote.RepairFirebaseApi
-import com.example.servicemanager.feature_repairs.data.repository.RepairRepositoryImplementation
-import com.example.servicemanager.feature_repairs.domain.repository.RepairRepository
-import com.example.servicemanager.feature_repairs.domain.use_cases.RepairUseCases
+import com.example.servicemanager.feature_repairs_data.local.RepairDatabase
+import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
+import com.example.servicemanager.feature_repairs_data.repository.RepairRepositoryImplementation
+import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
+import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module

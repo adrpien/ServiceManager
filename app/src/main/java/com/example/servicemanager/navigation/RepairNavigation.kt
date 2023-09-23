@@ -6,8 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.servicemanager.feature_repairs.presentation.repair_details.components.RepairDetailsScreen
-import com.example.servicemanager.feature_repairs.presentation.repair_list.components.RepairListScreen
+import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
+import com.example.servicemanager.future_repairs_presentation.repair_list.components.RepairListScreen
 
 @Composable
 fun RepairNavigation(navHostController: NavHostController) {

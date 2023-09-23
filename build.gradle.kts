@@ -8,6 +8,7 @@
         classpath(Build.hiltAndroidGradlePlugin)
         classpath(Build.androidBuildTools)
         classpath(Build.kotlinGradlePlugin)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     }
 }
 

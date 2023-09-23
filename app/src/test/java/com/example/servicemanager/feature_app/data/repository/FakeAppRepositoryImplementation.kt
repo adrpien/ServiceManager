@@ -1,6 +1,6 @@
 package com.example.servicemanager.feature_app.data.repository
 
-import com.example.servicemanager.core.util.Resource
+import com.example.core.util.Resource
 import com.example.servicemanager.feature_app.domain.model.*
 import com.example.servicemanager.feature_app.domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow

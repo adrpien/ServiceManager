@@ -1,6 +1,7 @@
 object Modules {
     const val app = ":app"
     const val core = ":core"
+    const val coreUi = ":core_ui"
 
     const val featureInspectionsData = ":feature_inspections:feature_inspections_data"
     const val featureInspectionsDomain = ":feature_inspections:feature_inspections_domain"

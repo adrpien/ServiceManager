@@ -16,9 +16,9 @@ import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStat
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
 import com.example.servicemanager.feature_app.domain.use_cases.states.GetRepairStateList
 import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTechnicianList
-import com.example.servicemanager.feature_inspections.data.local.InspectionDatabase
-import com.example.servicemanager.feature_inspections.data.remote.InspectionFirebaseApi
-import com.example.servicemanager.feature_inspections.data.repository.InspectionRepositoryImplementation
+import com.example.servicemanager.feature_inspections_data.local.InspectionDatabase
+import com.example.servicemanager.feature_inspections_data.remote.InspectionFirebaseApi
+import com.example.servicemanager.feature_inspections_data.repository.InspectionRepositoryImplementation
 import com.example.servicemanager.feature_inspections.domain.repository.InspectionRepository
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
 import com.google.firebase.firestore.FirebaseFirestore

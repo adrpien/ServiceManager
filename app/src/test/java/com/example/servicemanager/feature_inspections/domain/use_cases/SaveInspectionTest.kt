@@ -1,13 +1,11 @@
 package com.example.servicemanager.feature_inspections.domain.use_cases
 
 import com.adrpien.tiemed.domain.use_case.inspections.SaveInspection
-import com.example.servicemanager.core.util.ResourceState
+import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections.data.repository.FakeInspectionRepositoryImplementation
-import com.example.servicemanager.feature_inspections.domain.model.Inspection
-import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 
 import org.junit.Before
 import org.junit.Test

@@ -1,8 +1,8 @@
 package com.example.servicemanager.feature_inspections.data.repository
 
-import com.example.servicemanager.core.util.Resource
-import com.example.servicemanager.core.util.ResourceState
-import com.example.servicemanager.feature_inspections.domain.model.Inspection
+import com.example.core.util.Resource
+import com.example.core.util.ResourceState
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 import com.example.servicemanager.feature_inspections.domain.repository.InspectionRepository
 import kotlinx.coroutines.flow.Flow

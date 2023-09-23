@@ -6,10 +6,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.servicemanager.feature_inspections.presentation.inspection_details.components.InspectionDetailsScreen
+import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.InspectionListScreen
-import com.example.servicemanager.feature_repairs.presentation.repair_details.components.RepairDetailsScreen
-import com.example.servicemanager.feature_repairs.presentation.repair_list.components.RepairListScreen
+import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
+import com.example.servicemanager.future_repairs_presentation.repair_list.components.RepairListScreen
 
 @Composable
 fun ContentNavigation(navHostController: NavHostController) {

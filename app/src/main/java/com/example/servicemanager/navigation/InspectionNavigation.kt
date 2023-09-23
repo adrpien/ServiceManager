@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.servicemanager.feature_inspections.presentation.inspection_details.components.InspectionDetailsScreen
+import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.InspectionListScreen
 
 @Composable

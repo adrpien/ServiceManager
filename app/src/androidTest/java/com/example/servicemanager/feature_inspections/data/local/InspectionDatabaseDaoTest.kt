@@ -3,7 +3,9 @@ package com.example.servicemanager.feature_inspections.data.local
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.example.servicemanager.feature_inspections.data.local.entities.InspectionEntity
+import com.example.servicemanager.feature_inspections_data.local.entities.InspectionEntity
+import com.example.servicemanager.feature_inspections_data.local.InspectionDatabase
+import com.example.servicemanager.feature_inspections_data.local.InspectionDatabaseDao
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

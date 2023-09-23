@@ -1,0 +1,18 @@
+package com.example.servicemanager.feature_app.domain.use_cases.states
+
+
+import com.example.servicemanager.feature_app.domain.model.InspectionState
+import com.example.servicemanager.feature_app.domain.repository.AppRepository
+import com.example.core.util.Resource
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class GetInspectionStateList @Inject constructor (
+    private val repository: AppRepository
+) {
+
+    operator fun invoke(): Flow<Resource<List<InspectionState>>> {
+        return repository.getInspectionStateList()
+    }
+
+}

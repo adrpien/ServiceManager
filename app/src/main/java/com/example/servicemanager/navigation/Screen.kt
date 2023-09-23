@@ -1,7 +1,6 @@
 package com.example.servicemanager.navigation
 
-import com.example.servicemanager.core.util.Constans
-import com.example.servicemanager.navigation.Screen.HomeScreen.route
+import com.example.core.util.Constans
 
 sealed class Screen(val route: String){
     object HomeScreen: Screen(Constans.ROUTE_HOME_SCREEN)

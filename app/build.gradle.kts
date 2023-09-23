@@ -62,8 +62,8 @@ android {
 dependencies {
 
     // Modules
-    // implementation(project(Modules.core))
-    // implementation(project(Modules.app))
+    implementation(project(Modules.core))
+    implementation(project(Modules.coreUi))
     implementation(project(Modules.featureAppData))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureAuthenticationDomain))
