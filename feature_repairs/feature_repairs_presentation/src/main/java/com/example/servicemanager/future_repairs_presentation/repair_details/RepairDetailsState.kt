@@ -1,10 +1,11 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details
 
 import android.graphics.Bitmap
+import com.example.core.ui.theme.signatureHeight
+import com.example.core.ui.theme.signatureWidth
 import com.example.servicemanager.feature_app.domain.model.*
 import com.example.servicemanager.feature_repairs_domain.model.Repair
-import com.example.servicemanager.ui.theme.signatureHeight
-import com.example.servicemanager.ui.theme.signatureWidth
+
 
 data class RepairDetailsState(
     val isInEditMode: Boolean = false,

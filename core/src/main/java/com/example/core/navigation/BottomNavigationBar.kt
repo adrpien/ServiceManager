@@ -1,17 +1,18 @@
-package com.example.servicemanager.navigation
+package com.example.core.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.ui.theme.TiemedVeryLightBlue
 import com.example.servicemanager.ui.theme.*
 
 @Composable
@@ -33,7 +34,7 @@ fun BottomNavigationBar(
             BottomNavigationItem(
                 selected = selected,
                 selectedContentColor = TiemedVeryLightBeige,
-                unselectedContentColor =TiemedVeryLightBlue,
+                unselectedContentColor = TiemedVeryLightBlue,
                 onClick = { onItemClick(item) },
                 icon = {
                     Column(horizontalAlignment = CenterHorizontally) {

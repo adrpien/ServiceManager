@@ -1,7 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details
 
 import android.graphics.Bitmap
-import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 
 sealed class RepairDetailsEvent {

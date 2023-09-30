@@ -42,7 +42,7 @@ class UserLoginViewModel @Inject constructor(
                             ResourceState.SUCCESS -> {
                                 if (result.data != null) {
                                     _userLoginState.value = _userLoginState.value.copy(
-                                        userId = result.data
+                                        userId = result.data.toString()
                                     )
                                 }
                                 if (result.data != "0") {

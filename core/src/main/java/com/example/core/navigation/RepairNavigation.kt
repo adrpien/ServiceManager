@@ -1,4 +1,4 @@
-package com.example.servicemanager.navigation
+package com.example.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

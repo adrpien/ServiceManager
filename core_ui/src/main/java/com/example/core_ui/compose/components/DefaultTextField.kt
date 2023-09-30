@@ -9,10 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.core_ui.compose.DefaultTextFieldState
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
-import com.example.servicemanager.ui.theme.TiemedVeryLightBlue
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.ui.theme.TiemedVeryLightBlue
 
 @Composable
 fun DefaultTextField(

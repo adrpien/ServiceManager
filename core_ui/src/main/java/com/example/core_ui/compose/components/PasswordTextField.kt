@@ -19,9 +19,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.core_ui.compose.DefaultTextFieldState
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
+
 
 @Composable
 fun PasswordTextField(

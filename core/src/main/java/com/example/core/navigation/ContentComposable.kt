@@ -11,8 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.core.navigation.BottomNavigationBar
+import com.example.core.navigation.BottomNavigationItem
+import com.example.core.navigation.ContentNavigation
+import com.example.core.navigation.Screen
 import com.example.servicemanager.navigation.*
 
 @Composable

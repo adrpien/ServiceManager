@@ -11,13 +11,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.model.RepairState
 import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_repairs_domain.model.Repair
-import com.example.servicemanager.ui.theme.TiemedLightBeige
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Preview
 @Composable

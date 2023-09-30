@@ -2,7 +2,7 @@ package com.example.servicemanager.feature_repairs_data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.servicemanager.feature_repairs.domain.model.Repair
+import com.example.servicemanager.feature_repairs_domain.model.Repair
 
 
 @Entity

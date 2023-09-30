@@ -3,7 +3,7 @@ package com.example.servicemanager.feature_inspections_data.remote
 import android.util.Log
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_inspections.domain.model.Inspection
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow

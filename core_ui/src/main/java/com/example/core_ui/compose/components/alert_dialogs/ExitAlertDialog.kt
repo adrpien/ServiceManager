@@ -2,19 +2,13 @@ package com.example.core_ui.compose.components.alert_dialogs
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
-import com.example.servicemanager.ui.theme.TiemedVeryLightBlue
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.ui.theme.TiemedVeryLightBlue
 
 @Composable
 fun ExitAlertDialog(

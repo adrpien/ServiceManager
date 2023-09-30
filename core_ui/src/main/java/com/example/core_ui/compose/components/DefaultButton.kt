@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
 fun DefaultButton(
@@ -26,10 +25,10 @@ fun DefaultButton(
         onClick =  onClick,
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = TiemedVeryLightBeige,
-            contentColor = TiemedLightBlue
+            backgroundColor = MaterialTheme.colors.onPrimary,
+            contentColor = MaterialTheme.colors.primary
         ),
-        border = BorderStroke(2.dp, TiemedLightBlue)
+        border = BorderStroke(2.dp, MaterialTheme.colors.onSecondary)
     ) {
         Text(
             text = title

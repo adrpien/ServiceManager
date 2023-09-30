@@ -10,11 +10,12 @@ android {
 }
 dependencies{
     implementation(project(Modules.core))
+    implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureRepairsDomain))
 
     // Firebase
     implementation(Firebase.firebaseAuth)
-    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
 
     // Room

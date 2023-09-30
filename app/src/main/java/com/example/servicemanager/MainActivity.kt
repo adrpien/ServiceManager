@@ -1,11 +1,8 @@
-package com.example.servicemanager.ui
+package com.example.servicemanager
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.rememberNavController
-import com.example.servicemanager.navigation.ContentNavigation
-import com.example.servicemanager.navigation.LoginNavigation
 import com.example.servicemanager.ui.components.ContentComposable
 import dagger.hilt.android.AndroidEntryPoint
 

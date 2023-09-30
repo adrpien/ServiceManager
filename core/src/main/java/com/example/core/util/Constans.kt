@@ -1,6 +1,5 @@
 package com.example.core.util
 
-import com.example.servicemanager.navigation.Screen
 
 object Constans {
 

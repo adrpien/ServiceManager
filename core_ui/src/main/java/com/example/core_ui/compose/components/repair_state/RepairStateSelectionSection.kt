@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.servicemanager.core.compose.components.SelectRadioButton
-import com.example.servicemanager.feature_app.domain.model.RepairState
 
 @Composable
 fun RepairStateSelectionSection(

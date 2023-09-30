@@ -51,9 +51,9 @@ dependencies {
     implementation(AndroidX.lifecycleViewModelKtx)
 
     //Dagger - Hilt
-    kapt(DaggerHilt.kaptHiltAndroidCompiler)
     implementation(DaggerHilt.hiltAndroid)
-    kapt(DaggerHilt.kaptHiltCompiler)
+    kapt(DaggerHilt.kaptHiltAndroidCompiler)
+    // kapt(DaggerHilt.kaptHiltCompiler)
 
     // Local unit tests
     testImplementation(Testing.coreKtxTesting)

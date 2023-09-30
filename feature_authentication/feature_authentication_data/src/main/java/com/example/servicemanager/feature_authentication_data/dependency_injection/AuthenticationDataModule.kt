@@ -1,4 +1,4 @@
-package com.example.servicemanager.dependecy_injection
+package com.example.servicemanager.feature_authentication_data.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UserModule {
+object AuthenticationDataModule {
 
     @Provides
     @Singleton
@@ -60,16 +60,6 @@ object UserModule {
         return UserRepositoryImplementation(
             userFirebaseApi = userFirebaseApi,
             userDatabaseDao = userDatabaseDatabase.userDatabaseDao
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserUseCases(userRepository: UserRepository): UserUseCases {
-        return UserUseCases(
-            getUser = GetUser(userRepository),
-            getCurrentUser = GetCurrentUser(userRepository),
-            authenticate = Authenticate(userRepository)
         )
     }
 

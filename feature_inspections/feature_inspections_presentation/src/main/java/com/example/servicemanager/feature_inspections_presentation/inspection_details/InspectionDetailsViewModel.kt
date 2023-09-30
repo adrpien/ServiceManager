@@ -10,8 +10,8 @@ import com.example.core.util.Helper.Companion.convertToBitmap
 import com.example.core.util.Helper.Companion.convertToByteArray
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_inspections.domain.model.Inspection
 import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

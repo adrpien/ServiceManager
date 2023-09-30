@@ -1,4 +1,4 @@
-package com.example.servicemanager.navigation
+package com.example.core.navigation
 
 import com.example.core.util.Constans
 

@@ -1,14 +1,13 @@
-package com.example.servicemanager.ui.theme
+package com.example.core.ui.theme
 
-import androidx.annotation.Dimension
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import values.Dimensions
-import values.LocalSpacing
+import com.example.core_ui.values.Dimensions
+import com.example.core_ui.values.LocalSpacing
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,

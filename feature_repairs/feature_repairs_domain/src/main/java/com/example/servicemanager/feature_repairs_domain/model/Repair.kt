@@ -1,7 +1,5 @@
 package com.example.servicemanager.feature_repairs_domain.model
 
-import com.example.servicemanager.feature_repairs_data.local.entities.RepairEntity
-import com.example.servicemanager.feature_repairs_data.remote.dto.RepairDto
 import java.time.LocalDate
 
 

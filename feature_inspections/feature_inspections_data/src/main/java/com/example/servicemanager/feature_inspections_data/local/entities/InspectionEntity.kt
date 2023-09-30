@@ -2,7 +2,7 @@ package com.example.servicemanager.feature_inspections_data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.servicemanager.feature_inspections.domain.model.Inspection
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import java.util.*
 
 @Entity

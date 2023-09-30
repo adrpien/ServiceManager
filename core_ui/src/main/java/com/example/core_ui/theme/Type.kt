@@ -1,4 +1,4 @@
-package com.example.servicemanager.ui.theme
+package com.example.core.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

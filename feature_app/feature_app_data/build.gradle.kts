@@ -14,7 +14,7 @@ dependencies{
 
     // Firebase
     implementation(Firebase.firebaseAuth)
-    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
 
     // Room

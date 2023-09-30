@@ -1,6 +1,5 @@
 package com.example.servicemanager.feature_app.domain.model
 
-import com.example.servicemanager.feature_app.data.local.entities.EstStateEntity
 
 data class EstState (
     val estStateId: String = "",

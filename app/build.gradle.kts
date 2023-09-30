@@ -1,3 +1,4 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -83,7 +84,7 @@ dependencies {
 
     // Firebase
     implementation(Firebase.firebaseAuth)
-    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
 
     // Glide
@@ -106,14 +107,16 @@ dependencies {
     implementation (RaamCostaNavigation.composeDestinationsCore)
     ksp(RaamCostaNavigation.ksp)
 
+
     // Coroutines
     implementation(Coroutines.coroutinesCore)
     implementation(Coroutines.coroutinesAndroid)
     implementation(Coroutines.coroutinesPlayServices)
 
     //Dagger - Hilt
-    kapt(DaggerHilt.kaptHiltAndroidCompiler)
+
     implementation(DaggerHilt.hiltAndroid)
+    kapt(DaggerHilt.kaptHiltAndroidCompiler)
     kapt(DaggerHilt.kaptHiltCompiler)
 
     // Room

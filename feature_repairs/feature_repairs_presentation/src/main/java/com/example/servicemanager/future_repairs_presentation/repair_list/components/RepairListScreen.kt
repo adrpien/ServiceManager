@@ -1,6 +1,5 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
-import InspectionSortSection
 import RepairSortSection
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -18,12 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.core.navigation.Screen
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.servicemanager.core.compose.components.HospitalFilterSection
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListViewModel
-import com.example.servicemanager.navigation.Screen
-import com.example.servicemanager.ui.theme.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 

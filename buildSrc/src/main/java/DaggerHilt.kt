@@ -1,5 +1,5 @@
 object DaggerHilt {
-    const val hiltAndroidVersion = "2.40.5"
+    const val hiltAndroidVersion = "2.40"
     const val hiltAndroidCompilerVersion = "2.40.5"
     const val kaptHiltCompilerVersion = "1.0.0"
 

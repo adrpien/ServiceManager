@@ -3,7 +3,7 @@ package com.example.servicemanager.feature_repairs_data.remote
 import android.util.Log
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_repairs.domain.model.Repair
+import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow

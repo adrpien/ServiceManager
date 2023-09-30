@@ -11,13 +11,13 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.core.ui.theme.TiemedLightBlue
+import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.core.util.Helper.Companion.getDateString
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.model.InspectionState
 import com.example.servicemanager.feature_app.domain.model.Technician
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 
 @Composable
 fun InspectionListItem(

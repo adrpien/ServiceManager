@@ -1,7 +1,7 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_details
 
 import android.graphics.Bitmap
-import com.example.servicemanager.feature_inspections.domain.model.Inspection
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 sealed class InspectionDetailsEvent {
     data class SaveInspection(val inspection: Inspection): InspectionDetailsEvent()

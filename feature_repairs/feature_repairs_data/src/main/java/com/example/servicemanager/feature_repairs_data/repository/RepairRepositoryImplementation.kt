@@ -5,8 +5,8 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
-import com.example.servicemanager.feature_repairs.domain.model.Repair
-import com.example.servicemanager.feature_repairs.domain.repository.RepairRepository
+import com.example.servicemanager.feature_repairs_domain.model.Repair
+import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
 import kotlinx.coroutines.flow.*
 
 

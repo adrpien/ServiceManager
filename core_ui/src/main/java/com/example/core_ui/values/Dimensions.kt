@@ -1,4 +1,4 @@
-package values
+package com.example.core_ui.values
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp

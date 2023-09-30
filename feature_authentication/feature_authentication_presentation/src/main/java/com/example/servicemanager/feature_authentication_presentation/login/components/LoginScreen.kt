@@ -1,6 +1,6 @@
 package com.example.servicemanager.feature_authentication.presentation.login.components
 
-import androidx.compose.foundation.background
+import  androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -9,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core_ui.compose.DefaultTextFieldState
+import com.example.core.navigation.Screen
+import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.core_ui.compose.components.DefaultButton
 import com.example.core_ui.compose.components.DefaultTextField
+import com.example.core_ui.compose.components.DefaultTextFieldState
 import com.example.core_ui.compose.components.PasswordTextField
 import com.example.servicemanager.feature_authentication.presentation.login.UserLoginEvent
 import com.example.servicemanager.feature_authentication.presentation.login.UserLoginViewModel
-import com.example.servicemanager.navigation.Screen
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

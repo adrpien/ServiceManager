@@ -3,13 +3,6 @@ package com.example.core_ui.compose.components.alert_dialogs
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.window.DialogProperties
-import com.example.servicemanager.core.compose.components.SignatureArea
-import com.example.servicemanager.feature_inspections.presentation.inspection_details.InspectionDetailsEvent
-import com.example.servicemanager.ui.theme.TiemedLightBlue
-import com.example.servicemanager.ui.theme.TiemedVeryLightBeige
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.MaterialDialogState
-import com.vanpra.composematerialdialogs.customView
 
 @Composable
 fun DefaultExitDialog(
