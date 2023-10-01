@@ -1,3 +1,7 @@
+plugins {
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
+
+}
 buildscript {
     repositories {
         mavenCentral()
@@ -5,10 +9,9 @@ buildscript {
     }
     dependencies {
         classpath(Build.androidBuildTools)
+        classpath(Build.hiltAndroidGradlePlugin)
         classpath(Build.kotlinGradlePlugin)
         classpath(Build.googleServices)
-        classpath(Build.hiltAndroidGradlePlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     }
 }
 

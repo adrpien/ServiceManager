@@ -3,6 +3,8 @@ import RaamCostaNavigation.ksp
 plugins {
     `android-library`
     `kotlin-android`
+    id("dagger.hilt.android.plugin")
+
 }
 
 apply(from = "$rootDir/base-module.gradle")
@@ -13,5 +15,5 @@ android {
 dependencies{
 
     implementation(project(Modules.core))
-    implementation(project(Modules.featureAppDomain))
+    // implementation(project(Modules.featureAppDomain))
 }

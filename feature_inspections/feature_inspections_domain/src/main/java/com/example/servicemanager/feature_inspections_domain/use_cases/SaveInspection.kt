@@ -11,12 +11,18 @@ import javax.inject.Inject
 class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
-    operator fun invoke(inspection: Inspection): Flow<Resource<String>> {
+    operator fun invoke(inspection: Inspection): Flow<com.example.core.util.Resource<String>> {
         return if (inspection.deviceSn.isNotEmpty() && inspection.deviceIn.isNotEmpty()) {
             repository.insertInspection(inspection)
         } else {
-            flow<Resource<String>> {
-                emit(Resource(ResourceState.ERROR, "TextFields deviceSn and deviceIn are empty", "TextFields deviceSn and deviceIn are empty"))
+            flow<com.example.core.util.Resource<String>> {
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
+                        "TextFields deviceSn and deviceIn are empty",
+                        "TextFields deviceSn and deviceIn are empty"
+                    )
+                )
             }
         }
     }

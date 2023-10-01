@@ -20,41 +20,4 @@ data class Inspection(
     val deviceIn: String = "",
     ) {
 
-    fun toInspectionEntity(): InspectionEntity {
-        return InspectionEntity(
-            inspectionId = inspectionId,
-            hospitalId = hospitalId,
-            ward = ward,
-            comment = comment,
-            inspectionDate = inspectionDate,
-            technicianId = technicianId,
-            recipient = recipient,
-            inspectionStateId = inspectionStateId,
-            estStateId = estStateId,
-            deviceName = deviceName,
-            deviceManufacturer = deviceManufacturer,
-            deviceModel = deviceModel,
-            deviceSn = deviceSn,
-            deviceIn = deviceIn
-        )
-    }
-
-    fun toInspectionDto(): InspectionDto {
-        return InspectionDto(
-            inspectionId = inspectionId,
-            hospitalId = hospitalId,
-            ward = ward,
-            comment = comment,
-            inspectionDate = inspectionDate,
-            technicianId = technicianId,
-            recipient = recipient,
-            inspectionStateId = inspectionStateId,
-            estStateId = estStateId,
-            deviceName = deviceName,
-            deviceManufacturer = deviceManufacturer,
-            deviceModel = deviceModel,
-            deviceSN = deviceSn,
-            deviceIN = deviceIn
-        )
-    }
 }

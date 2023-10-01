@@ -11,7 +11,7 @@ class GetUser @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    operator fun invoke(userId: String): Flow<Resource<User>> {
+    operator fun invoke(userId: String): Flow<com.example.core.util.Resource<User>> {
         if (userId.isBlank()) {
             return flow {  }
         } else {

@@ -11,10 +11,15 @@ class Authenticate @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    operator fun invoke(mail: String, password: String): Flow<Resource<String>> {
+    operator fun invoke(mail: String, password: String): Flow<com.example.core.util.Resource<String>> {
         if (mail.isEmpty() || password.isEmpty()) {
             return flow {
-                emit(Resource(ResourceState.ERROR, "E-mail or password textfield is empty"))
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
+                        "E-mail or password textfield is empty"
+                    )
+                )
             }
         } else {
             return userRepository.authenticate(mail.trim(), password.trim())

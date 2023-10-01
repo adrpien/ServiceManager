@@ -1,19 +1,26 @@
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
     id("com.google.gms.google-services")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
-    id("com.google.devtools.ksp") version "1.8.0-1.0.9"
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace  = "com.example.servicemanager"
     compileSdk = ProjectConfig.compileSdk
 
+    applicationVariants.all {
+        addJavaSourceFoldersToModel(
+            File(buildDir, "generated/ksp/$name/kotlin")
+        )
+    }
+
     defaultConfig {
+
         compileSdkPreview = ProjectConfig.compileSdkPreview
         applicationId  = ProjectConfig.appId
         minSdk = ProjectConfig.minSdk
@@ -30,6 +37,8 @@ android {
                 arg("room.schemaLocation", "$projectDir/schemas")
             }
         }
+
+
     }
 
     buildTypes {
@@ -64,7 +73,6 @@ dependencies {
 
     // Modules
     implementation(project(Modules.core))
-    implementation(project(Modules.coreUi))
     implementation(project(Modules.featureAppData))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureAuthenticationDomain))
@@ -114,10 +122,13 @@ dependencies {
     implementation(Coroutines.coroutinesPlayServices)
 
     //Dagger - Hilt
-
     implementation(DaggerHilt.hiltAndroid)
-    kapt(DaggerHilt.kaptHiltAndroidCompiler)
     kapt(DaggerHilt.kaptHiltCompiler)
+
+    // Navigation
+    implementation("io.github.raamcosta.compose-destinations:core:1.5.38-beta")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.5.38-beta")
+
 
     // Room
     kapt(Room.roomCompiler)

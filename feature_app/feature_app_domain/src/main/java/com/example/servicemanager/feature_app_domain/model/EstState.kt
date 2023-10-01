@@ -5,12 +5,5 @@ data class EstState (
     val estStateId: String = "",
     val estState: String = ""
 ){
-    fun toEstStateEntity(): EstStateEntity {
-        return EstStateEntity(
-            estStateId = estStateId,
-            name = estState
-        )
-    }
-
 }
 

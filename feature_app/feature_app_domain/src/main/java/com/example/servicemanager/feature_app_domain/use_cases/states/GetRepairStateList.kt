@@ -10,7 +10,7 @@ class GetRepairStateList @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(): Flow<Resource<List<RepairState>>> {
+    operator fun invoke(): Flow<com.example.core.util.Resource<List<RepairState>>> {
         return repository.getRepairStateList()
     }
 }

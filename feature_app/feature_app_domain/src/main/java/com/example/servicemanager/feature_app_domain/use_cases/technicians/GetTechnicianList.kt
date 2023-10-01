@@ -10,7 +10,7 @@ class GetTechnicianList @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(): Flow<Resource<List<Technician>>> {
+    operator fun invoke(): Flow<com.example.core.util.Resource<List<Technician>>> {
         return repository.getTechnicianList()
     }
 }

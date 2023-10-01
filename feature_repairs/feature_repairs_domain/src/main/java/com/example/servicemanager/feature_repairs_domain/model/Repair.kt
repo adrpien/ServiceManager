@@ -27,58 +27,5 @@ data class Repair(
     val deviceSn: String = "",
     val deviceIn: String = "",
     ) {
-    fun toRepairEntity(): RepairEntity {
-        return RepairEntity(
-            repairId = repairId,
-            repairStateId = repairStateId,
-            hospitalId = hospitalId,
-            ward = ward,
-            defectDescription = defectDescription,
-            repairDescription = repairDescription,
-            partDescription = partDescription,
-            comment = comment,
-            estTestId = estStateId,
-            closingDate = closingDate,
-            openingDate = openingDate,
-            repairingDate = repairingDate,
-            pickupTechnicianId = pickupTechnicianId,
-            repairTechnicianId = repairTechnicianId,
-            returnTechnicianId = returnTechnicianId,
-            rate = rate,
-            recipient = recipient,
-            deviceName = deviceName,
-            deviceManufacturer = deviceManufacturer,
-            deviceModel = deviceModel,
-            deviceSn = deviceSn,
-            deviceIn = deviceIn
-        )
-    }
-
-    fun toRepairDto(): RepairDto {
-        return RepairDto(
-            repairId = repairId,
-            repairStateId = repairStateId,
-            hospitalId = hospitalId,
-            ward = ward,
-            defectDescription = defectDescription,
-            repairDescription = repairDescription,
-            partDescription = partDescription,
-            comment = comment,
-            estTestId = estStateId,
-            closingDate = closingDate,
-            openingDate = openingDate,
-            repairingDate = repairingDate,
-            pickupTechnicianId = pickupTechnicianId,
-            repairTechnicianId = repairTechnicianId,
-            returnTechnicianId = returnTechnicianId,
-            rate = rate,
-            recipient = recipient,
-            deviceName = deviceName,
-            deviceManufacturer = deviceManufacturer,
-            deviceModel = deviceModel,
-            deviceSn = deviceSn,
-            deviceIn = deviceIn
-        )
-    }
 }
 

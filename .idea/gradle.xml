@@ -14,10 +14,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core_ui" />
             <option value="$PROJECT_DIR$/feature_app" />
             <option value="$PROJECT_DIR$/feature_app/feature_app_data" />
             <option value="$PROJECT_DIR$/feature_app/feature_app_domain" />
+            <option value="$PROJECT_DIR$/feature_app/feature_app_presentation" />
             <option value="$PROJECT_DIR$/feature_authentication" />
             <option value="$PROJECT_DIR$/feature_authentication/feature_authentication_data" />
             <option value="$PROJECT_DIR$/feature_authentication/feature_authentication_domain" />

@@ -6,11 +6,4 @@ data class RepairState (
     val repairState: String = ""
         ) {
 
-    fun toRepairStateEntity(): RepairStateEntity {
-        return  RepairStateEntity(
-            repairStateId = repairStateId,
-            repairState = repairState
-        )
-    }
-
 }

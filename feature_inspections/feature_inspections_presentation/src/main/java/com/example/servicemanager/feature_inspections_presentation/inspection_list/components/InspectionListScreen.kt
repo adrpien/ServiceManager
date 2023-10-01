@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
+package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
 
 import InspectionSortSection
 import androidx.compose.animation.*
@@ -17,16 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.navigation.Screen
 import com.example.core.ui.theme.TiemedLightBlue
 import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.servicemanager.core.compose.components.HospitalFilterSection
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections.presentation.inspection_list.InspectionListViewModel
-
+import com.example.servicemanager.feature_inspections.presentation.inspection_list.components.InspectionListItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.example.core.util.Screen
+
 
 @Composable
 fun InspectionListScreen(

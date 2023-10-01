@@ -11,7 +11,7 @@ class GetInspectionStateList @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(): Flow<Resource<List<InspectionState>>> {
+    operator fun invoke(): Flow<com.example.core.util.Resource<List<InspectionState>>> {
         return repository.getInspectionStateList()
     }
 

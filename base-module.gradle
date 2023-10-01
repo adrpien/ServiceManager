@@ -52,8 +52,7 @@ dependencies {
 
     //Dagger - Hilt
     implementation(DaggerHilt.hiltAndroid)
-    kapt(DaggerHilt.kaptHiltAndroidCompiler)
-    // kapt(DaggerHilt.kaptHiltCompiler)
+    kapt(DaggerHilt.kaptHiltCompiler)
 
     // Local unit tests
     testImplementation(Testing.coreKtxTesting)
@@ -80,6 +79,10 @@ dependencies {
     androidTestImplementation(Testing.composeUiTest)
     androidTestImplementation(Testing.espresso)
     kaptAndroidTest(Testing.hiltTesting)
+
+    // Navigation
+    implementation("io.github.raamcosta.compose-destinations:animations-core:1.5.38-beta")
+    //ksp("io.github.raamcosta.compose-destinations:ksp:1.5.38-beta")
 
     // Coroutines
     implementation(Coroutines.coroutinesCore)

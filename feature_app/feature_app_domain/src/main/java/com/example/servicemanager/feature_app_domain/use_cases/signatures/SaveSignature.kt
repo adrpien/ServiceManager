@@ -12,10 +12,16 @@ class SaveSignature @Inject constructor (
     private val repository: AppRepository
     ) {
 
-    operator fun invoke(signatureId: String, byteArray: ByteArray): Flow<Resource<String>> {
+    operator fun invoke(signatureId: String, byteArray: ByteArray): Flow<com.example.core.util.Resource<String>> {
         if(signatureId.isEmpty()){
             return flow {
-                emit(Resource(ResourceState.ERROR, null, "Save signature unknown error"))
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
+                        null,
+                        "Save signature unknown error"
+                    )
+                )
             }
         }
         return repository.createSignature(signatureId, byteArray)

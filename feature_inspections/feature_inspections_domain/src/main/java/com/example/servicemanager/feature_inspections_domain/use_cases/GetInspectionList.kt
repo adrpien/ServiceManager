@@ -20,7 +20,7 @@ class GetInspectionList @Inject constructor (
         searchQuery: String = "",
         inspectionOrderType: InspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending),
         fetchFromApi: Boolean = false
-    ): Flow<Resource<List<Inspection>>> {
+    ): Flow<com.example.core.util.Resource<List<Inspection>>> {
         return if(fetchFromApi == false) {
             repository.getInspectionListFromLocal().map { resource ->
                 resource.copy(

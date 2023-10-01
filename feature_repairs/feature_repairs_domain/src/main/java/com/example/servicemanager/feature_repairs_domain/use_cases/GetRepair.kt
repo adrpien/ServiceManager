@@ -13,10 +13,16 @@ class GetRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
-    operator fun invoke(repairId: String): Flow<Resource<Repair>> {
+    operator fun invoke(repairId: String): Flow<com.example.core.util.Resource<Repair>> {
         if(repairId.isEmpty()) {
             return flow {
-                emit(Resource(ResourceState.ERROR, Repair(), "Get inspection unknown error"))
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
+                        Repair(),
+                        "Get inspection unknown error"
+                    )
+                )
             }
         }
         return repository.getRepair(repairId)

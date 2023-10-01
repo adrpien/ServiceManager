@@ -60,9 +60,11 @@ dependencies {
     implementation(Compose.materialIconExtended)
     implementation(Compose.swipeRefresh)
     debugImplementation(Compose.uiTooling)
+    implementation(AlertDialogs.vanpraMaterialDialog)
+    implementation(AlertDialogs.vanpraMaterialDialogDateTime)
 
     //Dagger - Hilt
-    kapt(DaggerHilt.kaptHiltAndroidCompiler)
+    // kapt(DaggerHilt.kaptHiltAndroidCompiler)
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
 
@@ -91,6 +93,5 @@ dependencies {
     androidTestImplementation(Testing.composeUiTest)
     androidTestImplementation(Testing.espresso)
     kaptAndroidTest(Testing.hiltTesting)
-
 
 }

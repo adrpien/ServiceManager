@@ -1,7 +1,9 @@
 plugins {
     `android-library`
     `kotlin-android`
-    id("com.google.devtools.ksp") version "1.8.0-1.0.9"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+    id("dagger.hilt.android.plugin")
+
 }
 
 apply(from = "$rootDir/compose-module.gradle")
@@ -11,7 +13,6 @@ android {
 }
 dependencies{
 
-    implementation(project(Modules.coreUi))
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureRepairsDomain))

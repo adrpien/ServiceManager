@@ -12,13 +12,13 @@ class UpdateRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
-    operator fun invoke(repair: Repair): Flow<Resource<String>> {
+    operator fun invoke(repair: Repair): Flow<com.example.core.util.Resource<String>> {
         return if (repair.repairId != "0")  repository.updateRepair(repair)
         else {
-            flow<Resource<String>> {
+            flow<com.example.core.util.Resource<String>> {
                 emit(
-                    Resource(
-                        ResourceState.ERROR,
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
                         "Repair update unknown error",
                         "Repair update unknown error"
                     )

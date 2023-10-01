@@ -12,13 +12,13 @@ class UpdateInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
 
-    operator fun invoke(inspection: Inspection): Flow<Resource<String>> {
+    operator fun invoke(inspection: Inspection): Flow<com.example.core.util.Resource<String>> {
         return if(inspection.inspectionId != "0") repository.updateInspection(inspection)
         else {
-            flow<Resource<String>> {
+            flow<com.example.core.util.Resource<String>> {
                 emit(
-                    Resource(
-                        ResourceState.ERROR,
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
                         "Inspection update unknown error",
                         "Inspection update unknown error"
                     )

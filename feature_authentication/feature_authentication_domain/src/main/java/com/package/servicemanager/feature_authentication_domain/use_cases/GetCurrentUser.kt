@@ -9,7 +9,7 @@ class GetCurrentUser @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    operator fun invoke(): Flow<Resource<String>> {
+    operator fun invoke(): Flow<com.example.core.util.Resource<String>> {
         return userRepository.getCurrentUser()
     }
 }

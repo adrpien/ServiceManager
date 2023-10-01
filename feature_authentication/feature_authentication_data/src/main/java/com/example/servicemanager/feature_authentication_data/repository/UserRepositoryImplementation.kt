@@ -17,30 +17,66 @@ class UserRepositoryImplementation(
     override fun authenticate(
         mail: String,
         password: String,
-    ): Flow<Resource<String>> {
+    ): Flow<com.example.core.util.Resource<String>> {
     return userFirebaseApi.authenticate(mail, password)
     }
 
     // I think holding user data in room is not safe, UserDatabase is not used for now
-    override fun getUser(userId: String): Flow<Resource<User>> = flow {
+    override fun getUser(userId: String): Flow<com.example.core.util.Resource<User>> = flow {
         var user: User? = User()
-        emit(Resource(ResourceState.LOADING, user, "User fetching started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                user,
+                "User fetching started"
+            )
+        )
         user = userFirebaseApi.getUser(userId)
         if (user != null){
-            emit(Resource(ResourceState.SUCCESS, user, "User fetching finished"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    user,
+                    "User fetching finished"
+                )
+            )
         } else {
-            emit(Resource(ResourceState.ERROR, user, "User fetching error"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    user,
+                    "User fetching error"
+                )
+            )
         }
     }
 
-    override fun getCurrentUser(): Flow<Resource<String>> = flow {
+    override fun getCurrentUser(): Flow<com.example.core.util.Resource<String>> = flow {
         var data: String  = ""
-        emit(Resource(ResourceState.LOADING, data, "Current user fetching started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                data,
+                "Current user fetching started"
+            )
+        )
         data = userFirebaseApi.getCurrentUser() ?: "0"
         if (data != null){
-            emit(Resource(ResourceState.SUCCESS, data, "Current user logged in"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    data,
+                    "Current user logged in"
+                )
+            )
         } else {
-            emit(Resource(ResourceState.ERROR, "Current user not logged in", "Current user not logged in"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    "Current user not logged in",
+                    "Current user not logged in"
+                )
+            )
         }
     }
 

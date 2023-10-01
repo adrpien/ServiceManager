@@ -49,9 +49,15 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    fun createInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+    fun createInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>> = flow {
         // TODO Caching mechanism in createInspection fun for InspectionFirebaseApi
-        emit(Resource(ResourceState.LOADING, "0", "Inspection record creating started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                "0",
+                "Inspection record creating started"
+            )
+        )
         var documentReference = firebaseFirestore.collection("inspections")
             .document()
         var map = mapOf<String, String>(
@@ -74,18 +80,36 @@ class  InspectionFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, documentReference.id, documentReference.id))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    documentReference.id,
+                    documentReference.id
+                )
+            )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
 
         } else {
-            emit(Resource(ResourceState.ERROR, "Inspection record creation error", "Inspection record creation error"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    "Inspection record creation error",
+                    "Inspection record creation error"
+                )
+            )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record creation error")
 
         }
     }
-    fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+    fun updateInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>> = flow {
         // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
-        emit(Resource(ResourceState.LOADING, "", "Inspection record updating started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                "",
+                "Inspection record updating started"
+            )
+        )
         var map = mapOf<String, String>(
             "inspectionId" to inspection.inspectionId,
             "inspectionStateId" to inspection.inspectionStateId,
@@ -107,11 +131,22 @@ class  InspectionFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, "Inspection record updated", "Inspection record updated"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    "Inspection record updated",
+                    "Inspection record updated"
+                )
+            )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
         } else {
 
-            emit(Resource(ResourceState.ERROR, result.exception?.message ?: "Update inspection unknown error", ))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    result.exception?.message ?: "Update inspection unknown error",
+                )
+            )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
         }
 

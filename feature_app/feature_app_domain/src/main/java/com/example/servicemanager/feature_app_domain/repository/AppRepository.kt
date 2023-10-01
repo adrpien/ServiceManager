@@ -7,23 +7,23 @@ import kotlinx.coroutines.flow.Flow
 interface AppRepository {
 
     /* ***** Signatures ************************************************************************* */
-    fun getSignature(signatureId: String): Flow<Resource<ByteArray>>
-    fun updateSignature (signatureId: String, byteArray: ByteArray): Flow<Resource<String>>
-    fun createSignature (signatureId: String, byteArray: ByteArray): Flow<Resource<String>>
+    fun getSignature(signatureId: String): Flow<com.example.core.util.Resource<ByteArray>>
+    fun updateSignature (signatureId: String, byteArray: ByteArray): Flow<com.example.core.util.Resource<String>>
+    fun createSignature (signatureId: String, byteArray: ByteArray): Flow<com.example.core.util.Resource<String>>
 
     /* ***** Hospitals ************************************************************************** */
-    fun getHospitalList(): Flow<Resource<List<Hospital>>>
+    fun getHospitalList(): Flow<com.example.core.util.Resource<List<Hospital>>>
 
     /* ***** Technicians ************************************************************************ */
-    fun getTechnicianList(): Flow<Resource<List<Technician>>>
+    fun getTechnicianList(): Flow<com.example.core.util.Resource<List<Technician>>>
 
     /* ***** EstStates ************************************************************************** */
-    fun getEstStateList(): Flow<Resource<List<EstState>>>
+    fun getEstStateList(): Flow<com.example.core.util.Resource<List<EstState>>>
 
     /* ***** InspectionState ******************************************************************** */
-    fun getInspectionStateList(): Flow<Resource<List<InspectionState>>>
+    fun getInspectionStateList(): Flow<com.example.core.util.Resource<List<InspectionState>>>
 
     /* ***** RepairStates *********************************************************************** */
-    fun getRepairStateList(): Flow<Resource<List<RepairState>>>
+    fun getRepairStateList(): Flow<com.example.core.util.Resource<List<RepairState>>>
 
 }

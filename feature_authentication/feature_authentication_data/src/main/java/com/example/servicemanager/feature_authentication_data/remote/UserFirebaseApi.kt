@@ -19,33 +19,51 @@ class UserFirebaseApi(
 
     private val USER_FIREBASE_API: String = "USER_FIREBASE_API"
 
-    fun authenticate(mail: String, password: String): Flow<Resource<String>> = flow {
+    fun authenticate(mail: String, password: String): Flow<com.example.core.util.Resource<String>> = flow {
         var userId: String? = "0"
-        emit(Resource(ResourceState.LOADING, userId, "Authentication started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                userId,
+                "Authentication started"
+            )
+        )
         try {
             val reference = firebaseAuth.signInWithEmailAndPassword(mail, password)
             val result = reference.await()
             userId = result.user?.uid
             if (result.user?.isEmailVerified == true) {
                 Log.d(USER_FIREBASE_API, "Authentication successful")
-                emit(Resource(ResourceState.SUCCESS, userId, "Authentication successful"))
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.SUCCESS,
+                        userId,
+                        "Authentication successful"
+                    )
+                )
 
             } else {
                 Log.d(USER_FIREBASE_API, "E-mail not verified")
-                emit(Resource(ResourceState.ERROR, "E-mail not verified", "E-mail not verified"))
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
+                        "E-mail not verified",
+                        "E-mail not verified"
+                    )
+                )
             }
         } catch (e: FirebaseAuthException) {
             emit(
-                Resource(
-                    ResourceState.ERROR,
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
                     "Incorrect e-mail or password",
                     "Incorrect e-mail or password"
                 )
             )
         } catch (e: FirebaseTooManyRequestsException) {
             emit(
-                Resource(
-                    ResourceState.ERROR,
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
                     "To many login attemps, try again later",
                     "To many login attemps, try again later"
                 )

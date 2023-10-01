@@ -6,6 +6,7 @@ import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections_data.local.InspectionDatabaseDao
 import com.example.servicemanager.feature_inspections_data.remote.InspectionFirebaseApi
 import com.example.servicemanager.feature_inspections.domain.repository.InspectionRepository
+import com.example.servicemanager.feature_inspections_data.mappers.toInspectionEntity
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import kotlinx.coroutines.flow.*
 
@@ -21,9 +22,21 @@ class  InspectionRepositoryImplementation(
     /* ********************************* INSPECTIONS ******************************************** */
     override fun getInspectionList() = flow {
         var inspectionList: List<Inspection> = listOf<Inspection>()
-        emit(Resource(ResourceState.LOADING, inspectionList, "Inspection list fetching started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                inspectionList,
+                "Inspection list fetching started"
+            )
+        )
         inspectionList = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
-        emit(Resource(ResourceState.LOADING, inspectionList, "Locally cached list"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                inspectionList,
+                "Locally cached list"
+            )
+        )
         val list = inspectionFirebaseApi.getInspectionList()?: emptyList()
         if(list.isNotEmpty()) {
             inspectionDatabaseDao.deleteAllInspections()
@@ -31,39 +44,81 @@ class  InspectionRepositoryImplementation(
                 inspectionDatabaseDao.insertInspection(device.toInspectionEntity())
             }
             inspectionList = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
-            emit(Resource(ResourceState.SUCCESS, inspectionList, "Device list fetching finished"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    inspectionList,
+                    "Device list fetching finished"
+                )
+            )
         }
     }
 
 
-    override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow{
+    override fun getInspection(inspectionId: String): Flow<com.example.core.util.Resource<Inspection>> = flow{
         var inspection = Inspection()
-        emit(Resource(ResourceState.LOADING, inspection, "Inspection record fetching started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                inspection,
+                "Inspection record fetching started"
+            )
+        )
         inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
-        emit(Resource(ResourceState.LOADING, inspection, "Locally cached record"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                inspection,
+                "Locally cached record"
+            )
+        )
         val record = inspectionFirebaseApi.getInspection(inspectionId)
         if(record != null) {
             inspectionDatabaseDao.deleteInspection(inspectionId)
             inspectionDatabaseDao.insertInspection(record.toInspectionEntity())
             inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
-            emit(Resource(ResourceState.SUCCESS, inspection, "Inspection record fetching finished"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    inspection,
+                    "Inspection record fetching finished"
+                )
+            )
         } else {
-            emit(Resource(ResourceState.ERROR, inspection, "Inspection record fetching error"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    inspection,
+                    "Inspection record fetching error"
+                )
+            )
         }
     }
 
-    override fun insertInspection(inspection: Inspection): Flow<Resource<String>> {
+    override fun insertInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>> {
         return inspectionFirebaseApi.createInspection(inspection)
     }
 
-    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> {
+    override fun updateInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>> {
         return inspectionFirebaseApi.updateInspection(inspection)
     }
 
-    override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
-        emit(Resource(ResourceState.LOADING, null, "Inspection list fetching form local started"))
+    override fun getInspectionListFromLocal(): Flow<com.example.core.util.Resource<List<Inspection>>> = flow {
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                null,
+                "Inspection list fetching form local started"
+            )
+        )
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
-        emit(Resource(ResourceState.SUCCESS, inspectionList, "Locally storaged list"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.SUCCESS,
+                inspectionList,
+                "Locally storaged list"
+            )
+        )
     }
 
 }

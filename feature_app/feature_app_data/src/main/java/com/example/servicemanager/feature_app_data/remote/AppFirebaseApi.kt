@@ -22,37 +22,67 @@ class  AppFirebaseApi(
 
 
     /* ********************************* SIGNATURES ********************************************* */
-    fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Flow<Resource<String>> = flow {
+    fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Flow<com.example.core.util.Resource<String>> = flow {
         // TODO Caching mechanism in uploadSignature fun for AppFirebaseApi implementation
         Log.d(APP_REPOSITORY, "Signature uploading started")
-        emit(Resource(ResourceState.LOADING, null))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                null
+            )
+        )
         val documentReference = firebaseStorage.getReference("signatures")
             .child("${signatureId}.jpg")
             val result = documentReference.putBytes(signatureBytes)
             result.await()
                     if (result.isSuccessful) {
-                        emit(Resource(ResourceState.SUCCESS, documentReference.downloadUrl.toString()))
+                        emit(
+                            com.example.core.util.Resource(
+                                com.example.core.util.ResourceState.SUCCESS,
+                                documentReference.downloadUrl.toString()
+                            )
+                        )
                         Log.d(APP_REPOSITORY, "Signature uploaded")
 
                     } else {
-                        emit(Resource(ResourceState.ERROR, null))
+                        emit(
+                            com.example.core.util.Resource(
+                                com.example.core.util.ResourceState.ERROR,
+                                null
+                            )
+                        )
                         Log.d(APP_REPOSITORY, "Signature uploading error")
                     }
 
     }
-    fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
+    fun getSignature(signatureId: String): Flow<com.example.core.util.Resource<ByteArray>> = flow {
         Log.d(APP_REPOSITORY, "Signature fetching started")
-        emit(Resource(ResourceState.LOADING, null))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                null
+            )
+        )
         val documentReference = firebaseStorage.getReference("signatures")
             .child("${signatureId}.jpg")
             val result = documentReference.getBytes(10000000) //  10MB
             result.await()
                     if (result.isSuccessful){
                         val data =  result.result
-                        emit(Resource(ResourceState.SUCCESS, data))
+                        emit(
+                            com.example.core.util.Resource(
+                                com.example.core.util.ResourceState.SUCCESS,
+                                data
+                            )
+                        )
                         Log.d(APP_REPOSITORY, "Signature fetched")
                     } else {
-                        emit(Resource(ResourceState.ERROR, null))
+                        emit(
+                            com.example.core.util.Resource(
+                                com.example.core.util.ResourceState.ERROR,
+                                null
+                            )
+                        )
                         Log.d(APP_REPOSITORY, "Signature fetching error")
                     }
     }

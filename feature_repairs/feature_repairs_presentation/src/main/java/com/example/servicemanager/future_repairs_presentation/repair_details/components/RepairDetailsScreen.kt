@@ -1,5 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details.components
 
+import RepairStateSelectionSection
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -17,19 +18,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.navigation.Screen
 import com.example.core.ui.theme.TiemedLightBeige
 import com.example.core.ui.theme.TiemedLightBlue
 import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core_ui.compose.components.DefaultTextField
-import com.example.core_ui.compose.components.DefaultTextFieldState
+import com.example.core.compose.components.DefaultTextField
+import com.example.core.compose.components.DefaultTextFieldState
 import com.example.servicemanager.core.compose.components.*
-import com.example.core_ui.compose.components.alert_dialogs.ExitAlertDialog
+import com.example.feature_app_presentation.components.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.feature_app.domain.model.EstState
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.model.RepairState
 import com.example.servicemanager.feature_app.domain.model.Technician
-import com.example.servicemanager.feature_repairs.presentation.repair_details.components.RepairStateSelectionSection
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsEvent
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel.*
@@ -42,6 +41,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import com.example.core.util.Screen
 
 
 @Composable
@@ -627,7 +627,7 @@ fun RepairDetailsScreen(
                     viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairingDate = date.toEpochDay().toString())))
                 }
             }
-            ExitAlertDialog(
+            com.example.feature_app_presentation.components.alert_dialogs.ExitAlertDialog(
                 isVisible = showExitDialog.value,
                 title = "Save?",
                 contentText = "Do you want save changes?",

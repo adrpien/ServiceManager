@@ -3,24 +3,16 @@ plugins {
     `kotlin-android`
 }
 
-apply(from = "$rootDir/base-module.gradle")
+apply(from = "$rootDir/compose-module.gradle")
 
 android {
-    namespace = "com.example.core"
+    namespace = "com.example.core_ui"
 }
-
 dependencies{
 
-    // Firebase
-    implementation(Firebase.firebaseAuth)
-    implementation(Firebase.firebaseStorage)
-    implementation(Firebase.firebaseFirestore)
-
-    // Room
-    "kapt"(Room.roomCompiler)
-    implementation(Room.roomRuntime)
-    implementation(Room.roomKtx)
+    // implementation(project(Modules.featureAppDomain))
 }
+
 
 
 

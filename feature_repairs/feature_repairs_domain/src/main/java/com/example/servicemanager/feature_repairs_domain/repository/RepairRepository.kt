@@ -8,11 +8,11 @@ interface RepairRepository {
 
 
     /* ***** Repairs **************************************************************************** */
-    fun getRepair(repairId: String): Flow<Resource<Repair>>
-    fun getRepairList(): Flow<Resource<List<Repair>>>
-    fun insertRepair (repair: Repair): Flow<Resource<String>>
-    fun updateRepair (repair: Repair): Flow<Resource<String>>
-    fun getRepairListFromLocal(): Flow<Resource<List<Repair>>>
+    fun getRepair(repairId: String): Flow<com.example.core.util.Resource<Repair>>
+    fun getRepairList(): Flow<com.example.core.util.Resource<List<Repair>>>
+    fun insertRepair (repair: Repair): Flow<com.example.core.util.Resource<String>>
+    fun updateRepair (repair: Repair): Flow<com.example.core.util.Resource<String>>
+    fun getRepairListFromLocal(): Flow<com.example.core.util.Resource<List<Repair>>>
 
 
 }

@@ -13,13 +13,19 @@ class SaveRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
-    operator fun invoke(repair: Repair): Flow<Resource<String>> {
+    operator fun invoke(repair: Repair): Flow<com.example.core.util.Resource<String>> {
         return if (repair.deviceSn.isNotEmpty() && repair.deviceIn.isNotEmpty())
         {
             repository.insertRepair(repair)
         } else {
-        flow<Resource<String>> {
-            emit(Resource(ResourceState.ERROR, "TextFields deviceSn and deviceIn are empty", "TextFields deviceSn and deviceIn are empty"))
+        flow<com.example.core.util.Resource<String>> {
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    "TextFields deviceSn and deviceIn are empty",
+                    "TextFields deviceSn and deviceIn are empty"
+                )
+            )
         }
         }
     }

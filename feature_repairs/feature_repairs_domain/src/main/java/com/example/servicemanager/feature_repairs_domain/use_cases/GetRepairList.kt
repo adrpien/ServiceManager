@@ -19,7 +19,7 @@ class GetRepairList @Inject constructor (
         searchQuery: String = "",
         repairOrderType: RepairOrderType = RepairOrderType.State(RepairOrderMonotonicity.Ascending),
         fetchFromApi: Boolean = false
-    ): Flow<Resource<List<Repair>>> {
+    ): Flow<com.example.core.util.Resource<List<Repair>>> {
         return if(fetchFromApi == false) {
             repository.getRepairListFromLocal().map { resource ->
                 resource.copy(

@@ -12,10 +12,16 @@ class GetInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
 
-    operator fun invoke(inspectionId: String): Flow<Resource<Inspection>> {
+    operator fun invoke(inspectionId: String): Flow<com.example.core.util.Resource<Inspection>> {
         if(inspectionId.isEmpty()) {
             return flow {
-                emit(Resource(ResourceState.ERROR, Inspection(), "Get inspection unknown error"))
+                emit(
+                    com.example.core.util.Resource(
+                        com.example.core.util.ResourceState.ERROR,
+                        Inspection(),
+                        "Get inspection unknown error"
+                    )
+                )
             }
         }
         return repository.getInspection(inspectionId)

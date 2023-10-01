@@ -49,9 +49,15 @@ class  RepairFirebaseApi(
             }
         return repair
     }
-    fun createRepair(repair: Repair): Flow<Resource<String>> = flow {
+    fun createRepair(repair: Repair): Flow<com.example.core.util.Resource<String>> = flow {
         // TODO Caching mechanism in createRepair fun for RepairFirebaseApi
-        emit(Resource(ResourceState.LOADING, "0", null))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                "0",
+                null
+            )
+        )
         var documentReference = firebaseFirestore.collection("repairs")
             .document()
         var map = mapOf<String, String>(
@@ -81,18 +87,35 @@ class  RepairFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, documentReference.id, "Repair record created"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    documentReference.id,
+                    "Repair record created"
+                )
+            )
             Log.d(REPAIR_REPOSITORY_API, "Repair record created")
 
         } else {
-            emit(Resource(ResourceState.ERROR, "Repair record creation error", "Repair record creation error"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    "Repair record creation error",
+                    "Repair record creation error"
+                )
+            )
             Log.d(REPAIR_REPOSITORY_API, "Repair record creation error")
 
         }
     }
-    fun updateRepair(repair: Repair): Flow<Resource<String>> = flow {
+    fun updateRepair(repair: Repair): Flow<com.example.core.util.Resource<String>> = flow {
         // TODO Caching mechanism in updateRepair fun for RepairFirebaseApi
-        emit(Resource(ResourceState.LOADING, "Reapir record updating started"))
+        emit(
+            com.example.core.util.Resource(
+                com.example.core.util.ResourceState.LOADING,
+                "Reapir record updating started"
+            )
+        )
         var map = mapOf<String, String>(
             "repairId" to repair.repairId,
             "repairStateId" to repair.repairStateId,
@@ -121,10 +144,22 @@ class  RepairFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(Resource(ResourceState.SUCCESS, "Repair record updated", "Repair record updated"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.SUCCESS,
+                    "Repair record updated",
+                    "Repair record updated"
+                )
+            )
             Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
         } else {
-            emit(Resource(ResourceState.ERROR, "Repair record update error", "Repair record update error"))
+            emit(
+                com.example.core.util.Resource(
+                    com.example.core.util.ResourceState.ERROR,
+                    "Repair record update error",
+                    "Repair record update error"
+                )
+            )
             Log.d(REPAIR_REPOSITORY_API, "Repair record update error")
         }
 
