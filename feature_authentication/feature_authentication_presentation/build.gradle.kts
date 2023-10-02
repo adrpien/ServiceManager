@@ -6,37 +6,15 @@ plugins {
 
 }
 
-apply(from = "$rootDir/compose-module.gradle")
+apply(from = "$rootDir/presentation-module.gradle")
 
 android {
     namespace = "com.example.feature_authentication_presentation"
 }
 dependencies{
-
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureAuthenticationDomain))
+    implementation(project(Modules.featureAppPresentation))
 
-    // Glide
-    implementation(Glide.glide)
-    "kapt"(Glide.glideCompiler)
-
-    // Compose dependencies
-    implementation(Compose.ui)
-    implementation(Compose.uiToolingPreview)
-    implementation(Compose.material)
-    implementation(Compose.material3)
-    implementation(Compose.activityCompose)
-    implementation(Compose.viewModelCompose)
-    implementation(Compose.hiltNavigationCompose)
-    implementation(Compose.materialIconExtended)
-    implementation(Compose.swipeRefresh)
-    debugImplementation(Compose.uiTooling)
-
-    // Compose Nav Destinations
-    implementation (RaamCostaNavigation.composeDestinationsCore)
-    ksp(RaamCostaNavigation.ksp)
-
-    // Date AlertDialog
-    implementation(DateAlertDialog.dateTime)
 }

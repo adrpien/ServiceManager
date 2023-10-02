@@ -22,7 +22,7 @@ import com.example.core.ui.theme.TiemedLightBlue
 import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.core.compose.components.DefaultTextField
 import com.example.core.compose.components.DefaultTextFieldState
-import com.example.feature_app_presentation.components.alert_dialogs.ExitAlertDialog
+import com.example.core.compose.components.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.core.compose.components.EstStateSelectionSection
 import com.example.servicemanager.core.compose.components.HospitalSelectionSection
 import com.example.servicemanager.core.compose.components.SignatureArea
@@ -510,7 +510,7 @@ fun InspectionDetailsScreen(
                     contentDescription = "Signature"
                 )
             }
-            com.example.feature_app_presentation.components.alert_dialogs.ExitAlertDialog(
+            ExitAlertDialog(
                 isVisible = showExitDialog.value,
                 title = "Save?",
                 contentText = "Do you want save changes?",

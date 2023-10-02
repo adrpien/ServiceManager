@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.compose.components.navigation.Screen
 import com.example.core.ui.theme.TiemedLightBlue
 import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.util.Screen
 import com.example.servicemanager.core.compose.components.HospitalFilterSection
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent

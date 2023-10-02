@@ -44,27 +44,13 @@ android {
 }
 
 dependencies {
+
     // AndroidX
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.lifecycleRuntimeKtx)
     implementation(AndroidX.lifecycleViewModelKtx)
 
-    // Compose dependencies
-    implementation(Compose.ui)
-    implementation(Compose.uiToolingPreview)
-    implementation(Compose.material)
-    implementation(Compose.material3)
-    implementation(Compose.activityCompose)
-    implementation(Compose.viewModelCompose)
-    implementation(Compose.hiltNavigationCompose)
-    implementation(Compose.materialIconExtended)
-    implementation(Compose.swipeRefresh)
-    debugImplementation(Compose.uiTooling)
-    implementation(AlertDialogs.vanpraMaterialDialog)
-    implementation(AlertDialogs.vanpraMaterialDialogDateTime)
-
     //Dagger - Hilt
-    // kapt(DaggerHilt.kaptHiltAndroidCompiler)
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
 
@@ -94,4 +80,22 @@ dependencies {
     androidTestImplementation(Testing.espresso)
     kaptAndroidTest(Testing.hiltTesting)
 
+    // Compose Nav Destinations
+    implementation (RaamCostaNavigation.composeDestinationsCore)
+    // ksp(RaamCostaNavigation.ksp)
+
+    // Coroutines
+    implementation(Coroutines.coroutinesCore)
+    implementation(Coroutines.coroutinesAndroid)
+    implementation(Coroutines.coroutinesPlayServices)
+
+    // Firebase
+    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseStorage)
+    implementation(Firebase.firebaseFirestore)
+
+    // Room
+    kapt(Room.roomCompiler)
+    implementation(Room.roomRuntime)
+    implementation(Room.roomKtx)
 }

@@ -23,8 +23,8 @@ import com.example.core.ui.theme.TiemedLightBlue
 import com.example.core.ui.theme.TiemedVeryLightBeige
 import com.example.core.compose.components.DefaultTextField
 import com.example.core.compose.components.DefaultTextFieldState
+import com.example.core.compose.components.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.core.compose.components.*
-import com.example.feature_app_presentation.components.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.feature_app.domain.model.EstState
 import com.example.servicemanager.feature_app.domain.model.Hospital
 import com.example.servicemanager.feature_app.domain.model.RepairState
@@ -627,7 +627,7 @@ fun RepairDetailsScreen(
                     viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairingDate = date.toEpochDay().toString())))
                 }
             }
-            com.example.feature_app_presentation.components.alert_dialogs.ExitAlertDialog(
+            ExitAlertDialog(
                 isVisible = showExitDialog.value,
                 title = "Save?",
                 contentText = "Do you want save changes?",

@@ -49,8 +49,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_7
-        targetCompatibility = JavaVersion.VERSION_1_7
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -70,7 +70,6 @@ android {
 }
 
 dependencies {
-
     // Modules
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppData))
@@ -89,11 +88,6 @@ dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.lifecycleRuntimeKtx)
     implementation(AndroidX.lifecycleViewModelKtx)
-
-    // Firebase
-    implementation(Firebase.firebaseAuth)
-    implementation(Firebase.firebaseStorage)
-    implementation(Firebase.firebaseFirestore)
 
     // Glide
     implementation(Glide.glide)
@@ -115,7 +109,6 @@ dependencies {
     implementation (RaamCostaNavigation.composeDestinationsCore)
     ksp(RaamCostaNavigation.ksp)
 
-
     // Coroutines
     implementation(Coroutines.coroutinesCore)
     implementation(Coroutines.coroutinesAndroid)
@@ -124,11 +117,6 @@ dependencies {
     //Dagger - Hilt
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
-
-    // Navigation
-    implementation("io.github.raamcosta.compose-destinations:core:1.5.38-beta")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.5.38-beta")
-
 
     // Room
     kapt(Room.roomCompiler)
@@ -163,4 +151,17 @@ dependencies {
     androidTestImplementation(Testing.composeUiTest)
     androidTestImplementation(Testing.espresso)
     kaptAndroidTest(Testing.hiltTesting)
+
+    // Firebase
+    implementation(Firebase.firebaseAuth)
+    implementation(Firebase.firebaseStorage)
+    implementation(Firebase.firebaseFirestore)
+
+    // Room
+    kapt(Room.roomCompiler)
+    implementation(Room.roomRuntime)
+    implementation(Room.roomKtx)
+
+
+    // \\1.8.10-1.0.9
 }
