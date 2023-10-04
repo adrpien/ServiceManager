@@ -70,6 +70,7 @@ android {
 }
 
 dependencies {
+
     // Modules
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppData))
@@ -117,6 +118,8 @@ dependencies {
     //Dagger - Hilt
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
+    kapt(DaggerHilt.kaptHiltAndroidCompiler)
+
 
     // Room
     kapt(Room.roomCompiler)
@@ -156,12 +159,4 @@ dependencies {
     implementation(Firebase.firebaseAuth)
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
-
-    // Room
-    kapt(Room.roomCompiler)
-    implementation(Room.roomRuntime)
-    implementation(Room.roomKtx)
-
-
-    // \\1.8.10-1.0.9
 }

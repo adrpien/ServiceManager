@@ -1,7 +1,6 @@
 plugins {
     `android-library`
     `kotlin-android`
-    id("dagger.hilt.android.plugin")
 }
 
 apply(from = "$rootDir/data-module.gradle")

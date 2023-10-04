@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+    id("com.google.devtools.ksp") version "1.8.0-1.0.9"
 }
 buildscript {
     repositories {
@@ -11,6 +11,7 @@ buildscript {
         classpath(Build.hiltAndroidGradlePlugin)
         classpath(Build.kotlinGradlePlugin)
         classpath(Build.googleServices)
+        classpath("com.squareup:javapoet:1.13.0")
     }
 }
 

@@ -53,6 +53,7 @@ dependencies {
     //Dagger - Hilt
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
+    kapt(DaggerHilt.kaptHiltAndroidCompiler)
 
     // Local unit tests
     testImplementation(Testing.coreKtxTesting)
