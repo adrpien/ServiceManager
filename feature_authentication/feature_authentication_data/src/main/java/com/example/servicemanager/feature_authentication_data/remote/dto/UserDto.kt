@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_authentication.data.remote.dto
+package com.example.servicemanager.feature_authentication_data.remote.dto
 
 data class UserDto(
     val userId: String,

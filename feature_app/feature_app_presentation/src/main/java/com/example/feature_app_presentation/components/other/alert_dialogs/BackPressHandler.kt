@@ -1,4 +1,4 @@
-package com.example.servicemanager.core.compose.components
+package com.example.feature_app_presentation.components.other.alert_dialogs
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher

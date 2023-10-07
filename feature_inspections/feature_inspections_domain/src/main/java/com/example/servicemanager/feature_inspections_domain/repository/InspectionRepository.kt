@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.domain.repository
+package com.example.servicemanager.feature_inspections_domain.repository
 
 import com.example.core.util.Resource
 import com.example.servicemanager.feature_inspections_domain.model.Inspection

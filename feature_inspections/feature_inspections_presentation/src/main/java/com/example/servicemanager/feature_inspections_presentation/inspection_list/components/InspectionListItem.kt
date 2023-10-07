@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list.components
+package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,12 +11,12 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
 import com.example.core.util.Helper.Companion.getDateString
-import com.example.servicemanager.feature_app.domain.model.Hospital
-import com.example.servicemanager.feature_app.domain.model.InspectionState
-import com.example.servicemanager.feature_app.domain.model.Technician
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.InspectionState
+import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 @Composable

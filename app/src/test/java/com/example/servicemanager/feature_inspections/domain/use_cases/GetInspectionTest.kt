@@ -1,7 +1,7 @@
 package com.example.servicemanager.feature_inspections.domain.use_cases
 
-import com.adrpien.tiemed.domain.use_case.inspections.GetInspection
-import com.adrpien.tiemed.domain.use_case.inspections.SaveInspection
+import com.example.servicemanager.feature_inspections_domain.use_cases.GetInspection
+import com.example.servicemanager.feature_inspections_domain.use_cases.SaveInspection
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections.data.repository.FakeInspectionRepositoryImplementation
 import com.example.servicemanager.feature_inspections_domain.model.Inspection

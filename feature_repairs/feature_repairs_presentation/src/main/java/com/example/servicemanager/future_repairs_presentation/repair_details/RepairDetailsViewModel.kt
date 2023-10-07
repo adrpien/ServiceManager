@@ -10,7 +10,7 @@ import com.example.core.util.Helper.Companion.convertToBitmap
 import com.example.core.util.Helper.Companion.convertToByteArray
 import com.example.core.util.ResourceState
 
-import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel

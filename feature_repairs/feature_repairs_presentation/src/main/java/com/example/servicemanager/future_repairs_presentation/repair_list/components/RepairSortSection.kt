@@ -1,11 +1,11 @@
-
+package com.example.servicemanager.future_repairs_presentation.repair_list.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.core.compose.components.OrderMonotonicityButton
-import com.example.servicemanager.core.compose.components.SortRadioButton
+import com.example.feature_app_presentation.components.other.OrderMonotonicityButton
+import com.example.feature_app_presentation.components.hospital_filter.SortRadioButton
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 

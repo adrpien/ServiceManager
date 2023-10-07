@@ -1,14 +1,17 @@
-package com.example.servicemanager.feature_app.data.local
+package com.example.servicemanager.feature_app_data.local
 
 import androidx.room.*
-import com.example.servicemanager.feature_app.data.local.entities.*
+import com.example.servicemanager.feature_app_data.local.entities.EstStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
+import com.example.servicemanager.feature_app_data.local.entities.InspectionStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.RepairStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.TechnicianEntity
 
 
 @Dao
 interface AppDatabaseDao {
 
     /* ***** Hospitals ************************************************************************** */
-    @Transaction
     @Query("SELECT * FROM hospitalentity")
     suspend fun getHospitalList(): List<HospitalEntity>
 
@@ -23,12 +26,10 @@ interface AppDatabaseDao {
     @Query("DELETE FROM hospitalentity WHERE hospitalId LIKE :hospitalId")
     suspend fun deleteHospital(hospitalId: String)
 
-    @Transaction
     @Query("DELETE FROM hospitalentity")
     suspend fun deleteAllHospitals()
 
     /* ***** Technicians ************************************************************************ */
-    @Transaction
     @Query("SELECT * FROM technicianentity")
     suspend fun getTechnicianList(): List<TechnicianEntity>
 
@@ -43,12 +44,10 @@ interface AppDatabaseDao {
     @Query("DELETE FROM technicianentity WHERE technicianId LIKE :technicianId")
     suspend fun deleteTechnician(technicianId: String)
 
-    @Transaction
     @Query("DELETE FROM technicianentity")
     suspend fun deleteAllTechnicians()
 
     /* ***** EstStates ************************************************************************** */
-    @Transaction
     @Query("SELECT * FROM eststateentity")
     suspend fun getEstStateList(): List<EstStateEntity>
 
@@ -63,12 +62,10 @@ interface AppDatabaseDao {
     @Query("DELETE FROM eststateentity WHERE estStateId LIKE :estStateId")
     suspend fun deleteEstState(estStateId: String)
 
-    @Transaction
     @Query("DELETE FROM eststateentity")
     suspend fun deleteAllEstStates()
 
     /* ***** InspectionState ******************************************************************** */
-    @Transaction
     @Query("SELECT * FROM inspectionstateentity")
     suspend fun getInspectionStateList(): List<InspectionStateEntity>
 
@@ -83,12 +80,10 @@ interface AppDatabaseDao {
     @Query("DELETE FROM inspectionstateentity WHERE inspectionStateId LIKE :inspectionStateId")
     suspend fun deleteInspectionState(inspectionStateId: String)
 
-    @Transaction
     @Query("DELETE FROM inspectionstateentity")
     suspend fun deleteAllInspectionStates()
 
     /* ***** RepairStates *********************************************************************** */
-    @Transaction
     @Query("SELECT * FROM repairstateentity")
     suspend fun getRepairStateList(): List<RepairStateEntity>
 
@@ -103,7 +98,6 @@ interface AppDatabaseDao {
     @Query("DELETE FROM repairstateentity WHERE repairStateId LIKE :repairStateId")
     suspend fun deleteRepairState(repairStateId: String)
 
-    @Transaction
     @Query("DELETE FROM repairstateentity")
     suspend fun deleteAllRepairStates()
 

@@ -1,8 +1,11 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list
+package com.example.servicemanager.feature_inspections_presentation.inspection_list
 
-import com.example.servicemanager.feature_inspections.domain.util.InspectionOrderMonotonicity
-import com.example.servicemanager.feature_inspections.domain.util.InspectionOrderType
-import com.example.servicemanager.feature_app.domain.model.*
+import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
+import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
+import com.example.servicemanager.feature_app_domain.model.EstState
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.InspectionState
+import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class InspectionListState(
@@ -16,7 +19,8 @@ data class InspectionListState(
     val searchQuery: String = "",
     val isSortSectionVisible: Boolean = false,
     val isHospitalFilterSectionVisible: Boolean = false,
-    val inspectionOrderType: InspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending),
+    val inspectionOrderType: InspectionOrderType = InspectionOrderType.State(
+        InspectionOrderMonotonicity.Ascending),
     val hospital: Hospital? = null
 ) {
 

@@ -1,4 +1,4 @@
-package com.example.servicemanager.core.compose.components
+package com.example.feature_app_presentation.components.hospital_selection
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
@@ -9,9 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core.ui.theme.TiemedVeryLightBlue
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedVeryLightBlue
 
 
 @Composable
@@ -39,7 +39,8 @@ fun SelectRadioButton(
             ),
             border = BorderStroke(
                 width = 2.dp,
-                color = TiemedLightBlue),
+                color = TiemedLightBlue
+            ),
             enabled = isClickable
         ) {
             Text(text = title)

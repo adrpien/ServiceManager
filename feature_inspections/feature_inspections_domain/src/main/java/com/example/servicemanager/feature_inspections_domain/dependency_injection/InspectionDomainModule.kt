@@ -1,11 +1,11 @@
 package com.example.servicemanager.feature_inspections_domain.dependency_injection
 
-import com.adrpien.tiemed.domain.use_case.inspections.SaveInspection
-import com.adrpien.tiemed.domain.use_case.inspections.GetInspection
-import com.adrpien.tiemed.domain.use_case.inspections.GetInspectionList
-import com.adrpien.tiemed.domain.use_case.inspections.UpdateInspection
-import com.example.servicemanager.feature_inspections.domain.repository.InspectionRepository
-import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
+import com.example.servicemanager.feature_inspections_domain.use_cases.SaveInspection
+import com.example.servicemanager.feature_inspections_domain.use_cases.GetInspection
+import com.example.servicemanager.feature_inspections_domain.use_cases.GetInspectionList
+import com.example.servicemanager.feature_inspections_domain.use_cases.UpdateInspection
+import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
+import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

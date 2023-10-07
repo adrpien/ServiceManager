@@ -1,4 +1,4 @@
-package com.example.core.compose.components
+package com.example.feature_app_presentation.components.other
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core.ui.theme.TiemedVeryLightBlue
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedVeryLightBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

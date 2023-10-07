@@ -1,4 +1,4 @@
-package com.example.core.compose.components
+package com.example.feature_app_presentation.components.other
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -25,8 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
 
 
 @Composable

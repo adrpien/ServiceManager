@@ -1,8 +1,7 @@
-package com.example.servicemanager.feature_app.domain.use_cases.hospitals
+package com.example.servicemanager.feature_app_domain.use_cases.hospitals
 
-import com.example.servicemanager.feature_app.domain.model.Hospital
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
-import com.example.core.util.Resource
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

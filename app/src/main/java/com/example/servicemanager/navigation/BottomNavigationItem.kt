@@ -1,4 +1,4 @@
-package com.example.core.compose.components.navigation
+package com.example.servicemanager.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

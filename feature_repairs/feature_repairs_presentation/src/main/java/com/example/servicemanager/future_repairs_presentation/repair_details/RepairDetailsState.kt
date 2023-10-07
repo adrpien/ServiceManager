@@ -1,9 +1,12 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details
 
 import android.graphics.Bitmap
-import com.example.core.ui.theme.signatureHeight
-import com.example.core.ui.theme.signatureWidth
-import com.example.servicemanager.feature_app.domain.model.*
+import com.example.core.theme.signatureHeight
+import com.example.core.theme.signatureWidth
+import com.example.servicemanager.feature_app_domain.model.EstState
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.RepairState
+import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 
 

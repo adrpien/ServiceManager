@@ -1,4 +1,4 @@
-package com.example.core.compose.components
+package com.example.feature_app_presentation.components.other
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.TiemedDarkBlue
-import com.example.core.ui.theme.TiemedLightBeige
-import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedDarkBlue
+import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.TiemedVeryLightBeige
 
 @Composable
 fun DefaultButton(

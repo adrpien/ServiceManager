@@ -16,28 +16,20 @@ class  RepairRepositoryImplementation(
     val repairFirebaseApi: RepairFirebaseApi
 ): RepairRepository {
 
-    private val REPAIR_REPOSITORY_IMPLEMENTATION = "TIEMED REPOSITORY IMPLEMENTATION"
 
 
     /* ********************************* REPAIRS ******************************************** */
     override fun getRepairList() = flow {
-        var repairList: List<Repair> = listOf<Repair>()
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                null,
-                "Repair list fetching started"
-            )
-        )
+        var repairList: List<Repair>
         repairList = repairDatabaseDao.getRepairList().map { it.toRepair() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 repairList,
                 "Locally cached list"
             )
         )
-        val list = repairFirebaseApi.getRepairList()?: emptyList()
+        val list = repairFirebaseApi.getRepairList()
         if(list.isNotEmpty()) {
             repairDatabaseDao.deleteAllRepairs()
             for (device in list) {
@@ -45,8 +37,8 @@ class  RepairRepositoryImplementation(
             }
             repairList = repairDatabaseDao.getRepairList().map { it.toRepair() }
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     repairList,
                     "Device list fetching finished"
                 )
@@ -55,19 +47,12 @@ class  RepairRepositoryImplementation(
     }
 
 
-    override fun getRepair(repairId: String): Flow<com.example.core.util.Resource<Repair>> = flow{
-        var repair = Repair()
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                null,
-                "Repair record fetching started"
-            )
-        )
+    override fun getRepair(repairId: String): Flow<Resource<Repair>> = flow{
+        var repair: Repair
         repair = repairDatabaseDao.getRepair(repairId).toRepair()
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 repair,
                 "Locally cached record"
             )
@@ -78,8 +63,8 @@ class  RepairRepositoryImplementation(
             repairDatabaseDao.insertRepair(record.toRepairEntity())
             repair = repairDatabaseDao.getRepair(repairId).toRepair()
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     repair,
                     "Repair record fetching finished"
                 )
@@ -87,26 +72,20 @@ class  RepairRepositoryImplementation(
         }
     }
 
-    override fun insertRepair(repair: Repair): Flow<com.example.core.util.Resource<String>> {
+    override fun insertRepair(repair: Repair): Flow<Resource<String>> {
         return repairFirebaseApi.createRepair(repair)
     }
 
-    override fun updateRepair(repair: Repair): Flow<com.example.core.util.Resource<String>> {
+    override fun updateRepair(repair: Repair): Flow<Resource<String>> {
         return repairFirebaseApi.updateRepair(repair)
     }
 
-    override fun getRepairListFromLocal(): Flow<com.example.core.util.Resource<List<Repair>>> = flow {
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                null,
-                "Repair list fetching form local started"
-            )
-        )
+    override fun getRepairListFromLocal(): Flow<Resource<List<Repair>>> = flow {
+
         var repairList: List<Repair> = repairDatabaseDao.getRepairList().map { it.toRepair() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.SUCCESS,
+            Resource(
+                ResourceState.SUCCESS,
                 repairList,
                 "Locally storaged list"
             )

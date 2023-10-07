@@ -1,9 +1,6 @@
-package com.example.servicemanager.feature_authentication.domain.use_cases
-
-import javax.inject.Inject
+package com.example.servicemanager.feature_authentication_domain.use_cases
 
 data class UserUseCases(
-    val getUser: GetUser,
+    val authenticate: Authenticate,
     val getCurrentUser: GetCurrentUser,
-    val authenticate: Authenticate
 )

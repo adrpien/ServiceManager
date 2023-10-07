@@ -1,9 +1,7 @@
-package com.example.servicemanager.feature_app.domain.use_cases.signatures
+package com.example.servicemanager.feature_app_domain.use_cases.signatures
 
 
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
-import com.example.core.util.Resource
-import com.example.core.util.ResourceState
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

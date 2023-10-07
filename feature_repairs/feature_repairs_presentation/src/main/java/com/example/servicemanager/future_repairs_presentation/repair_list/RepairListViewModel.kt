@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_app.domain.model.Hospital
-import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel

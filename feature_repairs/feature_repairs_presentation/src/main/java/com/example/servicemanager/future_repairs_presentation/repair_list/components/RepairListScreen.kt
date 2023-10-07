@@ -1,6 +1,5 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
-import RepairSortSection
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
 import com.example.core.util.Screen
-import com.example.servicemanager.core.compose.components.HospitalFilterSection
-import com.example.servicemanager.feature_app.domain.model.Hospital
+import com.example.feature_app_presentation.components.hospital_filter.HospitalFilterSection
+import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -73,7 +72,8 @@ fun RepairListScreen(
                     value = state.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = TiemedLightBlue,
-                        unfocusedBorderColor = TiemedLightBlue),
+                        unfocusedBorderColor = TiemedLightBlue
+                    ),
                     onValueChange = {
                         viewModel.onEvent(RepairListEvent.onSearchQueryChange(it))
                     },
@@ -91,14 +91,16 @@ fun RepairListScreen(
                     Icon(
                         imageVector = Icons.Default.Sort,
                         contentDescription = "Sort",
-                    tint = TiemedLightBlue)
+                    tint = TiemedLightBlue
+                    )
                 }
                 // TODO All Hospitals filter in RepairListScreen
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
-                    tint = TiemedLightBlue)
+                    tint = TiemedLightBlue
+                    )
                 }
                 // TODO Import repairs in RepairListScreen
 

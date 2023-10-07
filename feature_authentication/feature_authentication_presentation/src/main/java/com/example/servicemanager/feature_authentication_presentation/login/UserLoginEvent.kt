@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_authentication.presentation.login
+package com.example.servicemanager.feature_authentication_presentation.login
 
 sealed  class UserLoginEvent {
     data class Authenticate(val mail: String, val password: String): UserLoginEvent()

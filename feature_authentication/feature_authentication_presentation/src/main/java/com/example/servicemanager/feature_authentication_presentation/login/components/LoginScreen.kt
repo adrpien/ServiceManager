@@ -1,22 +1,22 @@
-package com.example.servicemanager.feature_authentication.presentation.login.components
+package com.example.servicemanager.feature_authentication_presentation.login.components
 
 import  androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core.compose.components.DefaultButton
-import com.example.core.compose.components.DefaultTextField
-import com.example.core.compose.components.DefaultTextFieldState
-import com.example.core.compose.components.PasswordTextField
+import com.example.feature_app_presentation.components.other.DefaultButton
+import com.example.feature_app_presentation.components.other.DefaultTextField
+import com.example.feature_app_presentation.components.other.DefaultTextFieldState
+import com.example.feature_app_presentation.components.other.PasswordTextField
 import com.example.core.util.Screen
-import com.example.servicemanager.feature_authentication.presentation.login.UserLoginEvent
-import com.example.servicemanager.feature_authentication.presentation.login.UserLoginViewModel
+import com.example.servicemanager.feature_authentication_presentation.login.UserLoginEvent
+import com.example.servicemanager.feature_authentication_presentation.login.UserLoginViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -80,7 +80,7 @@ fun LoginScreen(
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .background(TiemedVeryLightBeige)
+            .background(MaterialTheme.colorScheme.background)
             .padding(it)) {
             Column(
                 modifier = Modifier
@@ -98,7 +98,8 @@ fun LoginScreen(
                     state = userPassword
                 ) { password ->
                     userPassword.value= userPassword.value.copy(value = password)
-                    viewModel.onEvent(UserLoginEvent.UpdateState(
+                    viewModel.onEvent(
+                        UserLoginEvent.UpdateState(
                         password = password,
                         mail = userLoginState.value.mail
                     )
@@ -107,7 +108,8 @@ fun LoginScreen(
                 DefaultButton(
                     title = "Authenticate",
                     onClick = {
-                        viewModel.onEvent(UserLoginEvent.Authenticate(
+                        viewModel.onEvent(
+                            UserLoginEvent.Authenticate(
                             mail = userLoginState.value.mail,
                             password = userLoginState.value.password))
                     }

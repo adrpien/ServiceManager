@@ -1,4 +1,4 @@
-package com.example.servicemanager.core.compose.components
+package com.example.feature_app_presentation.components.signature
 
 import android.graphics.Bitmap
 import android.view.MotionEvent
@@ -17,10 +17,10 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core.ui.theme.signatureHeight
-import com.example.core.ui.theme.signatureWidth
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.signatureHeight
+import com.example.core.theme.signatureWidth
 import com.example.core.util.Helper.Companion.toDp
 
 

@@ -1,10 +1,13 @@
-package com.adrpien.tiemed.data.local
+package com.example.servicemanager.feature_app_data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
-import com.example.servicemanager.feature_app.data.local.AppDatabaseDao
-import com.example.servicemanager.feature_app.data.local.entities.*
+import com.example.servicemanager.feature_app_data.local.entities.EstStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
+import com.example.servicemanager.feature_app_data.local.entities.InspectionStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.RepairStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.TechnicianEntity
 
 
 @Database (

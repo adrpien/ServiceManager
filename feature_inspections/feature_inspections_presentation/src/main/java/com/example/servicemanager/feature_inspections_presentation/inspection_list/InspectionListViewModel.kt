@@ -1,14 +1,14 @@
-package com.example.servicemanager.feature_inspections.presentation.inspection_list
+package com.example.servicemanager.feature_inspections_presentation.inspection_list
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.servicemanager.feature_inspections.domain.util.InspectionOrderType
+import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_app.domain.model.Hospital
-import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_inspections.domain.use_cases.InspectionUseCases
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

@@ -1,4 +1,4 @@
-package com.example.core.compose.components.navigation
+package com.example.servicemanager.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
@@ -11,9 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core.ui.theme.TiemedVeryLightBlue
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedVeryLightBlue
 
 @Composable
 fun BottomNavigationBar(

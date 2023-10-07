@@ -1,13 +1,21 @@
-package com.example.servicemanager.feature_app.data.repository
+package com.example.servicemanager.feature_app_data.repository
 
-import android.util.Log
-import com.example.servicemanager.feature_app.data.local.AppDatabaseDao
-import com.example.servicemanager.feature_app.data.remote.AppFirebaseApi
-import com.example.servicemanager.feature_app.domain.model.*
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
+import com.example.servicemanager.feature_app_data.local.AppDatabaseDao
+import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
+import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
+import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
+import com.example.servicemanager.feature_app_data.mappers.toRepairStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toTechnicianEntity
+import com.example.servicemanager.feature_app_domain.model.EstState
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.InspectionState
+import com.example.servicemanager.feature_app_domain.model.RepairState
+import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.feature_app_domain.model.User
 import kotlinx.coroutines.flow.*
 
 class  AppRepositoryImplementation(
@@ -15,40 +23,29 @@ class  AppRepositoryImplementation(
     val firebaseApi: AppFirebaseApi
 ): AppRepository {
 
-    private val APP_REPOSITORY_IMPLEMENTATION = "TIEMED_REPOSITORY_IMPLEMENTATION"
-
     /* ********************************* SIGNATURES ********************************************* */
-    override fun getSignature(signatureId: String): Flow<com.example.core.util.Resource<ByteArray>> {
+    override fun getSignature(signatureId: String): Flow<Resource<ByteArray>> {
         return firebaseApi.getSignature(signatureId)
     }
-    override fun updateSignature(signatureId: String, byteArray: ByteArray): Flow<com.example.core.util.Resource<String>> {
+    override fun updateSignature(signatureId: String, byteArray: ByteArray): Flow<Resource<String>> {
         return firebaseApi.uploadSignature(signatureId, byteArray)
     }
-    override fun createSignature(signatureId: String, byteArray: ByteArray): Flow<com.example.core.util.Resource<String>> {
+    override fun createSignature(signatureId: String, byteArray: ByteArray): Flow<Resource<String>> {
         return firebaseApi.uploadSignature(signatureId, byteArray)
     }
 
     /* ********************************* HOSPITALS ********************************************* */
-
-    override fun getHospitalList() = flow<com.example.core.util.Resource<List<Hospital>>> {
-        var hospitalList = listOf<Hospital>()
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Hospital list fetching started")
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                hospitalList,
-                "Hospital list fetching started"
-            )
-        )
+    override fun getHospitalList() = flow {
+        var hospitalList: List<Hospital>
         hospitalList = appDatabaseDao.getHospitalList().map { it.toHospital() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 hospitalList,
                 "Locally cached list"
             )
         )
-        val list = firebaseApi.getHospitalList()?: emptyList()
+        val list = firebaseApi.getHospitalList()
         if(list.isNotEmpty()) {
             appDatabaseDao.deleteAllHospitals()
             for (hospital in list) {
@@ -56,8 +53,8 @@ class  AppRepositoryImplementation(
             }
             hospitalList = appDatabaseDao.getHospitalList().map { it.toHospital() }
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     hospitalList,
                     "Device list fetching finished"
                 )
@@ -66,26 +63,17 @@ class  AppRepositoryImplementation(
     }
 
     /* ********************************* TECHNICIANS ******************************************** */
-
     override fun getTechnicianList() = flow {
-        var technicianList = listOf<Technician>()
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Technician list fetching started")
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                technicianList,
-                "Technician list fetching started"
-            )
-        )
+        var technicianList: List<Technician>
         technicianList = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 technicianList,
                 "Locally cached list"
             )
         )
-        val list = firebaseApi.getTechnicianList()?: emptyList()
+        val list = firebaseApi.getTechnicianList()
         if(list.isNotEmpty()) {
             appDatabaseDao.deleteAllTechnicians()
             for (technician in list) {
@@ -93,8 +81,8 @@ class  AppRepositoryImplementation(
             }
             technicianList = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     technicianList,
                     "Device list fetching finished"
                 )
@@ -103,25 +91,17 @@ class  AppRepositoryImplementation(
     }
 
     /* ********************************* INSPECTION STATES ************************************** */
-    override fun getInspectionStateList() = flow<com.example.core.util.Resource<List<InspectionState>>> {
-        var inspectionStateList = listOf<InspectionState>()
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Inspection state list fetching started")
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                inspectionStateList,
-                "Inspection state list fetching started"
-            )
-        )
+    override fun getInspectionStateList() = flow<Resource<List<InspectionState>>> {
+        var inspectionStateList: List<InspectionState>
         inspectionStateList = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 inspectionStateList,
                 "Locally cached list"
             )
         )
-        val list = firebaseApi.getInspectionStateList()?: emptyList()
+        val list = firebaseApi.getInspectionStateList()
         if(list.isNotEmpty()) {
             appDatabaseDao.deleteAllInspectionStates()
             for (inspectionState in list) {
@@ -129,8 +109,8 @@ class  AppRepositoryImplementation(
             }
             inspectionStateList = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     inspectionStateList,
                     "Inspection state list fetching finished"
                 )
@@ -139,25 +119,17 @@ class  AppRepositoryImplementation(
     }
 
     /* ********************************* REPAIR STATES ****************************************** */
-    override fun getRepairStateList() = flow<com.example.core.util.Resource<List<RepairState>>> {
-        var repairStateList = listOf<RepairState>()
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Repair state list fetching started")
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                repairStateList,
-                "Repair state list fetching started"
-            )
-        )
+    override fun getRepairStateList() = flow<Resource<List<RepairState>>> {
+        var repairStateList: List<RepairState>
         repairStateList = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 repairStateList,
                 "Locally cached list"
             )
         )
-        val list = firebaseApi.getRepairStateList()?: emptyList()
+        val list = firebaseApi.getRepairStateList()
         if(list.isNotEmpty()) {
             appDatabaseDao.deleteAllRepairStates()
             for (repairState in list) {
@@ -165,8 +137,8 @@ class  AppRepositoryImplementation(
             }
             repairStateList = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     repairStateList,
                     "Inspection state list fetching finished"
                 )
@@ -175,25 +147,17 @@ class  AppRepositoryImplementation(
     }
 
     /* ********************************* EST STATES ********************************************* */
-    override fun getEstStateList() = flow<com.example.core.util.Resource<List<EstState>>> {
-        var estStateList = listOf<EstState>()
-        Log.d(APP_REPOSITORY_IMPLEMENTATION, "Est state list fetching started")
-        emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
-                estStateList,
-                "Est state list fetching started"
-            )
-        )
+    override fun getEstStateList() = flow<Resource<List<EstState>>> {
+        var estStateList: List<EstState>
         estStateList = appDatabaseDao.getEstStateList().map { it.toEstState() }
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 estStateList,
                 "Locally cached list"
             )
         )
-        val list = firebaseApi.getEstStateList()?: emptyList()
+        val list = firebaseApi.getEstStateList()
         if(list.isNotEmpty()) {
             appDatabaseDao.deleteAllEstStates()
             for (estState in list) {
@@ -201,12 +165,36 @@ class  AppRepositoryImplementation(
             }
             estStateList = appDatabaseDao.getEstStateList().map { it.toEstState() }
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     estStateList,
                     "Inspection state list fetching finished"
                 )
             )
         }
     }
+
+    /* ********************************* USER *************************************************** */
+    override fun getUser(userId: String): Flow<Resource<User>> = flow {
+        var user = firebaseApi.getUser(userId)
+        if (user != null){
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    user,
+                    "User fetching finished"
+                )
+            )
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    user,
+                    "User fetching error"
+                )
+            )
+        }
+    }
+
+
 }

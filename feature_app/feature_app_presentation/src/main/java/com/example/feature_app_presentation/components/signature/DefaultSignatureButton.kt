@@ -1,11 +1,11 @@
-package com.example.servicemanager.core.compose.components
+package com.example.feature_app_presentation.components.signature
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.DialogProperties
-import com.example.core.ui.theme.TiemedLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState

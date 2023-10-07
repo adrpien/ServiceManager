@@ -1,6 +1,6 @@
-package com.example.servicemanager.feature_app.data.remote.dto
+package com.example.servicemanager.feature_app_data.remote.dto
 
-import com.example.servicemanager.feature_app.data.local.entities.InspectionStateEntity
+import com.example.servicemanager.feature_app_data.local.entities.InspectionStateEntity
 
 data class  InspectionStateDto (
     val inspectionStateId: String,

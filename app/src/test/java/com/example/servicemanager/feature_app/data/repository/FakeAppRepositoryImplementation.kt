@@ -1,8 +1,12 @@
 package com.example.servicemanager.feature_app.data.repository
 
 import com.example.core.util.Resource
-import com.example.servicemanager.feature_app.domain.model.*
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
+import com.example.servicemanager.feature_app_domain.model.EstState
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.InspectionState
+import com.example.servicemanager.feature_app_domain.model.RepairState
+import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
 
 class FakeAppRepositoryImplementation(): AppRepository {

@@ -1,15 +1,16 @@
 package com.example.servicemanager.feature_app_domain.dependency_injection
 
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
-import com.example.servicemanager.feature_app.domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_app.domain.use_cases.hospitals.GetHospitalList
-import com.example.servicemanager.feature_app.domain.use_cases.signatures.GetSignature
-import com.example.servicemanager.feature_app.domain.use_cases.signatures.SaveSignature
-import com.example.servicemanager.feature_app.domain.use_cases.signatures.UpdateSignature
-import com.example.servicemanager.feature_app.domain.use_cases.states.GetEstStateList
-import com.example.servicemanager.feature_app.domain.use_cases.states.GetInspectionStateList
-import com.example.servicemanager.feature_app.domain.use_cases.states.GetRepairStateList
-import com.example.servicemanager.feature_app.domain.use_cases.technicians.GetTechnicianList
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
+import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
+import com.example.servicemanager.feature_app_domain.use_cases.signatures.GetSignature
+import com.example.servicemanager.feature_app_domain.use_cases.signatures.SaveSignature
+import com.example.servicemanager.feature_app_domain.use_cases.signatures.UpdateSignature
+import com.example.servicemanager.feature_app_domain.use_cases.states.GetEstStateList
+import com.example.servicemanager.feature_app_domain.use_cases.states.GetInspectionStateList
+import com.example.servicemanager.feature_app_domain.use_cases.states.GetRepairStateList
+import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
+import com.example.servicemanager.feature_app_domain.use_cases.users.GetUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +31,8 @@ object AppDomainModule {
             getEstStateList = GetEstStateList(repository),
             getInspectionStateList = GetInspectionStateList(repository),
             getRepairStateList = GetRepairStateList(repository),
-            getTechnicianList = GetTechnicianList(repository)
+            getTechnicianList = GetTechnicianList(repository),
+            getUser = GetUser(repository)
         )
     }
 

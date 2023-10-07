@@ -1,8 +1,8 @@
-package com.example.servicemanager.feature_app.data.local.entities
+package com.example.servicemanager.feature_app_data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.servicemanager.feature_app.domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.Hospital
 
 @Entity
 data class HospitalEntity(

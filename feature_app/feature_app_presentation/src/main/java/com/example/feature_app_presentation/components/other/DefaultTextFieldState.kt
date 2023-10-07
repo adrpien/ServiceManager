@@ -1,4 +1,4 @@
-package com.example.core.compose.components
+package com.example.feature_app_presentation.components.other
 
 data class DefaultTextFieldState(
     val isHintVisible: Boolean = true,

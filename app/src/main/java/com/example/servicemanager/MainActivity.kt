@@ -3,7 +3,7 @@ package com.example.servicemanager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.servicemanager.ui.components.ContentComposable
+import com.example.servicemanager.navigation.ContentComposable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

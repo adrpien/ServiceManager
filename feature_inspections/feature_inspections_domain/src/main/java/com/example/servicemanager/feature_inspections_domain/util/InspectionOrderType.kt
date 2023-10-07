@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_inspections.domain.util
+package com.example.servicemanager.feature_inspections_domain.util
 
 sealed class InspectionOrderType(val orderMonotonicity: InspectionOrderMonotonicity) {
     class Hospital(orderMonotonicity: InspectionOrderMonotonicity): InspectionOrderType(orderMonotonicity)

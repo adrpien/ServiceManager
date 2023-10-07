@@ -1,9 +1,12 @@
-package com.example.servicemanager.feature_app.data.remote
+package com.example.servicemanager.feature_app_data.remote
 
 import android.util.Log
-import com.example.servicemanager.feature_app.domain.model.*
-import com.example.core.util.Resource
-import com.example.core.util.ResourceState
+import com.example.servicemanager.feature_app_domain.model.EstState
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.InspectionState
+import com.example.servicemanager.feature_app_domain.model.RepairState
+import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.feature_app_domain.model.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
@@ -171,4 +174,17 @@ class  AppFirebaseApi(
         }
         return inspectionStateList
     }
+
+    /* ********************************* USER ************************************* */
+    suspend fun getUser(userId: String): User? {
+        var user: User? = null
+        val documentReference = firebaseFirestore.collection("users").document(userId)
+        val result = documentReference.get()
+        result.await()
+        if(result.isSuccessful) {
+            user = result.result.toObject(User::class.java)
+        }
+        return user
+    }
+
 }

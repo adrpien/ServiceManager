@@ -1,10 +1,9 @@
-package com.`package`.servicemanager.feature_authentication_domain.dependency_injection
+package com.example.servicemanager.feature_authentication_domain.dependency_injection
 
-import com.example.servicemanager.feature_authentication.domain.repository.UserRepository
-import com.example.servicemanager.feature_authentication.domain.use_cases.Authenticate
-import com.example.servicemanager.feature_authentication.domain.use_cases.GetCurrentUser
-import com.example.servicemanager.feature_authentication.domain.use_cases.GetUser
-import com.example.servicemanager.feature_authentication.domain.use_cases.UserUseCases
+import com.example.servicemanager.feature_authentication_domain.repository.UserRepository
+import com.example.servicemanager.feature_authentication_domain.use_cases.Authenticate
+import com.example.servicemanager.feature_authentication_domain.use_cases.GetCurrentUser
+import com.example.servicemanager.feature_authentication_domain.use_cases.UserUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +17,6 @@ object AuthenticationDomainModule {
     @Singleton
     fun provideUserUseCases(userRepository: UserRepository): UserUseCases {
         return UserUseCases(
-            getUser = GetUser(userRepository),
             getCurrentUser = GetCurrentUser(userRepository),
             authenticate = Authenticate(userRepository)
         )

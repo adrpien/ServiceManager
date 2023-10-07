@@ -1,4 +1,4 @@
-package com.example.servicemanager.ui.components
+package com.example.servicemanager.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,9 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.core.compose.components.navigation.BottomNavigationBar
-import com.example.core.compose.components.navigation.BottomNavigationItem
-import com.example.core.compose.components.navigation.ContentNavigation
 import com.example.core.util.Screen
 
 @Composable

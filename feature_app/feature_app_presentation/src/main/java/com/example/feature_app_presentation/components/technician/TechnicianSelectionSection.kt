@@ -1,4 +1,4 @@
-package com.example.servicemanager.core.compose.components
+package com.example.feature_app_presentation.components.technician
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -6,7 +6,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.servicemanager.feature_app.domain.model.Technician
+import com.example.feature_app_presentation.components.hospital_selection.SelectRadioButton
+import com.example.servicemanager.feature_app_domain.model.Technician
 
 @Composable
 fun TechnicianSelectionSection(

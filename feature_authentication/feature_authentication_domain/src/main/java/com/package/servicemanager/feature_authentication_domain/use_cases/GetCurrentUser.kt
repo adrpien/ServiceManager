@@ -1,7 +1,6 @@
-package com.example.servicemanager.feature_authentication.domain.use_cases
+package com.example.servicemanager.feature_authentication_domain.use_cases
 
-import com.example.core.util.Resource
-import com.example.servicemanager.feature_authentication.domain.repository.UserRepository
+import com.example.servicemanager.feature_authentication_domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

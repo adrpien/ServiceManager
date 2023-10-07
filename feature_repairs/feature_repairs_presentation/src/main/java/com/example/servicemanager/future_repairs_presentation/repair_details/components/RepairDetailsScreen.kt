@@ -1,6 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details.components
 
-import RepairStateSelectionSection
+import com.example.feature_app_presentation.components.repair_state.RepairStateSelectionSection
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -18,17 +18,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.ui.theme.TiemedLightBeige
-import com.example.core.ui.theme.TiemedLightBlue
-import com.example.core.ui.theme.TiemedVeryLightBeige
-import com.example.core.compose.components.DefaultTextField
-import com.example.core.compose.components.DefaultTextFieldState
-import com.example.core.compose.components.alert_dialogs.ExitAlertDialog
-import com.example.servicemanager.core.compose.components.*
-import com.example.servicemanager.feature_app.domain.model.EstState
-import com.example.servicemanager.feature_app.domain.model.Hospital
-import com.example.servicemanager.feature_app.domain.model.RepairState
-import com.example.servicemanager.feature_app.domain.model.Technician
+import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.TiemedLightBlue
+import com.example.core.theme.TiemedVeryLightBeige
+import com.example.feature_app_presentation.components.other.DefaultTextField
+import com.example.feature_app_presentation.components.other.DefaultTextFieldState
+import com.example.feature_app_presentation.components.other.alert_dialogs.ExitAlertDialog
+import com.example.servicemanager.feature_app_domain.model.EstState
+import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.RepairState
+import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsEvent
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel.*
@@ -42,6 +41,10 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import com.example.core.util.Screen
+import com.example.feature_app_presentation.components.est_states.EstStateSelectionSection
+import com.example.feature_app_presentation.components.hospital_selection.HospitalSelectionSection
+import com.example.feature_app_presentation.components.signature.SignatureArea
+import com.example.feature_app_presentation.components.technician.TechnicianSelectionSection
 
 
 @Composable
@@ -286,7 +289,8 @@ fun RepairDetailsScreen(
                     imageVector = Icons.Default.Save,
                     contentDescription = "Save",
                     modifier = Modifier,
-                tint = TiemedVeryLightBeige)
+                tint = TiemedVeryLightBeige
+                )
             }
         },
         scaffoldState = scaffoldState

@@ -2,10 +2,10 @@ package com.example.servicemanager.feature_app_data.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
-import com.adrpien.tiemed.data.local.AppDatabase
-import com.example.servicemanager.feature_app.data.remote.AppFirebaseApi
-import com.example.servicemanager.feature_app.data.repository.AppRepositoryImplementation
-import com.example.servicemanager.feature_app.domain.repository.AppRepository
+import com.example.servicemanager.feature_app_data.local.AppDatabase
+import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
+import com.example.servicemanager.feature_app_data.repository.AppRepositoryImplementation
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
