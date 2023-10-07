@@ -63,4 +63,17 @@ object AuthenticationDataModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideUserUseCases(
+        repository: UserRepository
+    ): UserUseCases {
+        return UserUseCases(
+            getUser = GetUser(repository),
+            authenticate = Authenticate(repository),
+            getCurrentUser = GetCurrentUser(repository)
+        )
+    }
+
+
 }
