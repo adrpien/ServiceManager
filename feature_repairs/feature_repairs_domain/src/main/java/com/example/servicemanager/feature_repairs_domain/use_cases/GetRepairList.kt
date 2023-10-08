@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_repairs_domain.use_cases
 
 
+import com.example.core.util.Resource
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 import com.example.servicemanager.feature_repairs_domain.model.Repair
@@ -18,7 +19,7 @@ class GetRepairList @Inject constructor (
         searchQuery: String = "",
         repairOrderType: RepairOrderType = RepairOrderType.State(RepairOrderMonotonicity.Ascending),
         fetchFromApi: Boolean = false
-    ): Flow<com.example.core.util.Resource<List<Repair>>> {
+    ): Flow<Resource<List<Repair>>> {
         return if(fetchFromApi == false) {
             repository.getRepairListFromLocal().map { resource ->
                 resource.copy(
@@ -26,7 +27,12 @@ class GetRepairList @Inject constructor (
                         ?.filter { repair ->
                             repair.toString().lowercase().contains(searchQuery.lowercase())
                         }
-                        ?.filter { it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId) }
+                        ?.filter {
+                            if (hospitalFilter?.hospitalId == "0") {
+                                true
+                            } else {
+                            it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)}
+                        }
                         ?.orderRepairList(repairOrderType)
                 )
             }
@@ -37,7 +43,12 @@ class GetRepairList @Inject constructor (
                         ?.filter { repair ->
                             repair.toString().lowercase().contains(searchQuery.lowercase())
                         }
-                        ?.filter { it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId) }
+                        ?.filter {
+                            if (hospitalFilter?.hospitalId == "0") {
+                            true
+                        } else {
+                            it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)}
+                        }
                         ?.orderRepairList(repairOrderType)
                 )
                 }

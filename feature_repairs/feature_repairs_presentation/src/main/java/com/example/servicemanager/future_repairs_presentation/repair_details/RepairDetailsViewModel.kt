@@ -28,6 +28,7 @@ class RepairDetailsViewModel @Inject constructor(
     private val appUseCases: AppUseCases
 ): ViewModel() {
 
+    private var repairIsLoading = true
     private var hospitalListIsLoading = true
     private var estStateListIsLoading = true
     private var technicianListIsLoading = true
@@ -108,6 +109,8 @@ class RepairDetailsViewModel @Inject constructor(
     }
 
     private fun fetchRepair() {
+        repairIsLoading = true
+        setIsLoadingStatus()
         currentRepairId = savedStateHandle.get<String?>("repairId")
         if (currentRepairId != "0") {
             viewModelScope.launch(Dispatchers.Main) {
@@ -117,6 +120,8 @@ class RepairDetailsViewModel @Inject constructor(
                         when (result.resourceState) {
                             ResourceState.SUCCESS -> {
                                 result.data?.let { repair ->
+                                    repairIsLoading = false
+                                    setIsLoadingStatus()
                                     _repairDetailsState.value =
                                         _repairDetailsState.value.copy(
                                             repair = repair
@@ -245,11 +250,11 @@ class RepairDetailsViewModel @Inject constructor(
     }
     private fun setIsLoadingStatus() {
         if(
-            _repairDetailsState.value.repair.repairId.isNotEmpty() &&
-            _repairDetailsState.value.hospitalList.isNotEmpty() &&
-            _repairDetailsState.value.estStateList.isNotEmpty() &&
-            _repairDetailsState.value.technicianList.isNotEmpty() &&
-            _repairDetailsState.value.repairStateList.isNotEmpty()
+            !repairIsLoading &&
+            !hospitalListIsLoading &&
+            !estStateListIsLoading &&
+            !technicianListIsLoading &&
+            !repairStateListIsLoading
         ){
             _repairDetailsState.value = _repairDetailsState.value.copy(
                 isLoading = false

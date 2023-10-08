@@ -689,6 +689,16 @@ fun RepairDetailsScreen(
                 }
             }
         }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (repairDetailsState.value.isLoading) {
+                CircularProgressIndicator(
+                    color = TiemedLightBlue,
+                )
+            }
+        }
     }
 }
 

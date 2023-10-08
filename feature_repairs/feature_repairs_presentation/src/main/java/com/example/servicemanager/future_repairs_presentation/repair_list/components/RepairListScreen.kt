@@ -94,7 +94,6 @@ fun RepairListScreen(
                     tint = TiemedLightBlue
                     )
                 }
-                // TODO All Hospitals filter in RepairListScreen
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
@@ -111,7 +110,7 @@ fun RepairListScreen(
                 exit = fadeOut() + slideOutVertically()
             ) {
                 HospitalFilterSection(
-                    hospitalList = state.value.hospitalList,
+                    hospitalList = state.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
                     hospital = state.value.hospital ?: Hospital(),
                     onHospitalChange = { viewModel.onEvent(RepairListEvent.filterRepairListByHospital(hospital = it)) }
                 )
