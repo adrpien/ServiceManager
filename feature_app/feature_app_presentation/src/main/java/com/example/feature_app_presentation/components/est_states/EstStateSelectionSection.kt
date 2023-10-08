@@ -15,7 +15,7 @@ fun EstStateSelectionSection(
     estStateList: List<EstState>,
     estState: EstState,
     onEstStateChange: (EstState) -> Unit,
-    isClickable: Boolean
+    enabled: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -35,7 +35,7 @@ fun EstStateSelectionSection(
                     title = item.estState,
                     selected = item.estStateId == estState.estStateId,
                     onClick = { onEstStateChange(item) },
-                    isClickable = isClickable
+                    isClickable = enabled
                 )
             }
         }

@@ -10,5 +10,4 @@ sealed class RepairDetailsEvent {
     data class UpdateSignatureState(val signature: Bitmap): RepairDetailsEvent()
     data class SetIsInEditMode(val value: Boolean): RepairDetailsEvent()
 
-
 }

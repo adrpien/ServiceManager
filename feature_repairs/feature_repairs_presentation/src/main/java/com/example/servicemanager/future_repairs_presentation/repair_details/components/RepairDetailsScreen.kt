@@ -6,6 +6,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.util.Screen
 import com.example.feature_app_presentation.components.other.DefaultTextField
 import com.example.feature_app_presentation.components.other.DefaultTextFieldState
 import com.example.feature_app_presentation.components.other.alert_dialogs.ExitAlertDialog
@@ -40,7 +42,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import com.example.core.util.Screen
 import com.example.feature_app_presentation.components.est_states.EstStateSelectionSection
 import com.example.feature_app_presentation.components.hospital_selection.HospitalSelectionSection
 import com.example.feature_app_presentation.components.signature.SignatureArea
@@ -55,8 +56,15 @@ fun RepairDetailsScreen(
     viewModel: RepairDetailsViewModel = hiltViewModel(),
 ) {
 
+/* ********************** STATES **************************************************************** */
     val repairDetailsState = viewModel.repairDetailsState
+    val hospitalList = viewModel.repairDetailsState.value.hospitalList
+    val estStateList = viewModel.repairDetailsState.value.estStateList
+    val repairStateList = viewModel.repairDetailsState.value.repairStateList
+    val technicianList = viewModel.repairDetailsState.value.technicianList
+    val isInEditMode = viewModel.repairDetailsState.value.isInEditMode
 
+/* ********************** DIALOGS *************************************************************** */
     val repairingDateDialogState = rememberMaterialDialogState()
     val repairingDateState = remember {
         mutableStateOf(LocalDate.now())
@@ -85,10 +93,6 @@ fun RepairDetailsScreen(
         }
     }
 
-    val showExitDialog = remember {
-        mutableStateOf(false)
-    }
-
     val returningDateDialogState = rememberMaterialDialogState()
     val returningDateState = remember {
         mutableStateOf(LocalDate.now())
@@ -103,7 +107,13 @@ fun RepairDetailsScreen(
         }
     }
 
+    val showExitDialog = remember {
+        mutableStateOf(false)
+    }
+
     val signatureDialogState = rememberMaterialDialogState()
+
+/* ********************** OTHERS **************************************************************** */
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -112,7 +122,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Name",
-                value =  repairDetailsState.value.repair.deviceName
+                value =  repairDetailsState.value.repair.deviceName,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -120,7 +131,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Manufacturer",
-                value =  repairDetailsState.value.repair.deviceManufacturer
+                value =  repairDetailsState.value.repair.deviceManufacturer,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -128,7 +140,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Model",
-                value =  repairDetailsState.value.repair.deviceModel
+                value =  repairDetailsState.value.repair.deviceModel,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -136,7 +149,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Serial number",
-                value =  repairDetailsState.value.repair.deviceSn
+                value =  repairDetailsState.value.repair.deviceSn,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -144,7 +158,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Inventory number",
-                value =  repairDetailsState.value.repair.deviceIn
+                value =  repairDetailsState.value.repair.deviceIn,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -152,7 +167,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Ward",
-                value =  repairDetailsState.value.repair.ward
+                value =  repairDetailsState.value.repair.ward,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -160,7 +176,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Comment",
-                value =  repairDetailsState.value.repair.comment
+                value =  repairDetailsState.value.repair.comment,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -168,7 +185,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Recipient",
-                value =  repairDetailsState.value.repair.recipient
+                value =  repairDetailsState.value.repair.recipient,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -176,7 +194,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Defect description",
-                value =  repairDetailsState.value.repair.defectDescription
+                value =  repairDetailsState.value.repair.defectDescription,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -184,7 +203,8 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Repair description",
-                value =  repairDetailsState.value.repair.repairDescription
+                value =  repairDetailsState.value.repair.repairDescription,
+                clickable = repairDetailsState.value.isInEditMode
             )
         )
     }
@@ -192,20 +212,19 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Part description",
-                value =  repairDetailsState.value.repair.partDescription
+                value =  repairDetailsState.value.repair.partDescription,
+                clickable = isInEditMode
             )
         )
     }
 
-    val hospitalList = viewModel.repairDetailsState.value.hospitalList
-    val estStateList = viewModel.repairDetailsState.value.estStateList
-    val repairStateList = viewModel.repairDetailsState.value.repairStateList
-    val technicianList = viewModel.repairDetailsState.value.technicianList
-    val isInEditMode = viewModel.repairDetailsState.value.isInEditMode
+/* ********************** BACK HANDLER  ********************************************************* */
 
     BackHandler(isInEditMode) {
         showExitDialog.value = true
     }
+
+/* ********************** UI EVENTS HANDLING  *************************************************** */
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect { event ->
             when(event) {
@@ -271,22 +290,33 @@ fun RepairDetailsScreen(
             }
         }
     }
+
+
     Scaffold(
+
+/* ********************** FLOATING BUTTON  ****************************************************** */
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    if (repairDetailsState.value.isInEditMode) {
+                        if(repairDetailsState.value.repair.repairId != "0") {
+                            viewModel.onEvent(RepairDetailsEvent.UpdateRepair(repairDetailsState.value.repair))
+                        } else {
+                            viewModel.onEvent(RepairDetailsEvent.SaveRepair(repairDetailsState.value.repair))
+                        }
+                        navHostController.navigate(Screen.RepairListScreen.route)
 
-                    if(repairDetailsState.value.repair.repairId != "0") {
-                        viewModel.onEvent(RepairDetailsEvent.UpdateRepair(repairDetailsState.value.repair))
+                        // For testing only
+                        // viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))
                     } else {
-                        viewModel.onEvent(RepairDetailsEvent.SaveRepair(repairDetailsState.value.repair))
+                        viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(true))
                     }
-                    navHostController.navigate(Screen.RepairListScreen.route)
+
                 },
                 backgroundColor = TiemedLightBlue
             ) {
                 Icon(
-                    imageVector = Icons.Default.Save,
+                    imageVector = if(repairDetailsState.value.isInEditMode) Icons.Default.Save else Icons.Default.Edit,
                     contentDescription = "Save",
                     modifier = Modifier,
                 tint = TiemedVeryLightBeige
@@ -303,10 +333,13 @@ fun RepairDetailsScreen(
                 .padding(8.dp)
                 .verticalScroll(scrollState)
                 ) {
+
+/* ********************** OPENING DATE  ********************************************************* */
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
+                enabled = isInEditMode,
                 onClick = { openingDateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
@@ -319,6 +352,8 @@ fun RepairDetailsScreen(
                     text = "Opening date: " + formattedOpeningDate.value.toString()
                 )
             }
+
+/* ********************** PICKUP TECHNICIAN  **************************************************** */
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -339,9 +374,11 @@ fun RepairDetailsScreen(
                         )
                         )
                     },
-                    isClickable = true
-                )
+                    enabled = isInEditMode
+                    )
             }
+
+/* ********************** DEVICE  *************************************************************** */
             Text(
                 text = "Device",
                 fontSize = 20.sp,
@@ -384,6 +421,8 @@ fun RepairDetailsScreen(
                     viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(deviceIn = inventoryNumber)))
                 },
                 state = deviceIn)
+
+/* ********************** LOCALIZATION  ********************************************************* */
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
@@ -395,6 +434,8 @@ fun RepairDetailsScreen(
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
+
+/* ********************** HOSPITAL SELECTION **************************************************** */
             HospitalSelectionSection(
                 hospitalList = hospitalList,
                 hospital = hospitalList.find { (it.hospitalId == repairDetailsState.value.repair.hospitalId ) } ?: Hospital(),
@@ -408,7 +449,7 @@ fun RepairDetailsScreen(
                     )
                     )
                 },
-                isClickable = isInEditMode
+                enabled = isInEditMode
             )
             DefaultTextField(
                 onValueChanged =  {string ->
@@ -422,6 +463,8 @@ fun RepairDetailsScreen(
                     viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(comment = string)))
                 },
                 state = comment)
+
+/* ********************** REPAIR  *************************************************************** */
             Text(
                 text = "Repair",
                 fontSize = 20.sp,
@@ -457,6 +500,8 @@ fun RepairDetailsScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
+
+/* ********************** REPAIRING TECHNICIAN  ************************************************* */
                 Text(
                     text = "Repairing technician:",
                     color = TiemedLightBlue
@@ -474,9 +519,11 @@ fun RepairDetailsScreen(
                         )
                         )
                     },
-                    isClickable = true
+                    enabled = isInEditMode
                 )
             }
+
+/* ********************** REPAIRING DATE  ******************************************************* */
             Button(
                 enabled = isInEditMode,
                 modifier = Modifier
@@ -494,6 +541,8 @@ fun RepairDetailsScreen(
                     text = "Repairing date: " + formattedRepairingDate.value.toString()
                 )
             }
+
+/* ********************** RESULT  *************************************************************** */
             Text(
                 text = "Result",
                 fontSize = 20.sp,
@@ -505,6 +554,8 @@ fun RepairDetailsScreen(
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
+
+/* ********************** EST STATE  ************************************************************ */
             Text(
                 text = "EstState:",
                 color = TiemedLightBlue
@@ -521,8 +572,10 @@ fun RepairDetailsScreen(
                         ))
                         .repair))
                 },
-                isClickable = isInEditMode
+                enabled = isInEditMode
             )
+
+/* ********************** REPAIRING STATE  ****************************************************** */
             Text(
                 text = "RepairState:",
                 color = TiemedLightBlue
@@ -539,8 +592,11 @@ fun RepairDetailsScreen(
                     ).repair
                     )
                     )
-                }
+                },
+                enabled = isInEditMode
             )
+
+/* ********************** RETURN TECHNICIAN  **************************************************** */
             Text(
                 text = "Return technician:",
                 color = TiemedLightBlue
@@ -558,8 +614,10 @@ fun RepairDetailsScreen(
                     )
                     )
                 },
-                isClickable = isInEditMode
+                enabled = isInEditMode
             )
+
+/* ********************** RETURNING DATE  **************************************************** */
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -583,6 +641,8 @@ fun RepairDetailsScreen(
                     viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(recipient = string)))
                 },
                 state = recipient)
+
+/* ********************** SIGNATURE  ************************************************************ */
             Button(
                 modifier = Modifier
                     .padding(8.dp),
@@ -600,6 +660,8 @@ fun RepairDetailsScreen(
                     bitmap = repairDetailsState.value.signature.asImageBitmap(),
                     contentDescription = "Signature")
             }
+
+/* ********************** DIALOGS  ************************************************************** */
             MaterialDialog(
                 dialogState = repairingDateDialogState,
                 properties = DialogProperties(
@@ -672,9 +734,9 @@ fun RepairDetailsScreen(
                 backgroundColor = TiemedLightBeige,
                 buttons = {
                     button(
-                        text = "Refresh",
+                        text = "Today",
                         onClick = {
-                            // TODO Refresh date
+                            // TODO Today date
                         })
                     positiveButton(
                         text = "Confirm")
@@ -703,9 +765,9 @@ fun RepairDetailsScreen(
                 backgroundColor = TiemedLightBeige,
                 buttons = {
                     button(
-                        text = "Refresh",
+                        text = "Today",
                         onClick = {
-                            // TODO Refresh date
+                            // TODO Today button onClick to implemement
                         })
                     positiveButton(
                         text = "Confirm")

@@ -15,7 +15,7 @@ fun TechnicianSelectionSection(
     technicianList: List<Technician>,
     technician: Technician,
     onTechnicianChange: (Technician) -> Unit,
-    isClickable: Boolean
+    enabled: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -35,7 +35,7 @@ fun TechnicianSelectionSection(
                     title = item.name,
                     selected = item.technicianId == technician.technicianId,
                     onClick = { onTechnicianChange(item) },
-                isClickable = isClickable)
+                isClickable = enabled)
             }
         }
     }

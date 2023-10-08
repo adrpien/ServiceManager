@@ -14,7 +14,7 @@ fun HospitalSelectionSection(
     hospitalList: List<Hospital>,
     hospital: Hospital,
     onHospitalChange: (Hospital) -> Unit,
-    isClickable: Boolean
+    enabled: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -34,7 +34,7 @@ fun HospitalSelectionSection(
                     title = item.hospital,
                     selected = item.hospitalId == hospital.hospitalId,
                     onClick = { onHospitalChange(item) },
-                    isClickable = isClickable
+                    isClickable = enabled
                 )
             }
         }

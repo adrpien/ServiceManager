@@ -358,7 +358,7 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                isClickable = inspectionDetailsState.value.isInEditMode
+                enabled = inspectionDetailsState.value.isInEditMode
             )
             DefaultTextField(
                 onValueChanged = { string ->
@@ -415,7 +415,7 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                isClickable = inspectionDetailsState.value.isInEditMode
+                enabled = inspectionDetailsState.value.isInEditMode
             )
             Text(
                 modifier = Modifier
@@ -461,7 +461,7 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                isClickable = inspectionDetailsState.value.isInEditMode
+                enabled = inspectionDetailsState.value.isInEditMode
             )
             Button(
                 modifier = Modifier

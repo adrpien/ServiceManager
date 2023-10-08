@@ -15,6 +15,7 @@ fun RepairStateSelectionSection(
     repairStateList: List<RepairState>,
     repairState: RepairState,
     onRepairStateChange: (RepairState) -> Unit,
+    enabled: Boolean
 ) {
 
     val scrollState = rememberScrollState()
@@ -34,7 +35,7 @@ fun RepairStateSelectionSection(
                     title = item.repairState,
                     selected = item.repairStateId == repairState.repairStateId,
                     onClick = { onRepairStateChange(item) },
-                isClickable = true)
+                isClickable = enabled)
             }
         }
     }
