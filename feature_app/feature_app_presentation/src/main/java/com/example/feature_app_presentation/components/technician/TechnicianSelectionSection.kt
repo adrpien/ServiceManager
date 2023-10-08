@@ -35,7 +35,8 @@ fun TechnicianSelectionSection(
                     title = item.name,
                     selected = item.technicianId == technician.technicianId,
                     onClick = { onTechnicianChange(item) },
-                isClickable = enabled)
+                isClickable = enabled
+                )
             }
         }
     }

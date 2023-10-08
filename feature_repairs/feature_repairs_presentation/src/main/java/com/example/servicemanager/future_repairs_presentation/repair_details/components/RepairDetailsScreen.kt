@@ -22,6 +22,8 @@ import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.util.DateFormattingTypes
+import com.example.core.util.Helper
 import com.example.core.util.Screen
 import com.example.feature_app_presentation.components.other.DefaultTextField
 import com.example.feature_app_presentation.components.other.DefaultTextFieldState
@@ -44,8 +46,10 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import com.example.feature_app_presentation.components.est_states.EstStateSelectionSection
 import com.example.feature_app_presentation.components.hospital_selection.HospitalSelectionSection
+import com.example.feature_app_presentation.components.other.DefaultDatePickerDialog
 import com.example.feature_app_presentation.components.signature.SignatureArea
 import com.example.feature_app_presentation.components.technician.TechnicianSelectionSection
+import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsState
 
 
 @Composable
@@ -69,42 +73,15 @@ fun RepairDetailsScreen(
     val repairingDateState = remember {
         mutableStateOf(LocalDate.now())
     }
-    val formattedRepairingDate = remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern(
-                    "dd/MM/yyyy"
-                )
-                .format(repairingDateState.value)
-        }
-    }
 
     val openingDateDialogState = rememberMaterialDialogState()
     val openingDateState = remember {
         mutableStateOf(LocalDate.now())
     }
-    val formattedOpeningDate = remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern(
-                    "dd/MM/yyyy"
-                )
-                .format(repairingDateState.value)
-        }
-    }
 
     val returningDateDialogState = rememberMaterialDialogState()
     val returningDateState = remember {
         mutableStateOf(LocalDate.now())
-    }
-    val formattedReturningDate = remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern(
-                    "dd/MM/yyyy"
-                )
-                .format(returningDateState.value)
-        }
     }
 
     val showExitDialog = remember {
@@ -349,7 +326,7 @@ fun RepairDetailsScreen(
                 border = BorderStroke(2.dp, TiemedLightBlue)
             ) {
                 Text(
-                    text = "Opening date: " + formattedOpeningDate.value.toString()
+                    text = "Opening date: " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong())
                 )
             }
 
@@ -366,13 +343,7 @@ fun RepairDetailsScreen(
                     technician = technicianList.find { (it.technicianId == repairDetailsState.value.repair.pickupTechnicianId) } ?: Technician(),
                     onTechnicianChange = {
                         viewModel.onEvent(
-                            RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.copy(
-                            repair = repairDetailsState.value.repair.copy(
-                                pickupTechnicianId = it.technicianId
-                            )
-                        ).repair
-                        )
-                        )
+                            RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(pickupTechnicianId = it.technicianId)))
                     },
                     enabled = isInEditMode
                     )
@@ -441,13 +412,7 @@ fun RepairDetailsScreen(
                 hospital = hospitalList.find { (it.hospitalId == repairDetailsState.value.repair.hospitalId ) } ?: Hospital(),
                 onHospitalChange = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.copy(
-                        repair = repairDetailsState.value.repair.copy(
-                            hospitalId = it.hospitalId
-                        )
-                    ).repair
-                    )
-                    )
+                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(hospitalId = it.hospitalId)))
                 },
                 enabled = isInEditMode
             )
@@ -511,13 +476,7 @@ fun RepairDetailsScreen(
                     technician = technicianList.find { (it.technicianId == repairDetailsState.value.repair.repairTechnicianId) } ?: Technician(),
                     onTechnicianChange = {
                         viewModel.onEvent(
-                            RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.copy(
-                            repair = repairDetailsState.value.repair.copy(
-                                repairTechnicianId = it.technicianId
-                            )
-                        ).repair
-                        )
-                        )
+                            RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairTechnicianId = it.technicianId)))
                     },
                     enabled = isInEditMode
                 )
@@ -538,7 +497,7 @@ fun RepairDetailsScreen(
                 border = BorderStroke(2.dp, TiemedLightBlue)
             ) {
                 Text(
-                    text = "Repairing date: " + formattedRepairingDate.value.toString()
+                    text = "Repairing date: " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong())
                 )
             }
 
@@ -566,11 +525,7 @@ fun RepairDetailsScreen(
                 estState = estStateList.find { (it.estStateId == repairDetailsState.value.repair.estStateId ) } ?: EstState(),
                 onEstStateChange = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.copy(
-                        repair = repairDetailsState.value.repair.copy(
-                            estStateId = it.estStateId
-                        ))
-                        .repair))
+                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(estStateId = it.estStateId)))
                 },
                 enabled = isInEditMode
             )
@@ -585,13 +540,7 @@ fun RepairDetailsScreen(
                 repairState = repairStateList.find { (it.repairStateId == repairDetailsState.value.repair.repairStateId ) } ?: RepairState(),
                 onRepairStateChange = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.copy(
-                        repair = repairDetailsState.value.repair.copy(
-                            repairStateId = it.repairStateId
-                        )
-                    ).repair
-                    )
-                    )
+                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairStateId = it.repairStateId)))
                 },
                 enabled = isInEditMode
             )
@@ -606,13 +555,7 @@ fun RepairDetailsScreen(
                 technician = technicianList.find { (it.technicianId == repairDetailsState.value.repair.returnTechnicianId) } ?: Technician(),
                 onTechnicianChange = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.copy(
-                        repair = repairDetailsState.value.repair.copy(
-                            returnTechnicianId = it.technicianId
-                        )
-                    ).repair
-                    )
-                    )
+                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(returnTechnicianId = it.technicianId)))
                 },
                 enabled = isInEditMode
             )
@@ -632,7 +575,7 @@ fun RepairDetailsScreen(
                 border = BorderStroke(2.dp, TiemedLightBlue)
             ) {
                 Text(
-                    text = "Returning date: " + formattedRepairingDate.value.toString()
+                    text = "Returning date: " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong())
                 )
             }
             DefaultTextField(
@@ -662,37 +605,36 @@ fun RepairDetailsScreen(
             }
 
 /* ********************** DIALOGS  ************************************************************** */
-            MaterialDialog(
+            DefaultDatePickerDialog(
                 dialogState = repairingDateDialogState,
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true
-                ),
-                backgroundColor = TiemedLightBeige,
-                buttons = {
-                    button(
-                        text = "Refresh",
-                        onClick = {
-                            // TODO Refresh date
-                        })
-                    positiveButton(
-                        text = "Confirm")
-                    negativeButton(
-                        text = "Cancel")
-                }
-            ) {
-                datepicker(
-                    initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong()).atZone(
-                        ZoneId.systemDefault()).toLocalDate(),
-                    title = "Repairing date",
-                    allowedDateValidator = { localDate ->
-                        localDate < LocalDate.now()
-                    }
-                ) { date ->
-                    repairingDateState.value = date
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairingDate = date.toEpochDay().toString())))
-                }
-            }
+                onClick = {
+                    repairingDateState.value = it
+                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                },
+                title = "RepairingDate",
+                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong()).atZone(
+                    ZoneId.systemDefault()).toLocalDate()
+            )
+            DefaultDatePickerDialog(
+                dialogState = openingDateDialogState,
+                onClick = {
+                    openingDateState.value = it
+                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(openingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                },
+                title = "OpeningDate",
+                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.openingDate.toLong()).atZone(
+                    ZoneId.systemDefault()).toLocalDate()
+            )
+            DefaultDatePickerDialog(
+                dialogState = returningDateDialogState,
+                onClick = {
+                    returningDateState.value = it
+                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(closingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                },
+                title = "ReturningDate",
+                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.closingDate.toLong()).atZone(
+                    ZoneId.systemDefault()).toLocalDate()
+            )
             ExitAlertDialog(
                 isVisible = showExitDialog.value,
                 title = "Save?",
@@ -713,80 +655,15 @@ fun RepairDetailsScreen(
                             )
                         }
                     }
-                    viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))
-                    showExitDialog.value = false
                     navHostController.popBackStack()
 
                 },
                 onDismiss = {
-                    viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))
-                    showExitDialog.value = false
                     navHostController.popBackStack()
 
                 }
             )
-            MaterialDialog(
-                dialogState = openingDateDialogState,
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true
-                ),
-                backgroundColor = TiemedLightBeige,
-                buttons = {
-                    button(
-                        text = "Today",
-                        onClick = {
-                            // TODO Today date
-                        })
-                    positiveButton(
-                        text = "Confirm")
-                    negativeButton(
-                        text = "Cancel")
-                }
-            ) {
-                datepicker(
-                    initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong()).atZone(
-                        ZoneId.systemDefault()).toLocalDate(),
-                    title = "Opening date",
-                    allowedDateValidator = { localDate ->
-                        localDate < LocalDate.now()
-                    }
-                ) { date ->
-                    openingDateState.value = date
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(openingDate = date.toEpochDay().toString())))
-                }
-            }
-            MaterialDialog(
-                dialogState = openingDateDialogState,
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true
-                ),
-                backgroundColor = TiemedLightBeige,
-                buttons = {
-                    button(
-                        text = "Today",
-                        onClick = {
-                            // TODO Today button onClick to implemement
-                        })
-                    positiveButton(
-                        text = "Confirm")
-                    negativeButton(
-                        text = "Cancel")
-                }
-            ) {
-                datepicker(
-                    initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong()).atZone(
-                        ZoneId.systemDefault()).toLocalDate(),
-                    title = "Opening date",
-                    allowedDateValidator = { localDate ->
-                        localDate < LocalDate.now()
-                    }
-                ) { date ->
-                    openingDateState.value = date
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(openingDate = date.toEpochDay().toString())))
-                }
-            }
+
             MaterialDialog(
                 dialogState = signatureDialogState,
                 properties = DialogProperties(
@@ -798,7 +675,7 @@ fun RepairDetailsScreen(
                     positiveButton(
                         text = "Confirm",
                         textStyle = TextStyle(color = TiemedLightBlue)
-                    ){}
+                    )
                     negativeButton(
                         text = "Cancel",
                         textStyle = TextStyle(color = TiemedLightBlue)

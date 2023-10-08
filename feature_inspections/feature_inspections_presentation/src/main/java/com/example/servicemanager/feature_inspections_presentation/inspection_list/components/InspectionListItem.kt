@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.util.DateFormattingTypes
 import com.example.core.util.Helper.Companion.getDateString
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
@@ -148,7 +149,7 @@ fun InspectionListItem(
                 )
 
                 Text(
-                    text = getDateString(inspection.inspectionDate.toLong()),
+                    text = getDateString(inspection.inspectionDate.toLong(), DateFormattingTypes.backSlashStyle()),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
