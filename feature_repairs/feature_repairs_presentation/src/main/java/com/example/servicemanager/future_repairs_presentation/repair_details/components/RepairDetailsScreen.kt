@@ -19,12 +19,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
-import com.example.core.util.DateFormattingTypes
 import com.example.core.util.Helper
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 import com.example.feature_app_presentation.components.other.DefaultTextField
 import com.example.feature_app_presentation.components.other.DefaultTextFieldState
 import com.example.feature_app_presentation.components.other.alert_dialogs.ExitAlertDialog
@@ -37,19 +35,16 @@ import com.example.servicemanager.future_repairs_presentation.repair_details.Rep
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel.*
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import com.example.feature_app_presentation.components.est_states.EstStateSelectionSection
 import com.example.feature_app_presentation.components.hospital_selection.HospitalSelectionSection
 import com.example.feature_app_presentation.components.other.DefaultDatePickerDialog
 import com.example.feature_app_presentation.components.signature.SignatureArea
 import com.example.feature_app_presentation.components.technician.TechnicianSelectionSection
-import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsState
 
 
 @Composable
@@ -281,7 +276,7 @@ fun RepairDetailsScreen(
                         } else {
                             viewModel.onEvent(RepairDetailsEvent.SaveRepair(repairDetailsState.value.repair))
                         }
-                        navHostController.navigate(Screen.RepairListScreen.route)
+                        navHostController.navigate(Screens.RepairListScreen.route)
 
                         // For testing only
                         // viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))

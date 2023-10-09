@@ -18,4 +18,8 @@ object Modules {
     const val featureAppData = ":feature_app:feature_app_data"
     const val featureAppDomain = ":feature_app:feature_app_domain"
     const val featureAppPresentation = ":feature_app:feature_app_presentation"
+
+    const val featureHomeData = ":feature_home:feature_home_data"
+    const val featureHomeDomain = ":feature_home:feature_home_domain"
+    const val featureHomePresentation = ":feature_home:feature_home_presentation"
 }

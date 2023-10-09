@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.components.InspectionListScreen
 
@@ -14,16 +14,16 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_li
 fun InspectionNavigation(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.RepairListScreen.route) {
+        startDestination = Screens.RepairListScreen.route) {
         composable(
-            route = Screen.InspectionListScreen.route,
+            route = Screens.InspectionListScreen.route,
         ){
             InspectionListScreen(
                 navHostController = navHostController
             )
         }
         composable(
-            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}",
+            route = Screens.InspectionDetailsScreen.route + "/{inspectionId}",
             arguments = listOf(
                 navArgument(name = "inspectionId") {
                     type = NavType.StringType

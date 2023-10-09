@@ -49,11 +49,11 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    fun createInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>> = flow {
+    fun createInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in createInspection fun for InspectionFirebaseApi
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 "0",
                 "Inspection record creating started"
             )
@@ -81,8 +81,8 @@ class  InspectionFirebaseApi(
         result.await()
         if (result.isSuccessful) {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     documentReference.id,
                     documentReference.id
                 )
@@ -91,8 +91,8 @@ class  InspectionFirebaseApi(
 
         } else {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.ERROR,
+                Resource(
+                    ResourceState.ERROR,
                     "Inspection record creation error",
                     "Inspection record creation error"
                 )
@@ -101,11 +101,11 @@ class  InspectionFirebaseApi(
 
         }
     }
-    fun updateInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>> = flow {
+    fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 "",
                 "Inspection record updating started"
             )
@@ -132,8 +132,8 @@ class  InspectionFirebaseApi(
         result.await()
         if (result.isSuccessful) {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     "Inspection record updated",
                     "Inspection record updated"
                 )
@@ -142,8 +142,8 @@ class  InspectionFirebaseApi(
         } else {
 
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.ERROR,
+                Resource(
+                    ResourceState.ERROR,
                     result.exception?.message ?: "Update inspection unknown error",
                 )
             )

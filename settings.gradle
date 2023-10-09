@@ -33,3 +33,8 @@ include ':feature_app:feature_app_domain'
 include ':feature_app:feature_app_presentation'
 include ':core'
 
+include ':feature_home'
+include ':feature_home'
+include ':feature_home:feature_home_data'
+include ':feature_home:feature_home_domain'
+include ':feature_home:feature_home_presentation'

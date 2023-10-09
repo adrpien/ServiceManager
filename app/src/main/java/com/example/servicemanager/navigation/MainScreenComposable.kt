@@ -12,14 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 
 @Composable
-fun ContentComposable(
+fun MainScreenComposable(
 ) {
     val navHostController = rememberNavController()
-
-    var showDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         bottomBar = {
@@ -27,19 +25,19 @@ fun ContentComposable(
                 itemList = listOf(
                     BottomNavigationItem(
                         name = "Inspections",
-                        route = Screen.InspectionListScreen.route,
+                        route = Screens.InspectionListScreen.route,
                         icon = Icons.Default.Checklist,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
                         name = "Repairs",
-                        route = Screen.RepairListScreen.route,
+                        route = Screens.RepairListScreen.route,
                         icon = Icons.Default.Settings,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
                         name = "Home",
-                        route = Screen.HomeScreen.route,
+                        route = Screens.HomeScreen.route,
                         icon = Icons.Default.Home,
                         badgeCount = 0
                     )
@@ -53,7 +51,7 @@ fun ContentComposable(
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            ContentNavigation(
+            NavigationContent(
                 navHostController = navHostController
             )
         }

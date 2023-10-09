@@ -6,37 +6,34 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.core.util.Screen
+import com.example.core.util.Screens
+import com.example.feature_home_presentation.home.components.HomeScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.components.InspectionListScreen
 import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
 import com.example.servicemanager.future_repairs_presentation.repair_list.components.RepairListScreen
 
 @Composable
-fun ContentNavigation(navHostController: NavHostController) {
+fun NavigationContent(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.RepairListScreen.route) {
+        startDestination = Screens.RepairListScreen.route) {
         composable(
-            route = Screen.InspectionListScreen.route,
+            route = Screens.InspectionListScreen.route,
         ){
             InspectionListScreen(
                 navHostController = navHostController
             )
         }
         composable(
-            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}" + "/{showAlertDialog}",
+            route = Screens.InspectionDetailsScreen.route + "/{inspectionId}",
             arguments = listOf(
                 navArgument(name = "inspectionId") {
                     type = NavType.StringType
                     defaultValue = "0"
                     nullable = false
-                },
-                navArgument(name = "showAlertDialog") {
-                    type = NavType.BoolType
-                    defaultValue = false
-                    nullable = false
                 }
+
             )
         ){
             InspectionDetailsScreen(
@@ -45,14 +42,14 @@ fun ContentNavigation(navHostController: NavHostController) {
             )
         }
         composable(
-            route = Screen.RepairListScreen.route,
+            route = Screens.RepairListScreen.route,
         ){
             RepairListScreen(
                 navHostController = navHostController
             )
         }
         composable(
-            route = Screen.RepairDetailsScreen.route + "/{repairId}",
+            route = Screens.RepairDetailsScreen.route + "/{repairId}",
             arguments = listOf(
                 navArgument(name = "repairId") {
                     type = NavType.StringType
@@ -64,6 +61,13 @@ fun ContentNavigation(navHostController: NavHostController) {
             RepairDetailsScreen(
                 navHostController = navHostController,
                 repairId = it.arguments?.getString("repairId") ?: "0"
+            )
+        }
+        composable(
+            route = Screens.HomeScreen.route
+        ){
+            HomeScreen(
+                navHostController = navHostController
             )
         }
     }

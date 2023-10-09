@@ -20,6 +20,8 @@ import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.util.Helper
+import com.example.core.util.Screens
 import com.example.feature_app_presentation.components.other.DefaultTextField
 import com.example.feature_app_presentation.components.other.DefaultTextFieldState
 import com.example.feature_app_presentation.components.other.alert_dialogs.ExitAlertDialog
@@ -32,6 +34,7 @@ import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.feature_app_presentation.components.inspection_state.InspectionStateSelectionSection
+import com.example.feature_app_presentation.components.other.DefaultDatePickerDialog
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel.*
@@ -43,7 +46,6 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 
 @Composable
@@ -54,30 +56,28 @@ fun InspectionDetailsScreen(
     viewModel: InspectionDetailsViewModel = hiltViewModel(),
 ) {
 
+/* ********************** STATES **************************************************************** */
     val inspectionDetailsState = viewModel.inspectionDetailsState
+    val hospitalList = viewModel.inspectionDetailsState.value.hospitalList
+    val estStateList = viewModel.inspectionDetailsState.value.estStateList
+    val inspectionStateList = viewModel.inspectionDetailsState.value.inspectionStateList
+    val technicianList = viewModel.inspectionDetailsState.value.technicianList
+    val isInEditMode = viewModel.inspectionDetailsState.value.isInEditMode
 
+/* ********************** DIALOGS *************************************************************** */
+    val inspectionDateDialogState = rememberMaterialDialogState()
     val inspectionDateState = remember {
         mutableStateOf(LocalDate.now())
     }
-    val formattedInspectionDate = remember {
-        derivedStateOf {
-            DateTimeFormatter
-                .ofPattern(
-                    "dd/MM/yyyy"
-                )
-                .format(inspectionDateState.value)
-        }
-    }
-
     val showExitDialog = remember {
         mutableStateOf(false)
     }
-    val dateDialogState = rememberMaterialDialogState()
     val signatureDialogState = rememberMaterialDialogState()
+
+/* ********************** OTHERS **************************************************************** */
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
-
 
     val deviceName = remember {
         mutableStateOf(
@@ -151,12 +151,6 @@ fun InspectionDetailsScreen(
             )
         )
     }
-
-    val hospitalList = viewModel.inspectionDetailsState.value.hospitalList
-    val estStateList = viewModel.inspectionDetailsState.value.estStateList
-    val inspectionStateList = viewModel.inspectionDetailsState.value.inspectionStateList
-    val technicianList = viewModel.inspectionDetailsState.value.technicianList
-    val isInEditMode = viewModel.inspectionDetailsState.value.isInEditMode
 
     BackHandler(isInEditMode) {
         showExitDialog.value = true
@@ -233,8 +227,11 @@ fun InspectionDetailsScreen(
                                 )
                             )
                         }
+                        navHostController.navigate(Screens.InspectionListScreen.route)
                     }
-                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
+                    else {
+                        viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
+                    }
                 },
                 backgroundColor = TiemedLightBlue
             ) {
@@ -467,7 +464,7 @@ fun InspectionDetailsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                onClick = { dateDialogState.show() },
+                onClick = { inspectionDateDialogState.show() },
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
@@ -477,7 +474,7 @@ fun InspectionDetailsScreen(
                 border = BorderStroke(2.dp, TiemedLightBlue)
             ) {
                 Text(
-                    text = "Inspection date: " + formattedInspectionDate.value.toString()
+                    text = "Inspection date: " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong())
                 )
             }
             DefaultTextField(
@@ -542,48 +539,14 @@ fun InspectionDetailsScreen(
 
                 }
             )
-
-            MaterialDialog(
-                dialogState = dateDialogState,
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true
-                ),
-                backgroundColor = TiemedLightBeige,
-                buttons = {
-                    button(
-                        text = "Refresh",
-                        onClick = {
-                            // TODO Refresh date
-                        })
-                    positiveButton(
-                        text = "Confirm"
-                    )
-                    negativeButton(
-                        text = "Cancel"
-                    )
-                }
-            ) {
-                datepicker(
-                    initialDate = Instant.ofEpochMilli(inspectionDetailsState.value.inspection.inspectionDate.toLong())
-                        .atZone(
-                            ZoneId.systemDefault()
-                        ).toLocalDate(),
-                    title = "Inspection date",
-                    allowedDateValidator = { localDate ->
-                        localDate < LocalDate.now()
-                    }
-                ) { date ->
-                    inspectionDateState.value = date
-                    viewModel.onEvent(
-                        InspectionDetailsEvent.UpdateInspectionState(
-                            inspectionDetailsState.value.inspection.copy(
-                                inspectionDate = date.toEpochDay().toString()
-                            )
-                        )
-                    )
-                }
-            }
+            DefaultDatePickerDialog(
+                dialogState = inspectionDateDialogState,
+                onClick = {
+                    inspectionDateState.value = it
+                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(inspectionDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                },
+                title = "Inspection Date"
+            )
             MaterialDialog(
                 dialogState = signatureDialogState,
                 properties = DialogProperties(

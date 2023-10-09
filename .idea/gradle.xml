@@ -22,6 +22,10 @@
             <option value="$PROJECT_DIR$/feature_authentication/feature_authentication_data" />
             <option value="$PROJECT_DIR$/feature_authentication/feature_authentication_domain" />
             <option value="$PROJECT_DIR$/feature_authentication/feature_authentication_presentation" />
+            <option value="$PROJECT_DIR$/feature_home" />
+            <option value="$PROJECT_DIR$/feature_home/feature_home_data" />
+            <option value="$PROJECT_DIR$/feature_home/feature_home_domain" />
+            <option value="$PROJECT_DIR$/feature_home/feature_home_presentation" />
             <option value="$PROJECT_DIR$/feature_inspections" />
             <option value="$PROJECT_DIR$/feature_inspections/feature_inspections_data" />
             <option value="$PROJECT_DIR$/feature_inspections/feature_inspections_domain" />

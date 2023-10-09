@@ -4,24 +4,24 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 import com.example.servicemanager.feature_authentication_presentation.login.components.LoginScreen
 
 @Composable
 fun LoginNavigation(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.UserLoginScreen.route)
+        startDestination = Screens.UserLoginScreen.route)
     {
         composable(
-            route = Screen.UserLoginScreen.route
+            route = Screens.UserLoginScreen.route
         ) {
             LoginScreen(navHostController = navHostController)
         }
         composable(
-            route = Screen.ContentComposable.route
+            route = Screens.ContentComposable.route
         ) {
-            ContentComposable()
+            MainScreenComposable()
         }
     }
 }

@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
 import com.example.servicemanager.future_repairs_presentation.repair_list.components.RepairListScreen
 
@@ -14,16 +14,16 @@ import com.example.servicemanager.future_repairs_presentation.repair_list.compon
 fun RepairNavigation(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.RepairListScreen.route) {
+        startDestination = Screens.RepairListScreen.route) {
         composable(
-            route = Screen.RepairListScreen.route,
+            route = Screens.RepairListScreen.route,
         ){
             RepairListScreen(
                 navHostController = navHostController
             )
         }
         composable(
-            route = Screen.RepairDetailsScreen.route + "/{repairId}",
+            route = Screens.RepairDetailsScreen.route + "/{repairId}",
             arguments = listOf(
                 navArgument(name = "repairId") {
                     type = NavType.StringType
@@ -36,6 +36,11 @@ fun RepairNavigation(navHostController: NavHostController) {
                 navHostController = navHostController,
                 repairId = it.arguments?.getString("repairId") ?: "0"
             )
+        }
+        composable(
+            route = Screens.HomeScreen.route
+        ){
+            // TODO HomeScreen with some preferences, about, stats, credits
         }
     }
 }

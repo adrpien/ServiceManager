@@ -24,7 +24,7 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_li
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 
 
 @Composable
@@ -46,7 +46,7 @@ fun InspectionListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs("0"))
+                    navHostController.navigate(Screens.InspectionDetailsScreen.withArgs("0"))
                 },
                 backgroundColor = TiemedLightBlue
             )
@@ -61,7 +61,9 @@ fun InspectionListScreen(
         scaffoldState = scaffoldState
     ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize().background(TiemedVeryLightBeige)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TiemedVeryLightBeige)
         ) {
 
             Row(
@@ -94,7 +96,6 @@ fun InspectionListScreen(
                     tint = TiemedLightBlue
                     )
                 }
-                // TODO All Hospitals filter in InspectionListScreen
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
@@ -102,7 +103,6 @@ fun InspectionListScreen(
                     tint = TiemedLightBlue
                     )
                 }
-                // TODO Import inspections in InspectionListScreen
 
             }
             AnimatedVisibility(
@@ -111,7 +111,7 @@ fun InspectionListScreen(
                 exit = fadeOut() + slideOutVertically()
             ) {
                 HospitalFilterSection(
-                    hospitalList = state.value.hospitalList,
+                    hospitalList = state.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
                     hospital = state.value.hospital ?: Hospital(),
                     onHospitalChange = { viewModel.onEvent(InspectionListEvent.filterInspectionListByHospital(hospital = it)) }
                 )
@@ -144,7 +144,7 @@ fun InspectionListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs(state.value.inspectionList[index].inspectionId))
+                                    navHostController.navigate(Screens.InspectionDetailsScreen.withArgs(state.value.inspectionList[index].inspectionId))
                                 },
                             inspection = state.value.inspectionList[index],
                             hospitalList = state.value.hospitalList,

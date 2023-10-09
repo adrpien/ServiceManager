@@ -14,7 +14,7 @@ import com.example.feature_app_presentation.components.other.DefaultButton
 import com.example.feature_app_presentation.components.other.DefaultTextField
 import com.example.feature_app_presentation.components.other.DefaultTextFieldState
 import com.example.feature_app_presentation.components.other.PasswordTextField
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -54,8 +54,8 @@ fun LoginScreen(
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is UserLoginViewModel.UiEvent.Authenticate -> {
-                    navHostController.navigate(Screen.ContentComposable.route) {
-                        popUpTo(Screen.UserLoginScreen.route) {
+                    navHostController.navigate(Screens.ContentComposable.route) {
+                        popUpTo(Screens.UserLoginScreen.route) {
                             inclusive = true
                         }
                     }
@@ -66,8 +66,8 @@ fun LoginScreen(
                         )
                     }
                 is UserLoginViewModel.UiEvent.NavigateTo -> {
-                        navHostController.navigate(Screen.ContentComposable.route) {
-                            popUpTo(Screen.UserLoginScreen.route) {
+                        navHostController.navigate(Screens.ContentComposable.route) {
+                            popUpTo(Screens.UserLoginScreen.route) {
                                 inclusive = true
                             }
                         }

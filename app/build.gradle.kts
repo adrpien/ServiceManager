@@ -84,6 +84,9 @@ dependencies {
     implementation(project(Modules.featureRepairsData))
     implementation(project(Modules.featureRepairsDomain))
     implementation(project(Modules.featureRepairsPresentation))
+    implementation(project(Modules.featureHomeData))
+    implementation(project(Modules.featureHomeDomain))
+    implementation(project(Modules.featureHomePresentation))
 
     // AndroidX
     implementation(AndroidX.coreKtx)

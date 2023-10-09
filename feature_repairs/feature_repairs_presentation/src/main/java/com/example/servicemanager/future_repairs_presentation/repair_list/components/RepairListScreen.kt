@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
-import com.example.core.util.Screen
+import com.example.core.util.Screens
 import com.example.feature_app_presentation.components.hospital_filter.HospitalFilterSection
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
@@ -45,7 +45,7 @@ fun RepairListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screen.RepairDetailsScreen.withArgs("0"))
+                    navHostController.navigate(Screens.RepairDetailsScreen.withArgs("0"))
                 },
                 backgroundColor = TiemedLightBlue
             )
@@ -60,7 +60,9 @@ fun RepairListScreen(
         scaffoldState = scaffoldState
     ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize().background(TiemedVeryLightBeige)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TiemedVeryLightBeige)
         ) {
 
             Row(
@@ -101,13 +103,12 @@ fun RepairListScreen(
                     tint = TiemedLightBlue
                     )
                 }
-                // TODO Import repairs in RepairListScreen
-
             }
             AnimatedVisibility(
                 visible = state.value.isHospitalFilterSectionVisible,
-                enter = fadeIn() + slideInVertically(),
-                exit = fadeOut() + slideOutVertically()
+                enter = fadeIn() + slideInHorizontally(),
+                // exit = fadeOut() + slideOutVertically()
+                exit = fadeOut() + slideOutHorizontally()
             ) {
                 HospitalFilterSection(
                     hospitalList = state.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
@@ -118,22 +119,20 @@ fun RepairListScreen(
 
             AnimatedVisibility(
                 visible = state.value.isSortSectionVisible,
-                enter = fadeIn() + slideInVertically(),
-                exit = fadeOut() + slideOutVertically()
+                enter = fadeIn() + slideInHorizontally(),
+                // exit = fadeOut() + slideOutVertically()
+                exit = fadeOut() + slideOutHorizontally()
             ) {
-               RepairSortSection(
-                    onOrderChange = { viewModel.onEvent(RepairListEvent.orderRepairList(it)) },
-                    repairOrderType = state.value.repairOrderType,
-                    onToggleMonotonicity = {
-                        viewModel.onEvent(RepairListEvent.ToggleOrderMonotonicity(it))
-                    }
-                )
+                Column {
+                    RepairSortSection(
+                        onOrderChange = { viewModel.onEvent(RepairListEvent.orderRepairList(it)) },
+                        repairOrderType = state.value.repairOrderType,
+                        onToggleMonotonicity = {
+                            viewModel.onEvent(RepairListEvent.ToggleOrderMonotonicity(it))
+                        }
+                    )
+                }
             }
-
-
-
-            val groupedRepairLists = state.value.repairList.groupBy { it.hospitalId }
-
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = {
@@ -148,7 +147,11 @@ fun RepairListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    navHostController.navigate(Screen.RepairDetailsScreen.withArgs(state.value.repairList[index].repairId))
+                                    navHostController.navigate(
+                                        Screens.RepairDetailsScreen.withArgs(
+                                            state.value.repairList[index].repairId
+                                        )
+                                    )
                                 },
                             repair = state.value.repairList[index],
                             hospitalList = state.value.hospitalList,
