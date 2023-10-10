@@ -678,8 +678,15 @@ fun RepairDetailsScreen(
                 }
             ) {
                 customView {
-                    SignatureArea() { bitmap ->
-                        viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+
+                    ){
+                        SignatureArea() { bitmap ->
+                            viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
+                        }
                     }
                 }
             }

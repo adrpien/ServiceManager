@@ -496,7 +496,6 @@ fun InspectionDetailsScreen(
             )
             Button(
                 modifier = Modifier
-
                     .padding(8.dp),
                 onClick = { signatureDialogState.show() },
                 enabled = isInEditMode,
@@ -577,8 +576,14 @@ fun InspectionDetailsScreen(
                 }
             ) {
                 customView {
-                    SignatureArea() { bitmap ->
-                        viewModel.onEvent(InspectionDetailsEvent.UpdateSignatureState(bitmap))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        SignatureArea() { bitmap ->
+                            viewModel.onEvent(InspectionDetailsEvent.UpdateSignatureState(bitmap))
+                        }
                     }
                 }
             }

@@ -1,7 +1,10 @@
 package com.example.core.theme
 
-val signatureWidth = 400
-val signatureHeight = 200
+object Dimensions {
+    const val signatureWidth = 600
+    const val signatureHeight = 300
+}
+
 
 
 

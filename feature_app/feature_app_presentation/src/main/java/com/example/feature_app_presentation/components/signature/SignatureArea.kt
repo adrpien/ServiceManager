@@ -2,6 +2,7 @@ package com.example.feature_app_presentation.components.signature
 
 import android.graphics.Bitmap
 import android.view.MotionEvent
+import androidx.annotation.Dimension
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,12 +18,13 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
+import com.example.core.theme.Dimensions.signatureHeight
+import com.example.core.theme.Dimensions.signatureWidth
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedVeryLightBeige
-import com.example.core.theme.signatureHeight
-import com.example.core.theme.signatureWidth
+import com.example.core.util.Constans
 import com.example.core.util.Helper.Companion.toDp
-
+import com.example.core.util.Helper.Companion.toPx
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -55,13 +57,15 @@ fun SignatureArea(
     }
 
     Surface(
-        modifier = Modifier.border(2.dp, TiemedLightBlue),
+        modifier = Modifier
+            .padding(10.dp)
+            .border(2.dp, TiemedLightBlue),
         color = Color.White
             ){
         Box(
             modifier = Modifier
-                .width(700.toDp.dp)
-                .height(350.toDp.dp)
+                .width(signatureWidth.toDp.dp)
+                .height(signatureHeight.toDp.dp)
         ) {
             Canvas(
                 modifier = Modifier
