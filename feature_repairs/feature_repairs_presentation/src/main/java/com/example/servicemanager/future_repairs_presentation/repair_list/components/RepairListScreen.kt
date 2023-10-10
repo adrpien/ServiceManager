@@ -34,10 +34,10 @@ fun RepairListScreen(
     ) {
 
 
-    val state = viewModel.repairListState
+    val repairListState = viewModel.repairListState
 
     val swipeRefreshState = rememberSwipeRefreshState(
-        isRefreshing = state.value.isRefreshing
+        isRefreshing = repairListState.value.isRefreshing
     )
     val scaffoldState = rememberScaffoldState()
 
@@ -71,7 +71,7 @@ fun RepairListScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
-                    value = state.value.searchQuery,
+                    value = repairListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = TiemedLightBlue,
                         unfocusedBorderColor = TiemedLightBlue
@@ -105,20 +105,20 @@ fun RepairListScreen(
                 }
             }
             AnimatedVisibility(
-                visible = state.value.isHospitalFilterSectionVisible,
+                visible = repairListState.value.isHospitalFilterSectionVisible,
                 enter = fadeIn() + slideInHorizontally(),
                 // exit = fadeOut() + slideOutVertically()
                 exit = fadeOut() + slideOutHorizontally()
             ) {
                 HospitalFilterSection(
-                    hospitalList = state.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
-                    hospital = state.value.hospital ?: Hospital(),
+                    hospitalList = repairListState.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
+                    hospital = repairListState.value.hospital ?: Hospital(),
                     onHospitalChange = { viewModel.onEvent(RepairListEvent.filterRepairListByHospital(hospital = it)) }
                 )
             }
 
             AnimatedVisibility(
-                visible = state.value.isSortSectionVisible,
+                visible = repairListState.value.isSortSectionVisible,
                 enter = fadeIn() + slideInHorizontally(),
                 // exit = fadeOut() + slideOutVertically()
                 exit = fadeOut() + slideOutHorizontally()
@@ -126,7 +126,7 @@ fun RepairListScreen(
                 Column {
                     RepairSortSection(
                         onOrderChange = { viewModel.onEvent(RepairListEvent.orderRepairList(it)) },
-                        repairOrderType = state.value.repairOrderType,
+                        repairOrderType = repairListState.value.repairOrderType,
                         onToggleMonotonicity = {
                             viewModel.onEvent(RepairListEvent.ToggleOrderMonotonicity(it))
                         }
@@ -142,21 +142,21 @@ fun RepairListScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(state.value.repairList.size) { index ->
+                    items(repairListState.value.repairList.size) { index ->
                         RepairListItem(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
                                     navHostController.navigate(
                                         Screens.RepairDetailsScreen.withArgs(
-                                            state.value.repairList[index].repairId
+                                            repairListState.value.repairList[index].repairId
                                         )
                                     )
                                 },
-                            repair = state.value.repairList[index],
-                            hospitalList = state.value.hospitalList,
-                            technicianList = state.value.technicianList,
-                            repairStateList = state.value.repairStateList
+                            repair = repairListState.value.repairList[index],
+                            hospitalList = repairListState.value.hospitalList,
+                            technicianList = repairListState.value.technicianList,
+                            repairStateList = repairListState.value.repairStateList
 
                         )
                     }
@@ -164,15 +164,17 @@ fun RepairListScreen(
                 }
             }
         }
+    }
+    if (repairListState.value.isLoading) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TiemedVeryLightBeige),
             contentAlignment = Alignment.Center
         ) {
-            if (state.value.isLoading) {
-                CircularProgressIndicator(
-                    color = TiemedLightBlue
-                )
-            }
+            CircularProgressIndicator(
+                color = TiemedLightBlue
+            )
         }
     }
 }

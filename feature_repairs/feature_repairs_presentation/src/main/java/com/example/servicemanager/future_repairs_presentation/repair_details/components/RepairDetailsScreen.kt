@@ -684,15 +684,17 @@ fun RepairDetailsScreen(
                 }
             }
         }
+    }
+    if (repairDetailsState.value.isLoading) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TiemedVeryLightBeige),
             contentAlignment = Alignment.Center
         ) {
-            if (repairDetailsState.value.isLoading) {
-                CircularProgressIndicator(
-                    color = TiemedLightBlue,
-                )
-            }
+            CircularProgressIndicator(
+                color = TiemedLightBlue
+            )
         }
     }
 }

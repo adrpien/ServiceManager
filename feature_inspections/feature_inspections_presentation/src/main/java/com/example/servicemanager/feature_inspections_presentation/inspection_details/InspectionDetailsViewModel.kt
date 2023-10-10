@@ -27,6 +27,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private val appUseCases: AppUseCases
 ): ViewModel() {
 
+    private var inspectionDetailsIsLoading = true
     private var hospitalListIsLoading = true
     private var estStateListIsLoading = true
     private var technicianListIsLoading = true
@@ -116,6 +117,8 @@ class InspectionDetailsViewModel @Inject constructor(
                                             inspection = inspection
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
+                                    inspectionDetailsIsLoading = false
+                                    setIsLoadingStatus()
                                 }
                             }
                             ResourceState.LOADING -> Unit
@@ -162,11 +165,11 @@ class InspectionDetailsViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            hospitalListIsLoading = false
-                            setIsLoadingStatus()
                             _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 hospitalList = list,
                             )
+                            hospitalListIsLoading = false
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -184,11 +187,11 @@ class InspectionDetailsViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            inspectionStateListIsLoading = false
-                            setIsLoadingStatus()
                             _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 inspectionStateList = list,
                             )
+                            inspectionStateListIsLoading = false
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -206,11 +209,11 @@ class InspectionDetailsViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            estStateListIsLoading = false
-                            setIsLoadingStatus()
                             _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 estStateList = list,
                             )
+                            estStateListIsLoading = false
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -228,11 +231,11 @@ class InspectionDetailsViewModel @Inject constructor(
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            technicianListIsLoading = false
-                            setIsLoadingStatus()
                             _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                 technicianList = list,
                             )
+                            technicianListIsLoading = false
+                            setIsLoadingStatus()
                         }
                     }
                     ResourceState.LOADING -> Unit
@@ -244,11 +247,11 @@ class InspectionDetailsViewModel @Inject constructor(
 
     private fun setIsLoadingStatus() {
         if(
-            _inspectionDetailsState.value.inspection.inspectionId.isNotEmpty() &&
-            _inspectionDetailsState.value.hospitalList.isNotEmpty() &&
-            _inspectionDetailsState.value.estStateList.isNotEmpty() &&
-            _inspectionDetailsState.value.technicianList.isNotEmpty() &&
-            _inspectionDetailsState.value.inspectionStateList.isNotEmpty()
+            !inspectionDetailsIsLoading &&
+            !hospitalListIsLoading &&
+            !estStateListIsLoading &&
+            !technicianListIsLoading &&
+            !inspectionStateListIsLoading
         ){
             _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                 isLoading = false

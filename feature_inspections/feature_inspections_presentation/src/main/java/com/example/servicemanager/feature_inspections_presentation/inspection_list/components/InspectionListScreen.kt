@@ -35,10 +35,10 @@ fun InspectionListScreen(
     ) {
 
 
-    val state = viewModel.inspectionListState
+    val inspectionListState = viewModel.inspectionListState
 
     val swipeRefreshState = rememberSwipeRefreshState(
-        isRefreshing = state.value.isRefreshing
+        isRefreshing = inspectionListState.value.isRefreshing
     )
     val scaffoldState = rememberScaffoldState()
 
@@ -72,7 +72,7 @@ fun InspectionListScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
-                    value = state.value.searchQuery,
+                    value = inspectionListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = TiemedLightBlue,
                         unfocusedBorderColor = TiemedLightBlue
@@ -106,25 +106,25 @@ fun InspectionListScreen(
 
             }
             AnimatedVisibility(
-                visible = state.value.isHospitalFilterSectionVisible,
+                visible = inspectionListState.value.isHospitalFilterSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
                 HospitalFilterSection(
-                    hospitalList = state.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
-                    hospital = state.value.hospital ?: Hospital(),
+                    hospitalList = inspectionListState.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
+                    hospital = inspectionListState.value.hospital ?: Hospital(),
                     onHospitalChange = { viewModel.onEvent(InspectionListEvent.filterInspectionListByHospital(hospital = it)) }
                 )
             }
 
             AnimatedVisibility(
-                visible = state.value.isSortSectionVisible,
+                visible = inspectionListState.value.isSortSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
                 InspectionSortSection(
                     onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
-                    inspectionOrderType = state.value.inspectionOrderType,
+                    inspectionOrderType = inspectionListState.value.inspectionOrderType,
                     onToggleMonotonicity = {
                         viewModel.onEvent(InspectionListEvent.ToggleOrderMonotonicity(it))
                     }
@@ -139,17 +139,17 @@ fun InspectionListScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(state.value.inspectionList.size) { index ->
+                    items(inspectionListState.value.inspectionList.size) { index ->
                         InspectionListItem(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    navHostController.navigate(Screens.InspectionDetailsScreen.withArgs(state.value.inspectionList[index].inspectionId))
+                                    navHostController.navigate(Screens.InspectionDetailsScreen.withArgs(inspectionListState.value.inspectionList[index].inspectionId))
                                 },
-                            inspection = state.value.inspectionList[index],
-                            hospitalList = state.value.hospitalList,
-                            technicianList = state.value.technicianList,
-                            inspectionStateList = state.value.inspectionStateList
+                            inspection = inspectionListState.value.inspectionList[index],
+                            hospitalList = inspectionListState.value.hospitalList,
+                            technicianList = inspectionListState.value.technicianList,
+                            inspectionStateList = inspectionListState.value.inspectionStateList
 
                         )
                     }
@@ -157,15 +157,17 @@ fun InspectionListScreen(
                 }
             }
         }
+    }
+    if (inspectionListState.value.isLoading) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TiemedVeryLightBeige),
             contentAlignment = Alignment.Center
         ) {
-            if (state.value.isLoading) {
-                CircularProgressIndicator(
-                    color = TiemedLightBlue
-                )
-            }
+            CircularProgressIndicator(
+                color = TiemedLightBlue
+            )
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
@@ -56,7 +57,7 @@ fun InspectionDetailsScreen(
     viewModel: InspectionDetailsViewModel = hiltViewModel(),
 ) {
 
-/* ********************** STATES **************************************************************** */
+    /* ********************** STATES **************************************************************** */
     val inspectionDetailsState = viewModel.inspectionDetailsState
     val hospitalList = viewModel.inspectionDetailsState.value.hospitalList
     val estStateList = viewModel.inspectionDetailsState.value.estStateList
@@ -64,7 +65,7 @@ fun InspectionDetailsScreen(
     val technicianList = viewModel.inspectionDetailsState.value.technicianList
     val isInEditMode = viewModel.inspectionDetailsState.value.isInEditMode
 
-/* ********************** DIALOGS *************************************************************** */
+    /* ********************** DIALOGS *************************************************************** */
     val inspectionDateDialogState = rememberMaterialDialogState()
     val inspectionDateState = remember {
         mutableStateOf(LocalDate.now())
@@ -74,7 +75,7 @@ fun InspectionDetailsScreen(
     }
     val signatureDialogState = rememberMaterialDialogState()
 
-/* ********************** OTHERS **************************************************************** */
+    /* ********************** OTHERS **************************************************************** */
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -185,6 +186,7 @@ fun InspectionDetailsScreen(
                         value = event.inspection.recipient
                     )
                 }
+
                 is UiEvent.ShowSnackBar -> {
                     coroutineScope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -192,9 +194,11 @@ fun InspectionDetailsScreen(
                         )
                     }
                 }
+
                 is UiEvent.NavigateTo -> {
                     navHostController.navigate(event.route)
                 }
+
                 is UiEvent.SetFieldsIsEditable -> {
                     deviceName.value = deviceName.value.copy(clickable = event.value)
                     deviceManufacturer.value =
@@ -209,6 +213,8 @@ fun InspectionDetailsScreen(
             }
         }
     }
+
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -228,8 +234,7 @@ fun InspectionDetailsScreen(
                             )
                         }
                         navHostController.navigate(Screens.InspectionListScreen.route)
-                    }
-                    else {
+                    } else {
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
                     }
                 },
@@ -287,7 +292,8 @@ fun InspectionDetailsScreen(
             )
             DefaultTextField(
                 onValueChanged = { manufacturer ->
-                    deviceManufacturer.value = deviceManufacturer.value.copy(value = manufacturer)
+                    deviceManufacturer.value =
+                        deviceManufacturer.value.copy(value = manufacturer)
                     viewModel.onEvent(
                         InspectionDetailsEvent.UpdateInspectionState(
                             inspectionDetailsState.value.inspection.copy(deviceManufacturer = manufacturer)
@@ -528,13 +534,11 @@ fun InspectionDetailsScreen(
                         }
                     }
                     viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                    showExitDialog.value = false
                     navHostController.popBackStack()
 
                 },
                 onDismiss = {
                     viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                    showExitDialog.value = false
                     navHostController.popBackStack()
 
                 }
@@ -543,7 +547,14 @@ fun InspectionDetailsScreen(
                 dialogState = inspectionDateDialogState,
                 onClick = {
                     inspectionDateState.value = it
-                    viewModel.onEvent(InspectionDetailsEvent.UpdateInspectionState(inspectionDetailsState.value.inspection.copy(inspectionDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                    viewModel.onEvent(
+                        InspectionDetailsEvent.UpdateInspectionState(
+                            inspectionDetailsState.value.inspection.copy(
+                                inspectionDate = it.atStartOfDay(ZoneId.systemDefault())
+                                    .toInstant().toEpochMilli().toString()
+                            )
+                        )
+                    )
                 },
                 title = "Inspection Date"
             )
@@ -571,9 +582,22 @@ fun InspectionDetailsScreen(
                     }
                 }
             }
-
-
+        }
+    }
+    if (inspectionDetailsState.value.isLoading) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(TiemedVeryLightBeige),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(
+                color = TiemedLightBlue
+            )
         }
     }
 }
+
+
+
 
