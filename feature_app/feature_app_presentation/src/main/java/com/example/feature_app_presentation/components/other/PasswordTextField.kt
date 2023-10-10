@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 
 
 @Composable
@@ -43,7 +43,7 @@ fun PasswordTextField(
             .border(2.dp, TiemedLightBlue),
         colors = TextFieldDefaults.colors(
             focusedTextColor = TiemedLightBlue,
-            focusedContainerColor = TiemedVeryLightBeige,
+            focusedContainerColor = TiemedLightBeige,
             unfocusedLabelColor = TiemedLightBlue,
             focusedLabelColor = TiemedLightBlue,
             disabledLabelColor = TiemedLightBlue,

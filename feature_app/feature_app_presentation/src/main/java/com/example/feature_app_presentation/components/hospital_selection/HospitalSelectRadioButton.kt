@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedVeryLightBlue
 
 
@@ -32,10 +32,10 @@ fun SelectRadioButton(
             onClick = onClick,
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = if (selected) TiemedLightBlue else TiemedVeryLightBeige,
-                contentColor = if (!selected) TiemedLightBlue else TiemedVeryLightBeige,
-                disabledBackgroundColor = if(selected) TiemedVeryLightBlue else TiemedVeryLightBeige,
-                disabledContentColor = if (selected) TiemedVeryLightBeige else TiemedVeryLightBlue
+                backgroundColor = if (selected) TiemedLightBlue else TiemedLightBeige,
+                contentColor = if (!selected) TiemedLightBlue else TiemedLightBeige,
+                disabledBackgroundColor = if(selected) TiemedVeryLightBlue else TiemedLightBeige,
+                disabledContentColor = if (selected) TiemedLightBeige else TiemedVeryLightBlue
             ),
             border = BorderStroke(
                 width = 2.dp,

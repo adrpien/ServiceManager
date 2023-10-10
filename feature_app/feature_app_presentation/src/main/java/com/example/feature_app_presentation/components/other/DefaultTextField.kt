@@ -12,7 +12,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedVeryLightBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +37,7 @@ fun DefaultTextField(
                 .border(2.dp, TiemedLightBlue),
             colors = TextFieldDefaults.textFieldColors(
                 focusedTextColor = TiemedLightBlue,
-                containerColor = TiemedVeryLightBeige,
+                containerColor = TiemedLightBeige,
                 unfocusedLabelColor = TiemedLightBlue,
                 focusedLabelColor = TiemedLightBlue,
                 disabledLabelColor = TiemedLightBlue,

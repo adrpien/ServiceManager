@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.DateFormattingTypes
 import com.example.core.util.Helper.Companion.getDateString
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -33,7 +33,7 @@ fun InspectionListItem(
             .padding(8.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
-        backgroundColor = TiemedVeryLightBeige
+        backgroundColor = TiemedLightBeige
     ) {
         Column(
             modifier = Modifier

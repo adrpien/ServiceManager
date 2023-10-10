@@ -20,7 +20,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
 import com.example.feature_app_presentation.components.other.DefaultTextField
@@ -291,7 +291,7 @@ fun RepairDetailsScreen(
                     imageVector = if(repairDetailsState.value.isInEditMode) Icons.Default.Save else Icons.Default.Edit,
                     contentDescription = "Save",
                     modifier = Modifier,
-                tint = TiemedVeryLightBeige
+                tint = TiemedLightBeige
                 )
             }
         },
@@ -301,7 +301,7 @@ fun RepairDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
-                .background(TiemedVeryLightBeige)
+                .background(TiemedLightBeige)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
                 ) {
@@ -315,7 +315,7 @@ fun RepairDetailsScreen(
                 onClick = { openingDateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedVeryLightBeige,
+                    backgroundColor = TiemedLightBeige,
                     contentColor = TiemedLightBlue
                 ),
                 border = BorderStroke(2.dp, TiemedLightBlue)
@@ -486,7 +486,7 @@ fun RepairDetailsScreen(
                 onClick = { repairingDateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedVeryLightBeige,
+                    backgroundColor = TiemedLightBeige,
                     contentColor = TiemedLightBlue
                 ),
                 border = BorderStroke(2.dp, TiemedLightBlue)
@@ -564,7 +564,7 @@ fun RepairDetailsScreen(
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedVeryLightBeige,
+                    backgroundColor = TiemedLightBeige,
                     contentColor = TiemedLightBlue
                 ),
                 border = BorderStroke(2.dp, TiemedLightBlue)
@@ -588,7 +588,7 @@ fun RepairDetailsScreen(
                 onClick = { signatureDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedVeryLightBeige,
+                    backgroundColor = TiemedLightBeige,
                     contentColor = TiemedLightBlue
                 ),
                 border = BorderStroke(2.dp, TiemedLightBlue)
@@ -665,7 +665,7 @@ fun RepairDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = TiemedVeryLightBeige,
+                backgroundColor = TiemedLightBeige,
                 buttons = {
                     positiveButton(
                         text = "Confirm",
@@ -696,7 +696,7 @@ fun RepairDetailsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedVeryLightBeige),
+                .background(TiemedLightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(

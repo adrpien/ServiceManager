@@ -18,9 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
 import com.example.feature_app_presentation.components.other.DefaultTextField
@@ -41,10 +40,8 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_de
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel.*
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
-import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -245,14 +242,14 @@ fun InspectionDetailsScreen(
                         imageVector = Icons.Default.Save,
                         contentDescription = "Save",
                         modifier = Modifier,
-                        tint = TiemedVeryLightBeige
+                        tint = MaterialTheme.colors.primary
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Edit",
                         modifier = Modifier,
-                        tint = TiemedVeryLightBeige
+                        tint = MaterialTheme.colors.primary
                     )
                 }
 
@@ -264,7 +261,7 @@ fun InspectionDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
-                .background(TiemedVeryLightBeige)
+                .background(TiemedLightBeige)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
         ) {
@@ -474,7 +471,7 @@ fun InspectionDetailsScreen(
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedVeryLightBeige,
+                    backgroundColor = TiemedLightBeige,
                     contentColor = TiemedLightBlue
                 ),
                 border = BorderStroke(2.dp, TiemedLightBlue)
@@ -501,7 +498,7 @@ fun InspectionDetailsScreen(
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedVeryLightBeige,
+                    backgroundColor = TiemedLightBeige,
                     contentColor = TiemedLightBlue
                 ),
                 border = BorderStroke(2.dp, TiemedLightBlue)
@@ -563,7 +560,7 @@ fun InspectionDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = TiemedVeryLightBeige,
+                backgroundColor = TiemedLightBeige,
                 buttons = {
                     positiveButton(
                         text = "Confirm",
@@ -593,7 +590,7 @@ fun InspectionDetailsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedVeryLightBeige),
+                .background(TiemedLightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(

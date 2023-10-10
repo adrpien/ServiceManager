@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 
 @Composable
 fun OrderMonotonicityButton(
@@ -37,7 +37,7 @@ fun OrderMonotonicityButton(
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = TiemedLightBlue,
-                contentColor = TiemedVeryLightBeige
+                contentColor = TiemedLightBeige
             )
         ) {
             if(isAscending){

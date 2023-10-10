@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.feature_app_presentation.components.hospital_filter.HospitalFilterSection
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListEvent
@@ -48,13 +48,13 @@ fun InspectionListScreen(
                 onClick = {
                     navHostController.navigate(Screens.InspectionDetailsScreen.withArgs("0"))
                 },
-                backgroundColor = TiemedLightBlue
+                backgroundColor = MaterialTheme.colors.background
             )
             {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add inspection",
-                    tint = TiemedVeryLightBeige
+                    tint = MaterialTheme.colors.onPrimary
                 )
             }
         },
@@ -63,7 +63,7 @@ fun InspectionListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedVeryLightBeige)
+                .background(TiemedLightBeige)
         ) {
 
             Row(
@@ -162,7 +162,7 @@ fun InspectionListScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedVeryLightBeige),
+                .background(TiemedLightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(

@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
@@ -32,7 +32,7 @@ fun RepairListItem(
             .padding(8.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
-        backgroundColor = TiemedVeryLightBeige
+        backgroundColor = TiemedLightBeige
     ) {
         Column(
             modifier = Modifier

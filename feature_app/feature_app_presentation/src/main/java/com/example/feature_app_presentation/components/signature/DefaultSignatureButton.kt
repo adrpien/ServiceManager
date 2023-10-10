@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.DialogProperties
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.TiemedBeige
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
@@ -32,7 +32,7 @@ fun DefaultSignatureButton(
             dismissOnBackPress = true,
             dismissOnClickOutside = true
         ),
-        backgroundColor = TiemedLightBeige,
+        backgroundColor = TiemedBeige,
         buttons = {
             positiveButton(
                 text = "Confirm")

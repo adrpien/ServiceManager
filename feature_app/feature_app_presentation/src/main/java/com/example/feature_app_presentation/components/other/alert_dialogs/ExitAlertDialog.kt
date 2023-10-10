@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.RectangleShape
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.theme.TiemedVeryLightBlue
 
 @Composable
@@ -20,7 +20,7 @@ fun ExitAlertDialog(
     if (isVisible){
         AlertDialog(
             shape = RectangleShape,
-            containerColor = TiemedVeryLightBeige,
+            containerColor = TiemedLightBeige,
             titleContentColor = TiemedLightBlue,
             textContentColor = TiemedLightBlue,
             onDismissRequest = { onDismiss() },

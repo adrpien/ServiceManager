@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="tiemed_dark_blue">#003273</color>
-    <color name="tiemed_medium_blue">#004673</color>
-    <color name="tiemed_light_blue">#005A73</color>
-    <color name="tiemed_light_teal">#003230</color>
-    <color name="tiemed_dark_teal">#006461</color>
-    <color name="tiemed_light_beige">#B6957E</color>
-    <color name="tiemed_light_grey">#B6B6B6</color>
-    <color name="tiemed_dark_grey">#818080</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
 </resources>

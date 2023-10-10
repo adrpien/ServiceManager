@@ -2,7 +2,6 @@ package com.example.feature_app_presentation.components.signature
 
 import android.graphics.Bitmap
 import android.view.MotionEvent
-import androidx.annotation.Dimension
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,10 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.example.core.theme.Dimensions.signatureHeight
 import com.example.core.theme.Dimensions.signatureWidth
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
-import com.example.core.util.Constans
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Helper.Companion.toDp
-import com.example.core.util.Helper.Companion.toPx
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -36,7 +33,7 @@ fun SignatureArea(
     var bitmap = Bitmap.createBitmap(signatureWidth, signatureHeight, Bitmap.Config.ARGB_8888)
     val backgroundPaint = Paint()
     backgroundPaint.apply {
-        TiemedVeryLightBeige.also { color = it }
+        TiemedLightBeige.also { color = it }
         style = PaintingStyle.Fill
     }
     val canvas = Canvas(bitmap.asImageBitmap())
@@ -70,7 +67,7 @@ fun SignatureArea(
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(TiemedVeryLightBeige)
+                    .background(TiemedLightBeige)
                     .pointerInteropFilter { motionEvent ->
                         when (motionEvent.action) {
                             MotionEvent.ACTION_DOWN -> {

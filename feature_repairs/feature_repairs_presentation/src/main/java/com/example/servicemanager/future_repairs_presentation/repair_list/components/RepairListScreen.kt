@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedVeryLightBeige
+import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Screens
 import com.example.feature_app_presentation.components.hospital_filter.HospitalFilterSection
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -53,7 +53,7 @@ fun RepairListScreen(
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add repair",
-                    tint = TiemedVeryLightBeige
+                    tint = TiemedLightBeige
                 )
             }
         },
@@ -62,7 +62,7 @@ fun RepairListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedVeryLightBeige)
+                .background(TiemedLightBeige)
         ) {
 
             Row(
@@ -169,7 +169,7 @@ fun RepairListScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedVeryLightBeige),
+                .background(TiemedLightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
