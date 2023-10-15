@@ -149,7 +149,7 @@ fun InspectionListItem(
                 )
 
                 Text(
-                    text = getDateString(inspection.inspectionDate.toLong(), DateFormattingTypes.backSlashStyle()),
+                    text = getDateString(inspection.inspectionDate.toLong(), DateFormattingTypes.BackSlashStyle()),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

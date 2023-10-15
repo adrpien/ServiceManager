@@ -12,7 +12,7 @@ class Helper {
     companion object {
 
         // Changing millis into String format
-        fun getDateString(millis: Long, formatingType: DateFormattingTypes = DateFormattingTypes.backSlashStyle()): String{
+        fun getDateString(millis: Long, formatingType: DateFormattingTypes = DateFormattingTypes.BackSlashStyle()): String{
             var dateString: String
             val date = Date(millis)
             val formatter = SimpleDateFormat(formatingType.formatting)
