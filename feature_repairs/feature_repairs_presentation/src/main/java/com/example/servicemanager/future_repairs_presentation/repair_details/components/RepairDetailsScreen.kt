@@ -1,6 +1,5 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details.components
 
-import com.example.feature_app_presentation.components.repair_state.RepairStateSelectionSection
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -23,9 +22,9 @@ import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
-import com.example.feature_app_presentation.components.other.DefaultTextField
-import com.example.feature_app_presentation.components.other.DefaultTextFieldState
-import com.example.feature_app_presentation.components.other.alert_dialogs.ExitAlertDialog
+import com.example.core_ui.components.other.DefaultTextField
+import com.example.core_ui.components.other.DefaultTextFieldState
+import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.RepairState
@@ -40,11 +39,9 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import com.example.feature_app_presentation.components.est_states.EstStateSelectionSection
-import com.example.feature_app_presentation.components.hospital_selection.HospitalSelectionSection
-import com.example.feature_app_presentation.components.other.DefaultDatePickerDialog
-import com.example.feature_app_presentation.components.signature.SignatureArea
-import com.example.feature_app_presentation.components.technician.TechnicianSelectionSection
+import com.example.core_ui.components.other.DefaultDatePickerDialog
+import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.core_ui.components.signature.SignatureArea
 
 
 @Composable
@@ -94,7 +91,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Name",
-                value =  repairDetailsState.value.repair.deviceName,
+                value = repairDetailsState.value.repair.deviceName,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -103,7 +100,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Manufacturer",
-                value =  repairDetailsState.value.repair.deviceManufacturer,
+                value = repairDetailsState.value.repair.deviceManufacturer,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -112,7 +109,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Model",
-                value =  repairDetailsState.value.repair.deviceModel,
+                value = repairDetailsState.value.repair.deviceModel,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -121,7 +118,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Serial number",
-                value =  repairDetailsState.value.repair.deviceSn,
+                value = repairDetailsState.value.repair.deviceSn,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -130,7 +127,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Inventory number",
-                value =  repairDetailsState.value.repair.deviceIn,
+                value = repairDetailsState.value.repair.deviceIn,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -139,7 +136,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Ward",
-                value =  repairDetailsState.value.repair.ward,
+                value = repairDetailsState.value.repair.ward,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -148,7 +145,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Comment",
-                value =  repairDetailsState.value.repair.comment,
+                value = repairDetailsState.value.repair.comment,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -157,7 +154,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Recipient",
-                value =  repairDetailsState.value.repair.recipient,
+                value = repairDetailsState.value.repair.recipient,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -166,7 +163,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Defect description",
-                value =  repairDetailsState.value.repair.defectDescription,
+                value = repairDetailsState.value.repair.defectDescription,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -175,7 +172,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Repair description",
-                value =  repairDetailsState.value.repair.repairDescription,
+                value = repairDetailsState.value.repair.repairDescription,
                 clickable = repairDetailsState.value.isInEditMode
             )
         )
@@ -184,7 +181,7 @@ fun RepairDetailsScreen(
         mutableStateOf(
             DefaultTextFieldState(
                 hint = "Part description",
-                value =  repairDetailsState.value.repair.partDescription,
+                value = repairDetailsState.value.repair.partDescription,
                 clickable = isInEditMode
             )
         )
@@ -333,15 +330,24 @@ fun RepairDetailsScreen(
                     text = "Pickup technician:",
                     color = TiemedLightBlue
                 )
-                TechnicianSelectionSection(
-                    technicianList = technicianList,
-                    technician = technicianList.find { (it.technicianId == repairDetailsState.value.repair.pickupTechnicianId) } ?: Technician(),
-                    onTechnicianChange = {
+
+/* ********************** DEVICE  *************************************************************** */
+
+                DefaultSelectionSection(
+                    itemList = technicianList,
+                    selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.pickupTechnicianId) }
+                        ?: Technician(),
+                    onItemChanged = {
                         viewModel.onEvent(
-                            RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(pickupTechnicianId = it.technicianId)))
+                            RepairDetailsEvent.UpdateRepairState(
+                                repairDetailsState.value.repair.copy(
+                                    pickupTechnicianId = it.technicianId
+                                )
+                            )
+                        )
                     },
                     enabled = isInEditMode
-                    )
+                )
             }
 
 /* ********************** DEVICE  *************************************************************** */
@@ -357,36 +363,70 @@ fun RepairDetailsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
-                onValueChanged =  { name ->
-                    deviceName.value= deviceName.value.copy(value = name)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(deviceName = name)))
+                onValueChanged = { name ->
+                    deviceName.value = deviceName.value.copy(value = name)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                deviceName = name
+                            )
+                        )
+                    )
                 },
-                state = deviceName)
+                state = deviceName
+            )
             DefaultTextField(
-                onValueChanged =  {manufacturer ->
-                    deviceManufacturer.value= deviceManufacturer.value.copy(value = manufacturer)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(deviceManufacturer = manufacturer)))
+                onValueChanged = { manufacturer ->
+                    deviceManufacturer.value = deviceManufacturer.value.copy(value = manufacturer)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                deviceManufacturer = manufacturer
+                            )
+                        )
+                    )
                 },
-                state = deviceManufacturer)
+                state = deviceManufacturer
+            )
             DefaultTextField(
-                onValueChanged =  { model ->
-                    deviceModel.value= deviceModel.value.copy(value = model)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(deviceModel = model)))
+                onValueChanged = { model ->
+                    deviceModel.value = deviceModel.value.copy(value = model)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                deviceModel = model
+                            )
+                        )
+                    )
                 },
-                state = deviceModel)
+                state = deviceModel
+            )
             DefaultTextField(
-                onValueChanged =  { serialNumber ->
-                    deviceSn.value= deviceSn.value.copy(value = serialNumber)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(deviceSn = serialNumber)))
+                onValueChanged = { serialNumber ->
+                    deviceSn.value = deviceSn.value.copy(value = serialNumber)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                deviceSn = serialNumber
+                            )
+                        )
+                    )
                 },
                 state = deviceSn
             )
             DefaultTextField(
-                onValueChanged =  { inventoryNumber ->
-                    deviceIn.value= deviceIn.value.copy(value = inventoryNumber)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(deviceIn = inventoryNumber)))
+                onValueChanged = { inventoryNumber ->
+                    deviceIn.value = deviceIn.value.copy(value = inventoryNumber)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                deviceIn = inventoryNumber
+                            )
+                        )
+                    )
                 },
-                state = deviceIn)
+                state = deviceIn
+            )
 
 /* ********************** LOCALIZATION  ********************************************************* */
             Text(
@@ -402,27 +442,48 @@ fun RepairDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
 
 /* ********************** HOSPITAL SELECTION **************************************************** */
-            HospitalSelectionSection(
-                hospitalList = hospitalList,
-                hospital = hospitalList.find { (it.hospitalId == repairDetailsState.value.repair.hospitalId ) } ?: Hospital(),
-                onHospitalChange = {
+
+            DefaultSelectionSection(
+                itemList = hospitalList,
+                selectedItem = hospitalList.find { (it.hospitalId == repairDetailsState.value.repair.hospitalId) }
+                    ?: Hospital(),
+                onItemChanged = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(hospitalId = it.hospitalId)))
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                hospitalId = it.hospitalId
+                            )
+                        )
+                    )
                 },
                 enabled = isInEditMode
             )
             DefaultTextField(
-                onValueChanged =  {string ->
-                    ward.value= ward.value.copy(value = string)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(ward = string)))
+                onValueChanged = { string ->
+                    ward.value = ward.value.copy(value = string)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                ward = string
+                            )
+                        )
+                    )
                 },
-                state = ward)
+                state = ward
+            )
             DefaultTextField(
-                onValueChanged =  {string ->
-                    comment.value= comment.value.copy(value = string)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(comment = string)))
+                onValueChanged = { string ->
+                    comment.value = comment.value.copy(value = string)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                comment = string
+                            )
+                        )
+                    )
                 },
-                state = comment)
+                state = comment
+            )
 
 /* ********************** REPAIR  *************************************************************** */
             Text(
@@ -437,23 +498,41 @@ fun RepairDetailsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
-                onValueChanged =  { defect ->
-                    defectDescription.value= defectDescription.value.copy(value = defect)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(defectDescription = defect)))
+                onValueChanged = { defect ->
+                    defectDescription.value = defectDescription.value.copy(value = defect)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                defectDescription = defect
+                            )
+                        )
+                    )
                 },
                 state = defectDescription
             )
             DefaultTextField(
-                onValueChanged =  { repair ->
-                    repairDescription.value= repairDescription.value.copy(value = repair)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairDescription = repair)))
+                onValueChanged = { repair ->
+                    repairDescription.value = repairDescription.value.copy(value = repair)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                repairDescription = repair
+                            )
+                        )
+                    )
                 },
                 state = repairDescription
             )
             DefaultTextField(
-                onValueChanged =  { part ->
-                    partDescription.value= partDescription.value.copy(value = part)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(partDescription = part)))
+                onValueChanged = { part ->
+                    partDescription.value = partDescription.value.copy(value = part)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                partDescription = part
+                            )
+                        )
+                    )
                 },
                 state = partDescription
             )
@@ -466,12 +545,18 @@ fun RepairDetailsScreen(
                     text = "Repairing technician:",
                     color = TiemedLightBlue
                 )
-                TechnicianSelectionSection(
-                    technicianList = technicianList,
-                    technician = technicianList.find { (it.technicianId == repairDetailsState.value.repair.repairTechnicianId) } ?: Technician(),
-                    onTechnicianChange = {
+                DefaultSelectionSection(
+                    itemList = technicianList,
+                    selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.repairTechnicianId) }
+                        ?: Technician(),
+                    onItemChanged =  {
                         viewModel.onEvent(
-                            RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairTechnicianId = it.technicianId)))
+                            RepairDetailsEvent.UpdateRepairState(
+                                repairDetailsState.value.repair.copy(
+                                    repairTechnicianId = it.technicianId
+                                )
+                            )
+                        )
                     },
                     enabled = isInEditMode
                 )
@@ -514,13 +599,18 @@ fun RepairDetailsScreen(
                 text = "EstState:",
                 color = TiemedLightBlue
                 )
-
-            EstStateSelectionSection(
-                estStateList = estStateList,
-                estState = estStateList.find { (it.estStateId == repairDetailsState.value.repair.estStateId ) } ?: EstState(),
-                onEstStateChange = {
+            DefaultSelectionSection(
+                itemList = estStateList,
+                selectedItem = estStateList.find { (it.estStateId == repairDetailsState.value.repair.estStateId) }
+                    ?: EstState(),
+                onItemChanged =  {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(estStateId = it.estStateId)))
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                estStateId = it.estStateId
+                            )
+                        )
+                    )
                 },
                 enabled = isInEditMode
             )
@@ -530,12 +620,18 @@ fun RepairDetailsScreen(
                 text = "RepairState:",
                 color = TiemedLightBlue
             )
-            RepairStateSelectionSection(
-                repairStateList = repairStateList,
-                repairState = repairStateList.find { (it.repairStateId == repairDetailsState.value.repair.repairStateId ) } ?: RepairState(),
-                onRepairStateChange = {
+            DefaultSelectionSection(
+                itemList = repairStateList,
+                selectedItem = repairStateList.find { (it.repairStateId == repairDetailsState.value.repair.repairStateId) }
+                    ?: RepairState(),
+                onItemChanged = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairStateId = it.repairStateId)))
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                repairStateId = it.repairStateId
+                            )
+                        )
+                    )
                 },
                 enabled = isInEditMode
             )
@@ -545,12 +641,18 @@ fun RepairDetailsScreen(
                 text = "Return technician:",
                 color = TiemedLightBlue
             )
-            TechnicianSelectionSection(
-                technicianList = technicianList,
-                technician = technicianList.find { (it.technicianId == repairDetailsState.value.repair.returnTechnicianId) } ?: Technician(),
-                onTechnicianChange = {
+            DefaultSelectionSection(
+                itemList = technicianList,
+                selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.returnTechnicianId) }
+                    ?: Technician(),
+                onItemChanged = {
                     viewModel.onEvent(
-                        RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(returnTechnicianId = it.technicianId)))
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                returnTechnicianId = it.technicianId
+                            )
+                        )
+                    )
                 },
                 enabled = isInEditMode
             )
@@ -574,11 +676,18 @@ fun RepairDetailsScreen(
                 )
             }
             DefaultTextField(
-                onValueChanged =  { string ->
-                    recipient.value= recipient.value.copy(value = string)
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(recipient = string)))
+                onValueChanged = { string ->
+                    recipient.value = recipient.value.copy(value = string)
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                recipient = string
+                            )
+                        )
+                    )
                 },
-                state = recipient)
+                state = recipient
+            )
 
 /* ********************** SIGNATURE  ************************************************************ */
             Button(
@@ -604,31 +713,58 @@ fun RepairDetailsScreen(
                 dialogState = repairingDateDialogState,
                 onClick = {
                     repairingDateState.value = it
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(repairingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                repairingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant()
+                                    .toEpochMilli().toString()
+                            )
+                        )
+                    )
                 },
                 title = "RepairingDate",
-                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong()).atZone(
-                    ZoneId.systemDefault()).toLocalDate()
+                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong())
+                    .atZone(
+                        ZoneId.systemDefault()
+                    ).toLocalDate()
             )
             DefaultDatePickerDialog(
                 dialogState = openingDateDialogState,
                 onClick = {
                     openingDateState.value = it
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(openingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                openingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant()
+                                    .toEpochMilli().toString()
+                            )
+                        )
+                    )
                 },
                 title = "OpeningDate",
-                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.openingDate.toLong()).atZone(
-                    ZoneId.systemDefault()).toLocalDate()
+                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.openingDate.toLong())
+                    .atZone(
+                        ZoneId.systemDefault()
+                    ).toLocalDate()
             )
             DefaultDatePickerDialog(
                 dialogState = returningDateDialogState,
                 onClick = {
                     returningDateState.value = it
-                    viewModel.onEvent(RepairDetailsEvent.UpdateRepairState(repairDetailsState.value.repair.copy(closingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli().toString())))
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                closingDate = it.atStartOfDay(ZoneId.systemDefault()).toInstant()
+                                    .toEpochMilli().toString()
+                            )
+                        )
+                    )
                 },
                 title = "ReturningDate",
-                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.closingDate.toLong()).atZone(
-                    ZoneId.systemDefault()).toLocalDate()
+                initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.closingDate.toLong())
+                    .atZone(
+                        ZoneId.systemDefault()
+                    ).toLocalDate()
             )
             ExitAlertDialog(
                 isVisible = showExitDialog.value,
@@ -684,7 +820,7 @@ fun RepairDetailsScreen(
                         contentAlignment = Alignment.Center
 
                     ){
-                        SignatureArea() { bitmap ->
+                        SignatureArea { bitmap ->
                             viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
                         }
                     }

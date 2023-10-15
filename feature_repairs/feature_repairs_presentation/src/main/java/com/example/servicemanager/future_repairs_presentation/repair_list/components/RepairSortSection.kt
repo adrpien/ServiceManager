@@ -4,8 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.feature_app_presentation.components.other.OrderMonotonicityButton
-import com.example.feature_app_presentation.components.hospital_filter.SortRadioButton
+import com.example.core_ui.components.other.DefaultRadioButton
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 
@@ -32,26 +31,31 @@ fun RepairSortSection(
                 horizontalArrangement = Arrangement.Start,
 
             ) {
-                SortRadioButton(
+                DefaultRadioButton(
                     title = "Hospital",
                     selected = repairOrderType is RepairOrderType.Hospital,
-                    onClick = { onOrderChange(RepairOrderType.Hospital(repairOrderType.orderMonotonicity)) })
-                SortRadioButton(
+                    onClick = { onOrderChange(RepairOrderType.Hospital(repairOrderType.orderMonotonicity)) },
+                    isClickable = true
+                )
+                DefaultRadioButton(
                     title = "State",
                     selected = repairOrderType is RepairOrderType.State,
-                    onClick = { onOrderChange(RepairOrderType.State(repairOrderType.orderMonotonicity)) })
-                SortRadioButton(
+                    onClick = { onOrderChange(RepairOrderType.State(repairOrderType.orderMonotonicity)) },
+                    isClickable = true
+                )
+                DefaultRadioButton(
                     title = "Date",
                     selected = repairOrderType is RepairOrderType.Date,
-                    onClick = { onOrderChange(RepairOrderType.Date(repairOrderType.orderMonotonicity)) })
-
+                    onClick = { onOrderChange(RepairOrderType.Date(repairOrderType.orderMonotonicity)) },
+                    isClickable = true
+                )
             }
             Row(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                OrderMonotonicityButton(
+                com.example.core_ui.components.other.OrderMonotonicityButton(
                     isAscending = repairOrderType.orderMonotonicity is RepairOrderMonotonicity.Ascending,
                     onClick = { onToggleMonotonicity(repairOrderType.toggleOrderMonotonicity()) }
                 )

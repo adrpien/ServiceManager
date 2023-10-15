@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.feature_app_presentation.components.other.DefaultButton
-import com.example.feature_app_presentation.components.other.DefaultTextField
-import com.example.feature_app_presentation.components.other.DefaultTextFieldState
-import com.example.feature_app_presentation.components.other.PasswordTextField
+import com.example.core_ui.components.other.DefaultButton
+import com.example.core_ui.components.other.DefaultTextField
+import com.example.core_ui.components.other.DefaultTextFieldState
+import com.example.core_ui.components.other.PasswordTextField
 import com.example.core.util.Screens
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginViewModel
@@ -31,18 +31,18 @@ fun LoginScreen(
 
     val userPassword = remember {
         mutableStateOf(
-            DefaultTextFieldState(
-            hint = "Password",
-            value = userLoginState.value.password
-        )
+            com.example.core_ui.components.other.DefaultTextFieldState(
+                hint = "Password",
+                value = userLoginState.value.password
+            )
         )
     }
     val userMail = remember {
         mutableStateOf(
-            DefaultTextFieldState(
-            hint = "Mail",
-            value = userLoginState.value.mail
-        )
+            com.example.core_ui.components.other.DefaultTextFieldState(
+                hint = "Mail",
+                value = userLoginState.value.mail
+            )
         )
     }
 
@@ -87,31 +87,38 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .padding(8.dp),
             ) {
-                DefaultTextField(
-                    onValueChanged =  { mail ->
-                        userMail.value= userMail.value.copy(value = mail)
-                        viewModel.onEvent(UserLoginEvent.UpdateState(mail = mail, password =  userLoginState.value.password))
+                com.example.core_ui.components.other.DefaultTextField(
+                    onValueChanged = { mail ->
+                        userMail.value = userMail.value.copy(value = mail)
+                        viewModel.onEvent(
+                            UserLoginEvent.UpdateState(
+                                mail = mail,
+                                password = userLoginState.value.password
+                            )
+                        )
                     },
                     state = userMail
                 )
-                PasswordTextField(
+                com.example.core_ui.components.other.PasswordTextField(
                     state = userPassword
                 ) { password ->
-                    userPassword.value= userPassword.value.copy(value = password)
+                    userPassword.value = userPassword.value.copy(value = password)
                     viewModel.onEvent(
                         UserLoginEvent.UpdateState(
-                        password = password,
-                        mail = userLoginState.value.mail
-                    )
+                            password = password,
+                            mail = userLoginState.value.mail
+                        )
                     )
                 }
-                DefaultButton(
+                com.example.core_ui.components.other.DefaultButton(
                     title = "Authenticate",
                     onClick = {
                         viewModel.onEvent(
                             UserLoginEvent.Authenticate(
-                            mail = userLoginState.value.mail,
-                            password = userLoginState.value.password))
+                                mail = userLoginState.value.mail,
+                                password = userLoginState.value.password
+                            )
+                        )
                     }
                 )
 

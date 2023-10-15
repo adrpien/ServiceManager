@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Screens
-import com.example.feature_app_presentation.components.hospital_filter.HospitalFilterSection
+import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListViewModel
@@ -110,10 +110,20 @@ fun RepairListScreen(
                 // exit = fadeOut() + slideOutVertically()
                 exit = fadeOut() + slideOutHorizontally()
             ) {
-                HospitalFilterSection(
-                    hospitalList = repairListState.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
-                    hospital = repairListState.value.hospital ?: Hospital(),
-                    onHospitalChange = { viewModel.onEvent(RepairListEvent.filterRepairListByHospital(hospital = it)) }
+                DefaultSelectionSection(
+                    itemList = repairListState.value.hospitalList + Hospital(
+                        hospitalId = "0",
+                        hospital = "All"
+                    ),
+                    selectedItem = repairListState.value.hospital ?: Hospital(),
+                    onItemChanged = {
+                        viewModel.onEvent(
+                            RepairListEvent.filterRepairListByHospital(
+                                hospital = it
+                            )
+                        )
+                    },
+                    enabled = true
                 )
             }
 

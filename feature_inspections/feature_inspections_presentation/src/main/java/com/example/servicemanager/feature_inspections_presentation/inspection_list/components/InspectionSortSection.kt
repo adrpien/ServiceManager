@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.feature_app_presentation.components.other.OrderMonotonicityButton
-import com.example.feature_app_presentation.components.hospital_filter.SortRadioButton
+import com.example.core_ui.components.other.DefaultRadioButton
+import com.example.core_ui.components.other.OrderMonotonicityButton
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 
@@ -32,18 +32,24 @@ fun InspectionSortSection(
                 horizontalArrangement = Arrangement.Start,
 
             ) {
-                SortRadioButton(
+                DefaultRadioButton(
                     title = "Hospital",
                     selected = inspectionOrderType is InspectionOrderType.Hospital,
-                    onClick = { onOrderChange(InspectionOrderType.Hospital(inspectionOrderType.orderMonotonicity)) })
-                SortRadioButton(
+                    onClick = { onOrderChange(InspectionOrderType.Hospital(inspectionOrderType.orderMonotonicity)) },
+                    isClickable = true
+                )
+                DefaultRadioButton(
                     title = "State",
                     selected = inspectionOrderType is InspectionOrderType.State,
-                    onClick = { onOrderChange(InspectionOrderType.State(inspectionOrderType.orderMonotonicity)) })
-                SortRadioButton(
+                    onClick = { onOrderChange(InspectionOrderType.State(inspectionOrderType.orderMonotonicity)) },
+                    isClickable = true
+                )
+                DefaultRadioButton(
                     title = "Date",
                     selected = inspectionOrderType is InspectionOrderType.Date,
-                    onClick = { onOrderChange(InspectionOrderType.Date(inspectionOrderType.orderMonotonicity)) })
+                    onClick = { onOrderChange(InspectionOrderType.Date(inspectionOrderType.orderMonotonicity)) }
+                    ,
+                    isClickable = true)
 
             }
             Row(

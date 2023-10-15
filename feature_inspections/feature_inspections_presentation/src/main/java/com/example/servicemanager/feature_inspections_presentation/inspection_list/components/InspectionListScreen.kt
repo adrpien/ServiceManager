@@ -18,13 +18,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedLightBeige
-import com.example.feature_app_presentation.components.hospital_filter.HospitalFilterSection
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.example.core.util.Screens
+import com.example.core_ui.components.other.DefaultSelectionSection
 
 
 @Composable
@@ -110,10 +110,21 @@ fun InspectionListScreen(
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
-                HospitalFilterSection(
-                    hospitalList = inspectionListState.value.hospitalList + Hospital(hospitalId = "0", hospital = "All"),
-                    hospital = inspectionListState.value.hospital ?: Hospital(),
-                    onHospitalChange = { viewModel.onEvent(InspectionListEvent.filterInspectionListByHospital(hospital = it)) }
+
+                DefaultSelectionSection(
+                    itemList = inspectionListState.value.hospitalList + Hospital(
+                        hospitalId = "0",
+                        hospital = "All"
+                    ),
+                    selectedItem = inspectionListState.value.hospital ?: Hospital(),
+                    onItemChanged = {
+                        viewModel.onEvent(
+                            InspectionListEvent.filterInspectionListByHospital(
+                                hospital = it
+                            )
+                        )
+                    },
+                    enabled = true
                 )
             }
 

@@ -10,7 +10,7 @@ android {
 }
 dependencies{
     implementation(project(Modules.core))
+    implementation(project(Modules.coreUi))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureInspectionsDomain))
-    implementation(project(Modules.featureAppPresentation))
 }

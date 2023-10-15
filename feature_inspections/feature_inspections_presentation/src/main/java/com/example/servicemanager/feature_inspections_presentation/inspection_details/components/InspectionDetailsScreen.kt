@@ -22,19 +22,16 @@ import com.example.core.theme.TiemedLightBlue
 import com.example.core.theme.TiemedLightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
-import com.example.feature_app_presentation.components.other.DefaultTextField
-import com.example.feature_app_presentation.components.other.DefaultTextFieldState
-import com.example.feature_app_presentation.components.other.alert_dialogs.ExitAlertDialog
-import com.example.feature_app_presentation.components.est_states.EstStateSelectionSection
-import com.example.feature_app_presentation.components.hospital_selection.HospitalSelectionSection
-import com.example.feature_app_presentation.components.signature.SignatureArea
-import com.example.feature_app_presentation.components.technician.TechnicianSelectionSection
+import com.example.core_ui.components.other.DefaultDatePickerDialog
+import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.core_ui.components.other.DefaultTextField
+import com.example.core_ui.components.other.DefaultTextFieldState
+import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
+import com.example.core_ui.components.signature.SignatureArea
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.Technician
-import com.example.feature_app_presentation.components.inspection_state.InspectionStateSelectionSection
-import com.example.feature_app_presentation.components.other.DefaultDatePickerDialog
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel.*
@@ -343,11 +340,11 @@ fun InspectionDetailsScreen(
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
-            HospitalSelectionSection(
-                hospitalList = hospitalList,
-                hospital = hospitalList.find { (it.hospitalId == inspectionDetailsState.value.inspection.hospitalId) }
+            DefaultSelectionSection(
+                itemList = hospitalList,
+                selectedItem = hospitalList.find { (it.hospitalId == inspectionDetailsState.value.inspection.hospitalId) }
                     ?: Hospital(),
-                onHospitalChange = {
+                onItemChanged = {
                     viewModel.onEvent(
                         InspectionDetailsEvent.UpdateInspectionState(
                             inspectionDetailsState.value.copy(
@@ -358,8 +355,9 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                enabled = inspectionDetailsState.value.isInEditMode
+                enabled = isInEditMode
             )
+
             DefaultTextField(
                 onValueChanged = { string ->
                     ward.value = ward.value.copy(value = string)
@@ -400,11 +398,12 @@ fun InspectionDetailsScreen(
                 color = TiemedLightBlue
             )
 
-            EstStateSelectionSection(
-                estStateList = estStateList,
-                estState = estStateList.find { (it.estStateId == inspectionDetailsState.value.inspection.estStateId) }
-                    ?: EstState(),
-                onEstStateChange = {
+            DefaultSelectionSection(
+                itemList = estStateList,
+                selectedItem = estStateList.find {
+                    (it.estStateId == inspectionDetailsState.value.inspection.estStateId)
+                } ?: EstState(),
+                onItemChanged = {
                     viewModel.onEvent(
                         InspectionDetailsEvent.UpdateInspectionState(
                             inspectionDetailsState.value.copy(
@@ -417,17 +416,18 @@ fun InspectionDetailsScreen(
                 },
                 enabled = inspectionDetailsState.value.isInEditMode
             )
+
             Text(
                 modifier = Modifier
                     .padding(8.dp),
                 text = "InspectionState:",
                 color = TiemedLightBlue
             )
-            InspectionStateSelectionSection(
-                inspectionStateList = inspectionStateList,
-                inspectionState = inspectionStateList.find { (it.inspectionStateId == inspectionDetailsState.value.inspection.inspectionStateId) }
+            DefaultSelectionSection(
+                itemList = inspectionStateList,
+                selectedItem = inspectionStateList.find { (it.inspectionStateId == inspectionDetailsState.value.inspection.inspectionStateId) }
                     ?: InspectionState(),
-                onInspectionStateChange = {
+                onItemChanged = {
                     viewModel.onEvent(
                         InspectionDetailsEvent.UpdateInspectionState(
                             inspectionDetailsState.value.copy(
@@ -438,7 +438,7 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                isClickable = inspectionDetailsState.value.isInEditMode
+                enabled = isInEditMode
             )
             Text(
                 modifier = Modifier
@@ -446,11 +446,11 @@ fun InspectionDetailsScreen(
                 text = "Technician:",
                 color = TiemedLightBlue
             )
-            TechnicianSelectionSection(
-                technicianList = technicianList,
-                technician = technicianList.find { (it.technicianId == inspectionDetailsState.value.inspection.technicianId) }
+            DefaultSelectionSection(
+                itemList = technicianList,
+                selectedItem = technicianList.find { (it.technicianId == inspectionDetailsState.value.inspection.technicianId) }
                     ?: Technician(),
-                onTechnicianChange = {
+                onItemChanged = {
                     viewModel.onEvent(
                         InspectionDetailsEvent.UpdateInspectionState(
                             inspectionDetailsState.value.copy(
@@ -461,7 +461,7 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                enabled = inspectionDetailsState.value.isInEditMode
+                enabled = isInEditMode
             )
             Button(
                 modifier = Modifier
