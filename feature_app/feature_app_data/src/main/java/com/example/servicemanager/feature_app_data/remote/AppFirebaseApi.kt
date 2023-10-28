@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_app_data.remote
 
 import android.util.Log
+import com.example.core.util.Resource
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
@@ -25,11 +26,11 @@ class  AppFirebaseApi(
 
 
     /* ********************************* SIGNATURES ********************************************* */
-    fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Flow<com.example.core.util.Resource<String>> = flow {
+    fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in uploadSignature fun for AppFirebaseApi implementation
         Log.d(APP_REPOSITORY, "Signature uploading started")
         emit(
-            com.example.core.util.Resource(
+            Resource(
                 com.example.core.util.ResourceState.LOADING,
                 null
             )
@@ -40,7 +41,7 @@ class  AppFirebaseApi(
             result.await()
                     if (result.isSuccessful) {
                         emit(
-                            com.example.core.util.Resource(
+                            Resource(
                                 com.example.core.util.ResourceState.SUCCESS,
                                 documentReference.downloadUrl.toString()
                             )
@@ -49,7 +50,7 @@ class  AppFirebaseApi(
 
                     } else {
                         emit(
-                            com.example.core.util.Resource(
+                            Resource(
                                 com.example.core.util.ResourceState.ERROR,
                                 null
                             )
@@ -58,10 +59,10 @@ class  AppFirebaseApi(
                     }
 
     }
-    fun getSignature(signatureId: String): Flow<com.example.core.util.Resource<ByteArray>> = flow {
+    fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
         Log.d(APP_REPOSITORY, "Signature fetching started")
         emit(
-            com.example.core.util.Resource(
+            Resource(
                 com.example.core.util.ResourceState.LOADING,
                 null
             )
@@ -73,7 +74,7 @@ class  AppFirebaseApi(
                     if (result.isSuccessful){
                         val data =  result.result
                         emit(
-                            com.example.core.util.Resource(
+                            Resource(
                                 com.example.core.util.ResourceState.SUCCESS,
                                 data
                             )
@@ -81,7 +82,7 @@ class  AppFirebaseApi(
                         Log.d(APP_REPOSITORY, "Signature fetched")
                     } else {
                         emit(
-                            com.example.core.util.Resource(
+                            Resource(
                                 com.example.core.util.ResourceState.ERROR,
                                 null
                             )

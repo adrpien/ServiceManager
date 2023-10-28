@@ -40,7 +40,6 @@ fun RepairNavigation(navHostController: NavHostController) {
         composable(
             route = Screens.HomeScreen.route
         ){
-            // TODO HomeScreen with some preferences, about, stats, credits
         }
     }
 }
