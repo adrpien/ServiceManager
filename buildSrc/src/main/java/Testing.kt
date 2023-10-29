@@ -1,6 +1,14 @@
 object Testing {
-    private const val junitVersion = "4.13.2"
-    const val junit4 = "junit:junit:$junitVersion"
+    private const  val junit5Version = "5.9.3"
+    const val junit5Api = "org.junit.jupiter:junit-jupiter-api:$junit5Version"
+    const val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
+    const val junit5Params = "org.junit.jupiter:junit-jupiter-params:$junit5Version"
+
+    private const val assertkVersion = "0.26.1"
+    const val assertk = "com.willowtreeapps.assertk:assertk:$assertkVersion"
+
+    private const val junit4Version = "4.13.2"
+    const val junit4 = "junit:junit:$junit4Version"
 
     private const val testManifestVersion = "1.4.2"
     const val testManifest = "androidx.compose.ui:ui-test-manifest:$testManifestVersion"

@@ -63,6 +63,9 @@ dependencies {
     testImplementation(Testing.mockWebServer)
     testImplementation(Testing.mockk)
     debugImplementation(Testing.testManifest)
+    testImplementation(Testing.junit5Api)
+    testImplementation(Testing.junit5Params)
+    testRuntimeOnly(Testing.junit5Engine)
 
     // Instrumentation tests
     androidTestImplementation(Testing.coreTesting)

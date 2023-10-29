@@ -7,6 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    id("de.mannodermaus.android-junit5") version "1.9.3.0"
 }
 
 android {
@@ -141,6 +142,10 @@ dependencies {
     testImplementation(Testing.mockWebServer)
     testImplementation(Testing.mockk)
     debugImplementation(Testing.testManifest)
+    testImplementation(Testing.junit5Api)
+    testImplementation(Testing.junit5Params)
+    testRuntimeOnly(Testing.junit5Engine)
+    testImplementation(Testing.assertk)
 
     // Instrumentation tests
     androidTestImplementation(Testing.coreTesting)
