@@ -9,4 +9,5 @@ android {
     namespace = "com.example.test"
 }
 dependencies{
+    implementation(project(Modules.core))
 }
