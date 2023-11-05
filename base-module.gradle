@@ -67,6 +67,11 @@ dependencies {
     testImplementation(Testing.junit5Api)
     testImplementation(Testing.junit5Params)
     testRuntimeOnly(Testing.junit5Engine)
+    testImplementation(Testing.assertk)
+    testImplementation(Testing.turbine)
+    testImplementation(Testing.robolectric)
+
+
 
     // Instrumentation tests
     androidTestImplementation(Testing.coreTesting)

@@ -1,5 +1,6 @@
 object Testing {
-    private const  val junit5Version = "5.9.3"
+
+    private const  val junit5Version = "5.8.1"
     const val junit5Api = "org.junit.jupiter:junit-jupiter-api:$junit5Version"
     const val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
     const val junit5Params = "org.junit.jupiter:junit-jupiter-params:$junit5Version"
@@ -49,4 +50,7 @@ object Testing {
 
     private const val coreKtxTestingVersion = "1.4.0"
     const val coreKtxTesting = "androidx.test:core-ktx:$coreKtxTestingVersion"
+
+    private const val robolectricVersion = "4.8"
+    const val robolectric = "org.robolectric:robolectric:${robolectricVersion}"
 }

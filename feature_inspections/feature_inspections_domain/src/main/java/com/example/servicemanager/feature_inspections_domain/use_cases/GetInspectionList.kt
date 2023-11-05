@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections_domain.use_cases
 
+import com.example.core.util.Resource
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -19,7 +20,7 @@ class GetInspectionList @Inject constructor (
         inspectionOrderType: InspectionOrderType = InspectionOrderType.State(
             InspectionOrderMonotonicity.Ascending),
         fetchFromApi: Boolean = false
-    ): Flow<com.example.core.util.Resource<List<Inspection>>> {
+    ): Flow<Resource<List<Inspection>>> {
         return if(fetchFromApi == false) {
             repository.getInspectionListFromLocal().map { resource ->
                 resource.copy(

@@ -17,7 +17,7 @@ data class Inspection(
     val deviceManufacturer: String = "",
     val deviceModel: String = "",
     val deviceSn: String = "",
-    val deviceIn: String = "",
+    val deviceIn: String = ""
     ) {
 
 }

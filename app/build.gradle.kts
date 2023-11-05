@@ -7,7 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
-    id("de.mannodermaus.android-junit5") version "1.9.3.0"
+    id("de.mannodermaus.android-junit5") version "1.10.0.0"
 }
 
 android {
@@ -28,8 +28,7 @@ android {
         targetSdk = ProjectConfig.targetSdk
         versionCode = ProjectConfig.versionCode
         versionName = ProjectConfig.versionName
-
-        testInstrumentationRunner = "com.example.servicemanager.core.HiltTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -68,6 +67,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -146,6 +149,8 @@ dependencies {
     testImplementation(Testing.junit5Params)
     testRuntimeOnly(Testing.junit5Engine)
     testImplementation(Testing.assertk)
+    testImplementation(Testing.turbine)
+    testImplementation(Testing.robolectric)
 
     // Instrumentation tests
     androidTestImplementation(Testing.coreTesting)
