@@ -7,56 +7,53 @@ import com.example.servicemanager.feature_inspections_domain.repository.Inspecti
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class InspectionRepositoryFake : InspectionRepository {
 
     private var shouldReturnError = false
 
-    private val  inspectionList = mutableListOf<Inspection>()
-    private val  inspectionListFlow = MutableStateFlow(
-        Resource(ResourceState.SUCCESS, inspectionList)
-    )
+    private val inspectionList: MutableList<Inspection> = mutableListOf()
 
-    override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> {
-        val inspection = inspectionList.find { it.inspectionId == inspectionId }
-        return if (shouldReturnError) {
-            flow { Resource(ResourceState.ERROR, null) }
+    override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow {
+
+    }
+
+    override fun getInspectionList(): Flow<Resource<List<Inspection>>> = flow {
+        if (shouldReturnError) {
+            emit(Resource(ResourceState.ERROR, null))
         } else {
-            flow { Resource(ResourceState.SUCCESS, inspection) }
+            emit(Resource(ResourceState.SUCCESS, inspectionList))
         }
     }
 
-    override fun getInspectionList(): Flow<Resource<List<Inspection>>> {
-        return if (shouldReturnError) {
-            inspectionListFlow.value = Resource(ResourceState.ERROR, null)
-            inspectionListFlow
+    override fun insertInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+        if (shouldReturnError) {
+            emit(Resource(ResourceState.ERROR, null))
         } else {
-            inspectionListFlow
+            inspectionList.add(inspection)
+            emit(Resource(ResourceState.SUCCESS, inspection.inspectionId))
         }
     }
 
-    override fun insertInspection(inspection: Inspection): Flow<Resource<String>> {
-        inspectionList.add(inspection)
-        inspectionListFlow.value = Resource(ResourceState.SUCCESS, inspectionList)
-        return flow { Resource(ResourceState.SUCCESS, inspection.inspectionId) }
-    }
-
-    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> {
-        return if (shouldReturnError) {
-            flow { Resource(ResourceState.ERROR, null) }
+    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+        if (shouldReturnError) {
+            emit(Resource(ResourceState.ERROR, null))
         } else {
             val inspectionIndex =
                 inspectionList.indexOf(inspectionList.find { it.inspectionId == inspection.inspectionId })
             inspectionList.removeAt(inspectionIndex)
             inspectionList.add(inspection)
-            flow {
-                Resource(ResourceState.SUCCESS, inspection.inspectionId)
-            }
+            emit(Resource(ResourceState.SUCCESS, inspection.inspectionId))
         }
     }
 
-    override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> {
-        return inspectionListFlow
+    override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
+        if (shouldReturnError) {
+            emit(Resource(ResourceState.ERROR, null))
+        } else {
+            emit(Resource(ResourceState.SUCCESS, inspectionList))
+        }
     }
 
     fun setShouldReturnError(value: Boolean){

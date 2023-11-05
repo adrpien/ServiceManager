@@ -32,7 +32,7 @@ fun inspection(
         deviceName = deviceName,
         deviceManufacturer = deviceManufacturer,
         deviceModel = deviceModel,
-        deviceSn = deviceSn,
-        deviceIn = deviceIn,
+        deviceSn = "000",
+        deviceIn = "000",
         )
 }
