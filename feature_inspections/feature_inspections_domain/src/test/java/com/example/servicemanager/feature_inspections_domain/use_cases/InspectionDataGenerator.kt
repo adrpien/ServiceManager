@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections_domain.use_cases
 
+import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import java.util.Calendar
 
@@ -35,4 +36,18 @@ fun inspection(
         deviceSn = "000",
         deviceIn = "000",
         )
+}
+
+fun hospitalDluga(): Hospital {
+    return Hospital(
+        hospital = "Dluga",
+        hospitalId = "ExF6PByjkDrHSCTzvYz3"
+    )
+}
+
+fun hospitalORSK(): Hospital {
+    return Hospital(
+        hospital = "ORSK",
+        hospitalId = "QtQqkoxoP24vakg5GcQu"
+    )
 }
