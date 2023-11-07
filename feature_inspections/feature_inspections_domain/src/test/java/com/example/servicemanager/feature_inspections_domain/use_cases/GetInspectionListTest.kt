@@ -2,6 +2,7 @@ package com.example.servicemanager.feature_inspections_domain.use_cases
 
 import assertk.assertThat
 import assertk.assertions.contains
+import assertk.assertions.containsExactly
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
@@ -37,10 +38,53 @@ class GetInspectionListTest {
         updateInspection = UpdateInspection(inspectionRepositoryFake)
         saveInspection = SaveInspection(inspectionRepositoryFake)
     }
+    @Test
+    fun `inspectionOrderType argument properly order by hospital`() = runBlocking {
+        val hospital3 = hospitalDluga()
+        val hospital2 = hospitalORSK()
+        val hospital1 = hospitalORSK()
+
+        val inspection1 = inspection("1", hospitalId = hospital1.hospitalId)
+        val inspection2 = inspection("2", hospitalId = hospital2.hospitalId)
+        val inspection3 = inspection("3", hospitalId = hospital3.hospitalId)
+
+        saveInspection(inspection1).first { it.resourceState == ResourceState.SUCCESS }
+        saveInspection(inspection2).first { it.resourceState == ResourceState.SUCCESS }
+        saveInspection(inspection3).first { it.resourceState == ResourceState.SUCCESS }
+
+        val result = getInspectionList(
+            inspectionOrderType = InspectionOrderType.Hospital(InspectionOrderMonotonicity.Ascending)
+        )
+            .first {
+                it.resourceState == ResourceState.SUCCESS
+            }
+        val data: List<Inspection> = result.data ?: emptyList()
+
+        assertThat(inspection3).isEqualTo(data[0])
+    }
+    @Test
+    fun `inspectionOrderType argument properly order by state`() = runBlocking {
+        val inspection1 = inspectionFailed("1")
+        val inspection2 = inspectionFailed("2")
+        val inspection3 = inspectionPassed("3")
+
+        saveInspection(inspection1).first { it.resourceState == ResourceState.SUCCESS }
+        saveInspection(inspection2).first { it.resourceState == ResourceState.SUCCESS }
+        saveInspection(inspection3).first { it.resourceState == ResourceState.SUCCESS }
+
+        val result = getInspectionList(
+            inspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending)
+        )
+            .first {
+                it.resourceState == ResourceState.SUCCESS
+            }
+        val data: List<Inspection> = result.data ?: emptyList()
+
+        assertThat(inspection3).isEqualTo(data[0])
+    }
 
     @Test
-    fun `inspectionOrderType argument properly order by date ascending`() = runBlocking {
-
+    fun `inspectionOrderType argument properly order by date`() = runBlocking {
         val inspection1 = inspection("1", inspectionDate = "1670799600000") // 2022/12/12
         val inspection2 = inspection("2", inspectionDate = "1697061600000") // 2023/10/12
         val inspection3 = inspection("3", inspectionDate = "1633989600000") // 2021/10/12
@@ -64,7 +108,6 @@ class GetInspectionListTest {
 
     @Test
     fun `hospitalFilter argument properly filters out inspectionList`() = runBlocking {
-
         val hospital1 = hospitalDluga()
         val hospital2 = hospitalORSK()
 
