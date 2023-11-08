@@ -16,12 +16,17 @@ class InspectionRepositoryFake : InspectionRepository {
     private val inspectionList: MutableList<Inspection> = mutableListOf()
 
     override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow {
-
+        if (shouldReturnError) {
+            emit(Resource(ResourceState.ERROR))
+        } else {
+            val inspection = inspectionList.find { it.inspectionId == inspectionId }
+            emit(Resource(ResourceState.SUCCESS, inspection))
+        }
     }
 
     override fun getInspectionList(): Flow<Resource<List<Inspection>>> = flow {
         if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR, null))
+            emit(Resource(ResourceState.ERROR))
         } else {
             emit(Resource(ResourceState.SUCCESS, inspectionList))
         }
@@ -29,7 +34,7 @@ class InspectionRepositoryFake : InspectionRepository {
 
     override fun insertInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR, null))
+            emit(Resource(ResourceState.ERROR))
         } else {
             inspectionList.add(inspection)
             emit(Resource(ResourceState.SUCCESS, inspection.inspectionId))
@@ -38,7 +43,7 @@ class InspectionRepositoryFake : InspectionRepository {
 
     override fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
         if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR, null))
+            emit(Resource(ResourceState.ERROR))
         } else {
             val inspectionIndex =
                 inspectionList.indexOf(inspectionList.find { it.inspectionId == inspection.inspectionId })
@@ -50,7 +55,7 @@ class InspectionRepositoryFake : InspectionRepository {
 
     override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
         if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR, null))
+            emit(Resource(ResourceState.ERROR))
         } else {
             emit(Resource(ResourceState.SUCCESS, inspectionList))
         }

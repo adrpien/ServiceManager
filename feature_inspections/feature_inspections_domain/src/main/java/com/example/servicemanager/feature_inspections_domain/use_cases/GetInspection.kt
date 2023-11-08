@@ -4,8 +4,10 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState.*
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
+import com.example.servicemanager.feature_inspections_domain.util.InspectionListExtensionFunctions.Companion.orderInspectionList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetInspection @Inject constructor (
@@ -13,18 +15,19 @@ class GetInspection @Inject constructor (
 ) {
 
     operator fun invoke(inspectionId: String): Flow<Resource<Inspection>> {
-        if(inspectionId.isEmpty()) {
-            return flow {
+        return if(inspectionId.isEmpty()) {
+            flow {
                 emit(
-                    com.example.core.util.Resource(
+                    Resource(
                         ERROR,
                         Inspection(),
                         "Get inspection unknown error"
                     )
                 )
             }
+        } else {
+            repository.getInspection(inspectionId)
         }
-        return repository.getInspection(inspectionId)
     }
-
 }
+
