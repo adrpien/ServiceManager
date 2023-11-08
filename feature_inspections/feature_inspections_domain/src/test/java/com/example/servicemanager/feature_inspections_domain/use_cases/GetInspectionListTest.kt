@@ -150,9 +150,9 @@ class GetInspectionListTest {
        }
         val data: List<Inspection> = result.data ?: emptyList()
 
-        assertk.assertThat(data).contains(inspection2)
-        assertk.assertThat(data).contains(inspection3)
-        assertk.assertThat(data).doesNotContain(inspection1)
-        assertk.assertThat(data).doesNotContain(inspection4)
+        assertThat(data).contains(inspection2)
+        assertThat(data).contains(inspection3)
+        assertThat(data).doesNotContain(inspection1)
+        assertThat(data).doesNotContain(inspection4)
     }
 }

@@ -27,14 +27,13 @@ class GetInspectionTest {
 
     @Test
     fun `GetInspection properly fetches valid data`() = runBlocking {
-        val inspection = inspection("3")
-        saveInspection(inspection).first { it.resourceState == ResourceState.SUCCESS }
+        val inspection3 = inspection("3")
+        saveInspection(inspection3).first { it.resourceState == ResourceState.SUCCESS }
         val result = getInspection("3").first {
             it.resourceState == ResourceState.SUCCESS
         }
-        val data = result.data
+        val data: Inspection = result.data ?: inspection("0")
 
-        assertThat(data).isNotNull()
         assertThat(data?.inspectionId).isEqualTo("3")
     }
 
