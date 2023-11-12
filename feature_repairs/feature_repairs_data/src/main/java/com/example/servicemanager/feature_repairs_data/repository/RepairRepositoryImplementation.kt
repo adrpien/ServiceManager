@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_repairs_data.repository
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.logger_domain.AppLogger
+import com.example.logger_domain.EventLogType
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs_data.mappers.toRepairEntity
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
@@ -13,7 +15,8 @@ import kotlinx.coroutines.flow.*
 
 class  RepairRepositoryImplementation(
     val repairDatabaseDao: RepairDatabaseDao,
-    val repairFirebaseApi: RepairFirebaseApi
+    val repairFirebaseApi: RepairFirebaseApi,
+    val appLogger: AppLogger
 ): RepairRepository {
 
 
@@ -43,6 +46,8 @@ class  RepairRepositoryImplementation(
                     "Device list fetching finished"
                 )
             )
+            // This is only testing of logger implementation
+            // appLogger.logEvent(EventLogType.SuccessLog(), "RepairList fetched")
         }
     }
 

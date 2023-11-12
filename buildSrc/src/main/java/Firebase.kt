@@ -8,13 +8,13 @@ object Firebase {
     private const val firebaseFirestoreVersion = "24.8.1"
     const val firebaseFirestore = "com.google.firebase:firebase-firestore-ktx:$firebaseFirestoreVersion"
 
-    private const val firebaseAnaliticsVersion = "21.5.0"
-    const val firebaseAnalytics = "com.google.firebase:firebase-analitics-ktx:$firebaseAnaliticsVersion"
+    private const val firebaseAnalyticsVersion = "21.5.0"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx:$firebaseAnalyticsVersion"
 
     private const val firebaseBomVersion = "32.5.0"
-    const val firebaseBom = "com.google.firebase:firebase-bom:$firebaseAnaliticsVersion"
+    const val firebaseBom = "com.google.firebase:firebase-bom:$firebaseAnalyticsVersion"
 
 
     private const val firebaseAnalytisPlayServiceMeasurementVersion = "21.5.0"
-    const val firebaseAnalytisPlayServiceMeasurement = "com.google.android.gms:play-services-measurement-api:$firebaseAnaliticsVersion"
+    const val firebaseAnalytisPlayServiceMeasurement = "com.google.android.gms:play-services-measurement-api:$firebaseAnalyticsVersion"
 }

@@ -179,7 +179,6 @@ dependencies {
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
     implementation(Firebase.firebaseAnalytics)
-    implementation(Firebase.firebaseBom)
     implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
 
 

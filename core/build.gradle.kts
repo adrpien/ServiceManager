@@ -9,9 +9,6 @@ android {
     namespace = "com.example.core"
 }
 dependencies{
-    implementation(project(Modules.sharedPreferencesData))
-    implementation(project(Modules.sharedPreferencesDomain))
-
     // Compose dependencies
     implementation(Compose.ui)
     implementation(Compose.uiToolingPreview)
@@ -34,7 +31,6 @@ dependencies{
     implementation(DateAlertDialog.dateTime)
 
     // Firebase
-    implementation(Firebase.firebaseBom)
     implementation(Firebase.firebaseAuth)
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)

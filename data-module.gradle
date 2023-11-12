@@ -102,7 +102,6 @@ dependencies {
     implementation(Coroutines.coroutinesPlayServices)
 
     // Firebase
-    implementation(Firebase.firebaseBom)
     implementation(Firebase.firebaseAuth)
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)

@@ -10,6 +10,7 @@ import com.example.test.inspection
 import com.example.test.inspectionFailed
 import com.example.test.inspectionPassed
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
+import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 import com.example.test.hospitalDluga
@@ -22,7 +23,7 @@ import org.junit.jupiter.api.Test
 
 class GetInspectionListTest {
 
-    private lateinit var inspectionRepositoryFake: InspectionRepositoryFake
+    private lateinit var inspectionRepositoryFake: InspectionRepository
     private lateinit var getInspectionList: GetInspectionList
     private lateinit var getInspection: GetInspection
     private lateinit var saveInspection: SaveInspection
@@ -36,6 +37,7 @@ class GetInspectionListTest {
         updateInspection = UpdateInspection(inspectionRepositoryFake)
         saveInspection = SaveInspection(inspectionRepositoryFake)
     }
+
     @Test
     fun `inspectionOrderType argument properly order by hospital`() = runBlocking<Unit> {
         val hospital3 = hospitalDluga()
