@@ -71,8 +71,6 @@ dependencies {
     testImplementation(Testing.turbine)
     testImplementation(Testing.robolectric)
 
-
-
     // Instrumentation tests
     androidTestImplementation(Testing.coreTesting)
     androidTestImplementation(Testing.coreKtxTesting)

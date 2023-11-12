@@ -59,7 +59,6 @@ dependencies {
     kapt(DaggerHilt.kaptHiltCompiler)
     kapt(DaggerHilt.kaptHiltAndroidCompiler)
 
-
     // Local unit tests
     testImplementation(Testing.coreKtxTesting)
     testImplementation(Testing.junit4)

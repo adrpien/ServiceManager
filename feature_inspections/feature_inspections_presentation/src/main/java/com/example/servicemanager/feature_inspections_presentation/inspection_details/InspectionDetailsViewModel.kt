@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.util.Constans
+import com.example.core.util.NavigationRoutes
 import com.example.core.util.Helper.Companion.convertToBitmap
 import com.example.core.util.Helper.Companion.convertToByteArray
 import com.example.core.util.ResourceState
@@ -77,7 +77,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 viewModelScope.launch(Dispatchers.IO) {
                                     appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
                                 }
-                                _eventFlow.emit(UiEvent.NavigateTo(Constans.ROUTE_INSPECTION_LIST_SCREEN))
+                                _eventFlow.emit(UiEvent.NavigateTo(NavigationRoutes.ROUTE_INSPECTION_LIST_SCREEN))
                             }
                         }
                     }

@@ -77,6 +77,7 @@ dependencies {
 
     // Modules
     implementation(project(Modules.core))
+    implementation(project(Modules.coreUi))
     implementation(project(Modules.featureAppData))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureAuthenticationDomain))
@@ -91,6 +92,12 @@ dependencies {
     implementation(project(Modules.featureHomeData))
     implementation(project(Modules.featureHomeDomain))
     implementation(project(Modules.featureHomePresentation))
+    implementation(project(Modules.sharedPreferencesDomain))
+    implementation(project(Modules.sharedPreferencesData))
+    implementation(project(Modules.loggerDomain))
+    implementation(project(Modules.loggerData))
+    implementation(project(Modules.test))
+    implementation(project(Modules.androidTest))
 
     // AndroidX
     implementation(AndroidX.coreKtx)
@@ -126,7 +133,6 @@ dependencies {
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.kaptHiltCompiler)
     kapt(DaggerHilt.kaptHiltAndroidCompiler)
-
 
     // Room
     kapt(Room.roomCompiler)
@@ -172,4 +178,10 @@ dependencies {
     implementation(Firebase.firebaseAuth)
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
+    implementation(Firebase.firebaseAnalytics)
+    implementation(Firebase.firebaseBom)
+    implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
+
+
+
 }

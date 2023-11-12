@@ -4,11 +4,10 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections_domain.InspectionRepositoryFake
+import com.example.test.inspection
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions.*
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -3,8 +3,9 @@ package com.example.core.dependecy_injection
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.core.data.DefaultPreferencesImplementation
-import com.example.core.domain.Preferences
+import com.example.shared_preferences_data.shared_preferences.DefaultPreferencesImplementation
+import com.example.shared_preferences_domain.AppPreferences
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
@@ -27,20 +28,6 @@ object CoreModule {
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(
-        app: Application
-    ): SharedPreferences {
-        return app.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)
-    }
-
-    @Provides
-    @Singleton
-    fun providePreferences(sharedPreferences: SharedPreferences): Preferences {
-        return DefaultPreferencesImplementation(sharedPreferences)
     }
 
 }

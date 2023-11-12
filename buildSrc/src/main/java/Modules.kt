@@ -1,7 +1,17 @@
 object Modules {
+
     const val app = ":app"
     const val core = ":core"
     const val coreUi = ":core_ui"
+
+    const val test = ":common:test"
+    const val androidTest = ":common:android_test"
+
+    const val sharedPreferencesData = ":shared_preferences:shared_preferences_data"
+    const val sharedPreferencesDomain = ":shared_preferences:shared_preferences_domain"
+
+    const val loggerData = ":logger:logger_data"
+    const val loggerDomain = ":logger:logger_domain"
 
     const val featureInspectionsData = ":feature_inspections:feature_inspections_data"
     const val featureInspectionsDomain = ":feature_inspections:feature_inspections_domain"
@@ -22,4 +32,9 @@ object Modules {
     const val featureHomeData = ":feature_home:feature_home_data"
     const val featureHomeDomain = ":feature_home:feature_home_domain"
     const val featureHomePresentation = ":feature_home:feature_home_presentation"
+
 }
+
+
+
+

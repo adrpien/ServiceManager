@@ -2,9 +2,9 @@ package com.example.servicemanager.feature_inspections_domain.use_cases
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.assertions.isNotNull
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections_domain.InspectionRepositoryFake
+import com.example.test.inspection
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

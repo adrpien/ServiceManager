@@ -13,4 +13,5 @@ android {
 dependencies{
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppDomain))
+    testImplementation(project(Modules.test))
 }

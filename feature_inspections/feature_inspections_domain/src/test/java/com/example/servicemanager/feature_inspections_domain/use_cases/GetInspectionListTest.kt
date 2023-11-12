@@ -2,23 +2,21 @@ package com.example.servicemanager.feature_inspections_domain.use_cases
 
 import assertk.assertThat
 import assertk.assertions.contains
-import assertk.assertions.containsExactly
 import assertk.assertions.doesNotContain
-import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
-import assertk.assertions.isNullOrEmpty
-import assertk.assertions.isTrue
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_domain.InspectionRepositoryFake
+import com.example.test.inspection
+import com.example.test.inspectionFailed
+import com.example.test.inspectionPassed
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
-import kotlinx.coroutines.flow.collect
+import com.example.test.hospitalDluga
+import com.example.test.hospitalORSK
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-import org.junit.Before
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -39,7 +37,7 @@ class GetInspectionListTest {
         saveInspection = SaveInspection(inspectionRepositoryFake)
     }
     @Test
-    fun `inspectionOrderType argument properly order by hospital`() = runBlocking {
+    fun `inspectionOrderType argument properly order by hospital`() = runBlocking<Unit> {
         val hospital3 = hospitalDluga()
         val hospital2 = hospitalORSK()
         val hospital1 = hospitalORSK()
@@ -63,7 +61,7 @@ class GetInspectionListTest {
         assertThat(inspection3).isEqualTo(data[0])
     }
     @Test
-    fun `inspectionOrderType argument properly order by state`() = runBlocking {
+    fun `inspectionOrderType argument properly order by state`() = runBlocking<Unit> {
         val inspection1 = inspectionFailed("1")
         val inspection2 = inspectionFailed("2")
         val inspection3 = inspectionPassed("3")
@@ -84,7 +82,7 @@ class GetInspectionListTest {
     }
 
     @Test
-    fun `inspectionOrderType argument properly order by date`() = runBlocking {
+    fun `inspectionOrderType argument properly order by date`() = runBlocking<Unit> {
         val inspection1 = inspection("1", inspectionDate = "1670799600000") // 2022/12/12
         val inspection2 = inspection("2", inspectionDate = "1697061600000") // 2023/10/12
         val inspection3 = inspection("3", inspectionDate = "1633989600000") // 2021/10/12

@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.util.Constans
+import com.example.core.util.NavigationRoutes
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_authentication_domain.use_cases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,7 +70,7 @@ class UserLoginViewModel @Inject constructor(
                     userUseCases.getCurrentUser().collect() {result ->
                         when(result.resourceState) {
                             ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.NavigateTo(Constans.ROUTE_CONTENT_COMPOSABLE))
+                                _eventFlow.emit(UiEvent.NavigateTo(NavigationRoutes.ROUTE_CONTENT_COMPOSABLE))
                             }
                             ResourceState.ERROR -> Unit
                             ResourceState.LOADING -> Unit

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.util.Constans
+import com.example.core.util.NavigationRoutes
 import com.example.core.util.Helper.Companion.convertToBitmap
 import com.example.core.util.Helper.Companion.convertToByteArray
 import com.example.core.util.ResourceState
@@ -76,7 +76,7 @@ class RepairDetailsViewModel @Inject constructor(
                                 }
                                 _eventFlow.emit(
                                     UiEvent.NavigateTo(
-                                        Constans.ROUTE_INSPECTION_LIST_SCREEN
+                                        NavigationRoutes.ROUTE_INSPECTION_LIST_SCREEN
                                     )
                                 )
 

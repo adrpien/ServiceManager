@@ -76,8 +76,6 @@ dependencies {
     testImplementation(Testing.turbine)
     testImplementation(Testing.robolectric)
 
-
-
     // Instrumentation tests
     androidTestImplementation(Testing.coreTesting)
     androidTestImplementation(Testing.coreKtxTesting)
@@ -104,9 +102,12 @@ dependencies {
     implementation(Coroutines.coroutinesPlayServices)
 
     // Firebase
+    implementation(Firebase.firebaseBom)
     implementation(Firebase.firebaseAuth)
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
+    implementation(Firebase.firebaseAnalytics)
+    implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
 
     // Room
     kapt(Room.roomCompiler)
