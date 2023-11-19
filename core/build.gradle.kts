@@ -9,6 +9,7 @@ android {
     namespace = "com.example.core"
 }
 dependencies{
+
     // Compose dependencies
     implementation(Compose.ui)
     implementation(Compose.uiToolingPreview)
@@ -37,6 +38,11 @@ dependencies{
     implementation(Firebase.firebaseAnalytics)
     implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
 
+    // Gson
+    implementation(Gson.gson)
+
+    // Reflect
+    implementation(Reflect.reflect)
 
     // Room
     "kapt"(Room.roomCompiler)

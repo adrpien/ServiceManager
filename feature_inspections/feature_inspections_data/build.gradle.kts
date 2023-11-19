@@ -12,4 +12,6 @@ dependencies{
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureInspectionsDomain))
+    implementation(project(Modules.loggerDomain))
+    implementation(project(Modules.loggerData))
 }

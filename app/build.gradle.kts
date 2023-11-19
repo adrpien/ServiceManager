@@ -181,6 +181,10 @@ dependencies {
     implementation(Firebase.firebaseAnalytics)
     implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
 
+    // Gson parser
+    implementation(Gson.gson)
 
+    // Reflect
+    implementation(Reflect.reflect)
 
 }

@@ -3,8 +3,7 @@ package com.example.servicemanager.feature_repairs_data.repository
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
-import com.example.logger_domain.AppLogger
-import com.example.logger_domain.EventLogType
+import com.example.logger_domain.logger.AppLogger
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs_data.mappers.toRepairEntity
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi

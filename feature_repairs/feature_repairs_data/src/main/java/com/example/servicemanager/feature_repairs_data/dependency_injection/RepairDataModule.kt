@@ -2,10 +2,13 @@ package com.example.servicemanager.feature_repairs_data.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
+import com.example.logger_data.logger.FirebaseLogger
+import com.example.logger_domain.logger.AppLogger
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabase
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
 import com.example.servicemanager.feature_repairs_data.repository.RepairRepositoryImplementation
 import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
@@ -17,6 +20,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepairDataModule {
+
 
     @Provides
     @Singleton
@@ -44,11 +48,13 @@ object RepairDataModule {
     @Singleton
     fun provideRepairRepository(
         repairDatabase: RepairDatabase,
-        repairFirebaseApi: RepairFirebaseApi
+        repairFirebaseApi: RepairFirebaseApi,
+        appLogger: AppLogger
     ): RepairRepository {
         return RepairRepositoryImplementation(
-            repairDatabase.repairDatabaseDao,
-            repairFirebaseApi
+            repairDatabaseDao = repairDatabase.repairDatabaseDao,
+            repairFirebaseApi = repairFirebaseApi,
+            appLogger = appLogger
         )
     }
 }
