@@ -21,10 +21,10 @@ class FirebaseLogger(
     }
 
 
-    override fun logInspection(eventLogType: EventLogType, message: String, inspection: Inspection, userId: String) {
+    override fun logInspection(eventLogType: EventLogType, message: String, inspection: Inspection) {
         val bundle = bundleOf()
+        bundle.putString("type_inspection", "type_inspection")
         bundle.putString("message", message)
-        bundle.putString("userId", userId)
         // val map = inspection.toMap()
         /*map.forEach { key, value ->
             bundle.putString( key, value.toString())
@@ -32,13 +32,15 @@ class FirebaseLogger(
         firebaseAnalytics.logEvent(eventLogType.logId, bundle)
     }
 
-    override fun logRepair(eventLogType: EventLogType, message: String, repair: Repair, userId: String){
+    override fun logRepair(eventLogType: EventLogType, message: String, repair: Repair){
         val bundle = bundleOf()
-        val map = repair.toMap()
+        bundle.putString("type_repair", "type_repair")
+        bundle.putString("message", message)
+        /*val map = repair.toMap()
         map.forEach { key, value ->
             bundle.putString(key, value.toString())
         }
-        bundle.putString("message", message)
+        bundle.putString("message", message)*/
         firebaseAnalytics.logEvent(eventLogType.logId, bundle)
     }
 }

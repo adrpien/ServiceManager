@@ -81,15 +81,17 @@ class  InspectionRepositoryImplementation(
     }
 
     override fun insertInspection(inspection: Inspection): Flow<Resource<String>> {
+        appLogger.logInspection(
+            eventLogType = EventLogType.NewRecordLog(),
+            inspection = inspection,
+        )
         return inspectionFirebaseApi.createInspection(inspection)
     }
 
     override fun updateInspection(inspection: Inspection): Flow<Resource<String>> {
         appLogger.logInspection(
             eventLogType = EventLogType.RecordUpdateLog(),
-            message = "",
             inspection = inspection,
-            userId = ""
             )
         return inspectionFirebaseApi.updateInspection(inspection)
     }

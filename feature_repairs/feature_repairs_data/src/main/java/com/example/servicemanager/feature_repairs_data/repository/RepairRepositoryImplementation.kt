@@ -4,6 +4,7 @@ package com.example.servicemanager.feature_repairs_data.repository
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.logger_domain.logger.AppLogger
+import com.example.logger_domain.util.EventLogType
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs_data.mappers.toRepairEntity
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
@@ -45,8 +46,6 @@ class  RepairRepositoryImplementation(
                     "Device list fetching finished"
                 )
             )
-            // This is only testing of logger implementation
-            // appLogger.logEvent(EventLogType.SuccessLog(), "RepairList fetched")
         }
     }
 
@@ -77,10 +76,18 @@ class  RepairRepositoryImplementation(
     }
 
     override fun insertRepair(repair: Repair): Flow<Resource<String>> {
+        appLogger.logRepair(
+            eventLogType = EventLogType.NewRecordLog(),
+            repair = repair
+        )
         return repairFirebaseApi.createRepair(repair)
     }
 
     override fun updateRepair(repair: Repair): Flow<Resource<String>> {
+        appLogger.logRepair(
+            eventLogType = EventLogType.RecordUpdateLog(),
+            repair = repair
+        )
         return repairFirebaseApi.updateRepair(repair)
     }
 
