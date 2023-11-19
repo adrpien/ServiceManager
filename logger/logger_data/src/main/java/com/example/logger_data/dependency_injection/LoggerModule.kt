@@ -1,4 +1,4 @@
-package com.example.servicemanager.dependecy_injection
+package com.example.logger_data.dependency_injection
 
 import android.app.Application
 import com.example.logger_data.logger.FirebaseLogger
@@ -14,18 +14,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-
+object LoggerModule {
     @Provides
     @Singleton
-    fun provideFirebaseStorage(): FirebaseStorage {
-        return FirebaseStorage.getInstance()
+    fun provideFireBaseAnalytics(app: Application): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(app)
     }
 
     @Provides
     @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
+    fun provideAppLogger(firebaseAnalytics: FirebaseAnalytics): AppLogger {
+        return FirebaseLogger(firebaseAnalytics = firebaseAnalytics)
     }
 
 }
