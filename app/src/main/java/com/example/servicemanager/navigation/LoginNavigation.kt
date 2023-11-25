@@ -21,7 +21,7 @@ fun LoginNavigation(navHostController: NavHostController) {
         composable(
             route = Screens.ContentComposable.route
         ) {
-            MainScreenComposable()
+            MainScreenNavigation()
         }
     }
 }

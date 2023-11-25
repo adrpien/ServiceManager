@@ -8,14 +8,12 @@ import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.core.util.Screens
 
 @Composable
-fun MainScreenComposable(
+fun MainScreenNavigation(
 ) {
     val navHostController = rememberNavController()
 
@@ -51,7 +49,7 @@ fun MainScreenComposable(
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            NavigationContent(
+            MainScreenNavigationContent(
                 navHostController = navHostController
             )
         }

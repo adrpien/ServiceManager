@@ -10,8 +10,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.preferences.AppPreferences
+import com.example.core.preferences.AppPreferencesImplementation
 import com.example.core.values.Dimensions
 import com.example.core.values.LocalSpacing
+import dagger.hilt.android.AndroidEntryPoint
 
 private val DarkColorPalette = darkColorScheme(
     primary = TiemedLightBeige,
@@ -36,21 +40,22 @@ private val LightColorPalette = lightColorScheme(
 fun ServiceManagerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
+    preferences: AppPreferences = hiltViewModel()
 ) {
-
-    /*val colorScheme = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }*/
-
-    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+/*    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val context = LocalContext.current
         if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
         if (darkTheme) DarkColorPalette else LightColorPalette
-    }
+    }*/
 
+    val isInDarkMode = preferences.getIsDarkModeEnabled()
+    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val context = LocalContext.current
+        if (isInDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    } else {
+        if (isInDarkMode) DarkColorPalette else LightColorPalette
+    }
 
     CompositionLocalProvider(LocalSpacing provides Dimensions()) {
         MaterialTheme(

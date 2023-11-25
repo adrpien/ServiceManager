@@ -1,11 +1,11 @@
-package com.example.shared_preferences_domain
+package com.example.core.preferences
 
 import com.example.core.util.DateFormattingTypes
 
 interface AppPreferences {
 
     // Date formatting type
-    fun getDateFromattingType(): DateFormattingTypes
+    fun getDateFormattingType(): DateFormattingTypes
     fun setDateFormattingType(formattingType: DateFormattingTypes)
 
     // Dark mode
@@ -13,9 +13,8 @@ interface AppPreferences {
     fun setIsDarkModeEnabled(isDarkModeEnabled: Boolean)
 
     companion object {
-        const val KEY_DARK_MODE = "dark_mode"
-        const val KEY_DATE_FORMATTING_TYPE = "date_formatting_type"
-
+        const val DARK_MODE = "dark_mode"
+        const val DATE_FORMATTING_TYPE = "date_formatting_type"
     }
 
 }

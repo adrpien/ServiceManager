@@ -14,7 +14,7 @@ import com.example.servicemanager.future_repairs_presentation.repair_details.com
 import com.example.servicemanager.future_repairs_presentation.repair_list.components.RepairListScreen
 
 @Composable
-fun NavigationContent(navHostController: NavHostController) {
+fun MainScreenNavigationContent(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
         startDestination = Screens.RepairListScreen.route) {
