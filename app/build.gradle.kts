@@ -92,8 +92,6 @@ dependencies {
     implementation(project(Modules.featureHomeData))
     implementation(project(Modules.featureHomeDomain))
     implementation(project(Modules.featureHomePresentation))
-    implementation(project(Modules.preferencesDomain))
-    implementation(project(Modules.preferencesData))
     implementation(project(Modules.loggerDomain))
     implementation(project(Modules.loggerData))
     implementation(project(Modules.test))

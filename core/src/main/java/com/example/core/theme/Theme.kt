@@ -38,7 +38,7 @@ private val LightColorPalette = lightColorScheme(
 
 @Composable
 fun ServiceManagerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    // darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
     preferences: AppPreferences = hiltViewModel()
 ) {

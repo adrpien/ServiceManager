@@ -52,6 +52,4 @@ include ':common:android_test'
 include ':logger'
 include ':logger:logger_domain'
 include ':logger:logger_data'
-include ':preferences'
-include ':preferences:preferences_domain'
-include ':preferences:preferences_data'
+
