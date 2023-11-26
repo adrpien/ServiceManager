@@ -1,9 +1,11 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,10 +32,13 @@ fun InspectionListItem(
 ) {
     Card(
         modifier = modifier
-            .padding(8.dp),
-        shape = RoundedCornerShape(8.dp),
+            .padding(8.dp)
+            .border(
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
+                shape = MaterialTheme.shapes.medium
+            ),
         elevation = 4.dp,
-        backgroundColor = LightBeige
+        backgroundColor = MaterialTheme.colorScheme.primary
     ) {
         Column(
             modifier = Modifier
@@ -46,11 +51,11 @@ fun InspectionListItem(
             ) {
                 Text(
                     text = inspection.deviceName,
-                    fontSize = 16.sp,
+                    fontSize = 20.sp,
                     fontStyle = FontStyle.Italic,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = LightBlue,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -67,7 +72,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -84,7 +89,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -95,7 +100,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -112,7 +117,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -130,7 +135,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -141,7 +146,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -153,7 +158,7 @@ fun InspectionListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)

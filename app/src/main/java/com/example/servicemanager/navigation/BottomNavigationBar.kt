@@ -1,6 +1,10 @@
 package com.example.servicemanager.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -24,9 +28,17 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     onItemClick: (BottomNavigationItem) -> Unit
 ) {
+    Column {
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.onPrimary)
+        )
         NavigationBar(
             modifier = modifier,
-            tonalElevation = 4.dp
+            tonalElevation = 4.dp,
+            containerColor = MaterialTheme.colorScheme.primary
         ) {
             itemList.forEach {  item ->
                 val backStackEntry = navHostController.currentBackStackEntryAsState()
@@ -67,4 +79,6 @@ fun BottomNavigationBar(
                 )
             }
         }
+    }
+
 }

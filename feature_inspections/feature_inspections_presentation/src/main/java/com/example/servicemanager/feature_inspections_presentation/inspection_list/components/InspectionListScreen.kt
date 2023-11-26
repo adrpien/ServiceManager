@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.House
@@ -48,13 +49,13 @@ fun InspectionListScreen(
                 onClick = {
                     navHostController.navigate(Screens.InspectionDetailsScreen.withArgs("0"))
                 },
-                backgroundColor = MaterialTheme.colors.background
+                backgroundColor = MaterialTheme.colorScheme.primary
             )
             {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add inspection",
-                    tint = MaterialTheme.colors.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -63,7 +64,7 @@ fun InspectionListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBeige)
+                .background(MaterialTheme.colorScheme.secondary)
         ) {
 
             Row(
@@ -74,8 +75,8 @@ fun InspectionListScreen(
                 OutlinedTextField(
                     value = inspectionListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = LightBlue,
-                        unfocusedBorderColor = LightBlue
+                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
                         viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
@@ -93,14 +94,14 @@ fun InspectionListScreen(
                     Icon(
                         imageVector = Icons.Default.Sort,
                         contentDescription = "Sort",
-                    tint = LightBlue
+                    tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
-                    tint = LightBlue
+                    tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
 
@@ -111,11 +112,16 @@ fun InspectionListScreen(
                 exit = fadeOut() + slideOutVertically()
             ) {
 
+                val itemList = inspectionListState.value.hospitalList + Hospital(
+                    hospitalId = "0",
+                    hospital = "All"
+                )
+
+                val nameList = itemList.map { it.hospital }
+
                 DefaultSelectionSection(
-                    itemList = inspectionListState.value.hospitalList + Hospital(
-                        hospitalId = "0",
-                        hospital = "All"
-                    ),
+                    itemList = itemList,
+                    nameList = nameList,
                     selectedItem = inspectionListState.value.hospital ?: Hospital(),
                     onItemChanged = {
                         viewModel.onEvent(

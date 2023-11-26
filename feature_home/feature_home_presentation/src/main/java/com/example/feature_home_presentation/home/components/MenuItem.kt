@@ -1,6 +1,8 @@
 package com.example.feature_home_presentation.home.components
 
 import android.content.res.Resources
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,11 +41,19 @@ fun MenuItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .padding(10.dp)
+                .padding(
+                    start = 20.dp,
+                    end = 20.dp,
+                    top = 10.dp,
+                    bottom = 10.dp)
+                .border(
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
+                    shape = MaterialTheme.shapes.medium
+                )
         ,
             shape = Shapes.small,
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             onClick = menuItemState.onClick) {

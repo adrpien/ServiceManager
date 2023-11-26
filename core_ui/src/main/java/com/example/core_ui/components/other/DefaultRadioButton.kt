@@ -3,10 +3,12 @@ package com.example.core_ui.components.other
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.core.theme.LightBlue
@@ -30,20 +32,21 @@ fun DefaultRadioButton(
             modifier = Modifier
                 .padding(8.dp),
             onClick = onClick,
-            shape = RectangleShape,
+            shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = if (selected) LightBlue else LightBeige,
-                contentColor = if (!selected) LightBlue else LightBeige,
-                disabledBackgroundColor = if(selected) VeryLightBlue else LightBeige,
-                disabledContentColor = if (selected) LightBeige else VeryLightBlue
+                containerColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             border = BorderStroke(
-                width = 2.dp,
-                color = LightBlue
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.onPrimary
             ),
             enabled = isClickable
         ) {
-            Text(text = title)
+            Text(
+                text = title
+
+            )
         }
     }
 }

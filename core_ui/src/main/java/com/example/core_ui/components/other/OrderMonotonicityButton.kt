@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.ArrowCircleUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -34,10 +35,10 @@ fun OrderMonotonicityButton(
         Button(
             onClick = onClick,
             modifier = Modifier,
-            shape = CircleShape,
+            shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = LightBlue,
-                contentColor = LightBeige
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
             if(isAscending){

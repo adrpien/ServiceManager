@@ -335,6 +335,7 @@ fun RepairDetailsScreen(
 
                 DefaultSelectionSection(
                     itemList = technicianList,
+                    nameList = technicianList.map { it.name },
                     selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.pickupTechnicianId) }
                         ?: Technician(),
                     onItemChanged = {
@@ -445,6 +446,7 @@ fun RepairDetailsScreen(
 
             DefaultSelectionSection(
                 itemList = hospitalList,
+                nameList = hospitalList.map { it.hospital },
                 selectedItem = hospitalList.find { (it.hospitalId == repairDetailsState.value.repair.hospitalId) }
                     ?: Hospital(),
                 onItemChanged = {
@@ -547,6 +549,7 @@ fun RepairDetailsScreen(
                 )
                 DefaultSelectionSection(
                     itemList = technicianList,
+                    nameList = technicianList.map { it.name },
                     selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.repairTechnicianId) }
                         ?: Technician(),
                     onItemChanged =  {
@@ -601,6 +604,7 @@ fun RepairDetailsScreen(
                 )
             DefaultSelectionSection(
                 itemList = estStateList,
+                nameList = estStateList.map { it.estState },
                 selectedItem = estStateList.find { (it.estStateId == repairDetailsState.value.repair.estStateId) }
                     ?: EstState(),
                 onItemChanged =  {
@@ -622,6 +626,7 @@ fun RepairDetailsScreen(
             )
             DefaultSelectionSection(
                 itemList = repairStateList,
+                nameList = repairStateList.map { it.repairState },
                 selectedItem = repairStateList.find { (it.repairStateId == repairDetailsState.value.repair.repairStateId) }
                     ?: RepairState(),
                 onItemChanged = {
@@ -643,6 +648,7 @@ fun RepairDetailsScreen(
             )
             DefaultSelectionSection(
                 itemList = technicianList,
+                nameList = technicianList.map { it.name },
                 selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.returnTechnicianId) }
                     ?: Technician(),
                 onItemChanged = {

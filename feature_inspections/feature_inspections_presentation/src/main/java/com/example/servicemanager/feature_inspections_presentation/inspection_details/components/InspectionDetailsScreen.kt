@@ -342,6 +342,7 @@ fun InspectionDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             DefaultSelectionSection(
                 itemList = hospitalList,
+                nameList = hospitalList.map { it.hospital },
                 selectedItem = hospitalList.find { (it.hospitalId == inspectionDetailsState.value.inspection.hospitalId) }
                     ?: Hospital(),
                 onItemChanged = {
@@ -400,6 +401,7 @@ fun InspectionDetailsScreen(
 
             DefaultSelectionSection(
                 itemList = estStateList,
+                nameList = estStateList.map { it.estState },
                 selectedItem = estStateList.find {
                     (it.estStateId == inspectionDetailsState.value.inspection.estStateId)
                 } ?: EstState(),
@@ -425,6 +427,7 @@ fun InspectionDetailsScreen(
             )
             DefaultSelectionSection(
                 itemList = inspectionStateList,
+                nameList = inspectionStateList.map { it.inspectionState },
                 selectedItem = inspectionStateList.find { (it.inspectionStateId == inspectionDetailsState.value.inspection.inspectionStateId) }
                     ?: InspectionState(),
                 onItemChanged = {
@@ -448,6 +451,7 @@ fun InspectionDetailsScreen(
             )
             DefaultSelectionSection(
                 itemList = technicianList,
+                nameList = technicianList.map { it.name },
                 selectedItem = technicianList.find { (it.technicianId == inspectionDetailsState.value.inspection.technicianId) }
                     ?: Technician(),
                 onItemChanged = {

@@ -17,7 +17,7 @@ val VeryLightBlue = Color(0xFFADC3D1)
 
 // Teal tones
 val DarkTeal = Color(0xFF013D3B)
-val MediumTeal = Color(0xFF014947)
+val MediumTeal = Color(0xFF155C5A)
 val LightTeal = Color(0xFF01BDB6)
 val VeryLightTeal = Color(0xFF6DE6E1)
 

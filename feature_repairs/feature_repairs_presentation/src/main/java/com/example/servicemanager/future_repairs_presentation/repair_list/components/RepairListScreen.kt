@@ -109,11 +109,15 @@ fun RepairListScreen(
                 // exit = fadeOut() + slideOutVertically()
                 exit = fadeOut() + slideOutHorizontally()
             ) {
+                val itemList = repairListState.value.hospitalList + Hospital(
+                    hospitalId = "0",
+                    hospital = "All"
+                )
+
+                val nameList = itemList.map { it.hospital }
                 DefaultSelectionSection(
-                    itemList = repairListState.value.hospitalList + Hospital(
-                        hospitalId = "0",
-                        hospital = "All"
-                    ),
+                    itemList = itemList,
+                    nameList = nameList,
                     selectedItem = repairListState.value.hospital ?: Hospital(),
                     onItemChanged = {
                         viewModel.onEvent(
