@@ -2,6 +2,7 @@ package com.example.servicemanager.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Checklist
@@ -16,42 +17,41 @@ import com.example.core.util.Screens
 fun MainScreenNavigation(
 ) {
     val navHostController = rememberNavController()
+        Scaffold(
+            bottomBar = {
+                BottomNavigationBar(
+                    itemList = listOf(
+                        BottomNavigationItem(
+                            name = "Inspections",
+                            route = Screens.InspectionListScreen.route,
+                            icon = Icons.Default.Checklist,
+                            badgeCount = 0
+                        ),
+                        BottomNavigationItem(
+                            name = "Repairs",
+                            route = Screens.RepairListScreen.route,
+                            icon = Icons.Default.Settings,
+                            badgeCount = 0
+                        ),
+                        BottomNavigationItem(
+                            name = "Home",
+                            route = Screens.HomeScreen.route,
+                            icon = Icons.Default.Home,
+                            badgeCount = 0
+                        )
 
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(
-                itemList = listOf(
-                    BottomNavigationItem(
-                        name = "Inspections",
-                        route = Screens.InspectionListScreen.route,
-                        icon = Icons.Default.Checklist,
-                        badgeCount = 0
                     ),
-                    BottomNavigationItem(
-                        name = "Repairs",
-                        route = Screens.RepairListScreen.route,
-                        icon = Icons.Default.Settings,
-                        badgeCount = 0
-                    ),
-                    BottomNavigationItem(
-                        name = "Home",
-                        route = Screens.HomeScreen.route,
-                        icon = Icons.Default.Home,
-                        badgeCount = 0
-                    )
-
-                ),
-                navHostController = navHostController,
-                onItemClick = {
-                    navHostController.navigate(it.route)
-                },
-            )
+                    navHostController = navHostController,
+                    onItemClick = {
+                        navHostController.navigate(it.route)
+                    },
+                )
+            }
+        ) {
+            Column(modifier = Modifier.padding(it)) {
+                MainScreenNavigationContent(
+                    navHostController = navHostController
+                )
+            }
         }
-    ) {
-        Column(modifier = Modifier.padding(it)) {
-            MainScreenNavigationContent(
-                navHostController = navHostController
-            )
-        }
-    }
 }

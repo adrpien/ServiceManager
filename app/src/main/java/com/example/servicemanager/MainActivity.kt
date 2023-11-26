@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
+import com.example.core.theme.ServiceManagerTheme
 import com.example.servicemanager.navigation.LoginNavigation
 import com.example.servicemanager.navigation.MainScreenNavigation
 import com.example.servicemanager.navigation.MainScreenNavigationContent
@@ -15,9 +16,9 @@ class MainActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navHostController = rememberNavController()
-            MainScreenNavigation()
-            // LoginNavigation(navHostController)
+            ServiceManagerTheme {
+                MainScreenNavigation()
+            }
         }
     }
 }

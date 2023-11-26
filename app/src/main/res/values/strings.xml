@@ -19,4 +19,6 @@
     <string name="model">Model</string>
     <string name="name">Name</string>
     <string name="device">Device</string>
+    <string name="about">About</string>
+
 </resources>

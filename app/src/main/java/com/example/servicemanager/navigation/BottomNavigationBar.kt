@@ -2,6 +2,7 @@ package com.example.servicemanager.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -13,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.core.theme.LightBlue
 import com.example.core.theme.LightBeige
+import com.example.core.theme.ServiceManagerTheme
 import com.example.core.theme.VeryLightBlue
 
 @Composable
@@ -22,49 +24,47 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     onItemClick: (BottomNavigationItem) -> Unit
 ) {
-
-    NavigationBar(
-        modifier = modifier,
-        containerColor = LightBlue,
-        tonalElevation = 4.dp
+        NavigationBar(
+            modifier = modifier,
+            tonalElevation = 4.dp
         ) {
-        itemList.forEach {  item ->
-            val backStackEntry = navHostController.currentBackStackEntryAsState()
-            val selected = item.route == backStackEntry.value?.destination?.route
-            BottomNavigationItem(
-                selected = selected,
-                selectedContentColor = LightBeige,
-                unselectedContentColor = VeryLightBlue,
-                onClick = { onItemClick(item) },
-                icon = {
-                    Column(horizontalAlignment = CenterHorizontally) {
-                        if(item.badgeCount > 0 ) {
-                            BadgedBox(
-                                badge = {
-                                       Text(text = item.badgeCount.toString())
-                                },
-                            ) {
+            itemList.forEach {  item ->
+                val backStackEntry = navHostController.currentBackStackEntryAsState()
+                val selected = item.route == backStackEntry.value?.destination?.route
+                BottomNavigationItem(
+                    selected = selected,
+                    selectedContentColor = MaterialTheme.colorScheme.onPrimary,
+                    unselectedContentColor = MaterialTheme.colorScheme.onSecondary,
+                    onClick = { onItemClick(item) },
+                    icon = {
+                        Column(horizontalAlignment = CenterHorizontally) {
+                            if(item.badgeCount > 0 ) {
+                                BadgedBox(
+                                    badge = {
+                                        Text(text = item.badgeCount.toString())
+                                    },
+                                ) {
+                                    Icon(
+                                        imageVector = item.icon,
+                                        contentDescription = item.name
+                                    )
+                                }
+                            } else {
                                 Icon(
                                     imageVector = item.icon,
                                     contentDescription = item.name
                                 )
                             }
-                        } else {
-                            Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.name
-                            )
-                        }
-                        if (selected) {
-                            Text(
-                                text = item.name,
-                                textAlign = TextAlign.Center,
-                                fontSize = 16.sp
-                            )
+                            if (selected) {
+                                Text(
+                                    text = item.name,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 16.sp
+                                )
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
-    }
 }

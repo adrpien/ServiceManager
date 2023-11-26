@@ -13,20 +13,19 @@ import com.example.core.util.UiText
 @Composable
 fun AboutAlertDialog(
     modifier: Modifier = Modifier,
-    isVisible: Boolean,
+    title: UiText,
     onConfirm: () -> Unit,
+    onDismissRequest: () -> Unit
 ) {
     val context = LocalContext.current
-
-/*    if (isVisible){
         AlertDialog(
             shape = RectangleShape,
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             textContentColor = MaterialTheme.colorScheme.onPrimary,
-            onDismissRequest = { isVisible = false },
-            title = { Text(text = context.title) },
-            text = { Text(text = contentText) },
+            onDismissRequest = onDismissRequest,
+            // title = { Text(text = title.asString()) },
+            text = { Text(text = "made by adi") },
             confirmButton = {
                 Button(
                     shape = RectangleShape,
@@ -41,6 +40,4 @@ fun AboutAlertDialog(
             },
 
         )
-    }*/
-
 }

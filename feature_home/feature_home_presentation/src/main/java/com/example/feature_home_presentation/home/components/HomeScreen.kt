@@ -35,6 +35,7 @@ fun HomeScreen(
     navHostController: NavHostController,
 ) {
 
+
     val showAboutDialog = remember {
         mutableStateOf(false)
     }
@@ -70,9 +71,7 @@ fun HomeScreen(
         icon = Icons.Default.Info,
         text = UiText.StringResource(R.string.about)
     ) {
-        coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar("App settings clicked!")
-        }
+        showAboutDialog.value = true
     }
 
     val menuItems = listOf<MenuItemState>(
@@ -108,8 +107,14 @@ fun HomeScreen(
                     MenuItem(menuItemState = item)
                 }
             }
+        }
 
-
+        if(showAboutDialog.value) {
+            AboutAlertDialog(
+                title = UiText.StringResource(R.string.about),
+                onConfirm = { showAboutDialog.value = false },
+                onDismissRequest = { showAboutDialog.value = false }
+            )
         }
     }
 }

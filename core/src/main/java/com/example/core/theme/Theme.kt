@@ -1,5 +1,7 @@
 package com.example.core.theme
 
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -7,45 +9,47 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.preferences.AppPreferences
 import com.example.core.values.Dimensions
 import com.example.core.values.LocalSpacing
 
+private val LocalMyColors = compositionLocalOf {
+    DarkColorPalette
+}
 private val DarkColorPalette = darkColorScheme(
-    primary = MediumTeal,
+    primary = DarkTeal,
     onPrimary = VeryLightTeal,
-    secondary = MediumGrey,
-    onSecondary = VeryLightGrey,
+    secondary = MediumTeal,
+    onSecondary = LightTeal,
 )
 
 private val LightColorPalette = lightColorScheme(
     primary = VeryLightTeal,
     onPrimary = DarkTeal,
-    secondary = VeryLightGrey,
-    onSecondary = MediumGrey
+    secondary = LightTeal,
+    onSecondary = MediumTeal
 )
 
 @Composable
 fun ServiceManagerTheme(
-    preferences: AppPreferences = hiltViewModel(),
     content: @Composable () -> Unit,
 ) {
-
+    /*val context = LocalContext.current
     val isInDarkMode = preferences.getIsDarkModeEnabled()
     // if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)  true
     val supportDynamicColorScheme = false
     val colorScheme = if (supportDynamicColorScheme) {
-        val context = LocalContext.current
         if (isInDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
         if (isInDarkMode) DarkColorPalette else LightColorPalette
-    }
+    }*/
 
     CompositionLocalProvider(LocalSpacing provides Dimensions()) {
         MaterialTheme(
-            colorScheme = colorScheme,
+            colorScheme = DarkColorPalette,
             typography = Typography,
             shapes = Shapes,
             content = content
