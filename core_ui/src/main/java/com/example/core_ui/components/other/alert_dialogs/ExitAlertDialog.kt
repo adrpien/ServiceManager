@@ -4,34 +4,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
 import androidx.compose.ui.graphics.RectangleShape
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
-import com.example.core.theme.TiemedVeryLightBlue
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
+import com.example.core.theme.VeryLightBlue
 
 @Composable
 fun ExitAlertDialog(
     modifier: Modifier = Modifier,
-    isVisible: Boolean,
     title: String,
     contentText: String,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onDismissRequest: () -> Unit
 ) {
-    if (isVisible){
         AlertDialog(
             shape = RectangleShape,
-            containerColor = TiemedLightBeige,
-            titleContentColor = TiemedLightBlue,
-            textContentColor = TiemedLightBlue,
-            onDismissRequest = { onDismiss() },
+            containerColor = LightBeige,
+            titleContentColor = LightBlue,
+            textContentColor = LightBlue,
+            onDismissRequest = onDismissRequest ,
             title = { Text(text = title) },
             text = { Text(text = contentText) },
             confirmButton = {
                 Button(
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = TiemedVeryLightBlue,
-                        contentColor = TiemedLightBlue
+                        containerColor = VeryLightBlue,
+                        contentColor = LightBlue
                     ),
                     onClick = { onConfirm() },
                 ) {
@@ -43,14 +42,12 @@ fun ExitAlertDialog(
                     onClick = { onDismiss() },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = TiemedVeryLightBlue,
-                        contentColor = TiemedLightBlue
+                        containerColor = VeryLightBlue,
+                        contentColor = LightBlue
                     )
                 ) {
                     Text(text = "Dissmiss")
                 }
             }
         )
-    }
-
 }
