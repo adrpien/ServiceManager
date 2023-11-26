@@ -19,8 +19,8 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
 import com.example.core.theme.Dimensions.signatureHeight
 import com.example.core.theme.Dimensions.signatureWidth
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
 import com.example.core.util.Helper.Companion.toDp
 
 
@@ -33,7 +33,7 @@ fun SignatureArea(
     var bitmap = Bitmap.createBitmap(signatureWidth, signatureHeight, Bitmap.Config.ARGB_8888)
     val backgroundPaint = Paint()
     backgroundPaint.apply {
-        TiemedLightBeige.also { color = it }
+        LightBeige.also { color = it }
         style = PaintingStyle.Fill
     }
     val canvas = Canvas(bitmap.asImageBitmap())
@@ -56,7 +56,7 @@ fun SignatureArea(
     Surface(
         modifier = Modifier
             .padding(10.dp)
-            .border(2.dp, TiemedLightBlue),
+            .border(2.dp, LightBlue),
         color = Color.White
             ){
         Box(
@@ -67,7 +67,7 @@ fun SignatureArea(
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(TiemedLightBeige)
+                    .background(LightBeige)
                     .pointerInteropFilter { motionEvent ->
                         when (motionEvent.action) {
                             MotionEvent.ACTION_DOWN -> {
@@ -100,14 +100,14 @@ fun SignatureArea(
                     path.value?.let { path ->
                         drawPath(
                             path = path,
-                            color = TiemedLightBlue,
+                            color = LightBlue,
                             style = Stroke(
                                 width = 4.dp.toPx()
                             )
                         )
                         val paint = Paint()
                         paint.apply {
-                            color = TiemedLightBlue
+                            color = LightBlue
                             style = PaintingStyle.Stroke
                             strokeWidth = 8f
                         }

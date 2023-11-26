@@ -40,9 +40,6 @@
             <option value="$PROJECT_DIR$/logger" />
             <option value="$PROJECT_DIR$/logger/logger_data" />
             <option value="$PROJECT_DIR$/logger/logger_domain" />
-            <option value="$PROJECT_DIR$/preferences" />
-            <option value="$PROJECT_DIR$/preferences/preferences_data" />
-            <option value="$PROJECT_DIR$/preferences/preferences_domain" />
           </set>
         </option>
       </GradleProjectSettings>

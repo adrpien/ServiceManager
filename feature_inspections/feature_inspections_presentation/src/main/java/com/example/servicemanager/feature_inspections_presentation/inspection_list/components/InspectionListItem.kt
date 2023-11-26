@@ -11,8 +11,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
 import com.example.core.util.DateFormattingTypes
 import com.example.core.util.Helper.Companion.getDateString
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -33,7 +33,7 @@ fun InspectionListItem(
             .padding(8.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
-        backgroundColor = TiemedLightBeige
+        backgroundColor = LightBeige
     ) {
         Column(
             modifier = Modifier
@@ -50,7 +50,7 @@ fun InspectionListItem(
                     fontStyle = FontStyle.Italic,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = TiemedLightBlue,
+                    color = LightBlue,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)

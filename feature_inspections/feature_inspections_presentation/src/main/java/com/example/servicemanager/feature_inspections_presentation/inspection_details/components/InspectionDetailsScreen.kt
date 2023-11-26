@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultDatePickerDialog
@@ -232,7 +232,7 @@ fun InspectionDetailsScreen(
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
                     }
                 },
-                backgroundColor = TiemedLightBlue
+                backgroundColor = LightBlue
             ) {
                 if (isInEditMode) {
                     Icon(
@@ -258,18 +258,18 @@ fun InspectionDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
-                .background(TiemedLightBeige)
+                .background(LightBeige)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
         ) {
             Text(
                 text = "Device",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -332,11 +332,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -383,11 +383,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Result",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -395,7 +395,7 @@ fun InspectionDetailsScreen(
                 modifier = Modifier
                     .padding(8.dp),
                 text = "EstState:",
-                color = TiemedLightBlue
+                color = LightBlue
             )
 
             DefaultSelectionSection(
@@ -421,7 +421,7 @@ fun InspectionDetailsScreen(
                 modifier = Modifier
                     .padding(8.dp),
                 text = "InspectionState:",
-                color = TiemedLightBlue
+                color = LightBlue
             )
             DefaultSelectionSection(
                 itemList = inspectionStateList,
@@ -444,7 +444,7 @@ fun InspectionDetailsScreen(
                 modifier = Modifier
                     .padding(8.dp),
                 text = "Technician:",
-                color = TiemedLightBlue
+                color = LightBlue
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -471,10 +471,10 @@ fun InspectionDetailsScreen(
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedLightBeige,
-                    contentColor = TiemedLightBlue
+                    backgroundColor = LightBeige,
+                    contentColor = LightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedLightBlue)
+                border = BorderStroke(2.dp, LightBlue)
             ) {
                 Text(
                     text = "Inspection date: " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong())
@@ -498,10 +498,10 @@ fun InspectionDetailsScreen(
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedLightBeige,
-                    contentColor = TiemedLightBlue
+                    backgroundColor = LightBeige,
+                    contentColor = LightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedLightBlue)
+                border = BorderStroke(2.dp, LightBlue)
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
@@ -509,36 +509,34 @@ fun InspectionDetailsScreen(
                     contentDescription = "Signature"
                 )
             }
-            ExitAlertDialog(
-                isVisible = showExitDialog.value,
-                title = "Save?",
-                contentText = "Do you want save changes?",
-                onConfirm = {
-                    if (showExitDialog.value) {
-                        if (inspectionDetailsState.value.inspection.inspectionId != "0") {
-                            viewModel.onEvent(
-                                InspectionDetailsEvent.UpdateInspection(
-                                    inspectionDetailsState.value.inspection
+            if(showExitDialog.value) {
+                ExitAlertDialog(
+                    title = "Save?",
+                    contentText = "Do you want save changes?",
+                    onConfirm = {
+                        if (showExitDialog.value) {
+                            if (inspectionDetailsState.value.inspection.inspectionId != "0") {
+                                viewModel.onEvent(
+                                    InspectionDetailsEvent.UpdateInspection(
+                                        inspectionDetailsState.value.inspection
+                                    )
                                 )
-                            )
-                        } else {
-                            viewModel.onEvent(
-                                InspectionDetailsEvent.SaveInspection(
-                                    inspectionDetailsState.value.inspection
+                            } else {
+                                viewModel.onEvent(
+                                    InspectionDetailsEvent.SaveInspection(
+                                        inspectionDetailsState.value.inspection
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
-                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                    navHostController.popBackStack()
+                        viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
+                        navHostController.popBackStack()
 
-                },
-                onDismiss = {
-                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                    navHostController.popBackStack()
-
-                }
-            )
+                    },
+                    onDismiss = { showExitDialog.value = false },
+                    onDismissRequest = { showExitDialog.value = false }
+                )
+            }
             DefaultDatePickerDialog(
                 dialogState = inspectionDateDialogState,
                 onClick = {
@@ -560,15 +558,15 @@ fun InspectionDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = TiemedLightBeige,
+                backgroundColor = LightBeige,
                 buttons = {
                     positiveButton(
                         text = "Confirm",
-                        textStyle = TextStyle(color = TiemedLightBlue)
+                        textStyle = TextStyle(color = LightBlue)
                     ) {}
                     negativeButton(
                         text = "Cancel",
-                        textStyle = TextStyle(color = TiemedLightBlue)
+                        textStyle = TextStyle(color = LightBlue)
                     )
                 }
             ) {
@@ -590,11 +588,11 @@ fun InspectionDetailsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedLightBeige),
+                .background(LightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = TiemedLightBlue
+                color = LightBlue
             )
         }
     }

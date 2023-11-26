@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListViewModel
@@ -63,7 +63,7 @@ fun InspectionListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedLightBeige)
+                .background(LightBeige)
         ) {
 
             Row(
@@ -74,8 +74,8 @@ fun InspectionListScreen(
                 OutlinedTextField(
                     value = inspectionListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = TiemedLightBlue,
-                        unfocusedBorderColor = TiemedLightBlue
+                        focusedBorderColor = LightBlue,
+                        unfocusedBorderColor = LightBlue
                     ),
                     onValueChange = {
                         viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
@@ -93,14 +93,14 @@ fun InspectionListScreen(
                     Icon(
                         imageVector = Icons.Default.Sort,
                         contentDescription = "Sort",
-                    tint = TiemedLightBlue
+                    tint = LightBlue
                     )
                 }
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
-                    tint = TiemedLightBlue
+                    tint = LightBlue
                     )
                 }
 
@@ -173,11 +173,11 @@ fun InspectionListScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedLightBeige),
+                .background(LightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = TiemedLightBlue
+                color = LightBlue
             )
         }
     }

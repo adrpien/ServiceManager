@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
-import com.example.core.theme.TiemedVeryLightBlue
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
+import com.example.core.theme.VeryLightBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,15 +34,15 @@ fun DefaultTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .border(2.dp, TiemedLightBlue),
+                .border(2.dp, LightBlue),
             colors = TextFieldDefaults.textFieldColors(
-                focusedTextColor = TiemedLightBlue,
-                containerColor = TiemedLightBeige,
-                unfocusedLabelColor = TiemedLightBlue,
-                focusedLabelColor = TiemedLightBlue,
-                disabledLabelColor = TiemedLightBlue,
-                errorLabelColor = TiemedLightBlue,
-                disabledTextColor = TiemedVeryLightBlue
+                focusedTextColor = LightBlue,
+                containerColor = LightBeige,
+                unfocusedLabelColor = LightBlue,
+                focusedLabelColor = LightBlue,
+                disabledLabelColor = LightBlue,
+                errorLabelColor = LightBlue,
+                disabledTextColor = VeryLightBlue
             ),
         )
         Spacer(modifier = Modifier.height(8.dp))

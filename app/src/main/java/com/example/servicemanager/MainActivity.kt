@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.example.servicemanager.navigation.LoginNavigation
+import com.example.servicemanager.navigation.MainScreenNavigation
+import com.example.servicemanager.navigation.MainScreenNavigationContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,10 +15,9 @@ class MainActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // MainScreenComposable(
-            // )
             val navHostController = rememberNavController()
-            LoginNavigation(navHostController)
+            MainScreenNavigation()
+            // LoginNavigation(navHostController)
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.core_ui.components.other
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.DialogProperties
-import com.example.core.theme.TiemedBeige
+import com.example.core.theme.MediumBeige
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -23,7 +23,7 @@ fun DefaultDatePickerDialog(
             dismissOnBackPress = true,
             dismissOnClickOutside = true
         ),
-        backgroundColor = TiemedBeige,
+        backgroundColor = MediumBeige,
         buttons = {
             button(
                 text = "Today",

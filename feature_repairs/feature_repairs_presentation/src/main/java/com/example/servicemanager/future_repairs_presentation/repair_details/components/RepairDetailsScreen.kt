@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultTextField
@@ -282,13 +282,13 @@ fun RepairDetailsScreen(
                     }
 
                 },
-                backgroundColor = TiemedLightBlue
+                backgroundColor = LightBlue
             ) {
                 Icon(
                     imageVector = if(repairDetailsState.value.isInEditMode) Icons.Default.Save else Icons.Default.Edit,
                     contentDescription = "Save",
                     modifier = Modifier,
-                tint = TiemedLightBeige
+                tint = LightBeige
                 )
             }
         },
@@ -298,7 +298,7 @@ fun RepairDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
-                .background(TiemedLightBeige)
+                .background(LightBeige)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
                 ) {
@@ -312,10 +312,10 @@ fun RepairDetailsScreen(
                 onClick = { openingDateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedLightBeige,
-                    contentColor = TiemedLightBlue
+                    backgroundColor = LightBeige,
+                    contentColor = LightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedLightBlue)
+                border = BorderStroke(2.dp, LightBlue)
             ) {
                 Text(
                     text = "Opening date: " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong())
@@ -328,7 +328,7 @@ fun RepairDetailsScreen(
             ) {
                 Text(
                     text = "Pickup technician:",
-                    color = TiemedLightBlue
+                    color = LightBlue
                 )
 
 /* ********************** DEVICE  *************************************************************** */
@@ -354,11 +354,11 @@ fun RepairDetailsScreen(
             Text(
                 text = "Device",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -432,11 +432,11 @@ fun RepairDetailsScreen(
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -489,11 +489,11 @@ fun RepairDetailsScreen(
             Text(
                 text = "Repair",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -543,7 +543,7 @@ fun RepairDetailsScreen(
 /* ********************** REPAIRING TECHNICIAN  ************************************************* */
                 Text(
                     text = "Repairing technician:",
-                    color = TiemedLightBlue
+                    color = LightBlue
                 )
                 DefaultSelectionSection(
                     itemList = technicianList,
@@ -571,10 +571,10 @@ fun RepairDetailsScreen(
                 onClick = { repairingDateDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedLightBeige,
-                    contentColor = TiemedLightBlue
+                    backgroundColor = LightBeige,
+                    contentColor = LightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedLightBlue)
+                border = BorderStroke(2.dp, LightBlue)
             ) {
                 Text(
                     text = "Repairing date: " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong())
@@ -585,11 +585,11 @@ fun RepairDetailsScreen(
             Text(
                 text = "Result",
                 fontSize = 20.sp,
-                color = TiemedLightBlue
+                color = LightBlue
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = TiemedLightBlue,
+                color = LightBlue,
                 modifier = Modifier.height(4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -597,7 +597,7 @@ fun RepairDetailsScreen(
 /* ********************** EST STATE  ************************************************************ */
             Text(
                 text = "EstState:",
-                color = TiemedLightBlue
+                color = LightBlue
                 )
             DefaultSelectionSection(
                 itemList = estStateList,
@@ -618,7 +618,7 @@ fun RepairDetailsScreen(
 /* ********************** REPAIRING STATE  ****************************************************** */
             Text(
                 text = "RepairState:",
-                color = TiemedLightBlue
+                color = LightBlue
             )
             DefaultSelectionSection(
                 itemList = repairStateList,
@@ -639,7 +639,7 @@ fun RepairDetailsScreen(
 /* ********************** RETURN TECHNICIAN  **************************************************** */
             Text(
                 text = "Return technician:",
-                color = TiemedLightBlue
+                color = LightBlue
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -666,10 +666,10 @@ fun RepairDetailsScreen(
                 enabled = isInEditMode,
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedLightBeige,
-                    contentColor = TiemedLightBlue
+                    backgroundColor = LightBeige,
+                    contentColor = LightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedLightBlue)
+                border = BorderStroke(2.dp, LightBlue)
             ) {
                 Text(
                     text = "Returning date: " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong())
@@ -697,10 +697,10 @@ fun RepairDetailsScreen(
                 onClick = { signatureDialogState.show()},
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = TiemedLightBeige,
-                    contentColor = TiemedLightBlue
+                    backgroundColor = LightBeige,
+                    contentColor = LightBlue
                 ),
-                border = BorderStroke(2.dp, TiemedLightBlue)
+                border = BorderStroke(2.dp, LightBlue)
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
@@ -766,34 +766,33 @@ fun RepairDetailsScreen(
                         ZoneId.systemDefault()
                     ).toLocalDate()
             )
-            ExitAlertDialog(
-                isVisible = showExitDialog.value,
-                title = "Save?",
-                contentText = "Do you want save changes?",
-                onConfirm = {
-                    if (showExitDialog.value) {
-                        if (repairDetailsState.value.repair.repairId != "0") {
-                            viewModel.onEvent(
-                                RepairDetailsEvent.UpdateRepair(
-                                    repairDetailsState.value.repair
-                                )
-                            )
-                        } else {
-                            viewModel.onEvent(
-                                RepairDetailsEvent.SaveRepair(
-                                    repairDetailsState.value.repair
-                                )
-                            )
-                        }
-                    }
-                    navHostController.popBackStack()
+            if (showExitDialog.value) {
+                    ExitAlertDialog(
+                        title = "Save?",
+                        contentText = "Do you want save changes?",
+                        onConfirm = {
+                            if (showExitDialog.value) {
+                                if (repairDetailsState.value.repair.repairId != "0") {
+                                    viewModel.onEvent(
+                                        RepairDetailsEvent.UpdateRepair(
+                                            repairDetailsState.value.repair
+                                        )
+                                    )
+                                } else {
+                                    viewModel.onEvent(
+                                        RepairDetailsEvent.SaveRepair(
+                                            repairDetailsState.value.repair
+                                        )
+                                    )
+                                }
+                            }
+                            navHostController.popBackStack()
 
-                },
-                onDismiss = {
-                    navHostController.popBackStack()
-
-                }
-            )
+                        },
+                        onDismiss = { showExitDialog.value = false },
+                        onDismissRequest = { showExitDialog.value = false }
+                    )
+            }
 
             MaterialDialog(
                 dialogState = signatureDialogState,
@@ -801,15 +800,15 @@ fun RepairDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = TiemedLightBeige,
+                backgroundColor = LightBeige,
                 buttons = {
                     positiveButton(
                         text = "Confirm",
-                        textStyle = TextStyle(color = TiemedLightBlue)
+                        textStyle = TextStyle(color = LightBlue)
                     )
                     negativeButton(
                         text = "Cancel",
-                        textStyle = TextStyle(color = TiemedLightBlue)
+                        textStyle = TextStyle(color = LightBlue)
                     )
                 }
             ) {
@@ -832,11 +831,11 @@ fun RepairDetailsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(TiemedLightBeige),
+                .background(LightBeige),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = TiemedLightBlue
+                color = LightBlue
             )
         }
     }

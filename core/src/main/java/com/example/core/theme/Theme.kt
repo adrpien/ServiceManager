@@ -1,7 +1,5 @@
 package com.example.core.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -12,45 +10,33 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.preferences.AppPreferences
-import com.example.core.preferences.AppPreferencesImplementation
 import com.example.core.values.Dimensions
 import com.example.core.values.LocalSpacing
-import dagger.hilt.android.AndroidEntryPoint
 
 private val DarkColorPalette = darkColorScheme(
-    primary = TiemedLightBeige,
-    onPrimary = TiemedMediumBlue,
-    secondary = TiemedLightTeal,
-    onSecondary = TiemedDarkTeal,
-    background = TiemedDarkGrey,
-    onBackground = TiemedLightGrey,
-
+    primary = MediumTeal,
+    onPrimary = VeryLightTeal,
+    secondary = MediumGrey,
+    onSecondary = VeryLightGrey,
 )
 
 private val LightColorPalette = lightColorScheme(
-    primary = TiemedMediumBlue,
-    onPrimary = TiemedLightBeige,
-    secondary = TiemedDarkTeal,
-    onSecondary = TiemedLightTeal,
-    background = TiemedLightGrey,
-    onBackground = TiemedDarkGrey
+    primary = VeryLightTeal,
+    onPrimary = DarkTeal,
+    secondary = VeryLightGrey,
+    onSecondary = MediumGrey
 )
 
 @Composable
 fun ServiceManagerTheme(
-    // darkTheme: Boolean = isSystemInDarkTheme(),
+    preferences: AppPreferences = hiltViewModel(),
     content: @Composable () -> Unit,
-    preferences: AppPreferences = hiltViewModel()
 ) {
-/*    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val context = LocalContext.current
-        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-    } else {
-        if (darkTheme) DarkColorPalette else LightColorPalette
-    }*/
 
     val isInDarkMode = preferences.getIsDarkModeEnabled()
-    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    // if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)  true
+    val supportDynamicColorScheme = false
+    val colorScheme = if (supportDynamicColorScheme) {
         val context = LocalContext.current
         if (isInDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {

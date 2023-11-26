@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.NavigationRoutes
-import com.example.core.util.Helper.Companion.convertToBitmap
-import com.example.core.util.Helper.Companion.convertToByteArray
+import com.example.core.util.Helper.Companion.byteArrayToBitmap
+import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
@@ -75,7 +75,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                     _inspectionDetailsState.value = _inspectionDetailsState.value.copy(inspection = _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId))
                                 }
                                 viewModelScope.launch(Dispatchers.IO) {
-                                    appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
+                                    appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
                                 }
                                 _eventFlow.emit(UiEvent.NavigateTo(NavigationRoutes.ROUTE_INSPECTION_LIST_SCREEN))
                             }
@@ -88,7 +88,7 @@ class InspectionDetailsViewModel @Inject constructor(
                     inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection).collect()
                 }
                 viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, convertToByteArray(inspectionDetailsState.value.signature)).collect()
+                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
                 }
             }
             is InspectionDetailsEvent.SetIsInEditMode -> {
@@ -145,7 +145,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 result.data?.let { signature ->
                                     _inspectionDetailsState.value =
                                         _inspectionDetailsState.value.copy(
-                                            signature = convertToBitmap(signature)
+                                            signature = byteArrayToBitmap(signature)
                                         )
                                 }
                             }

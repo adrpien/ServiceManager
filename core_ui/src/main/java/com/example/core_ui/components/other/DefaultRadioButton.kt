@@ -9,9 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
-import com.example.core.theme.TiemedVeryLightBlue
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
+import com.example.core.theme.VeryLightBlue
 
 
 @Composable
@@ -32,14 +32,14 @@ fun DefaultRadioButton(
             onClick = onClick,
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = if (selected) TiemedLightBlue else TiemedLightBeige,
-                contentColor = if (!selected) TiemedLightBlue else TiemedLightBeige,
-                disabledBackgroundColor = if(selected) TiemedVeryLightBlue else TiemedLightBeige,
-                disabledContentColor = if (selected) TiemedLightBeige else TiemedVeryLightBlue
+                backgroundColor = if (selected) LightBlue else LightBeige,
+                contentColor = if (!selected) LightBlue else LightBeige,
+                disabledBackgroundColor = if(selected) VeryLightBlue else LightBeige,
+                disabledContentColor = if (selected) LightBeige else VeryLightBlue
             ),
             border = BorderStroke(
                 width = 2.dp,
-                color = TiemedLightBlue
+                color = LightBlue
             ),
             enabled = isClickable
         ) {

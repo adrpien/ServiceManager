@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.core.util.Screens
+import com.example.feature_home_presentation.app_settings.components.AppSettingsScreen
+import com.example.feature_home_presentation.database_settings.components.DatabaseSettingsScreen
 import com.example.feature_home_presentation.home.components.HomeScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.components.InspectionListScreen
@@ -18,6 +20,7 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
         startDestination = Screens.RepairListScreen.route) {
+
         composable(
             route = Screens.InspectionListScreen.route,
         ){
@@ -25,6 +28,7 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
                 navHostController = navHostController
             )
         }
+
         composable(
             route = Screens.InspectionDetailsScreen.route + "/{inspectionId}",
             arguments = listOf(
@@ -41,6 +45,7 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
                 inspectionId = it.arguments?.getString("inspectionId") ?: "0"
             )
         }
+
         composable(
             route = Screens.RepairListScreen.route,
         ){
@@ -48,6 +53,7 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
                 navHostController = navHostController
             )
         }
+
         composable(
             route = Screens.RepairDetailsScreen.route + "/{repairId}",
             arguments = listOf(
@@ -63,12 +69,25 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
                 repairId = it.arguments?.getString("repairId") ?: "0"
             )
         }
+
         composable(
             route = Screens.HomeScreen.route
         ){
             HomeScreen(
                 navHostController = navHostController
             )
+        }
+
+        composable(
+            route = Screens.AppSettingsScreen.route
+        ) {
+            AppSettingsScreen()
+        }
+
+        composable(
+            route = Screens.DatabaseSettingsScreen.route
+        ) {
+            DatabaseSettingsScreen()
         }
     }
 }

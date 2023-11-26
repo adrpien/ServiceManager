@@ -23,8 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.TiemedLightBlue
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.LightBlue
+import com.example.core.theme.LightBeige
 
 
 @Composable
@@ -40,14 +40,14 @@ fun PasswordTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .border(2.dp, TiemedLightBlue),
+            .border(2.dp, LightBlue),
         colors = TextFieldDefaults.colors(
-            focusedTextColor = TiemedLightBlue,
-            focusedContainerColor = TiemedLightBeige,
-            unfocusedLabelColor = TiemedLightBlue,
-            focusedLabelColor = TiemedLightBlue,
-            disabledLabelColor = TiemedLightBlue,
-            errorLabelColor = TiemedLightBlue,
+            focusedTextColor = LightBlue,
+            focusedContainerColor = LightBeige,
+            unfocusedLabelColor = LightBlue,
+            focusedLabelColor = LightBlue,
+            disabledLabelColor = LightBlue,
+            errorLabelColor = LightBlue,
         ),
         value = state.value.value,
         onValueChange = onValueChanged,

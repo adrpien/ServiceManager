@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.TiemedDarkBlue
-import com.example.core.theme.TiemedBeige
-import com.example.core.theme.TiemedLightBeige
+import com.example.core.theme.DarkBlue
+import com.example.core.theme.MediumBeige
+import com.example.core.theme.LightBeige
 
 @Composable
 fun DefaultButton(
@@ -27,10 +27,10 @@ fun DefaultButton(
         onClick =  onClick,
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = TiemedBeige,
-            contentColor = TiemedDarkBlue
+            containerColor = MediumBeige,
+            contentColor = DarkBlue
         ),
-        border = BorderStroke(2.dp, TiemedLightBeige)
+        border = BorderStroke(2.dp, LightBeige)
     ) {
         Text(
             text = title

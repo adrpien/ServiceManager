@@ -2,7 +2,8 @@ package com.example.core.util
 
 
 object NavigationRoutes {
-
+    const val DATABASE_SETTINGS_SCREEN = "database_settings"
+    const val APP_SETTINGS_SCREEN = "app_settings"
     const val ROUTE_HOME_SCREEN = "home"
     const val ROUTE_INSPECTION_LIST_SCREEN = "inspection_list"
     const val ROUTE_INSPECTION_DETAILS_SCREEN = "inspection_details"

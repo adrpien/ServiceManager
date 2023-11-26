@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.NavigationRoutes
-import com.example.core.util.Helper.Companion.convertToBitmap
-import com.example.core.util.Helper.Companion.convertToByteArray
+import com.example.core.util.Helper.Companion.byteArrayToBitmap
+import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
 
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
@@ -72,7 +72,7 @@ class RepairDetailsViewModel @Inject constructor(
                                     _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
                                 }
                                 viewModelScope.launch(Dispatchers.IO) {
-                                    appUseCases.saveSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
+                                    appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
                                 }
                                 _eventFlow.emit(
                                     UiEvent.NavigateTo(
@@ -94,7 +94,7 @@ class RepairDetailsViewModel @Inject constructor(
                     repairUseCases.updateRepair(repairDetailsState.value.repair).collect()
                 }
                 viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, convertToByteArray(repairDetailsState.value.signature)).collect()
+                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
                 }
             }
             is RepairDetailsEvent.SetIsInEditMode -> {
@@ -153,7 +153,7 @@ class RepairDetailsViewModel @Inject constructor(
                                 result.data?.let { signature ->
                                     _repairDetailsState.value =
                                         _repairDetailsState.value.copy(
-                                            signature = convertToBitmap(signature)
+                                            signature = byteArrayToBitmap(signature)
                                         )
                                 }
                             }
