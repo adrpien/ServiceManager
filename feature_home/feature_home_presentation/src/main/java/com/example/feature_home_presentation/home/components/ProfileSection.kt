@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,39 +26,41 @@ import com.example.servicemanager.feature_home_domain.model.Profile
 fun ProfileSection(
     profile: Profile
 ) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp)
-            .border(
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
-                shape = MaterialTheme.shapes.medium
-            )
-            .background(MaterialTheme.colorScheme.primary)
+            .padding(20.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = 4.dp,
+        backgroundColor = MaterialTheme.colorScheme.primary
     ) {
-        val bitmap = Helper.byteArrayToBitmap(profile.profilePicture)
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = "Profile picture",
-            modifier = Modifier
-                .height(100.dp)
-                .width(100.dp)
-                .padding(10.dp)
-                .border(
-                    border = BorderStroke(1.dp, Color.Black),
-                    shape = MaterialTheme.shapes.medium
+        Row() {
+            val bitmap = Helper.byteArrayToBitmap(profile.profilePicture)
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = "Profile picture",
+                modifier = Modifier
+                    .height(100.dp)
+                    .width(100.dp)
+                    .padding(10.dp)
+                    .border(
+                        border = BorderStroke(1.dp, Color.Black),
+                        shape = MaterialTheme.shapes.medium
+                    )
+
+            )
+            Column {
+
+                Text(
+                    text = profile.user.userName,
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
-
-            )
-        Column {
-
-            Text(
-                text = profile.user.userName,
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Point this month: ${profile.pointsThisMonth}"
-            )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Point this month: ${profile.pointsThisMonth}",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
         }
     }
 }

@@ -55,7 +55,7 @@ fun InspectionListScreen(
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add inspection",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
@@ -68,7 +68,10 @@ fun InspectionListScreen(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .height(80.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -82,7 +85,7 @@ fun InspectionListScreen(
                         viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
                     },
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(10.dp),
 
                     placeholder = {
                         Text(text = "Search...")
@@ -106,6 +109,11 @@ fun InspectionListScreen(
                 }
 
             }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.onSecondary)
+            )
             AnimatedVisibility(
                 visible = inspectionListState.value.isHospitalFilterSectionVisible,
                 enter = fadeIn() + slideInVertically(),
@@ -161,7 +169,11 @@ fun InspectionListScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    navHostController.navigate(Screens.InspectionDetailsScreen.withArgs(inspectionListState.value.inspectionList[index].inspectionId))
+                                    navHostController.navigate(
+                                        Screens.InspectionDetailsScreen.withArgs(
+                                            inspectionListState.value.inspectionList[index].inspectionId
+                                        )
+                                    )
                                 },
                             inspection = inspectionListState.value.inspectionList[index],
                             hospitalList = inspectionListState.value.hospitalList,
@@ -178,12 +190,11 @@ fun InspectionListScreen(
     if (inspectionListState.value.isLoading) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(LightBeige),
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

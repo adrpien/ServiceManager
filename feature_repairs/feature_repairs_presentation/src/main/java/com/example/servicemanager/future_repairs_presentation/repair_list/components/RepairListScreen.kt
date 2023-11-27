@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -47,13 +48,13 @@ fun RepairListScreen(
                 onClick = {
                     navHostController.navigate(Screens.RepairDetailsScreen.withArgs("0"))
                 },
-                backgroundColor = LightBlue
+                backgroundColor = MaterialTheme.colorScheme.primary
             )
             {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add repair",
-                    tint = LightBeige
+                    tint = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
@@ -62,24 +63,28 @@ fun RepairListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.secondary)
         ) {
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(80.dp)
+                    .background(MaterialTheme.colorScheme.primary),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
                     value = repairListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = LightBlue,
-                        unfocusedBorderColor = LightBlue
+                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
                         viewModel.onEvent(RepairListEvent.onSearchQueryChange(it))
                     },
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(10.dp),
 
                     placeholder = {
                         Text(text = "Search...")
@@ -92,17 +97,24 @@ fun RepairListScreen(
                     Icon(
                         imageVector = Icons.Default.Sort,
                         contentDescription = "Sort",
-                    tint = LightBlue
+                    tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
-                    tint = MaterialTheme.colors.onPrimary
+                    tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(MaterialTheme.colorScheme.onSecondary)
+            )
+
             AnimatedVisibility(
                 visible = repairListState.value.isHospitalFilterSectionVisible,
                 enter = fadeIn() + slideInHorizontally(),
@@ -181,12 +193,11 @@ fun RepairListScreen(
     if (repairListState.value.isLoading) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(LightBeige),
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

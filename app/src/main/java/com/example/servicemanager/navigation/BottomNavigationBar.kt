@@ -33,7 +33,7 @@ fun BottomNavigationBar(
             modifier = Modifier
                 .height(1.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onSecondary)
         )
         NavigationBar(
             modifier = modifier,

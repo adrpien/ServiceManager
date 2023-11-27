@@ -1,9 +1,11 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,10 +31,15 @@ fun RepairListItem(
 ) {
     Card(
         modifier = modifier
-            .padding(8.dp),
-        shape = RoundedCornerShape(8.dp),
+            .padding(
+                start = 10.dp,
+                end = 10.dp,
+                top = 10.dp,
+                bottom = 10.dp)
+            .fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
-        backgroundColor = LightBeige
+        backgroundColor = MaterialTheme.colorScheme.primary
     ) {
         Column(
             modifier = Modifier
@@ -48,7 +55,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = LightBlue,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -65,7 +72,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -82,7 +89,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -93,7 +100,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -110,7 +117,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -128,7 +135,7 @@ fun RepairListItem(
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)

@@ -3,6 +3,7 @@ package com.example.core_ui.components.other
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -31,19 +32,21 @@ fun DefaultTextField(
             onValueChange = onValueChanged,
             enabled = state.value.clickable,
             singleLine = true,
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .border(2.dp, LightBlue),
-            colors = TextFieldDefaults.textFieldColors(
-                focusedTextColor = LightBlue,
-                containerColor = LightBeige,
-                unfocusedLabelColor = LightBlue,
-                focusedLabelColor = LightBlue,
-                disabledLabelColor = LightBlue,
-                errorLabelColor = LightBlue,
-                disabledTextColor = VeryLightBlue
-            ),
+                .border(1.dp, MaterialTheme.colorScheme.onSecondary, MaterialTheme.shapes.medium),
+            colors = TextFieldDefaults.colors(
+                focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                disabledTextColor = MaterialTheme.colorScheme.onSecondary,
+                focusedContainerColor = MaterialTheme.colorScheme.primary,
+                unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.secondary,
+                focusedLabelColor = MaterialTheme.colorScheme.onSecondary,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onSecondary,
+                disabledLabelColor = MaterialTheme.colorScheme.onSecondary,
+            )
         )
         Spacer(modifier = Modifier.height(8.dp))
     }

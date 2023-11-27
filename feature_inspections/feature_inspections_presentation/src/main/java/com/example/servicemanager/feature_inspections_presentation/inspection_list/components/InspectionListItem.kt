@@ -32,11 +32,7 @@ fun InspectionListItem(
 ) {
     Card(
         modifier = modifier
-            .padding(8.dp)
-            .border(
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
-                shape = MaterialTheme.shapes.medium
-            ),
+            .padding(8.dp),
         elevation = 4.dp,
         backgroundColor = MaterialTheme.colorScheme.primary
     ) {

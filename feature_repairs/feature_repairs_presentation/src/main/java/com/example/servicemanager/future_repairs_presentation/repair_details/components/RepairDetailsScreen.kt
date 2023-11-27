@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
@@ -18,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.LightBlue
 import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Screens
@@ -282,13 +282,13 @@ fun RepairDetailsScreen(
                     }
 
                 },
-                backgroundColor = LightBlue
+                backgroundColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(
                     imageVector = if(repairDetailsState.value.isInEditMode) Icons.Default.Save else Icons.Default.Edit,
                     contentDescription = "Save",
                     modifier = Modifier,
-                tint = LightBeige
+                tint = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
@@ -298,40 +298,37 @@ fun RepairDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
-                .background(LightBeige)
+                .background(MaterialTheme.colorScheme.secondary)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
                 ) {
 
 /* ********************** OPENING DATE  ********************************************************* */
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                enabled = isInEditMode,
-                onClick = { openingDateDialogState.show()},
-                shape = RectangleShape,
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = LightBeige,
-                    contentColor = LightBlue
-                ),
-                border = BorderStroke(2.dp, LightBlue)
-            ) {
-                Text(
-                    text = "Opening date: " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong())
-                )
-            }
-
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    enabled = isInEditMode,
+                    onClick = { openingDateDialogState.show() },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        disabledBackgroundColor = MaterialTheme.colorScheme.secondary,
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
+                ) {
+                    Text(
+                        text = "Opening date: " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong()),
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                }
 /* ********************** PICKUP TECHNICIAN  **************************************************** */
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+
                 Text(
                     text = "Pickup technician:",
-                    color = LightBlue
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier.padding(start = 8.dp)
                 )
-
-/* ********************** DEVICE  *************************************************************** */
 
                 DefaultSelectionSection(
                     itemList = technicianList,
@@ -349,18 +346,17 @@ fun RepairDetailsScreen(
                     },
                     enabled = isInEditMode
                 )
-            }
 
 /* ********************** DEVICE  *************************************************************** */
             Text(
                 text = "Device",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
@@ -433,12 +429,12 @@ fun RepairDetailsScreen(
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
 
@@ -491,12 +487,12 @@ fun RepairDetailsScreen(
             Text(
                 text = "Repair",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
@@ -538,14 +534,11 @@ fun RepairDetailsScreen(
                 },
                 state = partDescription
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
 
 /* ********************** REPAIRING TECHNICIAN  ************************************************* */
                 Text(
                     text = "Repairing technician:",
-                    color = LightBlue
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
                 DefaultSelectionSection(
                     itemList = technicianList,
@@ -563,24 +556,25 @@ fun RepairDetailsScreen(
                     },
                     enabled = isInEditMode
                 )
-            }
 
 /* ********************** REPAIRING DATE  ******************************************************* */
+
             Button(
                 enabled = isInEditMode,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 onClick = { repairingDateDialogState.show()},
-                shape = RectangleShape,
+                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = LightBeige,
-                    contentColor = LightBlue
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
                 ),
-                border = BorderStroke(2.dp, LightBlue)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Repairing date: " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong())
+                    text = "Repairing date: " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong()),
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
 
@@ -588,19 +582,19 @@ fun RepairDetailsScreen(
             Text(
                 text = "Result",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
 /* ********************** EST STATE  ************************************************************ */
             Text(
                 text = "EstState:",
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
                 )
             DefaultSelectionSection(
                 itemList = estStateList,
@@ -622,7 +616,7 @@ fun RepairDetailsScreen(
 /* ********************** REPAIRING STATE  ****************************************************** */
             Text(
                 text = "RepairState:",
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
                 itemList = repairStateList,
@@ -644,7 +638,7 @@ fun RepairDetailsScreen(
 /* ********************** RETURN TECHNICIAN  **************************************************** */
             Text(
                 text = "Return technician:",
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -670,15 +664,16 @@ fun RepairDetailsScreen(
                     .padding(8.dp),
                 onClick = { returningDateDialogState.show()},
                 enabled = isInEditMode,
-                shape = RectangleShape,
+                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = LightBeige,
-                    contentColor = LightBlue
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    disabledBackgroundColor = MaterialTheme.colorScheme.secondary
                 ),
-                border = BorderStroke(2.dp, LightBlue)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Returning date: " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong())
+                    text = "Returning date: " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong()),
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
             DefaultTextField(
@@ -701,12 +696,12 @@ fun RepairDetailsScreen(
                     .padding(8.dp),
                 enabled = isInEditMode,
                 onClick = { signatureDialogState.show()},
-                shape = RectangleShape,
+                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = LightBeige,
-                    contentColor = LightBlue
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    disabledBackgroundColor = MaterialTheme.colorScheme.secondary
                 ),
-                border = BorderStroke(2.dp, LightBlue)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
@@ -806,15 +801,15 @@ fun RepairDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = LightBeige,
+                backgroundColor = MaterialTheme.colorScheme.primary,
                 buttons = {
                     positiveButton(
                         text = "Confirm",
-                        textStyle = TextStyle(color = LightBlue)
+                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
                     )
                     negativeButton(
                         text = "Cancel",
-                        textStyle = TextStyle(color = LightBlue)
+                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
                     )
                 }
             ) {
@@ -837,11 +832,11 @@ fun RepairDetailsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBeige),
+                .background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

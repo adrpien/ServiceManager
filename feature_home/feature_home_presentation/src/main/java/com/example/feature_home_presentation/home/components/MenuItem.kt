@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonColors
+import androidx.compose.material.Card
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Button
@@ -33,41 +34,42 @@ fun MenuItem(
 ) {
 
     val context = LocalContext.current
-
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ){
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .padding(
-                    start = 20.dp,
-                    end = 20.dp,
-                    top = 10.dp,
-                    bottom = 10.dp)
-                .border(
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
-                    shape = MaterialTheme.shapes.medium
-                )
-        ,
-            shape = Shapes.small,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+    Card(
+        modifier = Modifier
+            .padding(
+                start = 20.dp,
+                end = 20.dp,
+                top = 10.dp,
+                bottom = 10.dp
             ),
-            onClick = menuItemState.onClick) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+        shape = MaterialTheme.shapes.medium,
+        elevation = 4.dp,
+        backgroundColor = MaterialTheme.colorScheme.primary
+    ) {
+        Column() {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                shape = MaterialTheme.shapes.medium,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                ),
+                onClick = menuItemState.onClick
             ) {
-                Icon(
-                    imageVector = menuItemState.icon,
-                    contentDescription = menuItemState.text.asString(context)
-                )
-                Text(
-                    text = menuItemState.text.asString(context),
-                    modifier = Modifier
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        imageVector = menuItemState.icon,
+                        contentDescription = menuItemState.text.asString(context)
+                    )
+                    Text(
+                        text = menuItemState.text.asString(context),
+                        modifier = Modifier
+                    )
+                }
             }
         }
     }
