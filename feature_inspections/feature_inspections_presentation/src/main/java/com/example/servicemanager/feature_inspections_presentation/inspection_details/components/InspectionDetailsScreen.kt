@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
@@ -18,9 +19,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.core.theme.Dimensions
 import com.example.core.theme.LightBlue
 import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
+import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
@@ -232,21 +235,21 @@ fun InspectionDetailsScreen(
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
                     }
                 },
-                backgroundColor = LightBlue
+                backgroundColor = MaterialTheme.colorScheme.primary
             ) {
                 if (isInEditMode) {
                     Icon(
                         imageVector = Icons.Default.Save,
                         contentDescription = "Save",
                         modifier = Modifier,
-                        tint = MaterialTheme.colors.primary
+                        tint = MaterialTheme.colorScheme.onSecondary
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Edit",
                         modifier = Modifier,
-                        tint = MaterialTheme.colors.primary
+                        tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
 
@@ -258,19 +261,19 @@ fun InspectionDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = it)
-                .background(LightBeige)
+                .background(MaterialTheme.colorScheme.secondary)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
         ) {
             Text(
                 text = "Device",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultTextField(
@@ -332,12 +335,12 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Localization",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             DefaultSelectionSection(
@@ -384,19 +387,18 @@ fun InspectionDetailsScreen(
             Text(
                 text = "Result",
                 fontSize = 20.sp,
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = LightBlue,
-                modifier = Modifier.height(4.dp)
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier,
                 text = "EstState:",
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             DefaultSelectionSection(
@@ -420,10 +422,9 @@ fun InspectionDetailsScreen(
             )
 
             Text(
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier,
                 text = "InspectionState:",
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
                 itemList = inspectionStateList,
@@ -444,10 +445,9 @@ fun InspectionDetailsScreen(
                 enabled = isInEditMode
             )
             Text(
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier,
                 text = "Technician:",
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -473,15 +473,16 @@ fun InspectionDetailsScreen(
                     .padding(8.dp),
                 onClick = { inspectionDateDialogState.show() },
                 enabled = isInEditMode,
-                shape = RectangleShape,
+                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = LightBeige,
-                    contentColor = LightBlue
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
                 ),
-                border = BorderStroke(2.dp, LightBlue)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Inspection date: " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong())
+                    text = "Inspection date: " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong()),
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
             DefaultTextField(
@@ -497,18 +498,22 @@ fun InspectionDetailsScreen(
             )
             Button(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(8.dp),
                 onClick = { signatureDialogState.show() },
                 enabled = isInEditMode,
-                shape = RectangleShape,
+                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = LightBeige,
-                    contentColor = LightBlue
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
                 ),
-                border = BorderStroke(2.dp, LightBlue)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .width(Dimensions.signatureWidth.toDp.dp)
+                        .height(Dimensions.signatureHeight.toDp.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.onSecondary),
                     bitmap = inspectionDetailsState.value.signature.asImageBitmap(),
                     contentDescription = "Signature"
                 )
@@ -592,11 +597,11 @@ fun InspectionDetailsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBeige),
+                .background(MaterialTheme.colorScheme.secondary),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
-                color = LightBlue
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

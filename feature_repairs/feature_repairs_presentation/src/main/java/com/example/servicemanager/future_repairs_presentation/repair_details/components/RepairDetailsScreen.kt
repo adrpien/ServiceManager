@@ -19,8 +19,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.core.theme.Dimensions.signatureHeight
+import com.example.core.theme.Dimensions.signatureWidth
 import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
+import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultTextField
 import com.example.core_ui.components.other.DefaultTextFieldState
@@ -319,15 +322,14 @@ fun RepairDetailsScreen(
                 ) {
                     Text(
                         text = "Opening date: " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong()),
-                        color = MaterialTheme.colorScheme.onSecondary
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
 /* ********************** PICKUP TECHNICIAN  **************************************************** */
 
                 Text(
                     text = "Pickup technician:",
-                    color = MaterialTheme.colorScheme.onSecondary,
-                    modifier = Modifier.padding(start = 8.dp)
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
 
                 DefaultSelectionSection(
@@ -574,7 +576,7 @@ fun RepairDetailsScreen(
             ) {
                 Text(
                     text = "Repairing date: " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong()),
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
@@ -673,7 +675,7 @@ fun RepairDetailsScreen(
             ) {
                 Text(
                     text = "Returning date: " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong()),
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
             DefaultTextField(
@@ -693,6 +695,7 @@ fun RepairDetailsScreen(
 /* ********************** SIGNATURE  ************************************************************ */
             Button(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(8.dp),
                 enabled = isInEditMode,
                 onClick = { signatureDialogState.show()},
@@ -704,8 +707,11 @@ fun RepairDetailsScreen(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Image(
-                    modifier = Modifier.fillMaxSize(),
-                    bitmap = repairDetailsState.value.signature.asImageBitmap(),
+                    modifier = Modifier
+                        .width(signatureWidth.toDp.dp)
+                        .height(signatureHeight.toDp.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.onSecondary),
+                bitmap = repairDetailsState.value.signature.asImageBitmap(),
                     contentDescription = "Signature")
             }
 
@@ -769,7 +775,7 @@ fun RepairDetailsScreen(
             )
             if (showExitDialog.value) {
                     ExitAlertDialog(
-                        title = "Save?",
+                        title = "Save",
                         contentText = "Do you want save changes?",
                         onConfirm = {
                             if (showExitDialog.value) {
@@ -794,7 +800,7 @@ fun RepairDetailsScreen(
                         onDismissRequest = { showExitDialog.value = false }
                     )
             }
-
+            // TODO Need to unificate styles of all dialogs
             MaterialDialog(
                 dialogState = signatureDialogState,
                 properties = DialogProperties(
@@ -802,14 +808,19 @@ fun RepairDetailsScreen(
                     dismissOnClickOutside = true
                 ),
                 backgroundColor = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.medium,
                 buttons = {
                     positiveButton(
                         text = "Confirm",
-                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
+                        textStyle = TextStyle(
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
                     )
                     negativeButton(
                         text = "Cancel",
-                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
+                        textStyle = TextStyle(
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
                     )
                 }
             ) {
@@ -818,10 +829,12 @@ fun RepairDetailsScreen(
                         modifier = Modifier
                             .fillMaxWidth(),
                         contentAlignment = Alignment.Center
-
                     ){
-                        SignatureArea { bitmap ->
-                            viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
+                        Column {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            SignatureArea( ) { bitmap ->
+                                viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
+                            }
                         }
                     }
                 }
@@ -831,8 +844,7 @@ fun RepairDetailsScreen(
     if (repairDetailsState.value.isLoading) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.primary),
+                .background(MaterialTheme.colorScheme.secondary),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(

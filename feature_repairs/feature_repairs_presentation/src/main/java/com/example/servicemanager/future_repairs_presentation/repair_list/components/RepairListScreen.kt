@@ -108,12 +108,6 @@ fun RepairListScreen(
                     )
                 }
             }
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(MaterialTheme.colorScheme.onSecondary)
-            )
 
             AnimatedVisibility(
                 visible = repairListState.value.isHospitalFilterSectionVisible,

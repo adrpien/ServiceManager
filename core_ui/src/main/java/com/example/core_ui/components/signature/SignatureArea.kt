@@ -6,6 +6,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,15 +29,19 @@ import com.example.core.util.Helper.Companion.toDp
 @Composable
 fun SignatureArea(
     modifier: Modifier = Modifier,
+    pathColor: Color = MaterialTheme.colorScheme.onSecondary,
     updateImageBitmap: (Bitmap) -> Unit,
 ) {
     var bitmap = Bitmap.createBitmap(signatureWidth, signatureHeight, Bitmap.Config.ARGB_8888)
     val backgroundPaint = Paint()
+
     backgroundPaint.apply {
-        LightBeige.also { color = it }
+        MaterialTheme.colorScheme.secondary.also { color = it }
         style = PaintingStyle.Fill
     }
+
     val canvas = Canvas(bitmap.asImageBitmap())
+
     canvas.drawRect(
         rect = Rect(0F,0F,bitmap.width.toFloat(), bitmap.height.toFloat()),
         paint = backgroundPaint)
@@ -55,8 +60,7 @@ fun SignatureArea(
 
     Surface(
         modifier = Modifier
-            .padding(10.dp)
-            .border(2.dp, LightBlue),
+            .border(1.dp, MaterialTheme.colorScheme.onSecondary),
         color = Color.White
             ){
         Box(
@@ -67,7 +71,7 @@ fun SignatureArea(
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LightBeige)
+                    .background(MaterialTheme.colorScheme.primary)
                     .pointerInteropFilter { motionEvent ->
                         when (motionEvent.action) {
                             MotionEvent.ACTION_DOWN -> {
@@ -75,6 +79,7 @@ fun SignatureArea(
                                 lastTouchX.value = motionEvent.x
                                 lastTouchY.value = motionEvent.y
                             }
+
                             MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
                                 val historySize = motionEvent.historySize
                                 for (i in 0 until historySize) {
@@ -100,14 +105,14 @@ fun SignatureArea(
                     path.value?.let { path ->
                         drawPath(
                             path = path,
-                            color = LightBlue,
+                            color = pathColor,
                             style = Stroke(
-                                width = 4.dp.toPx()
+                                width = 2.dp.toPx()
                             )
                         )
                         val paint = Paint()
                         paint.apply {
-                            color = LightBlue
+                            color = pathColor
                             style = PaintingStyle.Stroke
                             strokeWidth = 8f
                         }

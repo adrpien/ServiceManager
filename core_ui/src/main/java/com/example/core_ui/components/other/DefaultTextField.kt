@@ -38,8 +38,9 @@ fun DefaultTextField(
                 .padding(8.dp)
                 .border(1.dp, MaterialTheme.colorScheme.onSecondary, MaterialTheme.shapes.medium),
             colors = TextFieldDefaults.colors(
+                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
                 focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                disabledTextColor = MaterialTheme.colorScheme.onSecondary,
+                disabledTextColor = MaterialTheme.colorScheme.onPrimary,
                 focusedContainerColor = MaterialTheme.colorScheme.primary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.primary,
                 disabledContainerColor = MaterialTheme.colorScheme.secondary,
