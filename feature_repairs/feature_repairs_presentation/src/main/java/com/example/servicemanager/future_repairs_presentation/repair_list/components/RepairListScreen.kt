@@ -1,6 +1,8 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -78,7 +80,8 @@ fun RepairListScreen(
                     value = repairListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
+                        cursorColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
                         viewModel.onEvent(RepairListEvent.onSearchQueryChange(it))
@@ -87,7 +90,10 @@ fun RepairListScreen(
                         .padding(10.dp),
 
                     placeholder = {
-                        Text(text = "Search...")
+                        Text(
+                            text = "Search...",
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
                     },
                     maxLines = 1,
                     singleLine = true,
@@ -97,52 +103,77 @@ fun RepairListScreen(
                     Icon(
                         imageVector = Icons.Default.Sort,
                         contentDescription = "Sort",
-                    tint = MaterialTheme.colorScheme.onSecondary
+                        tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
                         contentDescription = "Hospital",
-                    tint = MaterialTheme.colorScheme.onSecondary
+                        tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             }
+            Box() {
+                SwipeRefresh(
+                    state = swipeRefreshState,
+                    onRefresh = {
+                        viewModel.onEvent(RepairListEvent.Refresh)
+                    }
+                ) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(repairListState.value.repairList.size) { index ->
+                            RepairListItem(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        navHostController.navigate(
+                                            Screens.RepairDetailsScreen.withArgs(
+                                                repairListState.value.repairList[index].repairId
+                                            )
+                                        )
+                                    },
+                                repair = repairListState.value.repairList[index],
+                                hospitalList = repairListState.value.hospitalList,
+                                technicianList = repairListState.value.technicianList,
+                                repairStateList = repairListState.value.repairStateList
 
-            AnimatedVisibility(
-                visible = repairListState.value.isHospitalFilterSectionVisible,
-                enter = fadeIn() + slideInHorizontally(),
-                // exit = fadeOut() + slideOutVertically()
-                exit = fadeOut() + slideOutHorizontally()
-            ) {
-                val itemList = repairListState.value.hospitalList + Hospital(
-                    hospitalId = "0",
-                    hospital = "All"
-                )
-
-                val nameList = itemList.map { it.hospital }
-                DefaultSelectionSection(
-                    itemList = itemList,
-                    nameList = nameList,
-                    selectedItem = repairListState.value.hospital ?: Hospital(),
-                    onItemChanged = {
-                        viewModel.onEvent(
-                            RepairListEvent.filterRepairListByHospital(
-                                hospital = it
                             )
-                        )
-                    },
-                    enabled = true
-                )
-            }
+                        }
 
-            AnimatedVisibility(
-                visible = repairListState.value.isSortSectionVisible,
-                enter = fadeIn() + slideInHorizontally(),
-                // exit = fadeOut() + slideOutVertically()
-                exit = fadeOut() + slideOutHorizontally()
-            ) {
-                Column {
+                    }
+                }
+                this@Column.AnimatedVisibility(
+                    visible = repairListState.value.isHospitalFilterSectionVisible,
+                    enter = fadeIn() + slideInVertically(),
+                    exit = fadeOut() + slideOutVertically()
+                ) {
+                    val itemList = repairListState.value.hospitalList + Hospital(
+                        hospitalId = "0",
+                        hospital = "All"
+                    )
+                    val nameList = itemList.map { it.hospital }
+                    DefaultSelectionSection(
+                        itemList = itemList,
+                        nameList = nameList,
+                        selectedItem = repairListState.value.hospital ?: Hospital(),
+                        onItemChanged = {
+                            viewModel.onEvent(
+                                RepairListEvent.filterRepairListByHospital(
+                                    hospital = it
+                                )
+                            )
+                        },
+                        enabled = true
+                    )
+                }
+                this@Column.AnimatedVisibility(
+                    visible = repairListState.value.isSortSectionVisible,
+                    enter = fadeIn() + slideInVertically(),
+                    exit = fadeOut() + slideOutVertically(targetOffsetY = { -it })
+                ) {
                     RepairSortSection(
                         onOrderChange = { viewModel.onEvent(RepairListEvent.orderRepairList(it)) },
                         repairOrderType = repairListState.value.repairOrderType,
@@ -152,48 +183,20 @@ fun RepairListScreen(
                     )
                 }
             }
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = {
-                    viewModel.onEvent(RepairListEvent.Refresh)
-                }
+        }
+        }
+        if (repairListState.value.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    items(repairListState.value.repairList.size) { index ->
-                        RepairListItem(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    navHostController.navigate(
-                                        Screens.RepairDetailsScreen.withArgs(
-                                            repairListState.value.repairList[index].repairId
-                                        )
-                                    )
-                                },
-                            repair = repairListState.value.repairList[index],
-                            hospitalList = repairListState.value.hospitalList,
-                            technicianList = repairListState.value.technicianList,
-                            repairStateList = repairListState.value.repairStateList
-
-                        )
-                    }
-
-                }
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
             }
         }
-    }
-    if (repairListState.value.isLoading) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.onSecondary
-            )
-        }
-    }
 }
+
+
 

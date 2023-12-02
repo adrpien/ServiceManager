@@ -114,7 +114,7 @@ fun SignatureArea(
                         paint.apply {
                             color = pathColor
                             style = PaintingStyle.Stroke
-                            strokeWidth = 8f
+                            strokeWidth = 4f
                         }
                         canvas.drawPath(
                             path  = path,

@@ -30,7 +30,7 @@ fun DefaultRadioButton(
     ) {
         Button(
             modifier = Modifier
-                .padding(8.dp),
+                .padding(4.dp),
             onClick = onClick,
             shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(

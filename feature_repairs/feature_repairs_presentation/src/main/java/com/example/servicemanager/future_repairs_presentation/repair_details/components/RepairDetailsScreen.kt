@@ -827,7 +827,8 @@ fun RepairDetailsScreen(
                 customView {
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.primary),
                         contentAlignment = Alignment.Center
                     ){
                         Column {
@@ -844,7 +845,7 @@ fun RepairDetailsScreen(
     if (repairDetailsState.value.isLoading) {
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.secondary),
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(

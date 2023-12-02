@@ -83,14 +83,14 @@ class RepairListViewModel @Inject constructor(
             }
 
             is RepairListEvent.ToggleSortSectionVisibility -> {
-                _repairListState.value = _repairListState.value.copy(
-                    isSortSectionVisible = !_repairListState.value.isSortSectionVisible
-                )
                 if(_repairListState.value.isHospitalFilterSectionVisible) {
                     _repairListState.value = _repairListState.value.copy(
                         isHospitalFilterSectionVisible = false
                     )
                 }
+                _repairListState.value = _repairListState.value.copy(
+                    isSortSectionVisible = !_repairListState.value.isSortSectionVisible
+                )
             }
 
             is RepairListEvent.ToggleOrderMonotonicity -> {
@@ -105,13 +105,13 @@ class RepairListViewModel @Inject constructor(
                 )
             }
             is RepairListEvent.ToggleHospitalFilterSectionVisibility -> {
-                _repairListState.value = _repairListState.value.copy(
-                    isHospitalFilterSectionVisible = !_repairListState.value.isHospitalFilterSectionVisible
-                )
                 if(_repairListState.value.isSortSectionVisible) {
                     _repairListState.value = _repairListState.value.copy(
                         isSortSectionVisible = false)
                 }
+                _repairListState.value = _repairListState.value.copy(
+                    isHospitalFilterSectionVisible = !_repairListState.value.isHospitalFilterSectionVisible
+                )
             }
             is RepairListEvent.filterRepairListByHospital -> {
                 _repairListState.value = _repairListState.value.copy(

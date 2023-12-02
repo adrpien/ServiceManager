@@ -1,10 +1,15 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.components.other.DefaultRadioButton
+import com.example.core_ui.components.other.OrderMonotonicityButton
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 
@@ -22,12 +27,16 @@ fun RepairSortSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(4.dp)
+                .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium)
+                .background(MaterialTheme.colorScheme.secondary),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                ,
                 horizontalArrangement = Arrangement.Start,
 
             ) {
@@ -51,11 +60,11 @@ fun RepairSortSection(
                 )
             }
             Row(
-                modifier = Modifier,
+                modifier = Modifier.padding(end = 8.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                com.example.core_ui.components.other.OrderMonotonicityButton(
+                OrderMonotonicityButton(
                     isAscending = repairOrderType.orderMonotonicity is RepairOrderMonotonicity.Ascending,
                     onClick = { onToggleMonotonicity(repairOrderType.toggleOrderMonotonicity()) }
                 )

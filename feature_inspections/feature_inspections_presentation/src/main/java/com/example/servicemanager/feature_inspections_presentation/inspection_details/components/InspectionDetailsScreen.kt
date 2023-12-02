@@ -596,8 +596,7 @@ fun InspectionDetailsScreen(
     if (inspectionDetailsState.value.isLoading) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.secondary),
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
