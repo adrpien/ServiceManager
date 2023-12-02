@@ -81,7 +81,9 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
         composable(
             route = Screens.AppSettingsScreen.route
         ) {
-            AppSettingsScreen()
+            AppSettingsScreen(
+                navHostController = navHostController
+            )
         }
 
         composable(

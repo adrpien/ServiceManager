@@ -1,13 +1,13 @@
 package com.example.core.util
 
-sealed class DateFormattingTypes(val formatting: String) {
+sealed class DateFormattingType(val formatting: String) {
 
-    data class BackSlashStyle(val value: String = "dd/MM/YYYY"): DateFormattingTypes(value)
-    data class AmericanStyle(val value: String = "YYYY/MM/dd"): DateFormattingTypes(value)
-    data class DashStyle(val value: String = "dd-MM-YYYY"): DateFormattingTypes(value)
+    data class BackSlashStyle(val value: String = "dd/MM/YYYY"): DateFormattingType(value)
+    data class AmericanStyle(val value: String = "YYYY/MM/dd"): DateFormattingType(value)
+    data class DashStyle(val value: String = "dd-MM-YYYY"): DateFormattingType(value)
 
     companion object {
-        fun getDateFormattingTypeWithString(string: String): DateFormattingTypes {
+        fun getDateFormattingTypeWithString(string: String): DateFormattingType {
             when(string) {
                 DashStyle().value -> {
                     return DashStyle()

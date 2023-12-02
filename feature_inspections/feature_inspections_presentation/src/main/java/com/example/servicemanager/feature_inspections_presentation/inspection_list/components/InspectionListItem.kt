@@ -1,9 +1,6 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
@@ -13,9 +10,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
-import com.example.core.util.DateFormattingTypes
+import com.example.core.util.DateFormattingType
 import com.example.core.util.Helper.Companion.getDateString
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
@@ -127,7 +122,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "State: " + inspectionStateList.find { inspection.inspectionStateId == it.inspectionStateId }?.inspectionState ?: "",
+                    text = ("State: " + inspectionStateList.find { inspection.inspectionStateId == it.inspectionStateId }?.inspectionState),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -150,7 +145,7 @@ fun InspectionListItem(
                 )
 
                 Text(
-                    text = getDateString(inspection.inspectionDate.toLong(), DateFormattingTypes.BackSlashStyle()),
+                    text = getDateString(inspection.inspectionDate.toLong(), DateFormattingType.BackSlashStyle()),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

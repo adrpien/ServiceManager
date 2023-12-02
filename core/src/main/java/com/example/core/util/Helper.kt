@@ -16,7 +16,7 @@ class Helper {
     companion object {
 
         // Changing millis into String format
-        fun getDateString(millis: Long, formatingType: DateFormattingTypes = DateFormattingTypes.BackSlashStyle()): String{
+        fun getDateString(millis: Long, formatingType: DateFormattingType = DateFormattingType.BackSlashStyle()): String{
             var dateString: String
             val date = Date(millis)
             val formatter = SimpleDateFormat(formatingType.formatting)
@@ -47,7 +47,7 @@ class Helper {
             return bitmap
         }
 
-        fun drawableToByteArray(context: Context, drawable: Drawable): ByteArray {
+        fun drawableToByteArray(drawable: Drawable): ByteArray {
             // Convert Drawable to Bitmap
             val bitmap = drawableToBitmap(drawable)
 

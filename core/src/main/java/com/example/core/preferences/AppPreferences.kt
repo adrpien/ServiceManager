@@ -1,12 +1,12 @@
 package com.example.core.preferences
 
-import com.example.core.util.DateFormattingTypes
+import com.example.core.util.DateFormattingType
 
 interface AppPreferences {
 
     // Date formatting type
-    fun getDateFormattingType(): DateFormattingTypes
-    fun setDateFormattingType(formattingType: DateFormattingTypes)
+    fun getDateFormattingType(): DateFormattingType
+    fun setDateFormattingType(formattingType: DateFormattingType)
 
     // Dark mode
     fun getIsDarkModeEnabled(): Boolean

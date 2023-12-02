@@ -2,19 +2,19 @@ package com.example.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.core.util.DateFormattingTypes
-import com.example.core.util.DateFormattingTypes.Companion.getDateFormattingTypeWithString
+import com.example.core.util.DateFormattingType
+import com.example.core.util.DateFormattingType.Companion.getDateFormattingTypeWithString
 
 class AppPreferencesImplementation(
     context: Context
 ): AppPreferences {
 
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("shared_pref", Context.MODE_PRIVATE)
-    override fun getDateFormattingType(): DateFormattingTypes {
-        return getDateFormattingTypeWithString(sharedPreferences.getString(AppPreferences.DATE_FORMATTING_TYPE, DateFormattingTypes.DashStyle().value) ?: DateFormattingTypes.DashStyle().value)
+    override fun getDateFormattingType(): DateFormattingType {
+        return getDateFormattingTypeWithString(sharedPreferences.getString(AppPreferences.DATE_FORMATTING_TYPE, DateFormattingType.DashStyle().value) ?: DateFormattingType.DashStyle().value)
     }
 
-    override fun setDateFormattingType(formattingType: DateFormattingTypes) {
+    override fun setDateFormattingType(formattingType: DateFormattingType) {
         sharedPreferences.edit()
             .putString(AppPreferences.DATE_FORMATTING_TYPE, formattingType.formatting)
             .apply()
