@@ -1,14 +1,9 @@
 package com.example.feature_home_presentation.home.components
 
-import android.content.res.Resources
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.Card
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
@@ -24,8 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.theme.ServiceManagerTheme
-import com.example.core.theme.Shapes
 import com.example.core.util.UiText
+import com.example.core_ui.components.other.MenuItemState
 import com.example.feature_home_presentation.R
 
 @Composable

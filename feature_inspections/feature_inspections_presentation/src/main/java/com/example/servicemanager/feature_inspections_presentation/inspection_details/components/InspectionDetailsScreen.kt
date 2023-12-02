@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -343,6 +342,11 @@ fun InspectionDetailsScreen(
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                modifier = Modifier,
+                text = "Hospital:",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
             DefaultSelectionSection(
                 itemList = hospitalList,
                 nameList = hospitalList.map { it.hospital },
@@ -420,7 +424,6 @@ fun InspectionDetailsScreen(
                 },
                 enabled = inspectionDetailsState.value.isInEditMode
             )
-
             Text(
                 modifier = Modifier,
                 text = "InspectionState:",

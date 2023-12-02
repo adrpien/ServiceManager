@@ -1,4 +1,4 @@
-package com.example.feature_home_presentation.home.components
+package com.example.core_ui.components.other
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.core.util.UiText

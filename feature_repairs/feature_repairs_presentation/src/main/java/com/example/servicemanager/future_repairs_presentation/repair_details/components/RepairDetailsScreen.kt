@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -21,7 +20,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.Dimensions.signatureHeight
 import com.example.core.theme.Dimensions.signatureWidth
-import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
@@ -441,7 +439,11 @@ fun RepairDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
 
 /* ********************** HOSPITAL SELECTION **************************************************** */
-
+            Text(
+                modifier = Modifier,
+                text = "Hospital:",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
             DefaultSelectionSection(
                 itemList = hospitalList,
                 nameList = hospitalList.map { it.hospital },

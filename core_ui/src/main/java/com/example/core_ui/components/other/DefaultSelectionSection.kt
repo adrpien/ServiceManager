@@ -10,8 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.core.util.MapperExtensionFunction.toMap
-import kotlin.reflect.KProperty
 
 @Composable
 fun <T> DefaultSelectionSection(
@@ -35,7 +33,7 @@ fun <T> DefaultSelectionSection(
     ) {
         Row(
             modifier = Modifier
-                .padding(start = 4.dp),
+                .padding(start = 4.dp, end = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             itemList.forEachIndexed() { index, item ->
