@@ -1,7 +1,5 @@
 package com.example.core_ui.components.other
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,8 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
+
 
 
 @Composable
@@ -36,8 +33,7 @@ fun PasswordTextField(
     onValueChanged: (String) -> (Unit),
 ) {
 
-    var password = rememberSaveable { mutableStateOf("") }
-    var passwordVisible = rememberSaveable { mutableStateOf(false) }
+    val passwordVisible = rememberSaveable { mutableStateOf(false) }
 
     TextField(
         modifier = Modifier
@@ -54,11 +50,13 @@ fun PasswordTextField(
             focusedLabelColor = MaterialTheme.colorScheme.onSecondary,
             unfocusedLabelColor = MaterialTheme.colorScheme.onSecondary,
             disabledLabelColor = MaterialTheme.colorScheme.onSecondary,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSecondary,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSecondary
         ),
         shape = MaterialTheme.shapes.medium,
         value = state.value.value,
         onValueChange = onValueChanged,
-        label = { Text("Password") },
+        label = { Text( "Password") },
         singleLine = true,
         placeholder = { Text("Password") },
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
@@ -72,7 +70,10 @@ fun PasswordTextField(
             val description = if (passwordVisible.value) "Hide password" else "Show password"
 
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value}){
-                Icon(imageVector  = image, description)
+                Icon(
+                    imageVector  = image,
+                    contentDescription = description,
+                    tint = MaterialTheme.colorScheme.onSecondary)
             }
         }
     )
