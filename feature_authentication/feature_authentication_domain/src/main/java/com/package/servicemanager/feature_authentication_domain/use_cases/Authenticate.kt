@@ -1,5 +1,7 @@
 package com.example.servicemanager.feature_authentication_domain.use_cases
 
+import com.example.core.util.Resource
+import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_authentication_domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -9,13 +11,13 @@ class Authenticate @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    operator fun invoke(mail: String, password: String): Flow<com.example.core.util.Resource<String>> {
+    operator fun invoke(mail: String, password: String): Flow<Resource<String>> {
         if (mail.isEmpty() || password.isEmpty()) {
             return flow {
                 emit(
-                    com.example.core.util.Resource(
-                        com.example.core.util.ResourceState.ERROR,
-                        "E-mail or password textfield is empty"
+                    Resource(
+                        ResourceState.ERROR,
+                        message = "E-mail or password is empty"
                     )
                 )
             }

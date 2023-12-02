@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,11 +34,11 @@ class UserLoginViewModel @Inject constructor(
                         when(result.resourceState) {
                             ResourceState.LOADING -> Unit
                             ResourceState.ERROR -> {
-                                _eventFlow.emit(
-                                    UiEvent.ShowSnackbar(
-                                        messege = result.data ?: "Uknown error"
+                                    _eventFlow.emit(
+                                        UiEvent.ShowSnackbar(
+                                            messege = result.message ?: "Unknown error"
+                                        )
                                     )
-                                )
                             }
                             ResourceState.SUCCESS -> {
                                 if (result.data != null) {
@@ -45,15 +46,7 @@ class UserLoginViewModel @Inject constructor(
                                         userId = result.data.toString()
                                     )
                                 }
-                                if (result.data != "0") {
-                                    _eventFlow.emit(UiEvent.Authenticate(_userLoginState.value.userId))
-                                } else {
-                                    _eventFlow.emit(
-                                        UiEvent.ShowSnackbar(
-                                            messege = "Incorrect e-mail or password"
-                                        )
-                                    )
-                                }
+                                _eventFlow.emit(UiEvent.Authenticate(_userLoginState.value.userId))
                             }
                         }
                     }
@@ -67,12 +60,18 @@ class UserLoginViewModel @Inject constructor(
             }
             is UserLoginEvent.GetCurrentUser -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    userUseCases.getCurrentUser().collect() {result ->
+                    userUseCases.getCurrentUser().collect { result ->
                         when(result.resourceState) {
                             ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.NavigateTo(NavigationRoutes.ROUTE_CONTENT_COMPOSABLE))
+                                _eventFlow.emit(UiEvent.Authenticate(result.data ?: "0"))
                             }
-                            ResourceState.ERROR -> Unit
+                            ResourceState.ERROR -> {
+                                _eventFlow.emit(
+                                    UiEvent.ShowSnackbar(
+                                        messege = result.message ?: "Unknown error"
+                                    )
+                                )
+                            }
                             ResourceState.LOADING -> Unit
                         }
                     }
@@ -83,7 +82,6 @@ class UserLoginViewModel @Inject constructor(
     sealed class UiEvent() {
         data class Authenticate(val userId: String): UiEvent()
         data class ShowSnackbar(val messege: String): UiEvent()
-        data class NavigateTo(val route: String): UiEvent()
     }
 }
 

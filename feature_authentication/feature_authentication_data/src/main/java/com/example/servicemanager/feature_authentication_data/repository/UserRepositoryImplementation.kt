@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 
-class UserRepositoryImplementation(
+class  UserRepositoryImplementation(
     val userFirebaseApi: UserFirebaseApi,
 ): UserRepository {
     override fun authenticate(

@@ -17,41 +17,42 @@ import com.example.core.util.Screens
 fun MainScreenNavigation(
 ) {
     val navHostController = rememberNavController()
-        Scaffold(
-            bottomBar = {
-                BottomNavigationBar(
-                    itemList = listOf(
-                        BottomNavigationItem(
-                            name = "Inspections",
-                            route = Screens.InspectionListScreen.route,
-                            icon = Icons.Default.Checklist,
-                            badgeCount = 0
-                        ),
-                        BottomNavigationItem(
-                            name = "Repairs",
-                            route = Screens.RepairListScreen.route,
-                            icon = Icons.Default.Settings,
-                            badgeCount = 0
-                        ),
-                        BottomNavigationItem(
-                            name = "Home",
-                            route = Screens.HomeScreen.route,
-                            icon = Icons.Default.Home,
-                            badgeCount = 0
-                        )
 
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(
+                itemList = listOf(
+                    BottomNavigationItem(
+                        name = "Inspections",
+                        route = Screens.InspectionListScreen.route,
+                        icon = Icons.Default.Checklist,
+                        badgeCount = 0
                     ),
-                    navHostController = navHostController,
-                    onItemClick = {
-                        navHostController.navigate(it.route)
-                    },
-                )
-            }
-        ) {
-            Column(modifier = Modifier.padding(it)) {
-                MainScreenNavigationContent(
-                    navHostController = navHostController
-                )
-            }
+                    BottomNavigationItem(
+                        name = "Repairs",
+                        route = Screens.RepairListScreen.route,
+                        icon = Icons.Default.Settings,
+                        badgeCount = 0
+                    ),
+                    BottomNavigationItem(
+                        name = "Home",
+                        route = Screens.HomeScreen.route,
+                        icon = Icons.Default.Home,
+                        badgeCount = 0
+                    )
+
+                ),
+                navHostController = navHostController,
+                onItemClick = {
+                    navHostController.navigate(it.route)
+                },
+            )
         }
+    ) {
+        Column(modifier = Modifier.padding(it)) {
+            MainScreenNavigationContent(
+                navHostController = navHostController
+            )
+        }
+    }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,7 @@ fun LoginScreen(
 
     val userPassword = remember {
         mutableStateOf(
-            com.example.core_ui.components.other.DefaultTextFieldState(
+            DefaultTextFieldState(
                 hint = "Password",
                 value = userLoginState.value.password
             )
@@ -39,7 +40,7 @@ fun LoginScreen(
     }
     val userMail = remember {
         mutableStateOf(
-            com.example.core_ui.components.other.DefaultTextFieldState(
+            DefaultTextFieldState(
                 hint = "Mail",
                 value = userLoginState.value.mail
             )
@@ -65,13 +66,6 @@ fun LoginScreen(
                             message = event.messege
                         )
                     }
-                is UserLoginViewModel.UiEvent.NavigateTo -> {
-                        navHostController.navigate(Screens.ContentComposable.route) {
-                            popUpTo(Screens.UserLoginScreen.route) {
-                                inclusive = true
-                            }
-                        }
-                    }
             }
         }
     }
@@ -80,14 +74,15 @@ fun LoginScreen(
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(it)) {
+            .background(MaterialTheme.colorScheme.secondary)
+            .padding(it)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
             ) {
-                com.example.core_ui.components.other.DefaultTextField(
+                DefaultTextField(
                     onValueChanged = { mail ->
                         userMail.value = userMail.value.copy(value = mail)
                         viewModel.onEvent(
@@ -99,7 +94,7 @@ fun LoginScreen(
                     },
                     state = userMail
                 )
-                com.example.core_ui.components.other.PasswordTextField(
+                PasswordTextField(
                     state = userPassword
                 ) { password ->
                     userPassword.value = userPassword.value.copy(value = password)
@@ -110,7 +105,7 @@ fun LoginScreen(
                         )
                     )
                 }
-                com.example.core_ui.components.other.DefaultButton(
+                DefaultButton(
                     title = "Authenticate",
                     onClick = {
                         viewModel.onEvent(
@@ -120,6 +115,13 @@ fun LoginScreen(
                             )
                         )
                     }
+                )
+
+                Text(
+                    text = "mail: adrpien@gmail.com"
+                )
+                Text(
+                    text = "password: test12345"
                 )
 
             }

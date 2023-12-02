@@ -1,5 +1,9 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,12 +27,14 @@ fun InspectionSortSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(8.dp)
+                .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium)
+                .background(MaterialTheme.colorScheme.secondary),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
-                modifier = Modifier,
+                modifier = Modifier.padding(start =  4.dp),
                 horizontalArrangement = Arrangement.Start,
 
             ) {
@@ -53,7 +59,7 @@ fun InspectionSortSection(
 
             }
             Row(
-                modifier = Modifier,
+                modifier = Modifier.padding(end = 4.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {

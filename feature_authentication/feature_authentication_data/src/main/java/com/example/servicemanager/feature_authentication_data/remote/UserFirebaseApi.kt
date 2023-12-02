@@ -23,7 +23,6 @@ class UserFirebaseApi(
             val result = reference.await()
             userId = result.user?.uid
             if (result.user?.isEmailVerified == true) {
-                Log.d(USER_FIREBASE_API, "Authentication successful")
                 emit(
                     Resource(
                         ResourceState.SUCCESS,
@@ -33,7 +32,6 @@ class UserFirebaseApi(
                 )
 
             } else {
-                Log.d(USER_FIREBASE_API, "E-mail not verified")
                 emit(
                     Resource(
                         ResourceState.ERROR,

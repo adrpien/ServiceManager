@@ -79,7 +79,9 @@ fun InspectionListScreen(
                     value = inspectionListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
+                        textColor = MaterialTheme.colorScheme.onSecondary,
+                        cursorColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
                         viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
@@ -114,75 +116,78 @@ fun InspectionListScreen(
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.onSecondary)
             )
-            AnimatedVisibility(
-                visible = inspectionListState.value.isHospitalFilterSectionVisible,
-                enter = fadeIn() + slideInVertically(),
-                exit = fadeOut() + slideOutVertically()
-            ) {
 
-                val itemList = inspectionListState.value.hospitalList + Hospital(
-                    hospitalId = "0",
-                    hospital = "All"
-                )
-
-                val nameList = itemList.map { it.hospital }
-
-                DefaultSelectionSection(
-                    itemList = itemList,
-                    nameList = nameList,
-                    selectedItem = inspectionListState.value.hospital ?: Hospital(),
-                    onItemChanged = {
-                        viewModel.onEvent(
-                            InspectionListEvent.filterInspectionListByHospital(
-                                hospital = it
-                            )
-                        )
-                    },
-                    enabled = true
-                )
-            }
-
-            AnimatedVisibility(
-                visible = inspectionListState.value.isSortSectionVisible,
-                enter = fadeIn() + slideInVertically(),
-                exit = fadeOut() + slideOutVertically()
-            ) {
-                InspectionSortSection(
-                    onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
-                    inspectionOrderType = inspectionListState.value.inspectionOrderType,
-                    onToggleMonotonicity = {
-                        viewModel.onEvent(InspectionListEvent.ToggleOrderMonotonicity(it))
+            Box() {
+                SwipeRefresh(
+                    state = swipeRefreshState,
+                    onRefresh = {
+                        viewModel.onEvent(InspectionListEvent.Refresh)
                     }
-                )
-            }
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = {
-                    viewModel.onEvent(InspectionListEvent.Refresh)
-                }
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(inspectionListState.value.inspectionList.size) { index ->
-                        InspectionListItem(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    navHostController.navigate(
-                                        Screens.InspectionDetailsScreen.withArgs(
-                                            inspectionListState.value.inspectionList[index].inspectionId
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(inspectionListState.value.inspectionList.size) { index ->
+                            InspectionListItem(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        navHostController.navigate(
+                                            Screens.InspectionDetailsScreen.withArgs(
+                                                inspectionListState.value.inspectionList[index].inspectionId
+                                            )
                                         )
-                                    )
-                                },
-                            inspection = inspectionListState.value.inspectionList[index],
-                            hospitalList = inspectionListState.value.hospitalList,
-                            technicianList = inspectionListState.value.technicianList,
-                            inspectionStateList = inspectionListState.value.inspectionStateList
+                                    },
+                                inspection = inspectionListState.value.inspectionList[index],
+                                hospitalList = inspectionListState.value.hospitalList,
+                                technicianList = inspectionListState.value.technicianList,
+                                inspectionStateList = inspectionListState.value.inspectionStateList
 
+                            )
+                        }
+
+                    }
+                    this@Column.AnimatedVisibility(
+                        visible = inspectionListState.value.isHospitalFilterSectionVisible,
+                        enter = fadeIn() + slideInVertically(),
+                        exit = fadeOut() + slideOutVertically()
+                    ) {
+
+                        val itemList = inspectionListState.value.hospitalList + Hospital(
+                            hospitalId = "0",
+                            hospital = "All"
+                        )
+
+                        val nameList = itemList.map { it.hospital }
+
+                        DefaultSelectionSection(
+                            itemList = itemList,
+                            nameList = nameList,
+                            selectedItem = inspectionListState.value.hospital ?: Hospital(),
+                            onItemChanged = {
+                                viewModel.onEvent(
+                                    InspectionListEvent.filterInspectionListByHospital(
+                                        hospital = it
+                                    )
+                                )
+                            },
+                            enabled = true
                         )
                     }
 
+                    this@Column.AnimatedVisibility(
+                        visible = inspectionListState.value.isSortSectionVisible,
+                        enter = fadeIn() + slideInVertically(),
+                        exit = fadeOut() + slideOutVertically()
+                    ) {
+                        InspectionSortSection(
+                            onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
+                            inspectionOrderType = inspectionListState.value.inspectionOrderType,
+                            onToggleMonotonicity = {
+                                viewModel.onEvent(InspectionListEvent.ToggleOrderMonotonicity(it))
+                            }
+                        )
+                    }
                 }
             }
         }

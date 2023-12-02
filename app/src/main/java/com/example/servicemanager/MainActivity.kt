@@ -17,7 +17,7 @@ class MainActivity(
         super.onCreate(savedInstanceState)
         setContent {
             ServiceManagerTheme {
-                MainScreenNavigation()
+                LoginNavigation()
             }
         }
     }

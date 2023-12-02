@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,12 +26,12 @@ fun DefaultButton(
             .fillMaxWidth()
             .padding(8.dp),
         onClick =  onClick,
-        shape = RectangleShape,
+        shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MediumBeige,
-            contentColor = DarkBlue
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onSecondary
         ),
-        border = BorderStroke(2.dp, LightBeige)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
     ) {
         Text(
             text = title

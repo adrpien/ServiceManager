@@ -1,5 +1,7 @@
 package com.example.core_ui.components.other
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +13,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -40,15 +43,19 @@ fun PasswordTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .border(2.dp, LightBlue),
+            .border(1.dp, MaterialTheme.colorScheme.onSecondary, MaterialTheme.shapes.medium),
         colors = TextFieldDefaults.colors(
-            focusedTextColor = LightBlue,
-            focusedContainerColor = LightBeige,
-            unfocusedLabelColor = LightBlue,
-            focusedLabelColor = LightBlue,
-            disabledLabelColor = LightBlue,
-            errorLabelColor = LightBlue,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
+            focusedTextColor = MaterialTheme.colorScheme.onPrimary,
+            disabledTextColor = MaterialTheme.colorScheme.onPrimary,
+            focusedContainerColor = MaterialTheme.colorScheme.primary,
+            unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = MaterialTheme.colorScheme.secondary,
+            focusedLabelColor = MaterialTheme.colorScheme.onSecondary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.onSecondary,
+            disabledLabelColor = MaterialTheme.colorScheme.onSecondary,
         ),
+        shape = MaterialTheme.shapes.medium,
         value = state.value.value,
         onValueChange = onValueChanged,
         label = { Text("Password") },
