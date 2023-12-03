@@ -11,4 +11,6 @@ object NavigationRoutes {
     const val ROUTE_REPAIR_LIST_SCREEN = "repair_list"
     const val ROUTE_USER_LOGIN_SCREEN = "user_login"
     const val ROUTE_CONTENT_COMPOSABLE = "content_composable"
+    const val ROUTE_CONTENT_WITH_NAVIGATION_COMPOSABLE = "content_with+navigation_composable"
+
 }

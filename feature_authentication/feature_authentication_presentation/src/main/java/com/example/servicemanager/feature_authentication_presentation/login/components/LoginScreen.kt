@@ -56,7 +56,7 @@ fun LoginScreen(
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is UiEvent.Authenticate -> {
-                    navHostController.navigate(Screens.ContentComposable.route) {
+                    navHostController.navigate(Screens.ContentWithNavigationComposable.withArgs(userLoginState.value.userId)) {
                         popUpTo(Screens.UserLoginScreen.route) {
                             inclusive = true
                         }

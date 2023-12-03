@@ -15,6 +15,7 @@ import com.example.core.util.Screens
 
 @Composable
 fun MainScreenNavigation(
+    userId: String?
 ) {
     val navHostController = rememberNavController()
 
@@ -24,19 +25,19 @@ fun MainScreenNavigation(
                 itemList = listOf(
                     BottomNavigationItem(
                         name = "Inspections",
-                        route = Screens.InspectionListScreen.route,
+                        route = Screens.InspectionListScreen,
                         icon = Icons.Default.Checklist,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
                         name = "Repairs",
-                        route = Screens.RepairListScreen.route,
+                        route = Screens.RepairListScreen,
                         icon = Icons.Default.Settings,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
                         name = "Home",
-                        route = Screens.HomeScreen.route,
+                        route = Screens.HomeScreen,
                         icon = Icons.Default.Home,
                         badgeCount = 0
                     )
@@ -44,14 +45,14 @@ fun MainScreenNavigation(
                 ),
                 navHostController = navHostController,
                 onItemClick = {
-                    navHostController.navigate(it.route)
+                    navHostController.navigate(it.route.withArgs(userId ?: "0"))
                 },
             )
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
             MainScreenNavigationContent(
-                navHostController = navHostController
+                navHostController = navHostController,
             )
         }
     }

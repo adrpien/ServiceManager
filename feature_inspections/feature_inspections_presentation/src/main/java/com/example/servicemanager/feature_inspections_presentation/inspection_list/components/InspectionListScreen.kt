@@ -30,6 +30,7 @@ import com.example.core_ui.components.other.DefaultSelectionSection
 
 @Composable
 fun InspectionListScreen(
+    userId: String?,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: InspectionListViewModel = hiltViewModel(),
@@ -153,10 +154,14 @@ fun InspectionListScreen(
                         exit = fadeOut() + slideOutVertically()
                     ) {
 
-                        val itemList = inspectionListState.value.hospitalList + Hospital(
-                            hospitalId = "0",
-                            hospital = "All"
-                        )
+                        val itemList = if (inspectionListState.value.user.userType == "DLUGA_WORKER") {
+                            inspectionListState.value.hospitalList.filter { inspectionListState.value.hospital?.hospital ==  "Dluga" }
+                        } else {
+                             inspectionListState.value.hospitalList + Hospital(
+                                hospitalId = "0",
+                                hospital = "All"
+                            )
+                        }
 
                         val nameList = itemList.map { it.hospital }
 

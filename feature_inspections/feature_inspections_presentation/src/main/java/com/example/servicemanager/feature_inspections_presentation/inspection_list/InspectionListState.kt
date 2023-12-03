@@ -6,9 +6,11 @@ import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class InspectionListState(
+    val user: User = User(),
     val inspectionList: List<Inspection> = emptyList(),
     val hospitalList: List<Hospital> = emptyList(),
     val inspectionStateList: List<InspectionState> = emptyList(),

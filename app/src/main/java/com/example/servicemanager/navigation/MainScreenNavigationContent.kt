@@ -16,16 +16,27 @@ import com.example.servicemanager.future_repairs_presentation.repair_details.com
 import com.example.servicemanager.future_repairs_presentation.repair_list.components.RepairListScreen
 
 @Composable
-fun MainScreenNavigationContent(navHostController: NavHostController) {
+fun MainScreenNavigationContent(
+    userId: String? = "0",
+    navHostController: NavHostController
+) {
     NavHost(
         navController = navHostController,
-        startDestination = Screens.RepairListScreen.route) {
+        startDestination = Screens.RepairListScreen.route + "/{userId}") {
 
         composable(
-            route = Screens.InspectionListScreen.route,
+            route = Screens.InspectionListScreen.route + "/{userId}",
+            arguments = listOf(
+                navArgument(name = "userId") {
+                    type = NavType.StringType
+                    defaultValue = "0"
+                    nullable = false
+                }
+            )
         ){
             InspectionListScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+                userId = it.arguments?.getString("userId") ?: "0"
             )
         }
 
@@ -47,10 +58,18 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
         }
 
         composable(
-            route = Screens.RepairListScreen.route,
+            route = Screens.RepairListScreen.route + "/{userId}",
+            arguments = listOf(
+                navArgument(name = "userId") {
+                    type = NavType.StringType
+                    defaultValue = "0"
+                    nullable = false
+                }
+            )
         ){
             RepairListScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+                userId = it.arguments?.getString("userId") ?: "0"
             )
         }
 
@@ -71,10 +90,18 @@ fun MainScreenNavigationContent(navHostController: NavHostController) {
         }
 
         composable(
-            route = Screens.HomeScreen.route
+            route = Screens.HomeScreen.route + "/{userId}",
+            arguments = listOf(
+                navArgument(name = "userId") {
+                    type = NavType.StringType
+                    defaultValue = "0"
+                    nullable = false
+                }
+            )
         ){
             HomeScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+                userId = it.arguments?.getString("userId") ?: "0"
             )
         }
 

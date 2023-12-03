@@ -2,11 +2,13 @@ package com.example.servicemanager.feature_inspections_presentation.inspection_l
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InspectionListViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val inspectionsUseCases: InspectionUseCases,
     private val appUseCases: AppUseCases
 ): ViewModel() {
@@ -35,9 +38,10 @@ class InspectionListViewModel @Inject constructor(
     val _inspectionListState = mutableStateOf(InspectionListState())
     val inspectionListState: State<InspectionListState> = _inspectionListState
 
-
+    private var currentUserId: String? = null
 
     init {
+        fetchUser(currentUserId)
         fetchHospitalList()
         fetchTechnicianList()
         fetchInspectionStateList()
@@ -259,7 +263,25 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 
-    sealed class UIEvent() {
-        data class ShowSnackbar(val message: String): UIEvent()
+    private fun fetchUser(userId: String?) {
+        currentUserId = savedStateHandle.get<String>("userId")
+        viewModelScope.launch(Dispatchers.IO) {
+            userId?.let { appUseCases.getUser(userId).collect() { result ->
+                when(result.resourceState) {
+                    ResourceState.SUCCESS -> {
+                        result.data?.let { user ->
+                            _inspectionListState.value = _inspectionListState.value.copy(user = user )
+                        }
+
+                    }
+                    ResourceState.LOADING -> Unit
+                    ResourceState.ERROR -> Unit
+                }
+            } }
+
+        }
     }
+}
+sealed class UIEvent() {
+    data class ShowSnackbar(val message: String): UIEvent()
 }

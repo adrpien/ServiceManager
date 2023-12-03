@@ -9,6 +9,8 @@ sealed class Screens(val route: String){
     object RepairListScreen: Screens(NavigationRoutes.ROUTE_REPAIR_LIST_SCREEN)
     object UserLoginScreen: Screens(NavigationRoutes.ROUTE_USER_LOGIN_SCREEN)
     object ContentComposable: Screens(NavigationRoutes.ROUTE_CONTENT_COMPOSABLE)
+    object ContentWithNavigationComposable: Screens(NavigationRoutes.ROUTE_CONTENT_WITH_NAVIGATION_COMPOSABLE)
+
     object AppSettingsScreen: Screens(NavigationRoutes.APP_SETTINGS_SCREEN)
     object DatabaseSettingsScreen: Screens(NavigationRoutes.DATABASE_SETTINGS_SCREEN)
 

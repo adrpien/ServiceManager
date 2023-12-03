@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
+    userId: String?,
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
 ) {
