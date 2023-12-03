@@ -42,7 +42,7 @@ fun BottomNavigationBar(
         ) {
             itemList.forEach {  item ->
                 val backStackEntry = navHostController.currentBackStackEntryAsState()
-                val selected = item.route.route == backStackEntry.value?.destination?.route
+                val selected = item.route.route + "/{userId}" == backStackEntry.value?.destination?.route
                 BottomNavigationItem(
                     selected = selected,
                     selectedContentColor = MaterialTheme.colorScheme.onPrimary,
