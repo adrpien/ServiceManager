@@ -16,7 +16,11 @@ class AppSettingsScreenViewModel @Inject constructor(
     val appSettingsScreenState: State<AppSettingsScreenState> = _appSettingsScreenState
 
     init {
-        fetchPreferences()
+        val result = fetchPreferences()
+        _appSettingsScreenState.value = _appSettingsScreenState.value.copy(
+            isDarkModeEnabled = result.isDarkModeEnabled,
+            dateFormattingType = result.dateFormattingType
+        )
     }
 
     private fun fetchPreferences(): AppSettingsScreenState {

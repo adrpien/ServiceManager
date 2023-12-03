@@ -3,17 +3,23 @@ package com.example.servicemanager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.example.core.preferences.AppPreferences
 import com.example.core.theme.ServiceManagerTheme
 import com.example.servicemanager.navigation.MainScreenNavigation
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity(
+class MainActivity (
 ) : ComponentActivity() {
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ServiceManagerTheme {
+            ServiceManagerTheme(appPreferences) {
                 // LoginNavigation()
                 MainScreenNavigation()
             }

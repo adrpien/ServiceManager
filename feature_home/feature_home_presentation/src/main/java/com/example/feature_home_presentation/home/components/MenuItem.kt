@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -16,12 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.ServiceManagerTheme
-import com.example.core.util.UiText
 import com.example.core_ui.components.other.MenuItemState
-import com.example.feature_home_presentation.R
 
 @Composable
 fun MenuItem(
@@ -67,19 +61,5 @@ fun MenuItem(
                 }
             }
         }
-    }
-}
-
-fun previewMenuItem(): MenuItemState {
-    return MenuItemState(
-            icon = Icons.Default.Logout,
-            text = UiText.StringResource(id = R.string.log_out)
-        ) { }
-}
-@Preview(showBackground = true)
-@Composable
-fun MenuItemPreview(){
-    ServiceManagerTheme{
-        MenuItem(menuItemState = previewMenuItem())
     }
 }

@@ -93,8 +93,7 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            val profilePicture = Helper.drawableToByteArray(context,
-                context.getDrawable(R.drawable.default_profile_picture)!!
+            val profilePicture = Helper.drawableToByteArray(context.getDrawable(R.drawable.default_profile_picture)!!
             )
 
             ProfileSection(
