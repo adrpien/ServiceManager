@@ -4,14 +4,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.util.NavigationRoutes
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_authentication_domain.use_cases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -79,9 +77,9 @@ class UserLoginViewModel @Inject constructor(
             }
         }
     }
-    sealed class UiEvent() {
-        data class Authenticate(val userId: String): UiEvent()
-        data class ShowSnackbar(val messege: String): UiEvent()
-    }
 }
 
+sealed class UiEvent() {
+    data class Authenticate(val userId: String): UiEvent()
+    data class ShowSnackbar(val messege: String): UiEvent()
+}

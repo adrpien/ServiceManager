@@ -14,6 +14,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import com.example.core_ui.components.other.SwitchItem
 import com.example.feature_home_presentation.R
 import com.example.feature_home_presentation.app_settings.AppSettingsScreenEvent
 import com.example.feature_home_presentation.app_settings.AppSettingsScreenViewModel
+import com.example.feature_home_presentation.app_settings.UiEvent
 
 @Composable
 fun AppSettingsScreen(
@@ -39,6 +41,18 @@ fun AppSettingsScreen(
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
+
+
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collect(){ event ->
+            when(event) {
+                is UiEvent.ShowSnackbar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(message = event.message)
+                }
+            }
+        }
+    }
 
     Scaffold(
         scaffoldState = scaffoldState
@@ -62,6 +76,11 @@ fun AppSettingsScreen(
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                modifier = Modifier,
+                text = "Dark mode:",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
             SwitchItem(
                 title = R.string.dark_mode,
                 isChecked = appSettingsState.value.isDarkModeEnabled,
@@ -69,6 +88,12 @@ fun AppSettingsScreen(
             ){
                 viewModel.onEvent(AppSettingsScreenEvent.SetDarkMode(it))
             }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                modifier = Modifier,
+                text = "Date formatting type:",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
             DefaultSelectionSection(
                 itemList = viewModel.appSettingsScreenState.value.dateFormattingTypeList,
                 nameList = viewModel.appSettingsScreenState.value.dateFormattingTypeList.map { it.formatting },

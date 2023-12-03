@@ -16,6 +16,7 @@ import com.example.core_ui.components.other.DefaultTextField
 import com.example.core_ui.components.other.DefaultTextFieldState
 import com.example.core_ui.components.other.PasswordTextField
 import com.example.core.util.Screens
+import com.example.servicemanager.feature_authentication_presentation.login.UiEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -54,14 +55,14 @@ fun LoginScreen(
     LaunchedEffect(true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is UserLoginViewModel.UiEvent.Authenticate -> {
+                is UiEvent.Authenticate -> {
                     navHostController.navigate(Screens.ContentComposable.route) {
                         popUpTo(Screens.UserLoginScreen.route) {
                             inclusive = true
                         }
                     }
                 }
-                is UserLoginViewModel.UiEvent.ShowSnackbar -> {
+                is UiEvent.ShowSnackbar -> {
                         scaffoldState.snackbarHostState.showSnackbar(
                             message = event.messege
                         )
