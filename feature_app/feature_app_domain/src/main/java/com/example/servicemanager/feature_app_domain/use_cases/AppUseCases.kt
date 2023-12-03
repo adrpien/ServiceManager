@@ -1,7 +1,7 @@
 package com.example.servicemanager.feature_app_domain.use_cases
 
-import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
+import com.example.servicemanager.feature_app_domain.use_cases.other.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.SaveSignature
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.GetSignature
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.UpdateSignature
@@ -20,5 +20,6 @@ data class AppUseCases(
     val getInspectionStateList: GetInspectionStateList,
     val getRepairStateList: GetRepairStateList,
     val getTechnicianList: GetTechnicianList,
-    val getUser: GetUser
-    )
+    val getUser: GetUser,
+    val getDateFormattingTypes : GetDateFormattingTypes
+)

@@ -1,26 +1,37 @@
-package com.example.feature_home_presentation.database_settings
+package com.example.feature_home_presentation.app_settings
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.core.preferences.AppPreferences
+import com.example.core.util.DateFormattingType
+import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AppSettingsScreenViewModel @Inject constructor(
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
+    private val appUseCases: AppUseCases
 ): ViewModel() {
 
     private val _appSettingsScreenState = mutableStateOf(AppSettingsScreenState())
     val appSettingsScreenState: State<AppSettingsScreenState> = _appSettingsScreenState
 
+
+
     init {
-        val result = fetchPreferences()
+        val preferences = fetchPreferences()
+        val dateTypes = fetchDateFormattingTypes()
+
+
         _appSettingsScreenState.value = _appSettingsScreenState.value.copy(
-            isDarkModeEnabled = result.isDarkModeEnabled,
-            dateFormattingType = result.dateFormattingType
+            isDarkModeEnabled = preferences.isDarkModeEnabled,
+            dateFormattingType = preferences.dateFormattingType,
+            dateFormattingTypeList = dateTypes
         )
+
+
     }
 
     private fun fetchPreferences(): AppSettingsScreenState {
@@ -31,6 +42,10 @@ class AppSettingsScreenViewModel @Inject constructor(
             dateFormattingType = dateFormattingType
         )
 
+    }
+
+    private fun fetchDateFormattingTypes(): List<DateFormattingType> {
+        return appUseCases.getDateFormattingTypes()
     }
 
     fun onEvent(event: AppSettingsScreenEvent) {

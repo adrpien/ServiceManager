@@ -3,6 +3,7 @@ package com.example.servicemanager.feature_app_domain.dependency_injection
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
+import com.example.servicemanager.feature_app_domain.use_cases.other.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.GetSignature
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.SaveSignature
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.UpdateSignature
@@ -32,7 +33,9 @@ object AppDomainModule {
             getInspectionStateList = GetInspectionStateList(repository),
             getRepairStateList = GetRepairStateList(repository),
             getTechnicianList = GetTechnicianList(repository),
-            getUser = GetUser(repository)
+            getUser = GetUser(repository),
+            getDateFormattingTypes = GetDateFormattingTypes()
+
         )
     }
 

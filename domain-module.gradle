@@ -100,4 +100,8 @@ dependencies {
     implementation(Coroutines.coroutinesCore)
     implementation(Coroutines.coroutinesAndroid)
     implementation(Coroutines.coroutinesPlayServices)
+
+    // Reflection
+    implementation(Reflection.reflection)
+
 }

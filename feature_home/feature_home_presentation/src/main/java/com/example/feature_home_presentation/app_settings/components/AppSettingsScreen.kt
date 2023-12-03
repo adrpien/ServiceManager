@@ -21,10 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.other.SwitchItem
 import com.example.feature_home_presentation.R
-import com.example.feature_home_presentation.database_settings.AppSettingsScreenEvent
-import com.example.feature_home_presentation.database_settings.AppSettingsScreenViewModel
+import com.example.feature_home_presentation.app_settings.AppSettingsScreenEvent
+import com.example.feature_home_presentation.app_settings.AppSettingsScreenViewModel
 
 @Composable
 fun AppSettingsScreen(
@@ -68,6 +69,15 @@ fun AppSettingsScreen(
             ){
                 viewModel.onEvent(AppSettingsScreenEvent.SetDarkMode(it))
             }
+            DefaultSelectionSection(
+                itemList = viewModel.appSettingsScreenState.value.dateFormattingTypeList,
+                nameList = viewModel.appSettingsScreenState.value.dateFormattingTypeList.map { it.formatting },
+                selectedItem = viewModel.appSettingsScreenState.value.dateFormattingType,
+                onItemChanged = {
+                                viewModel.onEvent(AppSettingsScreenEvent.SetDateFormattingType(it))
+                },
+                enabled = true
+            )
 
         }
     }

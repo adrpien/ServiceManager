@@ -101,4 +101,6 @@ interface AppDatabaseDao {
     @Query("DELETE FROM repairstateentity")
     suspend fun deleteAllRepairStates()
 
+
+
 }
