@@ -81,7 +81,9 @@ class RepairDetailsViewModel @Inject constructor(
 
                             }
                             ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
+                            ResourceState.ERROR -> {
+                                _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
+                            }
                         }
                     }
                 }
