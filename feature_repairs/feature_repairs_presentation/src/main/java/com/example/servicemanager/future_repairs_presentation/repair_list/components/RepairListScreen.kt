@@ -31,7 +31,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun RepairListScreen(
-    userId: String,
+    userId: String?,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: RepairListViewModel = hiltViewModel(),

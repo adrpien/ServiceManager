@@ -36,7 +36,6 @@ fun LoginNavigation() {
         ) {
             MainScreenNavigation(
                 userId = it.arguments?.getString("userId") ?: "0"
-
             )
         }
     }

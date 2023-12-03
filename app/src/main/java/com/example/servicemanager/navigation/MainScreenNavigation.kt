@@ -52,6 +52,7 @@ fun MainScreenNavigation(
     ) {
         Column(modifier = Modifier.padding(it)) {
             MainScreenNavigationContent(
+                userId = userId,
                 navHostController = navHostController,
             )
         }

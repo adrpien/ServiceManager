@@ -22,7 +22,8 @@ fun MainScreenNavigationContent(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screens.RepairListScreen.route + "/{userId}") {
+        startDestination = Screens.RepairListScreen.route + "/{userId}"
+    ) {
 
         composable(
             route = Screens.InspectionListScreen.route + "/{userId}",
@@ -36,7 +37,7 @@ fun MainScreenNavigationContent(
         ){
             InspectionListScreen(
                 navHostController = navHostController,
-                userId = it.arguments?.getString("userId") ?: "0"
+                userId = userId
             )
         }
 
@@ -69,7 +70,7 @@ fun MainScreenNavigationContent(
         ){
             RepairListScreen(
                 navHostController = navHostController,
-                userId = it.arguments?.getString("userId") ?: "0"
+                userId = userId
             )
         }
 
@@ -101,7 +102,7 @@ fun MainScreenNavigationContent(
         ){
             HomeScreen(
                 navHostController = navHostController,
-                userId = it.arguments?.getString("userId") ?: "0"
+                userId = userId
             )
         }
 
