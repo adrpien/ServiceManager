@@ -22,7 +22,6 @@ import com.example.core.theme.Dimensions.signatureHeight
 import com.example.core.theme.Dimensions.signatureWidth
 import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
-import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultTextField
 import com.example.core_ui.components.other.DefaultTextFieldState
 import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
@@ -274,7 +273,7 @@ fun RepairDetailsScreen(
                         } else {
                             viewModel.onEvent(RepairDetailsEvent.SaveRepair(repairDetailsState.value.repair))
                         }
-                        navHostController.navigate(Screens.RepairListScreen.route)
+                        // navHostController.navigate(Screens.RepairListScreen.route)
 
                         // For testing only
                         // viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))

@@ -5,11 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.util.NavigationRoutes
 import com.example.core.util.Helper.Companion.byteArrayToBitmap
 import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
-
+import com.example.core.util.Screens
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
@@ -76,15 +75,13 @@ class RepairDetailsViewModel @Inject constructor(
                                 }
                                 _eventFlow.emit(
                                     UiEvent.NavigateTo(
-                                        NavigationRoutes.ROUTE_INSPECTION_LIST_SCREEN
+                                        Screens.RepairListScreen.route
                                     )
                                 )
 
                             }
                             ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> {
-                                _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
-                            }
+                            ResourceState.ERROR -> Unit
                         }
                     }
                 }
@@ -124,7 +121,7 @@ class RepairDetailsViewModel @Inject constructor(
                                     setIsLoadingStatus()
                                     _repairDetailsState.value =
                                         _repairDetailsState.value.copy(
-                                            repair = repair
+                                            repair = repair,
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(repair))
                                 }
@@ -137,8 +134,11 @@ class RepairDetailsViewModel @Inject constructor(
         } else {
             _repairDetailsState.value =
                 _repairDetailsState.value.copy(
-                    repair = Repair()
+                    repair = Repair(),
+                    isInEditMode = true
                 )
+            repairIsLoading = false
+            setIsLoadingStatus()
         }
     }
     // TODO Bug needs to be fixed - fetches signature even if there no signature

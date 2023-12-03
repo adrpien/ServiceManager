@@ -5,10 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.util.NavigationRoutes
 import com.example.core.util.Helper.Companion.byteArrayToBitmap
 import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
+import com.example.core.util.Screens
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
@@ -77,7 +77,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 viewModelScope.launch(Dispatchers.IO) {
                                     appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
                                 }
-                                _eventFlow.emit(UiEvent.NavigateTo(NavigationRoutes.ROUTE_INSPECTION_LIST_SCREEN))
+                                _eventFlow.emit(UiEvent.NavigateTo(Screens.InspectionListScreen.route))
                             }
                         }
                     }
@@ -129,8 +129,12 @@ class InspectionDetailsViewModel @Inject constructor(
         } else {
             _inspectionDetailsState.value =
                 _inspectionDetailsState.value.copy(
-                    inspection = Inspection()
+                    inspection = Inspection(),
+                    isInEditMode = true
                 )
+            inspectionDetailsIsLoading = false
+            setIsLoadingStatus()
+
         }
     }
     // TODO Bug needs to be fixed - fetches signature even if there no signature
