@@ -7,6 +7,7 @@ import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
+import com.example.servicemanager.feature_app_domain.model.UserType
 import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
@@ -32,6 +33,8 @@ interface AppRepository {
     fun getRepairStateList(): Flow<Resource<List<RepairState>>>
 
     /* ***** User ******************************************************************************* */
-    fun getUser(id: String): Flow<Resource<User>>
+    fun getUser(userId: String): Flow<Resource<User>>
+
+    fun getUserTypeList(): Flow<Resource<List<UserType>>>
 
 }

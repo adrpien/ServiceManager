@@ -6,6 +6,8 @@ import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
 import com.example.servicemanager.feature_app_data.local.entities.InspectionStateEntity
 import com.example.servicemanager.feature_app_data.local.entities.RepairStateEntity
 import com.example.servicemanager.feature_app_data.local.entities.TechnicianEntity
+import com.example.servicemanager.feature_app_data.local.entities.UserTypeEntity
+import com.example.servicemanager.feature_app_domain.model.UserType
 
 
 @Dao
@@ -101,6 +103,22 @@ interface AppDatabaseDao {
     @Query("DELETE FROM repairstateentity")
     suspend fun deleteAllRepairStates()
 
+    /* ***** UserTypes *********************************************************************** */
+    @Query("SELECT * FROM usertypeentity")
+    suspend fun getUserTypeList(): List<UserTypeEntity>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUserType(userType: UserTypeEntity)
+
+    @Transaction
+    @Query("SELECT * FROM usertypeentity WHERE userTypeId LIKE :userTypeId")
+    suspend fun getUserType(userTypeId: String): UserType
+
+    @Transaction
+    @Query("DELETE FROM usertypeentity WHERE userTypeId LIKE :userTypeId")
+    suspend fun deleteUserType(userTypeId: String)
+
+    @Query("DELETE FROM usertypeentity")
+    suspend fun deleteAllUserTypes()
 
 }

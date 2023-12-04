@@ -10,12 +10,14 @@ import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toRepairStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toTechnicianEntity
+import com.example.servicemanager.feature_app_data.mappers.toUserTypeEntity
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
+import com.example.servicemanager.feature_app_domain.model.UserType
 import kotlinx.coroutines.flow.*
 
 class  AppRepositoryImplementation(
@@ -195,5 +197,33 @@ class  AppRepositoryImplementation(
             )
         }
     }
+
+    override fun getUserTypeList(): Flow<Resource<List<UserType>>> = flow {
+        var userTypeList: List<UserType>
+        userTypeList = appDatabaseDao.getUserTypeList().map { it.toUserType() }
+        emit(
+            Resource(
+                ResourceState.LOADING,
+                userTypeList,
+                "Locally cached list"
+            )
+        )
+        val list = firebaseApi.getUserTypeList()
+        if(list.isNotEmpty()) {
+            appDatabaseDao.deleteAllUserTypes()
+            for (userType in list) {
+                appDatabaseDao.insertUserType(userType.toUserTypeEntity())
+            }
+            userTypeList = appDatabaseDao.getUserTypeList().map { it.toUserType() }
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    userTypeList,
+                    "User types list fetching finished"
+                )
+            )
+        }
+    }
+
 
 }

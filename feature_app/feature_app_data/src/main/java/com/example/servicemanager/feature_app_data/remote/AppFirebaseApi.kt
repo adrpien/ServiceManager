@@ -8,6 +8,7 @@ import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
+import com.example.servicemanager.feature_app_domain.model.UserType
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
@@ -186,6 +187,22 @@ class  AppFirebaseApi(
             user = result.result.toObject(User::class.java)
         }
         return user
+    }
+
+    suspend fun getUserTypeList(): List<UserType> {
+        var userTypeList = emptyList<UserType>()
+        Log.d(APP_REPOSITORY, "User types list fetching started")
+        val documentReference = firebaseFirestore.collection("user_types")
+        val data = documentReference.get()
+        data.await()
+        if(data.isSuccessful) {
+            userTypeList = data.result.toObjects(UserType::class.java)
+            Log.d(APP_REPOSITORY, "User types list fetched")
+
+        } else {
+            Log.d(APP_REPOSITORY, "User types list fetching error")
+        }
+        return userTypeList
     }
 
 }

@@ -2,12 +2,14 @@ package com.example.servicemanager.feature_app_data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 import com.example.servicemanager.feature_app_data.local.entities.EstStateEntity
 import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
 import com.example.servicemanager.feature_app_data.local.entities.InspectionStateEntity
 import com.example.servicemanager.feature_app_data.local.entities.RepairStateEntity
 import com.example.servicemanager.feature_app_data.local.entities.TechnicianEntity
+import com.example.servicemanager.feature_app_data.local.entities.UserTypeEntity
 
 
 @Database (
@@ -17,9 +19,11 @@ import com.example.servicemanager.feature_app_data.local.entities.TechnicianEnti
         InspectionStateEntity::class,
         RepairStateEntity::class,
         TechnicianEntity::class,
+        UserTypeEntity::class
                ],
     version = 1
 )
+@TypeConverters(TypeConverterList::class)
 abstract class AppDatabase() : RoomDatabase() {
 
 

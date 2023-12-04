@@ -9,6 +9,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.states.GetEstStat
 import com.example.servicemanager.feature_app_domain.use_cases.states.GetInspectionStateList
 import com.example.servicemanager.feature_app_domain.use_cases.states.GetRepairStateList
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
+import com.example.servicemanager.feature_app_domain.use_cases.user_types.GetUserTypeList
 import com.example.servicemanager.feature_app_domain.use_cases.users.GetUser
 
 data class AppUseCases(
@@ -21,5 +22,6 @@ data class AppUseCases(
     val getRepairStateList: GetRepairStateList,
     val getTechnicianList: GetTechnicianList,
     val getUser: GetUser,
-    val getDateFormattingTypes : GetDateFormattingTypes
+    val getDateFormattingTypes : GetDateFormattingTypes,
+    val getUserTypeList: GetUserTypeList
 )

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +29,7 @@ class InspectionListViewModel @Inject constructor(
     private var estStateListIsLoading = true
     private var technicianListIsLoading = true
     private var inspectionStateListIsLoading = true
+    private var userTypeListIsLoading = true
 
     private var searchJob: Job? = null
 
@@ -38,11 +38,12 @@ class InspectionListViewModel @Inject constructor(
     val _inspectionListState = mutableStateOf(InspectionListState())
     val inspectionListState: State<InspectionListState> = _inspectionListState
 
-    private var currentUserId: String? = null
+    private lateinit var currentUserId: String
 
     init {
-        fetchUser(currentUserId)
+        fetchUser()
         fetchHospitalList()
+        fetchUserTypeList()
         fetchTechnicianList()
         fetchInspectionStateList()
         fetchEstStateList()
@@ -244,13 +245,32 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 
+    private fun fetchUserTypeList() {
+        viewModelScope.launch(Dispatchers.IO) {
+            appUseCases.getUserTypeList().collect() { result ->
+                when(result.resourceState) {
+                    ResourceState.SUCCESS -> {
+                        result.data?.let {
+                            _inspectionListState.value = _inspectionListState.value.copy(userTypeList = it)
+                            userTypeListIsLoading = false
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> Unit
+                }
+            }
+        }
+    }
+
     private fun setIsLoadingStatus() {
         if(
             !inspectionListIsLoading &&
             !hospitalListIsLoading &&
             !estStateListIsLoading &&
             !technicianListIsLoading &&
-            !inspectionStateListIsLoading
+            !inspectionStateListIsLoading &&
+            !userTypeListIsLoading
         ){
             _inspectionListState.value = _inspectionListState.value.copy(
                 isLoading = false
@@ -263,10 +283,10 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 
-    private fun fetchUser(userId: String?) {
-        currentUserId = savedStateHandle.get<String>("userId")
+    private fun fetchUser() {
+        currentUserId = savedStateHandle.get<String>("userId") ?: "0"
         viewModelScope.launch(Dispatchers.IO) {
-            userId?.let { appUseCases.getUser(userId).collect() { result ->
+            appUseCases.getUser(currentUserId).collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { user ->
@@ -277,7 +297,7 @@ class InspectionListViewModel @Inject constructor(
                     ResourceState.LOADING -> Unit
                     ResourceState.ERROR -> Unit
                 }
-            } }
+            }
 
         }
     }

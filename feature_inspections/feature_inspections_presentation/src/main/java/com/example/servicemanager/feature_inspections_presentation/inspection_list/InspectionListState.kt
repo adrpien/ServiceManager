@@ -7,6 +7,7 @@ import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
+import com.example.servicemanager.feature_app_domain.model.UserType
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class InspectionListState(
@@ -23,7 +24,8 @@ data class InspectionListState(
     val isHospitalFilterSectionVisible: Boolean = false,
     val inspectionOrderType: InspectionOrderType = InspectionOrderType.State(
         InspectionOrderMonotonicity.Ascending),
-    val hospital: Hospital? = null
+    val hospital: Hospital? = null,
+    val userTypeList: List<UserType> = emptyList()
 ) {
 
 }
