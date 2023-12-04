@@ -154,19 +154,21 @@ fun InspectionListScreen(
                         exit = fadeOut() + slideOutVertically()
                     ) {
 
-                        val itemList = if (inspectionListState.value.user.userType == "DLUGA_WORKER") {
-                            inspectionListState.value.hospitalList.filter { inspectionListState.value.hospital?.hospital ==  "Dluga" }
-                        } else {
-                             inspectionListState.value.hospitalList + Hospital(
-                                hospitalId = "0",
-                                hospital = "All"
-                            )
-                        }
+
+                        val itemList = inspectionListState.value.hospitalList + Hospital(
+                            hospitalId = "0",
+                            hospital = "All"
+                        )
 
                         val nameList = itemList.map { it.hospital }
+                        val hospitalIdList = viewModel.inspectionListState.value.userTypeList.map { it.userTypeId }
+
+                        val itemList2: List<Hospital> = inspectionListState.value.hospitalList.filter { hospital ->
+                            hospitalIdList.contains(hospital.hospitalId)
+                        }
 
                         DefaultSelectionSection(
-                            itemList = itemList,
+                            itemList = itemList2,
                             nameList = nameList,
                             selectedItem = inspectionListState.value.hospital ?: Hospital(),
                             onItemChanged = {

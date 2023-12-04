@@ -35,7 +35,7 @@ class InspectionListViewModel @Inject constructor(
 
     private var getInspectionListJob: Job? = null
 
-    val _inspectionListState = mutableStateOf(InspectionListState())
+    private val _inspectionListState = mutableStateOf(InspectionListState())
     val inspectionListState: State<InspectionListState> = _inspectionListState
 
     private lateinit var currentUserId: String
@@ -141,7 +141,7 @@ class InspectionListViewModel @Inject constructor(
     ) {
             inspectionListIsLoading = true
             setIsLoadingStatus()
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Main) {
             inspectionsUseCases.getInspectionList(
                 searchQuery = searchQuery,
                 fetchFromApi = fetchFromApi,
@@ -166,7 +166,7 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchHospitalList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getHospitalList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -186,7 +186,7 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchInspectionStateList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getInspectionStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -206,7 +206,7 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchEstStateList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getEstStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -226,7 +226,7 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchTechnicianList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -246,7 +246,7 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchUserTypeList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getUserTypeList().collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -285,7 +285,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchUser() {
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getUser(currentUserId).collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
