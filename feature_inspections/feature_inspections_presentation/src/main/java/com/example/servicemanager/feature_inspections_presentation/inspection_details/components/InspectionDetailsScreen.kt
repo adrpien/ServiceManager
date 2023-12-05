@@ -23,6 +23,7 @@ import com.example.core.theme.LightBlue
 import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
+import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.other.DefaultTextField
@@ -191,7 +192,7 @@ fun InspectionDetailsScreen(
                 }
 
                 is UiEvent.NavigateTo -> {
-                    navHostController.navigate(event.route)
+                    navHostController.navigate(event.route + "/{userId}")
                 }
 
                 is UiEvent.SetFieldsIsEditable -> {
@@ -228,7 +229,7 @@ fun InspectionDetailsScreen(
                                 )
                             )
                         }
-                        // navHostController.navigate(Screens.InspectionListScreen.route)
+                        navHostController.navigate(Screens.InspectionListScreen.route + "/{userId}")
                     } else {
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
                     }

@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListViewModel
@@ -155,21 +153,20 @@ fun InspectionListScreen(
                     ) {
 
 
-                        val itemList = inspectionListState.value.hospitalList + Hospital(
+                        var itemList = inspectionListState.value.hospitalList + Hospital(
                             hospitalId = "0",
                             hospital = "All"
                         )
+                        val hospitalNameList = itemList.map { it.hospital }
+                        val accessedHospitalIdList = viewModel.inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }.hospitals
 
-                        val nameList = itemList.map { it.hospital }
-                        val hospitalIdList = viewModel.inspectionListState.value.userTypeList.map { it.userTypeId }
-
-                        val itemList2: List<Hospital> = inspectionListState.value.hospitalList.filter { hospital ->
-                            hospitalIdList.contains(hospital.hospitalId)
+                        itemList = itemList.filter { hospital ->
+                            accessedHospitalIdList.contains(hospital.hospitalId)
                         }
 
                         DefaultSelectionSection(
-                            itemList = itemList2,
-                            nameList = nameList,
+                            itemList = itemList,
+                            nameList = hospitalNameList,
                             selectedItem = inspectionListState.value.hospital ?: Hospital(),
                             onItemChanged = {
                                 viewModel.onEvent(
