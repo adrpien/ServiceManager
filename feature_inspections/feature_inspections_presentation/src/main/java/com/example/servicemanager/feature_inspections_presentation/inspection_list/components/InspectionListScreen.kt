@@ -12,8 +12,10 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -24,7 +26,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultSelectionSection
-
+import com.example.servicemanager.feature_inspections_presentation.inspection_list.UiEvent
 
 @Composable
 fun InspectionListScreen(
@@ -34,13 +36,22 @@ fun InspectionListScreen(
     viewModel: InspectionListViewModel = hiltViewModel(),
     ) {
 
-
+    val context = LocalContext.current
     val inspectionListState = viewModel.inspectionListState
-
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = inspectionListState.value.isRefreshing
     )
     val scaffoldState = rememberScaffoldState()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is UiEvent.ShowSnackbar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(event.message)
+                }
+            }
+        }
+    }
 
     Scaffold(
         floatingActionButton = {
@@ -141,8 +152,12 @@ fun InspectionListScreen(
                                 hospitalList = inspectionListState.value.hospitalList,
                                 technicianList = inspectionListState.value.technicianList,
                                 inspectionStateList = inspectionListState.value.inspectionStateList
-
-                            )
+                            ) {
+                                viewModel.onEvent(InspectionListEvent.CopyToClipboard(
+                                    string = "some string",
+                                    context = context
+                                ))
+                            }
                         }
 
                     }

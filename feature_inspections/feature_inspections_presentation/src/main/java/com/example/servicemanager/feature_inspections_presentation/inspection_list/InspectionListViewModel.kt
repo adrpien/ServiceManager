@@ -14,6 +14,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,6 +41,9 @@ class InspectionListViewModel @Inject constructor(
     val inspectionListState: State<InspectionListState> = _inspectionListState
 
     private lateinit var currentUserId: String
+
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         fetchUser()
@@ -128,6 +133,14 @@ class InspectionListViewModel @Inject constructor(
                     searchQuery = inspectionListState.value.searchQuery,
                     hospitalFilter = inspectionListState.value.hospital
                 )
+            }
+
+            is InspectionListEvent.CopyToClipboard -> {
+                appUseCases.copyToClipboard(
+                    string = event.string,
+                    context = event.context
+                )
+                UiEvent.ShowSnackbar("String copied to clipboard!")
             }
         }
     }
@@ -302,6 +315,6 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 }
-sealed class UIEvent() {
-    data class ShowSnackbar(val message: String): UIEvent()
+sealed class UiEvent() {
+    data class ShowSnackbar(val message: String): UiEvent()
 }

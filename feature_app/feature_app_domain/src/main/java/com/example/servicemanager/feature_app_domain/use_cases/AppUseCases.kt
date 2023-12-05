@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_app_domain.use_cases
 
+import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app_domain.use_cases.other.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.SaveSignature
@@ -23,5 +24,6 @@ data class AppUseCases(
     val getTechnicianList: GetTechnicianList,
     val getUser: GetUser,
     val getDateFormattingTypes : GetDateFormattingTypes,
-    val getUserTypeList: GetUserTypeList
+    val getUserTypeList: GetUserTypeList,
+    val copyToClipboard: CopyToClipboard
 )

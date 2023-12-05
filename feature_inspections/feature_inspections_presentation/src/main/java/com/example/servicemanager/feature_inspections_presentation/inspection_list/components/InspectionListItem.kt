@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,7 +26,8 @@ fun InspectionListItem(
     inspection: Inspection = Inspection(),
     hospitalList: List<Hospital> = emptyList(),
     technicianList: List<Technician> = emptyList(),
-    inspectionStateList: List<InspectionState> = emptyList()
+    inspectionStateList: List<InspectionState> = emptyList(),
+    onLongPress: (Offset) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -88,9 +90,7 @@ fun InspectionListItem(
                         .padding(end = 8.dp)
                         .pointerInput(Unit) {
                             detectTapGestures(
-                                onLongPress = {
-
-                                }
+                                onLongPress = onLongPress
                             )
 
                         },

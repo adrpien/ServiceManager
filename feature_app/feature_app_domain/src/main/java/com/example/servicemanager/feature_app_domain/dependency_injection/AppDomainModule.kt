@@ -2,6 +2,7 @@ package com.example.servicemanager.feature_app_domain.dependency_injection
 
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app_domain.use_cases.other.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.GetSignature
@@ -36,7 +37,8 @@ object AppDomainModule {
             getTechnicianList = GetTechnicianList(repository),
             getUser = GetUser(repository),
             getDateFormattingTypes = GetDateFormattingTypes(),
-            getUserTypeList = GetUserTypeList(repository)
+            getUserTypeList = GetUserTypeList(repository),
+            copyToClipboard = CopyToClipboard()
         )
     }
 
