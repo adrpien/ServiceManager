@@ -10,14 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CopyToClipboard @Inject constructor (
+    private val clipboardManager: ClipboardManager
 ) {
 
-    operator fun invoke(context: Context, string: String) {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    operator fun invoke(string: String) {
         val textToCopy = string
-
         val clip = ClipData.newPlainText("Copied Text", string)
-        clipboard.setPrimaryClip(clip)
+        clipboardManager.setPrimaryClip(clip)
     }
 
 }

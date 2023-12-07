@@ -10,6 +10,7 @@ import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
+import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -136,11 +137,12 @@ class InspectionListViewModel @Inject constructor(
             }
 
             is InspectionListEvent.CopyToClipboard -> {
-                appUseCases.copyToClipboard(
-                    string = event.string,
-                    context = event.context
-                )
-                UiEvent.ShowSnackbar("String copied to clipboard!")
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.copyToClipboard(
+                        string = event.string,
+                    )
+                    _eventFlow.emit(UiEvent.ShowSnackbar("String copied to clipboard"))
+                }
             }
         }
     }

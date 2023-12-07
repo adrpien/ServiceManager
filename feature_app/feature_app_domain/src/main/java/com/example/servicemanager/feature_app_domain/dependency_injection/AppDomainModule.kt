@@ -1,5 +1,8 @@
 package com.example.servicemanager.feature_app_domain.dependency_injection
 
+import android.app.Application
+import android.content.ClipboardManager
+import android.content.Context
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
@@ -23,9 +26,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppDomainModule {
+
     @Provides
     @Singleton
-    fun provideAppUseCases(repository: AppRepository): AppUseCases {
+    fun provideClipboardManager(app: Application): ClipboardManager {
+        return app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+    @Provides
+    @Singleton
+    fun provideAppUseCases(repository: AppRepository, clipboardManager: ClipboardManager): AppUseCases {
         return AppUseCases(
             getHospitalList = GetHospitalList(repository),
             saveSignature = SaveSignature(repository),
@@ -38,7 +47,7 @@ object AppDomainModule {
             getUser = GetUser(repository),
             getDateFormattingTypes = GetDateFormattingTypes(),
             getUserTypeList = GetUserTypeList(repository),
-            copyToClipboard = CopyToClipboard()
+            copyToClipboard = CopyToClipboard(clipboardManager)
         )
     }
 

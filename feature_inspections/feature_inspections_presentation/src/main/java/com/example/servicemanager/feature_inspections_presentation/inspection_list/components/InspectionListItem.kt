@@ -1,14 +1,12 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
 
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,7 +25,8 @@ fun InspectionListItem(
     hospitalList: List<Hospital> = emptyList(),
     technicianList: List<Technician> = emptyList(),
     inspectionStateList: List<InspectionState> = emptyList(),
-    onLongPress: (Offset) -> Unit
+    onInPress: (String) -> Unit,
+    onSnPress: (String) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -88,13 +87,9 @@ fun InspectionListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
-                        .pointerInput(Unit) {
-                            detectTapGestures(
-                                onLongPress = onLongPress
-                            )
-
-                        },
-
+                        .clickable {
+                            onSnPress(inspection.deviceSn)
+                        }
 
                 )
                 Text(
@@ -106,6 +101,9 @@ fun InspectionListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
+                        .clickable {
+                            onInPress(inspection.deviceIn)
+                        }
 
                 )
             }
