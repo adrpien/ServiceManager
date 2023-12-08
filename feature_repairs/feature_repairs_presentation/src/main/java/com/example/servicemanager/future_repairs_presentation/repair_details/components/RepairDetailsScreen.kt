@@ -1,5 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_details.components
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +46,7 @@ import java.time.ZoneId
 import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.signature.SignatureArea
+import com.example.feature_repairs_presentation.R
 
 
 @Composable
@@ -52,6 +56,8 @@ fun RepairDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: RepairDetailsViewModel = hiltViewModel(),
 ) {
+
+    val context: Context = LocalContext.current
 
 /* ********************** STATES **************************************************************** */
     val repairDetailsState = viewModel.repairDetailsState
@@ -91,7 +97,7 @@ fun RepairDetailsScreen(
     val deviceName = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Name",
+                hint = context.resources.getString(R.string.name),
                 value = repairDetailsState.value.repair.deviceName,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -100,7 +106,7 @@ fun RepairDetailsScreen(
     val deviceManufacturer = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Manufacturer",
+                hint = context.resources.getString(R.string.manufacturer),
                 value = repairDetailsState.value.repair.deviceManufacturer,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -109,7 +115,7 @@ fun RepairDetailsScreen(
     val deviceModel = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Model",
+                hint = context.resources.getString(R.string.model),
                 value = repairDetailsState.value.repair.deviceModel,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -118,7 +124,7 @@ fun RepairDetailsScreen(
     val deviceSn = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Serial number",
+                hint = context.resources.getString(R.string.serial_number),
                 value = repairDetailsState.value.repair.deviceSn,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -127,7 +133,7 @@ fun RepairDetailsScreen(
     val deviceIn = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Inventory number",
+                hint = context.resources.getString(R.string.inventory_number),
                 value = repairDetailsState.value.repair.deviceIn,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -136,7 +142,7 @@ fun RepairDetailsScreen(
     val ward = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Ward",
+                hint = context.resources.getString(R.string.ward),
                 value = repairDetailsState.value.repair.ward,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -145,7 +151,7 @@ fun RepairDetailsScreen(
     val comment = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Comment",
+                hint = context.resources.getString(R.string.comment),
                 value = repairDetailsState.value.repair.comment,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -154,7 +160,7 @@ fun RepairDetailsScreen(
     val recipient = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Recipient",
+                hint = context.resources.getString(R.string.recipient),
                 value = repairDetailsState.value.repair.recipient,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -163,7 +169,7 @@ fun RepairDetailsScreen(
     val defectDescription = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Defect description",
+                hint = context.resources.getString(R.string.defect_description),
                 value = repairDetailsState.value.repair.defectDescription,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -172,7 +178,7 @@ fun RepairDetailsScreen(
     val repairDescription = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Repair description",
+                hint = context.resources.getString(R.string.repair_description),
                 value = repairDetailsState.value.repair.repairDescription,
                 clickable = repairDetailsState.value.isInEditMode
             )
@@ -181,7 +187,7 @@ fun RepairDetailsScreen(
     val partDescription = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Part description",
+                hint = context.resources.getString(R.string.part_description),
                 value = repairDetailsState.value.repair.partDescription,
                 clickable = isInEditMode
             )
@@ -427,7 +433,7 @@ fun RepairDetailsScreen(
 
 /* ********************** LOCALIZATION  ********************************************************* */
             Text(
-                text = "Localization",
+                text = stringResource(R.string.localization),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -441,7 +447,7 @@ fun RepairDetailsScreen(
 /* ********************** HOSPITAL SELECTION **************************************************** */
             Text(
                 modifier = Modifier,
-                text = "Hospital:",
+                text = stringResource(id = R.string.hospital) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
@@ -541,7 +547,7 @@ fun RepairDetailsScreen(
 
 /* ********************** REPAIRING TECHNICIAN  ************************************************* */
                 Text(
-                    text = "Repairing technician:",
+                    text = stringResource(R.string.repairing_technician) + ":",
                     color = MaterialTheme.colorScheme.onSecondary
                 )
                 DefaultSelectionSection(
@@ -577,14 +583,14 @@ fun RepairDetailsScreen(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Repairing date: " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong()),
+                    text = stringResource(R.string.repairing_date) + ": " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong()),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
 /* ********************** RESULT  *************************************************************** */
             Text(
-                text = "Result",
+                text = stringResource(R.string.result),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -597,7 +603,7 @@ fun RepairDetailsScreen(
 
 /* ********************** EST STATE  ************************************************************ */
             Text(
-                text = "EstState:",
+                text = stringResource(R.string.eststate) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
                 )
             DefaultSelectionSection(
@@ -619,7 +625,7 @@ fun RepairDetailsScreen(
 
 /* ********************** REPAIRING STATE  ****************************************************** */
             Text(
-                text = "RepairState:",
+                text = stringResource(R.string.repairstate) + ": ",
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
@@ -641,7 +647,7 @@ fun RepairDetailsScreen(
 
 /* ********************** RETURN TECHNICIAN  **************************************************** */
             Text(
-                text = "Return technician:",
+                text = stringResource(R.string.return_technician) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
@@ -676,7 +682,7 @@ fun RepairDetailsScreen(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Returning date: " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong()),
+                    text = stringResource(R.string.returning_date) + ": " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong()),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -731,7 +737,7 @@ fun RepairDetailsScreen(
                         )
                     )
                 },
-                title = "RepairingDate",
+                title = stringResource(R.string.repairing_date),
                 initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong())
                     .atZone(
                         ZoneId.systemDefault()
@@ -750,7 +756,7 @@ fun RepairDetailsScreen(
                         )
                     )
                 },
-                title = "OpeningDate",
+                title = stringResource(R.string.opening_date),
                 initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.openingDate.toLong())
                     .atZone(
                         ZoneId.systemDefault()
@@ -769,7 +775,7 @@ fun RepairDetailsScreen(
                         )
                     )
                 },
-                title = "ReturningDate",
+                title = stringResource(R.string.returning_date),
                 initialDate = Instant.ofEpochMilli(repairDetailsState.value.repair.closingDate.toLong())
                     .atZone(
                         ZoneId.systemDefault()
@@ -777,8 +783,8 @@ fun RepairDetailsScreen(
             )
             if (showExitDialog.value) {
                     ExitAlertDialog(
-                        title = "Save",
-                        contentText = "Do you want save changes?",
+                        title = stringResource(R.string.save),
+                        contentText = stringResource(R.string.do_you_want_save_changes),
                         onConfirm = {
                             if (showExitDialog.value) {
                                 if (repairDetailsState.value.repair.repairId != "0") {

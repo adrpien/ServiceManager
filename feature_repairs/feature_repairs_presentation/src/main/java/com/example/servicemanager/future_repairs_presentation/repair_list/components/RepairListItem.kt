@@ -1,9 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
@@ -14,8 +11,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
 import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.RepairState
@@ -88,7 +83,7 @@ fun RepairListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = stringResource(R.string.serialNumber) +": " + repair.deviceSn,
+                    text = stringResource(R.string.serial_number_short) +": " + repair.deviceSn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -99,7 +94,7 @@ fun RepairListItem(
 
                 )
                 Text(
-                    text = stringResource(R.string.inventoryNumber) + ": " + repair.deviceIn,
+                    text = stringResource(R.string.inventory_number_short) + ": " + repair.deviceIn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
