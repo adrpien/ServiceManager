@@ -31,4 +31,10 @@
     <string name="opening_date">Opening Date</string>
     <string name="save">Save</string>
     <string name="do_you_want_save_changes">Do you want save changes?</string>
+    <string name="pickup_technician">Pickup technician</string>
+    <string name="device">Device</string>
+    <string name="repair">Repair</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="signature">Signature</string>
 </resources>

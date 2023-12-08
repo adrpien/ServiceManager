@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_repair">Utwórz rekord naprawy</string>
+    <string name="search">Szukaj...</string>
+    <string name="sort">Sortuj</string>
+    <string name="hospital">Szpital</string>
+    <string name="all">Wszystkie</string>
+    <string name="state">Stan</string>
+    <string name="date">Data</string>
+    <string name="serial_number_short">ns</string>
+    <string name="inventory_number_short">ni</string>
+    <string name="localization">Lokalizacja</string>
+    <string name="name">Imię</string>
+    <string name="manufacturer">Producent</string>
+    <string name="model">Model</string>
+    <string name="serial_number">Numer seryjny</string>
+    <string name="inventory_number">Numer inwentarzowy</string>
+    <string name="ward">Oddział</string>
+    <string name="comment">Komentarz</string>
+    <string name="recipient">Odbierający</string>
+    <string name="defect_description">Opis usterki</string>
+    <string name="repair_description">Opis naprawy</string>
+    <string name="part_description">Użyte części</string>
+    <string name="repairing_technician">Naprawiający</string>
+    <string name="repairing_date">Data naprawy</string>
+    <string name="result">Wynik</string>
+    <string name="eststate">Test bezpieczeństwa elektrycznego</string>
+    <string name="repairstate">Stan naprawy</string>
+    <string name="return_technician">Zwracający</string>
+    <string name="returning_date">Data zwrotu</string>
+    <string name="opening_date">Data zgłoszenia</string>
+    <string name="save">Zapisz</string>
+    <string name="do_you_want_save_changes">Chcesz zachować zmiany?</string>
+    <string name="pickup_technician">Odbierający</string>
+    <string name="device">Urządzenie</string>
+    <string name="repair">Naprawa</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="cancel">Anuluj</string>
+    <string name="signature">Podpis</string>
+</resources>

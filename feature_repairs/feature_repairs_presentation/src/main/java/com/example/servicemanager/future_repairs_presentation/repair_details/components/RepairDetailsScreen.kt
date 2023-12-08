@@ -293,7 +293,7 @@ fun RepairDetailsScreen(
             ) {
                 Icon(
                     imageVector = if(repairDetailsState.value.isInEditMode) Icons.Default.Save else Icons.Default.Edit,
-                    contentDescription = "Save",
+                    contentDescription = stringResource(id = R.string.save),
                     modifier = Modifier,
                 tint = MaterialTheme.colorScheme.onSecondary
                 )
@@ -325,14 +325,14 @@ fun RepairDetailsScreen(
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
                 ) {
                     Text(
-                        text = "Opening date: " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong()),
+                        text = stringResource(id = R.string.opening_date) + ": " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong()),
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
 /* ********************** PICKUP TECHNICIAN  **************************************************** */
 
                 Text(
-                    text = "Pickup technician:",
+                    text = stringResource(R.string.pickup_technician) + ":",
                     color = MaterialTheme.colorScheme.onSecondary
                 )
 
@@ -355,7 +355,7 @@ fun RepairDetailsScreen(
 
 /* ********************** DEVICE  *************************************************************** */
             Text(
-                text = "Device",
+                text = stringResource(R.string.device),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -495,7 +495,7 @@ fun RepairDetailsScreen(
 
 /* ********************** REPAIR  *************************************************************** */
             Text(
-                text = "Repair",
+                text = stringResource(id = R.string.repair),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -720,7 +720,8 @@ fun RepairDetailsScreen(
                         .height(signatureHeight.toDp.dp)
                         .border(1.dp, MaterialTheme.colorScheme.onSecondary),
                 bitmap = repairDetailsState.value.signature.asImageBitmap(),
-                    contentDescription = "Signature")
+                    contentDescription = stringResource(R.string.signature)
+                )
             }
 
 /* ********************** DIALOGS  ************************************************************** */
@@ -819,13 +820,13 @@ fun RepairDetailsScreen(
                 shape = MaterialTheme.shapes.medium,
                 buttons = {
                     positiveButton(
-                        text = "Confirm",
+                        text = stringResource(R.string.confirm),
                         textStyle = TextStyle(
                             color = MaterialTheme.colorScheme.onSecondary
                         )
                     )
                     negativeButton(
-                        text = "Cancel",
+                        text = stringResource(R.string.cancel),
                         textStyle = TextStyle(
                             color = MaterialTheme.colorScheme.onSecondary
                         )
