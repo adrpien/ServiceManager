@@ -9,12 +9,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.theme.LightBlue
 import com.example.core.theme.LightBeige
+import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
@@ -35,7 +37,8 @@ fun RepairListItem(
                 start = 10.dp,
                 end = 10.dp,
                 top = 10.dp,
-                bottom = 10.dp)
+                bottom = 10.dp
+            )
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
@@ -85,7 +88,7 @@ fun RepairListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "SN: " + repair.deviceSn,
+                    text = stringResource(R.string.serialNumber) +": " + repair.deviceSn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -96,7 +99,7 @@ fun RepairListItem(
 
                 )
                 Text(
-                    text = "IN: " + repair.deviceIn,
+                    text = stringResource(R.string.inventoryNumber) + ": " + repair.deviceIn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -113,7 +116,7 @@ fun RepairListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Localization: " + (hospitalList.find { repair.hospitalId == it.hospitalId }?.hospital ?: "") + ", " +  repair.ward,
+                    text = stringResource(R.string.localization) + ": " + (hospitalList.find { repair.hospitalId == it.hospitalId }?.hospital ?: "") + ", " +  repair.ward,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -131,7 +134,8 @@ fun RepairListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "State: " + repairStateList.find { repair.repairStateId == it.repairStateId }?.repairState ?: "",
+                    text = (stringResource(R.string.state) + ": " + repairStateList.find { repair.repairStateId == it.repairStateId }?.repairState)
+                        ?: "",
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

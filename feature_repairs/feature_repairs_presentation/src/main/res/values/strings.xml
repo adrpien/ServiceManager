@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_repair">Add repair</string>
+    <string name="search">Search...</string>
+    <string name="sort">Sort</string>
+    <string name="hospital">Hospital</string>
+    <string name="all">All</string>
+    <string name="state">State</string>
+    <string name="date">Date</string>
+    <string name="serialNumber">Sn</string>
+    <string name="inventoryNumber">In</string>
+    <string name="localization">Localization</string>
+</resources>

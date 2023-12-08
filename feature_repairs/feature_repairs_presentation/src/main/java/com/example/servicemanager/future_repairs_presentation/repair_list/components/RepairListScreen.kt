@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -23,6 +24,7 @@ import com.example.core.theme.LightBlue
 import com.example.core.theme.LightBeige
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListViewModel
@@ -56,7 +58,7 @@ fun RepairListScreen(
             {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add repair",
+                    contentDescription = stringResource(R.string.add_repair),
                     tint = MaterialTheme.colorScheme.onSecondary
                 )
             }
@@ -92,7 +94,7 @@ fun RepairListScreen(
 
                     placeholder = {
                         Text(
-                            text = "Search...",
+                            text = stringResource(R.string.search),
                             color = MaterialTheme.colorScheme.onSecondary
                         )
                     },
@@ -103,14 +105,14 @@ fun RepairListScreen(
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleSortSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort",
+                        contentDescription = stringResource(R.string.sort),
                         tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
                 IconButton(onClick = { viewModel.onEvent(RepairListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
-                        contentDescription = "Hospital",
+                        contentDescription = stringResource(R.string.hospital),
                         tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
@@ -153,7 +155,7 @@ fun RepairListScreen(
                 ) {
                     val itemList = repairListState.value.hospitalList + Hospital(
                         hospitalId = "0",
-                        hospital = "All"
+                        hospital = stringResource(R.string.all)
                     )
                     val nameList = itemList.map { it.hospital }
                     DefaultSelectionSection(
