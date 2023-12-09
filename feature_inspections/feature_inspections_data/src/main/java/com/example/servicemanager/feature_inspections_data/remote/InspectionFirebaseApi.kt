@@ -57,8 +57,7 @@ class  InspectionFirebaseApi(
             Resource(
                 ResourceState.LOADING,
                 "0",
-                UiText.StringResource(R.string.inspection_record_creating_started)
-            )
+null            )
         )
         var documentReference = firebaseFirestore.collection("inspections")
             .document()
@@ -108,8 +107,8 @@ class  InspectionFirebaseApi(
         emit(
             Resource(
                 ResourceState.LOADING,
-                "",
-                UiText.StringResource(R.string.inspection_record_updating_started)
+                "0",
+                null
             )
         )
         var map = mapOf<String, String>(

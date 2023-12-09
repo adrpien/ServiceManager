@@ -115,7 +115,8 @@ class  RepairFirebaseApi(
         emit(
             Resource(
                 ResourceState.LOADING,
-                "Reapir record updating started"
+                "0",
+                null
             )
         )
         var map = mapOf<String, String>(

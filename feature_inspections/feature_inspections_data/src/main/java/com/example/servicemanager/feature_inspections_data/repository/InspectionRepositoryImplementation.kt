@@ -43,7 +43,7 @@ class  InspectionRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     inspectionList,
-                    UiText.StringResource(R.string.device_list_fetching_finished)
+                    UiText.StringResource(R.string.inspection_list_fetching_finished)
                 )
             )
         }

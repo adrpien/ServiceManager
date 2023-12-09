@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="string_copied_to_clipboard">Skopiowano do schowka</string>
+    <string name="hospital">Szpital</string>
+    <string name="state">Stan</string>
+    <string name="date">Data</string>
+    <string name="sn_number_short">Sn</string>
+    <string name="inventory_number_short">In</string>
+    <string name="localization">Lokalizacja</string>
+    <string name="name">Nazwa</string>
+    <string name="manufacturer">Producent</string>
+    <string name="model">Model</string>
+    <string name="serial_number">Numer seryjny</string>
+    <string name="inventory_number">Numer inwentarzowy</string>
+    <string name="ward">Oddział</string>
+    <string name="comment">Komentarz</string>
+    <string name="recipient">Odbierający</string>
+    <string name="save">Zapisz</string>
+    <string name="edit">Edytuj</string>
+    <string name="device">Urządzenie</string>
+    <string name="result">Rezultat</string>
+    <string name="eststate">Test bezpieczeństwa elektrycznego</string>
+    <string name="inspectionstate">Stan</string>
+    <string name="technician">Wykonujący</string>
+    <string name="inspection_date">Data przeglądu</string>
+    <string name="signature">Podpis</string>
+    <string name="do_you_want_save_changes">Do you want save changes?</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="cancel">Anuluj</string>
+</resources>

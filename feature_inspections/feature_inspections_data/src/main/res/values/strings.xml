@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="inspection_record_creating_started">Inspection record creating started</string>
     <string name="inspection_record_created">Inspection record created</string>
     <string name="inspection_record_creation_error">Inspection record creation error</string>
-    <string name="inspection_record_updating_started">Inspection record updating started</string>
     <string name="inspection_record_updated">Inspection record updated</string>
     <string name="update_inspection_unknown_error">Update inspection unknown error</string>
     <string name="locally_cached_list">Locally cached list</string>
-    <string name="device_list_fetching_finished">Device list fetching finished</string>
+    <string name="inspection_list_fetching_finished">Inspection list fetching finished</string>
     <string name="locally_cached_record">Locally cached record</string>
     <string name="inspection_record_fetching_finished">Inspection record fetching finished</string>
     <string name="inspection_record_fetching_error">Inspection record fetching error</string>

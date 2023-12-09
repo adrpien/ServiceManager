@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="get_inspection_unknown_error">Nieznany Błąd</string>
+    <string name="textfields_devicesn_and_devicein_are_empty">Pole Sn lub In jest puste</string>
+    <string name="inspection_update_unknown_error">Nieznany Błąd</string>
+</resources>
