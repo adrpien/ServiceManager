@@ -784,7 +784,7 @@ fun RepairDetailsScreen(
             )
             if (showExitDialog.value) {
                     ExitAlertDialog(
-                        title = stringResource(R.string.save),
+                        title = stringResource(R.string.save) + "?",
                         contentText = stringResource(R.string.do_you_want_save_changes),
                         onConfirm = {
                             if (showExitDialog.value) {

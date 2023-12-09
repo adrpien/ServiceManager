@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_details.components
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,8 +22,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.Dimensions
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
 import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
@@ -30,6 +31,7 @@ import com.example.core_ui.components.other.DefaultTextField
 import com.example.core_ui.components.other.DefaultTextFieldState
 import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.signature.SignatureArea
+import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
@@ -52,6 +54,8 @@ fun InspectionDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: InspectionDetailsViewModel = hiltViewModel(),
 ) {
+
+    val context: Context = LocalContext.current
 
     /* ********************** STATES **************************************************************** */
     val inspectionDetailsState = viewModel.inspectionDetailsState
@@ -79,7 +83,7 @@ fun InspectionDetailsScreen(
     val deviceName = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Name",
+                hint = context.resources.getString(R.string.name),
                 value = inspectionDetailsState.value.inspection.deviceName,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -88,7 +92,7 @@ fun InspectionDetailsScreen(
     val deviceManufacturer = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Manufacturer",
+                hint = context.resources.getString(R.string.manufacturer),
                 value = inspectionDetailsState.value.inspection.deviceManufacturer,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -97,7 +101,7 @@ fun InspectionDetailsScreen(
     val deviceModel = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Model",
+                hint = context.resources.getString(R.string.model),
                 value = inspectionDetailsState.value.inspection.deviceModel,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -106,7 +110,7 @@ fun InspectionDetailsScreen(
     val deviceSn = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Serial number",
+                hint = context.resources.getString(R.string.serial_number),
                 value = inspectionDetailsState.value.inspection.deviceSn,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -115,7 +119,7 @@ fun InspectionDetailsScreen(
     val deviceIn = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Inventory number",
+                hint = context.resources.getString(R.string.inventory_number),
                 value = inspectionDetailsState.value.inspection.deviceIn,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -124,7 +128,7 @@ fun InspectionDetailsScreen(
     val ward = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Ward",
+                hint = context.resources.getString(R.string.ward),
                 value = inspectionDetailsState.value.inspection.ward,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -133,7 +137,7 @@ fun InspectionDetailsScreen(
     val comment = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Comment",
+                hint = context.resources.getString(R.string.comment),
                 value = inspectionDetailsState.value.inspection.comment,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -142,7 +146,7 @@ fun InspectionDetailsScreen(
     val recipient = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Recipient",
+                hint = context.resources.getString(R.string.recipient),
                 value = inspectionDetailsState.value.inspection.recipient,
                 clickable = inspectionDetailsState.value.isInEditMode
             )
@@ -239,14 +243,14 @@ fun InspectionDetailsScreen(
                 if (isInEditMode) {
                     Icon(
                         imageVector = Icons.Default.Save,
-                        contentDescription = "Save",
+                        contentDescription = stringResource(R.string.save),
                         modifier = Modifier,
                         tint = MaterialTheme.colorScheme.onSecondary
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit",
+                        contentDescription = stringResource(R.string.edit),
                         modifier = Modifier,
                         tint = MaterialTheme.colorScheme.onSecondary
                     )
@@ -265,7 +269,7 @@ fun InspectionDetailsScreen(
                 .verticalScroll(scrollState)
         ) {
             Text(
-                text = "Device",
+                text = stringResource(R.string.device),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -332,7 +336,7 @@ fun InspectionDetailsScreen(
                 state = deviceIn
             )
             Text(
-                text = "Localization",
+                text = stringResource(id = R.string.localization),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -344,7 +348,7 @@ fun InspectionDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier,
-                text = "Hospital:",
+                text = stringResource(R.string.hospital) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
@@ -389,7 +393,7 @@ fun InspectionDetailsScreen(
                 state = comment
             )
             Text(
-                text = "Result",
+                text = stringResource(R.string.result),
                 fontSize = 20.sp,
                 color = MaterialTheme.colorScheme.onSecondary
             )
@@ -401,7 +405,7 @@ fun InspectionDetailsScreen(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier,
-                text = "EstState:",
+                text = stringResource(R.string.eststate) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
             )
 
@@ -426,7 +430,7 @@ fun InspectionDetailsScreen(
             )
             Text(
                 modifier = Modifier,
-                text = "InspectionState:",
+                text = stringResource(R.string.inspectionstate) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
@@ -449,7 +453,7 @@ fun InspectionDetailsScreen(
             )
             Text(
                 modifier = Modifier,
-                text = "Technician:",
+                text = stringResource(R.string.technician) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
@@ -484,7 +488,7 @@ fun InspectionDetailsScreen(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
             ) {
                 Text(
-                    text = "Inspection date: " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong()),
+                    text = stringResource(R.string.inspection_date) + ": " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong()),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -518,13 +522,13 @@ fun InspectionDetailsScreen(
                         .height(Dimensions.signatureHeight.toDp.dp)
                         .border(1.dp, MaterialTheme.colorScheme.onSecondary),
                     bitmap = inspectionDetailsState.value.signature.asImageBitmap(),
-                    contentDescription = "Signature"
+                    contentDescription = stringResource(R.string.signature)
                 )
             }
             if(showExitDialog.value) {
                 ExitAlertDialog(
-                    title = "Save?",
-                    contentText = "Do you want save changes?",
+                    title = stringResource(R.string.save) + "?",
+                    contentText = stringResource(R.string.do_you_want_save_changes),
                     onConfirm = {
                         if (showExitDialog.value) {
                             if (inspectionDetailsState.value.inspection.inspectionId != "0") {
@@ -562,7 +566,7 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                title = "Inspection Date"
+                title = stringResource(R.string.inspection_date)
             )
             MaterialDialog(
                 dialogState = signatureDialogState,
@@ -570,15 +574,15 @@ fun InspectionDetailsScreen(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
                 ),
-                backgroundColor = LightBeige,
+                backgroundColor = MaterialTheme.colorScheme.primary,
                 buttons = {
                     positiveButton(
-                        text = "Confirm",
-                        textStyle = TextStyle(color = LightBlue)
+                        text = stringResource(R.string.confirm),
+                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
                     ) {}
                     negativeButton(
-                        text = "Cancel",
-                        textStyle = TextStyle(color = LightBlue)
+                        text = stringResource(R.string.cancel),
+                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
                     )
                 }
             ) {

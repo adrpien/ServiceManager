@@ -7,4 +7,24 @@
     <string name="sn_number_short">Sn</string>
     <string name="inventory_number_short">In</string>
     <string name="localization">Localization</string>
+    <string name="name">Name</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="model">Model</string>
+    <string name="serial_number">Serial number</string>
+    <string name="inventory_number">Inventory number</string>
+    <string name="ward">Ward</string>
+    <string name="comment">Comment</string>
+    <string name="recipient">Recipient</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="device">Device</string>
+    <string name="result">Result</string>
+    <string name="eststate">EstState</string>
+    <string name="inspectionstate">InspectionState</string>
+    <string name="technician">Technician</string>
+    <string name="inspection_date">Inspection date</string>
+    <string name="signature">Signature</string>
+    <string name="do_you_want_save_changes">Do you want save changes?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>
