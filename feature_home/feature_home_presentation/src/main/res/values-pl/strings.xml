@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_out">Wyloguj</string>
+    <string name="database_settings">"Ustawenia bazy danych"</string>
+    <string name="settings">Ustawienia aplikacji</string>
+    <string name="about">O aplikacji</string>
+    <string name="dark_mode">Tryb ciemny</string>
+    <string name="profile_picture">Zdjęcie profilowe</string>
+    <string name="point_this_month">Punktów  w tym miesiącu</string>
+    <string name="made_by_adi">made by adi</string>
+    <string name="changes_will_be_visible_next_time_you_launch_the_app">Zmiany będą widoczne od następnego uruchomienia aplikacji</string>
+</resources>

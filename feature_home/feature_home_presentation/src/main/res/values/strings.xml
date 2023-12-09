@@ -5,4 +5,8 @@
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="dark_mode">Dark mode</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="point_this_month">Point this month</string>
+    <string name="made_by_adi">made by adi</string>
+    <string name="changes_will_be_visible_next_time_you_launch_the_app">Changes will be visible next time you launch the app</string>
 </resources>

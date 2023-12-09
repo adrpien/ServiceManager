@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.preferences.AppPreferences
 import com.example.core.util.DateFormattingType
+import com.example.core.util.UiText
+import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -61,7 +63,8 @@ class AppSettingsScreenViewModel @Inject constructor(
                     _appSettingsScreenState.value =
                         _appSettingsScreenState.value.copy(isDarkModeEnabled = event.value)
                     appPreferences.setIsDarkModeEnabled(event.value)
-                    _eventFlow.emit(UiEvent.ShowSnackbar("Changes will be visible next time you launch the app"))
+
+                    _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.changes_will_be_visible_next_time_you_launch_the_app)))
                 }
             }
                 is AppSettingsScreenEvent.SetDateFormattingType -> {
@@ -69,7 +72,7 @@ class AppSettingsScreenViewModel @Inject constructor(
                         _appSettingsScreenState.value =
                             _appSettingsScreenState.value.copy(dateFormattingType = event.value)
                         appPreferences.setDateFormattingType(event.value)
-                        _eventFlow.emit(UiEvent.ShowSnackbar("Changes will be visible next time you launch the app"))
+                        _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.changes_will_be_visible_next_time_you_launch_the_app)))
                     }
                 }
         }
@@ -77,5 +80,5 @@ class AppSettingsScreenViewModel @Inject constructor(
 }
 
 sealed class UiEvent() {
-    data class ShowSnackbar(val message: String): UiEvent()
+    data class ShowSnackbar(val message: UiText): UiEvent()
 }

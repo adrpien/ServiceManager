@@ -2,7 +2,6 @@ package com.example.feature_home_presentation.home.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.core.util.Helper
+import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_home_domain.model.Profile
 
 @Composable
@@ -38,7 +39,7 @@ fun ProfileSection(
             val bitmap = Helper.byteArrayToBitmap(profile.profilePicture)
             Image(
                 bitmap = bitmap.asImageBitmap(),
-                contentDescription = "Profile picture",
+                contentDescription = stringResource(R.string.profile_picture),
                 modifier = Modifier
                     .height(100.dp)
                     .width(100.dp)
@@ -57,7 +58,7 @@ fun ProfileSection(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "Point this month: ${profile.pointsThisMonth}",
+                    text = stringResource(R.string.point_this_month) + ": ${profile.pointsThisMonth}",
                     color = MaterialTheme.colorScheme.onSecondary
                 )
             }

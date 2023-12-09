@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Service Manager</string>
+    <string name="save">Zapisz</string>
+    <string name="add">Utwórz</string>
+    <string name="edit">Edytuj</string>
+    <string name="inspection_list">Lista przeglądów</string>
+    <string name="inspection">Przegląd</string>
+    <string name="repair_list">Lista napraw</string>
+    <string name="repair">Naprawa</string>
+    <string name="settings">Ustawienia</string>
+    <string name="localization">Lokalizacja</string>
+    <string name="result">Wynik</string>
+    <string name="inspection_date">Data przeglądu</string>
+    <string name="ward">Oddział</string>
+    <string name="comment">Komentarz</string>
+    <string name="serial_number">Numer seryjny</string>
+    <string name="inventory_number">Numer inwentarzowy</string>
+    <string name="manufacturer">Producent</string>
+    <string name="model">Model</string>
+    <string name="name">Nazwa</string>
+    <string name="device">Urządzenie</string>
+    <string name="about">O aplikacji</string>
+    <string name="inspections">Przeglądy</string>
+    <string name="repairs">Naprawy</string>
+    <string name="home">Home</string>
+
+</resources>

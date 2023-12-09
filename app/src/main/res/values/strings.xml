@@ -20,5 +20,8 @@
     <string name="name">Name</string>
     <string name="device">Device</string>
     <string name="about">About</string>
+    <string name="inspections">Inspections</string>
+    <string name="repairs">Repairs</string>
+    <string name="home">Home</string>
 
 </resources>

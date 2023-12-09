@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +37,8 @@ fun AppSettingsScreen(
     viewModel: AppSettingsScreenViewModel = hiltViewModel(),
 ) {
 
+    val context = LocalContext.current
+
     val appSettingsState = viewModel.appSettingsScreenState
 
     val coroutineScope = rememberCoroutineScope()
@@ -48,7 +51,7 @@ fun AppSettingsScreen(
         viewModel.eventFlow.collect(){ event ->
             when(event) {
                 is UiEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(message = event.message)
+                    scaffoldState.snackbarHostState.showSnackbar(message = event.message.asString(context))
                 }
             }
         }

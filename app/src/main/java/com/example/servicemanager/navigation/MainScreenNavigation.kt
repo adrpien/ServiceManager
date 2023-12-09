@@ -2,7 +2,6 @@ package com.example.servicemanager.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Checklist
@@ -10,8 +9,10 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.example.core.util.Screens
+import com.example.servicemanager.R
 
 @Composable
 fun MainScreenNavigation(
@@ -24,19 +25,19 @@ fun MainScreenNavigation(
             BottomNavigationBar(
                 itemList = listOf(
                     BottomNavigationItem(
-                        name = "Inspections",
+                        name = stringResource(R.string.inspections),
                         route = Screens.InspectionListScreen,
                         icon = Icons.Default.Checklist,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
-                        name = "Repairs",
+                        name = stringResource(R.string.repairs),
                         route = Screens.RepairListScreen,
                         icon = Icons.Default.Settings,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
-                        name = "Home",
+                        name = stringResource(R.string.home),
                         route = Screens.HomeScreen,
                         icon = Icons.Default.Home,
                         badgeCount = 0
