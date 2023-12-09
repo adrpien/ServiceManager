@@ -114,6 +114,7 @@ fun HomeScreen(
         if(showAboutDialog.value) {
             AboutAlertDialog(
                 title = UiText.StringResource(R.string.about),
+                context = context,
                 onConfirm = { showAboutDialog.value = false },
                 onDismissRequest = { showAboutDialog.value = false }
             )

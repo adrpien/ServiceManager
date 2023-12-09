@@ -29,7 +29,7 @@ fun AboutAlertDialog(
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.onSecondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary
+                        contentColor = MaterialTheme.colorScheme.secondary
                     ),
                     onClick = { onConfirm() },
                 ) {

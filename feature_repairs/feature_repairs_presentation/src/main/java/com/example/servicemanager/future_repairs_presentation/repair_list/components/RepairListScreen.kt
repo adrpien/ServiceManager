@@ -84,7 +84,8 @@ fun RepairListScreen(
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
-                        cursorColor = MaterialTheme.colorScheme.onSecondary
+                        cursorColor = MaterialTheme.colorScheme.onSecondary,
+                        textColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
                         viewModel.onEvent(RepairListEvent.onSearchQueryChange(it))
