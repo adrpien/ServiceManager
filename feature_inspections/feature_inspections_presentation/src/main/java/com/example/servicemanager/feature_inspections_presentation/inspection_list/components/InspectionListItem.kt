@@ -7,12 +7,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.util.DateFormattingType
 import com.example.core.util.Helper.Companion.getDateString
+import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
 import com.example.servicemanager.feature_app_domain.model.Technician
@@ -79,7 +81,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "SN: " + inspection.deviceSn,
+                    text = stringResource(R.string.sn_number_short) + ": " + inspection.deviceSn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -93,7 +95,7 @@ fun InspectionListItem(
 
                 )
                 Text(
-                    text = "IN: " + inspection.deviceIn,
+                    text = stringResource(R.string.inventory_number_short) + ": " + inspection.deviceIn,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -113,7 +115,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Localization: " + (hospitalList.find { inspection.hospitalId == it.hospitalId }?.hospital ?: "") + ", " +  inspection.ward,
+                    text = stringResource(R.string.localization) + ": " + (hospitalList.find { inspection.hospitalId == it.hospitalId }?.hospital ?: "") + ", " +  inspection.ward,
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -131,7 +133,7 @@ fun InspectionListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = ("State: " + inspectionStateList.find { inspection.inspectionStateId == it.inspectionStateId }?.inspectionState),
+                    text = (stringResource(id = R.string.state) + ": " + inspectionStateList.find { inspection.inspectionStateId == it.inspectionStateId }?.inspectionState),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

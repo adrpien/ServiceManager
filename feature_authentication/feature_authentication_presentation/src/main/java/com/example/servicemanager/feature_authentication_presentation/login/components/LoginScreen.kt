@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_authentication_presentation.login.components
 
+import android.content.Context
 import  androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
@@ -8,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -16,6 +19,8 @@ import com.example.core_ui.components.other.DefaultTextField
 import com.example.core_ui.components.other.DefaultTextFieldState
 import com.example.core_ui.components.other.PasswordTextField
 import com.example.core.util.Screens
+import com.example.core.util.UiText
+import com.example.feature_authentication_presentation.R
 import com.example.servicemanager.feature_authentication_presentation.login.UiEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginViewModel
@@ -31,10 +36,12 @@ fun LoginScreen(
 
     val userLoginState = viewModel.userLoginState
 
+    val context: Context = LocalContext.current
+
     val userPassword = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Password",
+                hint = context.resources.getString(R.string.password),
                 value = userLoginState.value.password
             )
         )
@@ -42,7 +49,7 @@ fun LoginScreen(
     val userMail = remember {
         mutableStateOf(
             DefaultTextFieldState(
-                hint = "Mail",
+                hint = context.resources.getString(R.string.mail),
                 value = userLoginState.value.mail
             )
         )
@@ -64,7 +71,7 @@ fun LoginScreen(
                 }
                 is UiEvent.ShowSnackbar -> {
                         scaffoldState.snackbarHostState.showSnackbar(
-                            message = event.messege
+                            message = event.messege.asString(context)
                         )
                     }
             }
@@ -107,7 +114,7 @@ fun LoginScreen(
                     )
                 }
                 DefaultButton(
-                    title = "Authenticate",
+                    title = stringResource(R.string.authenticate),
                     onClick = {
                         viewModel.onEvent(
                             UserLoginEvent.Authenticate(

@@ -1,6 +1,5 @@
 package com.example.servicemanager.feature_authentication_data.remote
 
-import android.util.Log
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText

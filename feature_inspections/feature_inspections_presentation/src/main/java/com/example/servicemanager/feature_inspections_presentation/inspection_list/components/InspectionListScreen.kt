@@ -52,7 +52,7 @@ fun InspectionListScreen(
                 is UiEvent.ShowSnackbar -> {
                     coroutineScope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
-                            message = event.message,
+                            message = event.message.asString(context),
                         )
                     }
                 }

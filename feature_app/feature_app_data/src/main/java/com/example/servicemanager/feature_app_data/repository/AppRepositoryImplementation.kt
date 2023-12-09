@@ -60,7 +60,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     hospitalList,
-                    "Device list fetching finished"
+                    UiText.StringResource(R.string.device_list_fetching_finished)
                 )
             )
         }
@@ -74,7 +74,7 @@ class  AppRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 technicianList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = firebaseApi.getTechnicianList()
@@ -88,7 +88,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     technicianList,
-                    "Device list fetching finished"
+                    UiText.StringResource(R.string.device_list_fetching_finished)
                 )
             )
         }
@@ -102,7 +102,7 @@ class  AppRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 inspectionStateList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = firebaseApi.getInspectionStateList()
@@ -116,7 +116,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     inspectionStateList,
-                    "Inspection state list fetching finished"
+                    UiText.StringResource(R.string.inspection_state_list_fetching_finished)
                 )
             )
         }
@@ -130,7 +130,7 @@ class  AppRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 repairStateList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = firebaseApi.getRepairStateList()
@@ -144,7 +144,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     repairStateList,
-                    "Inspection state list fetching finished"
+                    UiText.StringResource(R.string.inspection_state_list_fetching_finished)
                 )
             )
         }
@@ -158,7 +158,7 @@ class  AppRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 estStateList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = firebaseApi.getEstStateList()
@@ -172,7 +172,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     estStateList,
-                    "Inspection state list fetching finished"
+                    UiText.StringResource(R.string.device_list_fetching_finished)
                 )
             )
         }
@@ -186,7 +186,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     user,
-                    "User fetching finished"
+                    UiText.StringResource(R.string.user_fetching_finished)
                 )
             )
         } else {
@@ -194,7 +194,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.ERROR,
                     user,
-                    "User fetching error"
+                    UiText.StringResource(R.string.user_fetching_error)
                 )
             )
         }
@@ -207,7 +207,7 @@ class  AppRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 userTypeList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = firebaseApi.getUserTypeList()
@@ -221,7 +221,7 @@ class  AppRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     userTypeList,
-                    "User types list fetching finished"
+                    UiText.StringResource(R.string.user_types_list_fetching_finished)
                 )
             )
         }

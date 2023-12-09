@@ -7,9 +7,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.components.other.DefaultRadioButton
 import com.example.core_ui.components.other.OrderMonotonicityButton
+import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 
@@ -28,7 +30,10 @@ fun InspectionSortSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium)
+                .border(
+                    BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary),
+                    MaterialTheme.shapes.medium
+                )
                 .background(MaterialTheme.colorScheme.secondary),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -39,19 +44,19 @@ fun InspectionSortSection(
 
             ) {
                 DefaultRadioButton(
-                    title = "Hospital",
+                    title = stringResource(R.string.hospital),
                     selected = inspectionOrderType is InspectionOrderType.Hospital,
                     onClick = { onOrderChange(InspectionOrderType.Hospital(inspectionOrderType.orderMonotonicity)) },
                     isClickable = true
                 )
                 DefaultRadioButton(
-                    title = "State",
+                    title = stringResource(R.string.state),
                     selected = inspectionOrderType is InspectionOrderType.State,
                     onClick = { onOrderChange(InspectionOrderType.State(inspectionOrderType.orderMonotonicity)) },
                     isClickable = true
                 )
                 DefaultRadioButton(
-                    title = "Date",
+                    title = stringResource(R.string.date),
                     selected = inspectionOrderType is InspectionOrderType.Date,
                     onClick = { onOrderChange(InspectionOrderType.Date(inspectionOrderType.orderMonotonicity)) }
                     ,

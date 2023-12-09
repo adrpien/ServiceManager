@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_repairs_data.remote
 import android.util.Log
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_repairs_data.R
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -49,11 +51,11 @@ class  RepairFirebaseApi(
             }
         return repair
     }
-    fun createRepair(repair: Repair): Flow<com.example.core.util.Resource<String>> = flow {
+    fun createRepair(repair: Repair): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in createRepair fun for RepairFirebaseApi
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 "0",
                 null
             )
@@ -88,31 +90,31 @@ class  RepairFirebaseApi(
         result.await()
         if (result.isSuccessful) {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     documentReference.id,
-                    "Repair record created"
+                    UiText.StringResource(R.string.repair_record_created)
                 )
             )
             Log.d(REPAIR_REPOSITORY_API, "Repair record created")
 
         } else {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.ERROR,
+                Resource(
+                    ResourceState.ERROR,
                     "Repair record creation error",
-                    "Repair record creation error"
+                    UiText.StringResource(R.string.repair_record_creation_error)
                 )
             )
             Log.d(REPAIR_REPOSITORY_API, "Repair record creation error")
 
         }
     }
-    fun updateRepair(repair: Repair): Flow<com.example.core.util.Resource<String>> = flow {
+    fun updateRepair(repair: Repair): Flow<Resource<String>> = flow {
         // TODO Caching mechanism in updateRepair fun for RepairFirebaseApi
         emit(
-            com.example.core.util.Resource(
-                com.example.core.util.ResourceState.LOADING,
+            Resource(
+                ResourceState.LOADING,
                 "Reapir record updating started"
             )
         )
@@ -145,19 +147,19 @@ class  RepairFirebaseApi(
         result.await()
         if (result.isSuccessful) {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.SUCCESS,
+                Resource(
+                    ResourceState.SUCCESS,
                     "Repair record updated",
-                    "Repair record updated"
+                    UiText.StringResource(R.string.repair_record_updated)
                 )
             )
             Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
         } else {
             emit(
-                com.example.core.util.Resource(
-                    com.example.core.util.ResourceState.ERROR,
+                Resource(
+                    ResourceState.ERROR,
                     "Repair record update error",
-                    "Repair record update error"
+                    UiText.StringResource(R.string.repair_record_update_error)
                 )
             )
             Log.d(REPAIR_REPOSITORY_API, "Repair record update error")

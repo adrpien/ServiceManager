@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_authentication_presentation.R
 import com.example.servicemanager.feature_authentication_domain.use_cases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -34,9 +36,9 @@ class UserLoginViewModel @Inject constructor(
                             ResourceState.ERROR -> {
                                     _eventFlow.emit(
                                         UiEvent.ShowSnackbar(
-                                            messege = result.message ?: "Unknown error"
+                                            messege = result.message ?: UiText.StringResource(R.string.unknown_error)
                                         )
-                                    )
+                                        )
                             }
                             ResourceState.SUCCESS -> {
                                 if (result.data != null) {
@@ -66,7 +68,7 @@ class UserLoginViewModel @Inject constructor(
                             ResourceState.ERROR -> {
                                 _eventFlow.emit(
                                     UiEvent.ShowSnackbar(
-                                        messege = result.message ?: "Unknown error"
+                                        messege = result.message ?: UiText.StringResource(R.string.unknown_error)
                                     )
                                 )
                             }
@@ -81,5 +83,5 @@ class UserLoginViewModel @Inject constructor(
 
 sealed class UiEvent() {
     data class Authenticate(val userId: String): UiEvent()
-    data class ShowSnackbar(val messege: String): UiEvent()
+    data class ShowSnackbar(val messege: UiText): UiEvent()
 }

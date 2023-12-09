@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_repairs_data.repository
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_repairs_data.R
 import com.example.logger_domain.logger.AppLogger
 import com.example.logger_domain.util.EventLogType
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
@@ -29,7 +31,7 @@ class  RepairRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 repairList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = repairFirebaseApi.getRepairList()
@@ -43,7 +45,7 @@ class  RepairRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     repairList,
-                    "Device list fetching finished"
+                    UiText.StringResource(R.string.device_list_fetching_finished)
                 )
             )
         }
@@ -57,7 +59,7 @@ class  RepairRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 repair,
-                "Locally cached record"
+                UiText.StringResource(R.string.locally_cached_record)
             )
         )
         val record = repairFirebaseApi.getRepair(repairId)
@@ -69,7 +71,7 @@ class  RepairRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     repair,
-                    "Repair record fetching finished"
+                    UiText.StringResource(R.string.repair_record_fetching_finished)
                 )
             )
         }
@@ -98,7 +100,7 @@ class  RepairRepositoryImplementation(
             Resource(
                 ResourceState.SUCCESS,
                 repairList,
-                "Locally storaged list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
     }

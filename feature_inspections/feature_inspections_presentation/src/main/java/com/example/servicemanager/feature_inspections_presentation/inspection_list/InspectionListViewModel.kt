@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
@@ -141,7 +143,7 @@ class InspectionListViewModel @Inject constructor(
                     appUseCases.copyToClipboard(
                         string = event.string,
                     )
-                    _eventFlow.emit(UiEvent.ShowSnackbar("String copied to clipboard"))
+                    _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.string_copied_to_clipboard)))
                 }
             }
         }
@@ -318,5 +320,5 @@ class InspectionListViewModel @Inject constructor(
     }
 }
 sealed class UiEvent() {
-    data class ShowSnackbar(val message: String): UiEvent()
+    data class ShowSnackbar(val message: UiText): UiEvent()
 }

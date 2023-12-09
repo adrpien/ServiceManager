@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="locally_cached_list">Locally cached list</string>
+    <string name="device_list_fetching_finished">Device list fetching finished</string>
+    <string name="inspection_state_list_fetching_finished">Inspection state list fetching finished</string>
+    <string name="user_fetching_finished">User fetching finished</string>
+    <string name="user_fetching_error">User fetching error</string>
+    <string name="user_types_list_fetching_finished">User types list fetching finished</string>
 </resources>

@@ -1,21 +1,16 @@
 package com.example.servicemanager.feature_repairs_domain.use_cases
 
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.doesNotContain
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
-import assertk.assertions.size
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
-import com.example.feature_repairs_domain.RepairRepositoryFake
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 import com.example.test.hospitalDluga
 import com.example.test.hospitalORSK
-import com.example.test.inspection
 import com.example.test.repairDiagnosed
 import com.example.test.repairFinished
 import com.example.test.repairRepaired
@@ -23,8 +18,6 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

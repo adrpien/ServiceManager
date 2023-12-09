@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repair_record_created">Repair record created</string>
+    <string name="repair_record_creation_error">Repair record creation error</string>
+    <string name="repair_record_updated">Repair record updated</string>
+    <string name="repair_record_update_error">Repair record update error</string>
+    <string name="locally_cached_list">Locally cached list</string>
+    <string name="device_list_fetching_finished">Device list fetching finished</string>
+    <string name="locally_cached_record">Locally cached record</string>
+    <string name="repair_record_fetching_finished">Repair record fetching finished</string>
+</resources>

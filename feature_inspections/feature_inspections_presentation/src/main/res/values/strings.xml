@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="string_copied_to_clipboard">String copied to clipboard</string>
+    <string name="hospital">Hospital</string>
+    <string name="state">State</string>
+    <string name="date">Date</string>
+    <string name="sn_number_short">Sn</string>
+    <string name="inventory_number_short">In</string>
+    <string name="localization">Localization</string>
+</resources>

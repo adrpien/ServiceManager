@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_inspections_data.repository
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_inspections_data.R
 import com.example.logger_domain.logger.AppLogger
 import com.example.logger_domain.util.EventLogType
 import com.example.servicemanager.feature_inspections_data.local.InspectionDatabaseDao
@@ -27,7 +29,7 @@ class  InspectionRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 inspectionList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = inspectionFirebaseApi.getInspectionList()
@@ -41,7 +43,7 @@ class  InspectionRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     inspectionList,
-                    "Device list fetching finished"
+                    UiText.StringResource(R.string.device_list_fetching_finished)
                 )
             )
         }
@@ -54,7 +56,7 @@ class  InspectionRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 inspection,
-                "Locally cached record"
+                UiText.StringResource(R.string.locally_cached_record)
             )
         )
         val record = inspectionFirebaseApi.getInspection(inspectionId)
@@ -66,7 +68,7 @@ class  InspectionRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     inspection,
-                    "Inspection record fetching finished"
+                    UiText.StringResource(R.string.inspection_record_fetching_finished)
                 )
             )
         } else {
@@ -74,7 +76,7 @@ class  InspectionRepositoryImplementation(
                 Resource(
                     ResourceState.ERROR,
                     inspection,
-                    "Inspection record fetching error"
+                    UiText.StringResource(R.string.inspection_record_fetching_error)
                 )
             )
         }
@@ -102,7 +104,7 @@ class  InspectionRepositoryImplementation(
             Resource(
                 ResourceState.SUCCESS,
                 inspectionList,
-                "Locally storaged list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
     }

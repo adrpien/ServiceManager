@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_inspections_data.remote
 import android.util.Log
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_inspections_data.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -55,7 +57,7 @@ class  InspectionFirebaseApi(
             Resource(
                 ResourceState.LOADING,
                 "0",
-                "Inspection record creating started"
+                UiText.StringResource(R.string.inspection_record_creating_started)
             )
         )
         var documentReference = firebaseFirestore.collection("inspections")
@@ -84,7 +86,7 @@ class  InspectionFirebaseApi(
                 Resource(
                     ResourceState.SUCCESS,
                     documentReference.id,
-                    documentReference.id
+                    UiText.StringResource(R.string.inspection_record_created)
                 )
             )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
@@ -94,7 +96,7 @@ class  InspectionFirebaseApi(
                 Resource(
                     ResourceState.ERROR,
                     "Inspection record creation error",
-                    "Inspection record creation error"
+                    UiText.StringResource(R.string.inspection_record_creation_error)
                 )
             )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record creation error")
@@ -107,7 +109,7 @@ class  InspectionFirebaseApi(
             Resource(
                 ResourceState.LOADING,
                 "",
-                "Inspection record updating started"
+                UiText.StringResource(R.string.inspection_record_updating_started)
             )
         )
         var map = mapOf<String, String>(
@@ -135,7 +137,7 @@ class  InspectionFirebaseApi(
                 Resource(
                     ResourceState.SUCCESS,
                     "Inspection record updated",
-                    "Inspection record updated"
+                    UiText.StringResource(R.string.inspection_record_updated)
                 )
             )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
@@ -144,7 +146,8 @@ class  InspectionFirebaseApi(
             emit(
                 Resource(
                     ResourceState.ERROR,
-                    result.exception?.message ?: "Update inspection unknown error",
+                    result.exception?.message ?: "Unknown error",
+                    UiText.StringResource(R.string.update_inspection_unknown_error)
                 )
             )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
