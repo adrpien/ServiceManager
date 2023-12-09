@@ -2,6 +2,8 @@ package com.example.servicemanager.feature_inspections_domain.use_cases
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_inspections_domain.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +22,7 @@ class SaveInspection @Inject constructor (
                     Resource(
                         ResourceState.ERROR,
                         "TextFields deviceSn and deviceIn are empty",
-                        "TextFields deviceSn and deviceIn are empty"
+                        UiText.StringResource(R.string.textfields_devicesn_and_devicein_are_empty)
                     )
                 )
             }

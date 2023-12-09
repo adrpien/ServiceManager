@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_authentication_data.remote
 import android.util.Log
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_authentication_data.R
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -27,7 +29,7 @@ class UserFirebaseApi(
                     Resource(
                         ResourceState.SUCCESS,
                         userId,
-                        "Authentication successful"
+                        UiText.StringResource(R.string.authentication_successful)
                     )
                 )
 
@@ -36,7 +38,7 @@ class UserFirebaseApi(
                     Resource(
                         ResourceState.ERROR,
                         userId,
-                        "E-mail not verified"
+                        UiText.StringResource(R.string.e_mail_not_verified)
                     )
                 )
             }
@@ -45,7 +47,7 @@ class UserFirebaseApi(
                 Resource(
                     ResourceState.ERROR,
                     userId,
-                    "Incorrect e-mail or password"
+                    UiText.StringResource(R.string.incorrect_e_mail_or_password)
                 )
             )
         } catch (e: FirebaseTooManyRequestsException) {
@@ -53,7 +55,7 @@ class UserFirebaseApi(
                 Resource(
                     ResourceState.ERROR,
                     userId,
-                    "To many login attemps, try again later"
+                    UiText.StringResource(R.string.to_many_login_attemps_try_again_later)
                 )
             )
         }

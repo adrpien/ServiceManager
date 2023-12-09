@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="getuser_uknown_error">getUser uknown error</string>
+</resources>

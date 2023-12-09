@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="get_signature_unknown_error">Get signature unknown error</string>
+    <string name="update_signature_unknown_error">Update signature unknown error</string>
+</resources>

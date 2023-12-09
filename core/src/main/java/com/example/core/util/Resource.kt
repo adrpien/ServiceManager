@@ -13,7 +13,7 @@ package com.example.core.util
 data class Resource <out T>(
     val resourceState: ResourceState,
     val data: T? = null,
-    val message: String? = null
+    val message: UiText? = null
     ) {
     /*
     ********** COMPANION OBJECT *********************
@@ -22,7 +22,7 @@ data class Resource <out T>(
     companion object {
         fun <T> success(data: T?) = Resource(ResourceState.SUCCESS, data, null)
 
-        fun <T> error(message: String?, data: T?) = Resource(ResourceState.ERROR, data, message)
+        fun <T> error(message: UiText?, data: T?) = Resource(ResourceState.ERROR, data, message)
 
         fun <T> loading(data: T?) = Resource(ResourceState.LOADING, data, null)
     }

@@ -2,6 +2,8 @@ package com.example.servicemanager.feature_inspections_domain.use_cases
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState.*
+import com.example.core.util.UiText
+import com.example.feature_inspections_domain.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
 import com.example.servicemanager.feature_inspections_domain.util.InspectionListExtensionFunctions.Companion.orderInspectionList
@@ -21,7 +23,7 @@ class GetInspection @Inject constructor (
                     Resource(
                         ERROR,
                         Inspection(),
-                        "Get inspection unknown error"
+                        UiText.StringResource(R.string.get_inspection_unknown_error)
                     )
                 )
             }

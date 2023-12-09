@@ -2,6 +2,8 @@ package com.example.servicemanager.feature_authentication_data.repository
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_authentication_data.R
 import com.example.servicemanager.feature_authentication_data.remote.UserFirebaseApi
 import com.example.servicemanager.feature_authentication_domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +28,7 @@ class  UserRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     data,
-                    "Current user logged in"
+                    UiText.StringResource(R.string.current_user_logged_in)
                 )
             )
         } else {
@@ -34,7 +36,7 @@ class  UserRepositoryImplementation(
                 Resource(
                     ResourceState.ERROR,
                     data,
-                    "Current user not logged in"
+                    UiText.StringResource(R.string.current_user_not_logged_in)
                 )
             )
         }

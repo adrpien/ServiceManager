@@ -3,6 +3,8 @@ package com.example.servicemanager.feature_repairs_domain.use_cases
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_repairs_domain.R
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
 import kotlinx.coroutines.flow.Flow
@@ -19,12 +21,13 @@ class SaveRepair @Inject constructor (
         {
             repository.insertRepair(repair)
         } else {
-        flow<Resource<String>> {
+        flow {
             emit(
                 Resource(
                     ResourceState.ERROR,
+                    //UiText.StringResource(R.string.)
                     "TextFields deviceSn and deviceIn are empty",
-                    "TextFields deviceSn and deviceIn are empty"
+                    UiText.StringResource(R.string.textfields_devicesn_and_devicein_are_empty)
                 )
             )
         }

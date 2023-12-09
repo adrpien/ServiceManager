@@ -2,6 +2,8 @@ package com.example.servicemanager.feature_authentication_domain.use_cases
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_authentication_domain.R
 import com.example.servicemanager.feature_authentication_domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +19,7 @@ class Authenticate @Inject constructor(
                 emit(
                     Resource(
                         ResourceState.ERROR,
-                        message = "E-mail or password is empty"
+                        message = UiText.StringResource(R.string.e_mail_or_password_is_empty)
                     )
                 )
             }

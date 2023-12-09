@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="get_inspection_unknown_error">Get inspection unknown error</string>
+    <string name="textfields_devicesn_and_devicein_are_empty">TextFields deviceSn and deviceIn are empty</string>
+    <string name="inspection_update_unknown_error">Inspection update unknown error</string>
+</resources>

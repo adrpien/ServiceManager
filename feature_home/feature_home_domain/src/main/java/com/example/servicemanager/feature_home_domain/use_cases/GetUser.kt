@@ -2,6 +2,8 @@ package com.example.servicemanager.feature_home_domain.use_cases
 
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_home_domain.R
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +21,7 @@ class GetUser @Inject constructor(
                     Resource(
                         ResourceState.ERROR,
                         null,
-                        "getUser uknown error"
+                        UiText.StringResource(R.string.getuser_uknown_error)
                         )
                 )
             }

@@ -5,6 +5,8 @@ import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_app_data.R
 import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
@@ -44,7 +46,7 @@ class  AppRepositoryImplementation(
             Resource(
                 ResourceState.LOADING,
                 hospitalList,
-                "Locally cached list"
+                UiText.StringResource(R.string.locally_cached_list)
             )
         )
         val list = firebaseApi.getHospitalList()
