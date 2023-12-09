@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="textfields_devicesn_or_devicein_is_empty">Pole Sn lub In jest puste</string>
+    <string name="repair_update_unknown_error">Nieznany błąd</string>
+</resources>

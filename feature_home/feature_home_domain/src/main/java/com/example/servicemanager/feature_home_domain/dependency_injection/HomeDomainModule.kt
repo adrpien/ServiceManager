@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_home_domain
+package com.example.servicemanager.feature_home_domain.dependency_injection
 
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.servicemanager.feature_home_domain.use_cases.GetUser

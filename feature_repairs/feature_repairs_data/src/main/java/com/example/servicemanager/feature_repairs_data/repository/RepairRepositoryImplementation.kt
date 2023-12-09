@@ -45,7 +45,7 @@ class  RepairRepositoryImplementation(
                 Resource(
                     ResourceState.SUCCESS,
                     repairList,
-                    UiText.StringResource(R.string.device_list_fetching_finished)
+                    UiText.StringResource(R.string.repair_list_fetching_finished)
                 )
             )
         }

@@ -27,7 +27,7 @@ class SaveRepair @Inject constructor (
                     ResourceState.ERROR,
                     //UiText.StringResource(R.string.)
                     "TextFields deviceSn and deviceIn are empty",
-                    UiText.StringResource(R.string.textfields_devicesn_and_devicein_are_empty)
+                    UiText.StringResource(R.string.textfields_devicesn_or_devicein_is_empty)
                 )
             )
         }

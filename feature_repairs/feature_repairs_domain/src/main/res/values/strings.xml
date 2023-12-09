@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="textfields_devicesn_and_devicein_are_empty">TextFields deviceSn and deviceIn are empty</string>
-    <string name="repair_update_unknown_error">Repair update unknown error</string>
+    <string name="textfields_devicesn_or_devicein_is_empty">Field Sn or In is empty</string>
+    <string name="repair_update_unknown_error">Unknown error</string>
 </resources>
