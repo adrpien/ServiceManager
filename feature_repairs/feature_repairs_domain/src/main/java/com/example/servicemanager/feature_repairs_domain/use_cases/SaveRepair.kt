@@ -13,6 +13,7 @@ class SaveRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
+    // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
     operator fun invoke(repair: Repair): Flow<Resource<String>> {
         return if (repair.deviceSn.isNotEmpty() && repair.deviceIn.isNotEmpty())
         {

@@ -12,13 +12,14 @@ class UpdateRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
-    operator fun invoke(repair: Repair): Flow<com.example.core.util.Resource<String>> {
+    // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
+    operator fun invoke(repair: Repair): Flow<Resource<String>> {
         return if (repair.repairId != "0")  repository.updateRepair(repair)
         else {
-            flow<com.example.core.util.Resource<String>> {
+            flow<Resource<String>> {
                 emit(
-                    com.example.core.util.Resource(
-                        com.example.core.util.ResourceState.ERROR,
+                    Resource(
+                        ResourceState.ERROR,
                         "Repair update unknown error",
                         "Repair update unknown error"
                     )
