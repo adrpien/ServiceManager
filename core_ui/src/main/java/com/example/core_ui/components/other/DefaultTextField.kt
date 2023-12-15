@@ -40,22 +40,36 @@ fun DefaultTextField(
                 // .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium),
             value = state.value.value,
             label = {
-                Text(
-                    text = state.value.hint,
-                    modifier = Modifier.background(Color.Transparent)
+                Row(modifier = Modifier.border(
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = if(state.value.clickable) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                        ),
+                    shape = MaterialTheme.shapes.extraSmall
                 )
+                    .padding(start = 8.dp, end = 8.dp)
+                    .background(
+                        Color.Transparent
+                    )
+                ) {
+                    Text(
+                        text = state.value.hint,
+                        modifier = Modifier.background(Color.Transparent)
+                    )
+                }
+
             },
             onValueChange = onValueChanged,
             enabled = state.value.clickable,
             singleLine = true,
             shape = MaterialTheme.shapes.medium,
         colors = OutlinedTextFieldDefaults.colors(
-                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
                 focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-                disabledTextColor = MaterialTheme.colorScheme.primary,
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondary,
+                disabledTextColor = MaterialTheme.colorScheme.onPrimary,
+                focusedContainerColor = MaterialTheme.colorScheme.primary,
+                unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary,
                 focusedLabelColor = MaterialTheme.colorScheme.onSecondary,
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSecondary,
                 disabledLabelColor = MaterialTheme.colorScheme.onSecondary,
@@ -63,13 +77,6 @@ fun DefaultTextField(
                 focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                 disabledBorderColor = MaterialTheme.colorScheme.onSecondary,
-
-                // unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSecondary,
-                // focusedPlaceholderColor = MaterialTheme.colorScheme.onSecondary,
-                // disabledPlaceholderColor = MaterialTheme.colorScheme.onSecondary,
-                // focusedIndicatorColor = Color.Transparent,
-                // unfocusedIndicatorColor = Color.Transparent,
-                // disabledIndicatorColor = Color.Transparent
             )
         )
         Spacer(modifier = Modifier.height(8.dp))

@@ -27,7 +27,12 @@ fun <T> DefaultSelectionSection(
         modifier = modifier
             .padding(4.dp)
             .fillMaxWidth()
-            .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium)
+            .border(
+                BorderStroke(
+                width = 1.dp,
+                color = if(enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+            ),
+                MaterialTheme.shapes.medium)
             .background(MaterialTheme.colorScheme.secondary)
             .horizontalScroll(scrollState),
     ) {

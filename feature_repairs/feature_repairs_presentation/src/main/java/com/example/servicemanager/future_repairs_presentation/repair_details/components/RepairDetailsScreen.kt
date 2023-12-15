@@ -26,6 +26,7 @@ import com.example.core.theme.Dimensions.signatureWidth
 import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
+import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.other.DefaultTextField
 import com.example.core_ui.components.other.DefaultTextFieldState
 import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
@@ -311,24 +312,14 @@ fun RepairDetailsScreen(
                 ) {
 
 /* ********************** OPENING DATE  ********************************************************* */
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    enabled = isInEditMode,
-                    onClick = { openingDateDialogState.show() },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colorScheme.primary,
-                        disabledBackgroundColor = MaterialTheme.colorScheme.secondary,
-                    ),
-                    shape = MaterialTheme.shapes.medium,
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.opening_date) + ": " + Helper.getDateString(repairDetailsState.value.repair.openingDate.toLong()),
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
+
+            DefaultDateButton(
+                dateLong = repairDetailsState.value.repair.openingDate.toLong(),
+                onClick = { openingDateDialogState.show() },
+                enabled = isInEditMode,
+                precedingTextSource = R.string.opening_date
+            )
+
 /* ********************** PICKUP TECHNICIAN  **************************************************** */
 
                 Text(
@@ -569,24 +560,12 @@ fun RepairDetailsScreen(
 
 /* ********************** REPAIRING DATE  ******************************************************* */
 
-            Button(
+            DefaultDateButton(
+                dateLong = repairDetailsState.value.repair.repairingDate.toLong(),
+                onClick = { repairingDateDialogState.show() },
                 enabled = isInEditMode,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                onClick = { repairingDateDialogState.show()},
-                shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
-                ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
-            ) {
-                Text(
-                    text = stringResource(R.string.repairing_date) + ": " + Helper.getDateString(repairDetailsState.value.repair.repairingDate.toLong()),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+                precedingTextSource = R.string.repairing_date
+            )
 
 /* ********************** RESULT  *************************************************************** */
             Text(
@@ -668,24 +647,17 @@ fun RepairDetailsScreen(
             )
 
 /* ********************** RETURNING DATE  **************************************************** */
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                onClick = { returningDateDialogState.show()},
+
+            DefaultDateButton(
+                dateLong = repairDetailsState.value.repair.closingDate.toLong(),
+                onClick = { returningDateDialogState.show() },
                 enabled = isInEditMode,
-                shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor = MaterialTheme.colorScheme.secondary
-                ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
-            ) {
-                Text(
-                    text = stringResource(R.string.returning_date) + ": " + Helper.getDateString(repairDetailsState.value.repair.closingDate.toLong()),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+                precedingTextSource = R.string.returning_date
+            )
+
+    /* ********************** RECIPIENT  ******************************************************** */
+
+
             DefaultTextField(
                 onValueChanged = { string ->
                     recipient.value = recipient.value.copy(value = string)
@@ -710,9 +682,12 @@ fun RepairDetailsScreen(
                 shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor = MaterialTheme.colorScheme.secondary
+                    disabledBackgroundColor = MaterialTheme.colorScheme.primary
                 ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = if(isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                )
             ) {
                 Image(
                     modifier = Modifier

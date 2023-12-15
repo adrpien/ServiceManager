@@ -25,6 +25,7 @@ import com.example.core.theme.Dimensions
 import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
+import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.other.DefaultTextField
@@ -474,24 +475,12 @@ fun InspectionDetailsScreen(
                 },
                 enabled = isInEditMode
             )
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            DefaultDateButton(
+                dateLong = inspectionDetailsState.value.inspection.inspectionDate.toLong(),
                 onClick = { inspectionDateDialogState.show() },
                 enabled = isInEditMode,
-                shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
-                ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
-            ) {
-                Text(
-                    text = stringResource(R.string.inspection_date) + ": " + Helper.getDateString(inspectionDetailsState.value.inspection.inspectionDate.toLong()),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+                precedingTextSource = R.string.inspection_date
+            )
             DefaultTextField(
                 onValueChanged = { string ->
                     recipient.value = recipient.value.copy(value = string)
@@ -512,9 +501,12 @@ fun InspectionDetailsScreen(
                 shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
+                    disabledBackgroundColor =  MaterialTheme.colorScheme.primary
                 ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = if (viewModel.inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                )
             ) {
                 Image(
                     modifier = Modifier

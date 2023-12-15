@@ -8,12 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Matrix
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
-import com.example.core.theme.VeryLightBlue
+
 
 
 @Composable
@@ -34,12 +30,13 @@ fun DefaultRadioButton(
             onClick = onClick,
             shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary,
+
             ),
             border = BorderStroke(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
             ),
             enabled = isClickable
         ) {

@@ -31,7 +31,10 @@ fun DefaultButton(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onSecondary
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary)
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     ) {
         Text(
             text = title
