@@ -37,4 +37,5 @@
     <string name="confirm">Potwierdź</string>
     <string name="cancel">Anuluj</string>
     <string name="signature">Podpis</string>
+    <string name="ok">Ok</string>
 </resources>

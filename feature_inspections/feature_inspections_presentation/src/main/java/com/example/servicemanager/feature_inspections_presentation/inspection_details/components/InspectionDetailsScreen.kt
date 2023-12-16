@@ -22,14 +22,13 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.Dimensions
-import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
-import com.example.core_ui.components.other.DefaultTextField
-import com.example.core_ui.components.other.DefaultTextFieldState
+import com.example.core_ui.components.textfield.DefaultTextField
+import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.signature.SignatureArea
 import com.example.feature_inspections_presentation.R

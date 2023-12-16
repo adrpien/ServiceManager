@@ -1,4 +1,4 @@
-package com.example.core_ui.components.other
+package com.example.core_ui.components.textfield
 
 data class DefaultTextFieldState(
     val isHintVisible: Boolean = true,

@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,12 +24,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.Dimensions.signatureHeight
 import com.example.core.theme.Dimensions.signatureWidth
-import com.example.core.util.Helper
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultDateButton
-import com.example.core_ui.components.other.DefaultTextField
-import com.example.core_ui.components.other.DefaultTextFieldState
+import com.example.core_ui.components.textfield.DefaultTextField
+import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -48,6 +48,8 @@ import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.signature.SignatureArea
 import com.example.feature_repairs_presentation.R
+import androidx.compose.material3.SnackbarHostState
+import com.example.core_ui.components.snackbar.AppSnackbar
 
 
 @Composable
@@ -94,6 +96,9 @@ fun RepairDetailsScreen(
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
 
     val deviceName = remember {
         mutableStateOf(
@@ -202,7 +207,13 @@ fun RepairDetailsScreen(
     }
 
 /* ********************** UI EVENTS HANDLING  *************************************************** */
+
     LaunchedEffect(key1 = true) {
+        val result = scaffoldState.snackbarHostState.showSnackbar(
+            message = "event.messege",
+            actionLabel = "Ok",
+            duration = SnackbarDuration.Short
+        )
         viewModel.eventFlow.collect { event ->
             when(event) {
                 is UiEvent.UpdateTextFields -> {
@@ -244,6 +255,8 @@ fun RepairDetailsScreen(
                     coroutineScope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
                             message = event.messege,
+                            actionLabel = "Ok",
+                            duration = SnackbarDuration.Short
                         )
                     }
                 }
@@ -300,8 +313,14 @@ fun RepairDetailsScreen(
                 )
             }
         },
-        scaffoldState = scaffoldState
-    ){
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(data = it)
+            }
+        },
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -309,7 +328,7 @@ fun RepairDetailsScreen(
                 .background(MaterialTheme.colorScheme.secondary)
                 .padding(8.dp)
                 .verticalScroll(scrollState)
-                ) {
+        ) {
 
 /* ********************** OPENING DATE  ********************************************************* */
 
@@ -320,31 +339,31 @@ fun RepairDetailsScreen(
                 precedingTextSource = R.string.opening_date
             )
 
-/* ********************** PICKUP TECHNICIAN  **************************************************** */
+            /* ********************** PICKUP TECHNICIAN  **************************************************** */
 
-                Text(
-                    text = stringResource(R.string.pickup_technician) + ":",
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
+            Text(
+                text = stringResource(R.string.pickup_technician) + ":",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
 
-                DefaultSelectionSection(
-                    itemList = technicianList,
-                    nameList = technicianList.map { it.name },
-                    selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.pickupTechnicianId) }
-                        ?: Technician(),
-                    onItemChanged = {
-                        viewModel.onEvent(
-                            RepairDetailsEvent.UpdateRepairState(
-                                repairDetailsState.value.repair.copy(
-                                    pickupTechnicianId = it.technicianId
-                                )
+            DefaultSelectionSection(
+                itemList = technicianList,
+                nameList = technicianList.map { it.name },
+                selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.pickupTechnicianId) }
+                    ?: Technician(),
+                onItemChanged = {
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                pickupTechnicianId = it.technicianId
                             )
                         )
-                    },
-                    enabled = isInEditMode
-                )
+                    )
+                },
+                enabled = isInEditMode
+            )
 
-/* ********************** DEVICE  *************************************************************** */
+            /* ********************** DEVICE  *************************************************************** */
             Text(
                 text = stringResource(R.string.device),
                 fontSize = 20.sp,
@@ -422,7 +441,7 @@ fun RepairDetailsScreen(
                 state = deviceIn
             )
 
-/* ********************** LOCALIZATION  ********************************************************* */
+            /* ********************** LOCALIZATION  ********************************************************* */
             Text(
                 text = stringResource(R.string.localization),
                 fontSize = 20.sp,
@@ -435,7 +454,7 @@ fun RepairDetailsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
 
-/* ********************** HOSPITAL SELECTION **************************************************** */
+            /* ********************** HOSPITAL SELECTION **************************************************** */
             Text(
                 modifier = Modifier,
                 text = stringResource(id = R.string.hospital) + ":",
@@ -484,7 +503,7 @@ fun RepairDetailsScreen(
                 state = comment
             )
 
-/* ********************** REPAIR  *************************************************************** */
+            /* ********************** REPAIR  *************************************************************** */
             Text(
                 text = stringResource(id = R.string.repair),
                 fontSize = 20.sp,
@@ -536,29 +555,29 @@ fun RepairDetailsScreen(
                 state = partDescription
             )
 
-/* ********************** REPAIRING TECHNICIAN  ************************************************* */
-                Text(
-                    text = stringResource(R.string.repairing_technician) + ":",
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-                DefaultSelectionSection(
-                    itemList = technicianList,
-                    nameList = technicianList.map { it.name },
-                    selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.repairTechnicianId) }
-                        ?: Technician(),
-                    onItemChanged =  {
-                        viewModel.onEvent(
-                            RepairDetailsEvent.UpdateRepairState(
-                                repairDetailsState.value.repair.copy(
-                                    repairTechnicianId = it.technicianId
-                                )
+            /* ********************** REPAIRING TECHNICIAN  ************************************************* */
+            Text(
+                text = stringResource(R.string.repairing_technician) + ":",
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+            DefaultSelectionSection(
+                itemList = technicianList,
+                nameList = technicianList.map { it.name },
+                selectedItem = technicianList.find { (it.technicianId == repairDetailsState.value.repair.repairTechnicianId) }
+                    ?: Technician(),
+                onItemChanged = {
+                    viewModel.onEvent(
+                        RepairDetailsEvent.UpdateRepairState(
+                            repairDetailsState.value.repair.copy(
+                                repairTechnicianId = it.technicianId
                             )
                         )
-                    },
-                    enabled = isInEditMode
-                )
+                    )
+                },
+                enabled = isInEditMode
+            )
 
-/* ********************** REPAIRING DATE  ******************************************************* */
+            /* ********************** REPAIRING DATE  ******************************************************* */
 
             DefaultDateButton(
                 dateLong = repairDetailsState.value.repair.repairingDate.toLong(),
@@ -567,7 +586,7 @@ fun RepairDetailsScreen(
                 precedingTextSource = R.string.repairing_date
             )
 
-/* ********************** RESULT  *************************************************************** */
+            /* ********************** RESULT  *************************************************************** */
             Text(
                 text = stringResource(R.string.result),
                 fontSize = 20.sp,
@@ -580,17 +599,17 @@ fun RepairDetailsScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-/* ********************** EST STATE  ************************************************************ */
+            /* ********************** EST STATE  ************************************************************ */
             Text(
                 text = stringResource(R.string.eststate) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
-                )
+            )
             DefaultSelectionSection(
                 itemList = estStateList,
                 nameList = estStateList.map { it.estState },
                 selectedItem = estStateList.find { (it.estStateId == repairDetailsState.value.repair.estStateId) }
                     ?: EstState(),
-                onItemChanged =  {
+                onItemChanged = {
                     viewModel.onEvent(
                         RepairDetailsEvent.UpdateRepairState(
                             repairDetailsState.value.repair.copy(
@@ -602,7 +621,7 @@ fun RepairDetailsScreen(
                 enabled = isInEditMode
             )
 
-/* ********************** REPAIRING STATE  ****************************************************** */
+            /* ********************** REPAIRING STATE  ****************************************************** */
             Text(
                 text = stringResource(R.string.repairstate) + ": ",
                 color = MaterialTheme.colorScheme.onSecondary
@@ -624,7 +643,7 @@ fun RepairDetailsScreen(
                 enabled = isInEditMode
             )
 
-/* ********************** RETURN TECHNICIAN  **************************************************** */
+            /* ********************** RETURN TECHNICIAN  **************************************************** */
             Text(
                 text = stringResource(R.string.return_technician) + ":",
                 color = MaterialTheme.colorScheme.onSecondary
@@ -646,7 +665,7 @@ fun RepairDetailsScreen(
                 enabled = isInEditMode
             )
 
-/* ********************** RETURNING DATE  **************************************************** */
+            /* ********************** RETURNING DATE  **************************************************** */
 
             DefaultDateButton(
                 dateLong = repairDetailsState.value.repair.closingDate.toLong(),
@@ -655,7 +674,7 @@ fun RepairDetailsScreen(
                 precedingTextSource = R.string.returning_date
             )
 
-    /* ********************** RECIPIENT  ******************************************************** */
+            /* ********************** RECIPIENT  ******************************************************** */
 
 
             DefaultTextField(
@@ -672,13 +691,13 @@ fun RepairDetailsScreen(
                 state = recipient
             )
 
-/* ********************** SIGNATURE  ************************************************************ */
+            /* ********************** SIGNATURE  ************************************************************ */
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 enabled = isInEditMode,
-                onClick = { signatureDialogState.show()},
+                onClick = { signatureDialogState.show() },
                 shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colorScheme.primary,
@@ -686,7 +705,7 @@ fun RepairDetailsScreen(
                 ),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = if(isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    color = if (isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
                 )
             ) {
                 Image(
@@ -694,12 +713,12 @@ fun RepairDetailsScreen(
                         .width(signatureWidth.toDp.dp)
                         .height(signatureHeight.toDp.dp)
                         .border(1.dp, MaterialTheme.colorScheme.onSecondary),
-                bitmap = repairDetailsState.value.signature.asImageBitmap(),
+                    bitmap = repairDetailsState.value.signature.asImageBitmap(),
                     contentDescription = stringResource(R.string.signature)
                 )
             }
 
-/* ********************** DIALOGS  ************************************************************** */
+            /* ********************** DIALOGS  ************************************************************** */
             DefaultDatePickerDialog(
                 dialogState = repairingDateDialogState,
                 onClick = {
@@ -758,31 +777,31 @@ fun RepairDetailsScreen(
                     ).toLocalDate()
             )
             if (showExitDialog.value) {
-                    ExitAlertDialog(
-                        title = stringResource(R.string.save) + "?",
-                        contentText = stringResource(R.string.do_you_want_save_changes),
-                        onConfirm = {
-                            if (showExitDialog.value) {
-                                if (repairDetailsState.value.repair.repairId != "0") {
-                                    viewModel.onEvent(
-                                        RepairDetailsEvent.UpdateRepair(
-                                            repairDetailsState.value.repair
-                                        )
+                ExitAlertDialog(
+                    title = stringResource(R.string.save) + "?",
+                    contentText = stringResource(R.string.do_you_want_save_changes),
+                    onConfirm = {
+                        if (showExitDialog.value) {
+                            if (repairDetailsState.value.repair.repairId != "0") {
+                                viewModel.onEvent(
+                                    RepairDetailsEvent.UpdateRepair(
+                                        repairDetailsState.value.repair
                                     )
-                                } else {
-                                    viewModel.onEvent(
-                                        RepairDetailsEvent.SaveRepair(
-                                            repairDetailsState.value.repair
-                                        )
+                                )
+                            } else {
+                                viewModel.onEvent(
+                                    RepairDetailsEvent.SaveRepair(
+                                        repairDetailsState.value.repair
                                     )
-                                }
+                                )
                             }
-                            navHostController.popBackStack()
+                        }
+                        navHostController.popBackStack()
 
-                        },
-                        onDismiss = { showExitDialog.value = false },
-                        onDismissRequest = { showExitDialog.value = false }
-                    )
+                    },
+                    onDismiss = { showExitDialog.value = false },
+                    onDismissRequest = { showExitDialog.value = false }
+                )
             }
             // TODO Need to unificate styles of all dialogs
             MaterialDialog(
@@ -814,10 +833,10 @@ fun RepairDetailsScreen(
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.primary),
                         contentAlignment = Alignment.Center
-                    ){
+                    ) {
                         Column {
                             Spacer(modifier = Modifier.height(8.dp))
-                            SignatureArea( ) { bitmap ->
+                            SignatureArea() { bitmap ->
                                 viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
                             }
                         }
@@ -825,6 +844,7 @@ fun RepairDetailsScreen(
                 }
             }
         }
+    }
     }
     if (repairDetailsState.value.isLoading) {
         Box(
