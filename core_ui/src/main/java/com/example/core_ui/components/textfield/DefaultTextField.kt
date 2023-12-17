@@ -29,7 +29,7 @@ fun DefaultTextField(
     Column() {
         OutlinedTextField(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(8.dp),
                 // .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium),
             value = state.value.value,

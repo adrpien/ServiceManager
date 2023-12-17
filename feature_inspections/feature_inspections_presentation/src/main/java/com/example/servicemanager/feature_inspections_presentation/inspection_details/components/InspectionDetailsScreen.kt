@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.theme.Dimensions
 import com.example.core.util.Helper.Companion.toDp
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
@@ -234,7 +234,7 @@ fun InspectionDetailsScreen(
                                 )
                             )
                         }
-                        navHostController.navigate(Screens.InspectionListScreen.route + "/{userId}")
+                        navHostController.navigate(Screen.InspectionListScreen.route + "/{userId}")
                     } else {
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
                     }

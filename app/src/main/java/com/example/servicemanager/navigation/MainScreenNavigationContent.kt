@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.feature_home_presentation.app_settings.components.AppSettingsScreen
 import com.example.feature_home_presentation.database_settings.components.DatabaseSettingsScreen
 import com.example.feature_home_presentation.home.components.HomeScreen
@@ -22,11 +22,11 @@ fun MainScreenNavigationContent(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screens.RepairListScreen.route + "/{userId}"
+        startDestination = Screen.RepairListScreen.route + "/{userId}"
     ) {
 
         composable(
-            route = Screens.InspectionListScreen.route + "/{userId}",
+            route = Screen.InspectionListScreen.route + "/{userId}",
             arguments = listOf(
                 navArgument(name = "userId") {
                     type = NavType.StringType
@@ -42,7 +42,7 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screens.InspectionDetailsScreen.route + "/{inspectionId}",
+            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}",
             arguments = listOf(
                 navArgument(name = "inspectionId") {
                     type = NavType.StringType
@@ -59,7 +59,7 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screens.RepairListScreen.route + "/{userId}",
+            route = Screen.RepairListScreen.route + "/{userId}",
             arguments = listOf(
                 navArgument(name = "userId") {
                     type = NavType.StringType
@@ -75,7 +75,7 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screens.RepairDetailsScreen.route + "/{repairId}",
+            route = Screen.RepairDetailsScreen.route + "/{repairId}",
             arguments = listOf(
                 navArgument(name = "repairId") {
                     type = NavType.StringType
@@ -91,7 +91,7 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screens.HomeScreen.route + "/{userId}",
+            route = Screen.HomeScreen.route + "/{userId}",
             arguments = listOf(
                 navArgument(name = "userId") {
                     type = NavType.StringType
@@ -107,7 +107,7 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screens.AppSettingsScreen.route
+            route = Screen.AppSettingsScreen.route
         ) {
             AppSettingsScreen(
                 navHostController = navHostController
@@ -115,7 +115,7 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screens.DatabaseSettingsScreen.route
+            route = Screen.DatabaseSettingsScreen.route
         ) {
             DatabaseSettingsScreen()
         }

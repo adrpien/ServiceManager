@@ -25,7 +25,7 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_li
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.UiEvent
@@ -65,7 +65,7 @@ fun InspectionListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screens.InspectionDetailsScreen.withArgs("0"))
+                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs("0"))
                 },
                 backgroundColor = MaterialTheme.colorScheme.primary
             )
@@ -113,7 +113,7 @@ fun InspectionListScreen(
                         cursorColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
-                        viewModel.onEvent(InspectionListEvent.onSearchQueryChange(it))
+                        viewModel.onEvent(InspectionListEvent.OnSearchQueryChange(it))
                     },
                     modifier = Modifier
                         .padding(10.dp),
@@ -162,7 +162,7 @@ fun InspectionListScreen(
                                     .fillMaxWidth()
                                     .clickable {
                                         navHostController.navigate(
-                                            Screens.InspectionDetailsScreen.withArgs(
+                                            Screen.InspectionDetailsScreen.withArgs(
                                                 inspectionListState.value.inspectionList[index].inspectionId
                                             )
                                         )
@@ -214,7 +214,7 @@ fun InspectionListScreen(
                             selectedItem = inspectionListState.value.hospital ?: Hospital(),
                             onItemChanged = {
                                 viewModel.onEvent(
-                                    InspectionListEvent.filterInspectionListByHospital(
+                                    InspectionListEvent.FilterInspectionListByHospital(
                                         hospital = it
                                     )
                                 )
@@ -229,7 +229,7 @@ fun InspectionListScreen(
                         exit = fadeOut() + slideOutVertically()
                     ) {
                         InspectionSortSection(
-                            onOrderChange = { viewModel.onEvent(InspectionListEvent.orderInspectionList(it)) },
+                            onOrderChange = { viewModel.onEvent(InspectionListEvent.OrderInspectionList(it)) },
                             inspectionOrderType = inspectionListState.value.inspectionOrderType,
                             onToggleMonotonicity = {
                                 viewModel.onEvent(InspectionListEvent.ToggleOrderMonotonicity(it))

@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.core_ui.components.menu.BottomNavigationItem
 import com.example.servicemanager.R
 
@@ -27,19 +27,19 @@ fun MainScreenNavigation(
                 itemList = listOf(
                     BottomNavigationItem(
                         name = stringResource(R.string.inspections),
-                        route = Screens.InspectionListScreen,
+                        route = Screen.InspectionListScreen,
                         icon = Icons.Default.Checklist,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
                         name = stringResource(R.string.repairs),
-                        route = Screens.RepairListScreen,
+                        route = Screen.RepairListScreen,
                         icon = Icons.Default.Settings,
                         badgeCount = 0
                     ),
                     BottomNavigationItem(
                         name = stringResource(R.string.home),
-                        route = Screens.HomeScreen,
+                        route = Screen.HomeScreen,
                         icon = Icons.Default.Home,
                         badgeCount = 0
                     )

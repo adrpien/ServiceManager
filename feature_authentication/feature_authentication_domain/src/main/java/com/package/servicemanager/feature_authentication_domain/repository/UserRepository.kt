@@ -8,4 +8,6 @@ interface UserRepository {
 
     fun getCurrentUser(): Flow<Resource<String>>
 
+    fun logOut()
+
 }

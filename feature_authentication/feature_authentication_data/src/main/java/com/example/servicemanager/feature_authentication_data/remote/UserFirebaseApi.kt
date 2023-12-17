@@ -63,4 +63,8 @@ class UserFirebaseApi(
     fun getCurrentUser(): String? {
         return firebaseAuth.currentUser?.uid
     }
+
+    fun logOut() {
+        return firebaseAuth.signOut()
+    }
 }

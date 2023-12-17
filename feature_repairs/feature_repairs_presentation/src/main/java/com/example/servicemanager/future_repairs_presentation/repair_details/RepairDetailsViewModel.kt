@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.util.Helper.Companion.byteArrayToBitmap
 import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
@@ -75,7 +75,7 @@ class RepairDetailsViewModel @Inject constructor(
                                 }
                                 _eventFlow.emit(
                                     UiEvent.NavigateTo(
-                                        Screens.RepairListScreen.route
+                                        Screen.RepairListScreen.route
                                     )
                                 )
 

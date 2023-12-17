@@ -12,7 +12,6 @@ import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
-import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -60,7 +59,7 @@ class InspectionListViewModel @Inject constructor(
 
     fun onEvent(event: InspectionListEvent) {
         when(event) {
-            is InspectionListEvent.onSearchQueryChange -> {
+            is InspectionListEvent.OnSearchQueryChange -> {
                 _inspectionListState.value = _inspectionListState.value.copy(searchQuery = event.searchQuery)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
@@ -83,7 +82,7 @@ class InspectionListViewModel @Inject constructor(
                     hospitalFilter = inspectionListState.value.hospital
                 )
             }
-            is InspectionListEvent.orderInspectionList -> {
+            is InspectionListEvent.OrderInspectionList -> {
                 _inspectionListState.value = _inspectionListState.value.copy(
                     inspectionOrderType = event.inspectionOrderType
                 )
@@ -126,7 +125,7 @@ class InspectionListViewModel @Inject constructor(
                         isSortSectionVisible = false)
                 }
             }
-            is InspectionListEvent.filterInspectionListByHospital -> {
+            is InspectionListEvent.FilterInspectionListByHospital -> {
                 _inspectionListState.value = _inspectionListState.value.copy(
                     hospital = event.hospital
                 )

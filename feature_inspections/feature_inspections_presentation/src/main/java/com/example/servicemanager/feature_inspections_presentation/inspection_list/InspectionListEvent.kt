@@ -7,9 +7,9 @@ import com.example.servicemanager.feature_app_domain.model.Hospital
 sealed class InspectionListEvent {
 
     object Refresh: InspectionListEvent()
-    data class onSearchQueryChange(val searchQuery: String): InspectionListEvent()
-    data class orderInspectionList(val inspectionOrderType: InspectionOrderType): InspectionListEvent()
-    data class filterInspectionListByHospital(val hospital: Hospital): InspectionListEvent()
+    data class OnSearchQueryChange(val searchQuery: String): InspectionListEvent()
+    data class OrderInspectionList(val inspectionOrderType: InspectionOrderType): InspectionListEvent()
+    data class FilterInspectionListByHospital(val hospital: Hospital): InspectionListEvent()
     object  ToggleSortSectionVisibility : InspectionListEvent()
     object  ToggleHospitalFilterSectionVisibility : InspectionListEvent()
     data class  ToggleOrderMonotonicity(val inspectionOrderType: InspectionOrderType) : InspectionListEvent()

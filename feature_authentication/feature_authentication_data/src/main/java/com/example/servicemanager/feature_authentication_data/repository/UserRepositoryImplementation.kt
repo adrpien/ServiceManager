@@ -42,4 +42,8 @@ class  UserRepositoryImplementation(
         }
     }
 
+    override fun logOut() {
+        return userFirebaseApi.logOut()
+    }
+
 }

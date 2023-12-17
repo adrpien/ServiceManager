@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_authentication_presentation.R
-import com.example.servicemanager.feature_authentication_domain.use_cases.UserUseCases
+import com.example.servicemanager.feature_authentication_domain.use_cases.AuthenticationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserLoginViewModel @Inject constructor(
-    private val userUseCases: UserUseCases,
+    private val authenticationUseCases: AuthenticationUseCases,
 ): ViewModel() {
 
     private var _userLoginState = mutableStateOf(UserLoginState())
@@ -30,7 +30,7 @@ class UserLoginViewModel @Inject constructor(
         when(userLoginEvent){
             is UserLoginEvent.Authenticate -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    userUseCases.authenticate(userLoginEvent.mail, userLoginEvent.password).collect() { result ->
+                    authenticationUseCases.authenticate(userLoginEvent.mail, userLoginEvent.password).collect() { result ->
                         when(result.resourceState) {
                             ResourceState.LOADING -> Unit
                             ResourceState.ERROR -> {
@@ -60,7 +60,7 @@ class UserLoginViewModel @Inject constructor(
             }
             is UserLoginEvent.GetCurrentUser -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    userUseCases.getCurrentUser().collect { result ->
+                    authenticationUseCases.getCurrentUser().collect { result ->
                         when(result.resourceState) {
                             ResourceState.SUCCESS -> {
                                 _eventFlow.emit(UiEvent.Authenticate(result.data ?: "0"))

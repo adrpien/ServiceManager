@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.util.Helper.Companion.byteArrayToBitmap
 import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
@@ -77,7 +77,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 viewModelScope.launch(Dispatchers.IO) {
                                     appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
                                 }
-                                _eventFlow.emit(UiEvent.NavigateTo(Screens.InspectionListScreen.route))
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                             }
                         }
                     }

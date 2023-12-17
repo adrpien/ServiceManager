@@ -25,7 +25,7 @@ import androidx.navigation.NavHostController
 import com.example.core.theme.Dimensions.signatureHeight
 import com.example.core.theme.Dimensions.signatureWidth
 import com.example.core.util.Helper.Companion.toDp
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
@@ -291,7 +291,7 @@ fun RepairDetailsScreen(
 
                         }
 
-                        navHostController.navigate(Screens.RepairListScreen.route + "/{userId}")
+                        navHostController.navigate(Screen.RepairListScreen.route + "/{userId}")
 
                     } else {
                         viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(true))

@@ -13,4 +13,5 @@ dependencies{
     implementation(project(Modules.coreUi))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureHomeDomain))
+    implementation(project(Modules.featureAuthenticationDomain))
 }

@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.util.Screens
+import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_repairs_presentation.R
@@ -48,7 +48,7 @@ fun RepairListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screens.RepairDetailsScreen.withArgs("0"))
+                    navHostController.navigate(Screen.RepairDetailsScreen.withArgs("0"))
                 },
                 backgroundColor = MaterialTheme.colorScheme.primary
             )
@@ -142,7 +142,7 @@ fun RepairListScreen(
                                     .fillMaxWidth()
                                     .clickable {
                                         navHostController.navigate(
-                                            Screens.RepairDetailsScreen.withArgs(
+                                            Screen.RepairDetailsScreen.withArgs(
                                                 repairListState.value.repairList[index].repairId
                                             )
                                         )
