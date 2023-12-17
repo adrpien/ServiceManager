@@ -27,6 +27,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.UiEvent
 import kotlinx.coroutines.launch
 
@@ -76,7 +77,18 @@ fun InspectionListScreen(
                 )
             }
         },
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                )
+            }
+        },
     ) { padding ->
         Column(
             modifier = Modifier

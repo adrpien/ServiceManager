@@ -4,6 +4,7 @@ import android.content.Context
 import  androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.password.PasswordTextField
 import com.example.core.util.Screens
+import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_authentication_presentation.R
 import com.example.servicemanager.feature_authentication_presentation.login.UiEvent
 import com.example.servicemanager.feature_authentication_presentation.login.UserLoginEvent
@@ -77,7 +79,18 @@ fun LoginScreen(
         }
     }
     Scaffold(
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                )
+            }
+        },
     ) {
         Box(modifier = Modifier
             .fillMaxSize()

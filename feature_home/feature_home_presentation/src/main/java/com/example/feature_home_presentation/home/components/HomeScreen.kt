@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DataArray
 import androidx.compose.material.icons.filled.Info
@@ -25,6 +26,7 @@ import com.example.core.util.Helper
 import com.example.core.util.Screens
 import com.example.core.util.UiText
 import com.example.core_ui.components.menu.MenuItemState
+import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_home_domain.model.Profile
@@ -85,6 +87,17 @@ fun HomeScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                )
+            }
+        },
         backgroundColor = MaterialTheme.colorScheme.secondary
     ) { padding ->
 

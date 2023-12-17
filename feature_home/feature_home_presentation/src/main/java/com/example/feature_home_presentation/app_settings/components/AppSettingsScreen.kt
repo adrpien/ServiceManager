@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.other.SwitchItem
+import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_home_presentation.R
 import com.example.feature_home_presentation.app_settings.AppSettingsScreenEvent
 import com.example.feature_home_presentation.app_settings.AppSettingsScreenViewModel
@@ -58,7 +60,18 @@ fun AppSettingsScreen(
     }
 
     Scaffold(
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                )
+            }
+        },
     ) {
         Column(
             modifier = Modifier

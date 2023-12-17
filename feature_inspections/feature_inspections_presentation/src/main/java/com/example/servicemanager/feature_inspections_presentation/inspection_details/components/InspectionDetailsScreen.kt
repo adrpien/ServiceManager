@@ -31,6 +31,7 @@ import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.signature.SignatureArea
+import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -259,6 +260,17 @@ fun InspectionDetailsScreen(
             }
         },
         scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                )
+            }
+        },
     ) {
         Column(
             modifier = Modifier

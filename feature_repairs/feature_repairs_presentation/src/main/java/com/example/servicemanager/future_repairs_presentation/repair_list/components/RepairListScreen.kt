@@ -1,8 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,10 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
 import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
@@ -63,7 +60,18 @@ fun RepairListScreen(
                 )
             }
         },
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = scaffoldState.snackbarHostState) {
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                )
+            }
+        },
     ) { padding ->
         Column(
             modifier = Modifier
