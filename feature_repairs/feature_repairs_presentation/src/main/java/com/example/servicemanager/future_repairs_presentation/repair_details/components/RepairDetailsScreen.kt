@@ -209,11 +209,6 @@ fun RepairDetailsScreen(
 /* ********************** UI EVENTS HANDLING  *************************************************** */
 
     LaunchedEffect(key1 = true) {
-        val result = scaffoldState.snackbarHostState.showSnackbar(
-            message = "event.messege",
-            actionLabel = "Ok",
-            duration = SnackbarDuration.Short
-        )
         viewModel.eventFlow.collect { event ->
             when(event) {
                 is UiEvent.UpdateTextFields -> {
@@ -316,7 +311,13 @@ fun RepairDetailsScreen(
         scaffoldState = scaffoldState,
         snackbarHost = {
             SnackbarHost(hostState = scaffoldState.snackbarHostState) {
-                AppSnackbar(data = it)
+                AppSnackbar(
+                    data = it,
+                    // can be mutableState here, but for me like this is ok
+                    onActionClick = {
+                        it.dismiss()
+                    }
+                    )
             }
         },
     ) {
