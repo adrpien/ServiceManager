@@ -9,4 +9,10 @@
     <string name="point_this_month">Punktów  w tym miesiącu</string>
     <string name="made_by_adi">made by adi</string>
     <string name="changes_will_be_visible_next_time_you_launch_the_app">Zmiany będą widoczne od następnego uruchomienia aplikacji</string>
+    <string name="add_inspections_from_file">Dodaj listę przeglądów z pliku</string>
+    <string name="add_hospital">Dodaj szpital</string>
+    <string name="add_technician">Dodaj serwisanta</string>
+    <string name="add_inspection_state">Dodaj stan przeglądu</string>
+    <string name="add_repair_state">Dodaj stan naprawy</string>
+    <string name="manage_hospital_list">Zarządzaj listą szpitali</string>
 </resources>

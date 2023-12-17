@@ -9,4 +9,10 @@
     <string name="point_this_month">Point this month</string>
     <string name="made_by_adi">made by adi</string>
     <string name="changes_will_be_visible_next_time_you_launch_the_app">Changes will be visible next time you launch the app</string>
+    <string name="add_inspections_from_file">Add inspection list from file</string>
+    <string name="add_hospital">Add hospital</string>
+    <string name="add_technician">Add technician</string>
+    <string name="add_inspection_state">Add inspection state</string>
+    <string name="add_repair_state">Add repair state</string>
+    <string name="manage_hospital_list">Manage hospital list</string>
 </resources>

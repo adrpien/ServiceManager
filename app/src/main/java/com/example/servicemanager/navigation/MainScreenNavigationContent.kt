@@ -117,7 +117,9 @@ fun MainScreenNavigationContent(
         composable(
             route = Screen.DatabaseSettingsScreen.route
         ) {
-            DatabaseSettingsScreen()
+            DatabaseSettingsScreen(
+                navHostController = navHostController
+            )
         }
     }
 }

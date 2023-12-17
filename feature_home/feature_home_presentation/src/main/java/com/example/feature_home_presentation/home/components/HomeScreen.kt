@@ -52,6 +52,7 @@ fun HomeScreen(
 
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
+
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -66,9 +67,7 @@ fun HomeScreen(
         icon = Icons.Default.DataArray,
         text = UiText.StringResource(R.string.database_settings)
     ) {
-        coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
-        }
+        navHostController.navigate(Screen.DatabaseSettingsScreen.route)
     }
 
     val appSettingMenuItemState = MenuItemState(

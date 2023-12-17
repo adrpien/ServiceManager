@@ -12,12 +12,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HomeDataModule {
 
-    @Provides
-    @Singleton
-    fun providesHomeUseCases(appRepository: AppRepository): HomeUseCases {
-        return HomeUseCases(
-        )
-    }
 }
 
 
