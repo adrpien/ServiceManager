@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
-import com.example.core.theme.ServiceManagerTheme
-import com.example.core.theme.VeryLightBlue
+import com.example.core_ui.components.menu.BottomNavigationItem
 
 @Composable
 fun BottomNavigationBar(

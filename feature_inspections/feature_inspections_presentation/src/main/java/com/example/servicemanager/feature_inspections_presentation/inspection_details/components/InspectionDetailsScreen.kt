@@ -29,7 +29,7 @@ import com.example.core_ui.components.other.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
-import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
+import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.signature.SignatureArea
 import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.EstState

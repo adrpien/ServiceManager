@@ -1,4 +1,4 @@
-package com.example.core_ui.components.other
+package com.example.core_ui.components.password
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer

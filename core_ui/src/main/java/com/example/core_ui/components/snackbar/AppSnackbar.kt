@@ -16,6 +16,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -25,10 +26,7 @@ fun AppSnackbar(data: SnackbarData) {
             .padding(16.dp)
             .fillMaxWidth(),
         content = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(8.dp)
-            ) {
+            Row {
                 Icon(
                     imageVector = Icons.Default.Info,
                     contentDescription = null,
@@ -36,6 +34,14 @@ fun AppSnackbar(data: SnackbarData) {
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(text = data.message, color = MaterialTheme.colorScheme.onPrimary)
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+            ) {
+
             }
         },
         backgroundColor = MaterialTheme.colorScheme.primary,

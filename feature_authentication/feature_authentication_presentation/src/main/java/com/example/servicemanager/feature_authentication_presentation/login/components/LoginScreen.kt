@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import com.example.core_ui.components.other.DefaultButton
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
-import com.example.core_ui.components.other.PasswordTextField
+import com.example.core_ui.components.password.PasswordTextField
 import com.example.core.util.Screens
 import com.example.feature_authentication_presentation.R
 import com.example.servicemanager.feature_authentication_presentation.login.UiEvent

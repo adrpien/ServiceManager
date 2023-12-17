@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.example.core.util.Screens
+import com.example.core_ui.components.menu.BottomNavigationItem
 import com.example.servicemanager.R
 
 @Composable

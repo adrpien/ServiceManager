@@ -29,7 +29,7 @@ import com.example.core.util.Screens
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
-import com.example.core_ui.components.other.alert_dialogs.ExitAlertDialog
+import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.RepairState

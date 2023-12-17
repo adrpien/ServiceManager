@@ -1,4 +1,4 @@
-package com.example.core_ui.components.other.alert_dialogs
+package com.example.core_ui.components.alert_dialogs
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
