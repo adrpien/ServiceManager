@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -28,6 +29,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.snackbar.AppSnackbar
+import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.UiEvent
 import kotlinx.coroutines.launch
 
@@ -119,7 +121,7 @@ fun InspectionListScreen(
                         .padding(10.dp),
 
                     placeholder = {
-                        Text(text = "Search...")
+                        Text(text = stringResource(R.string.search))
                     },
                     maxLines = 1,
                     singleLine = true,
@@ -127,14 +129,14 @@ fun InspectionListScreen(
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleSortSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort",
+                        contentDescription = stringResource(R.string.sort),
                     tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
                 IconButton(onClick = { viewModel.onEvent(InspectionListEvent.ToggleHospitalFilterSectionVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.House,
-                        contentDescription = "Hospital",
+                        contentDescription = stringResource(R.string.hospital),
                     tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }

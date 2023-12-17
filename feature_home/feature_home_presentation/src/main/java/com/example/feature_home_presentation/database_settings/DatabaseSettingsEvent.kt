@@ -10,6 +10,7 @@ sealed class DatabaseSettingsEvent {
     data class AddHospital(val hospital: Hospital): DatabaseSettingsEvent()
     data class AddInspectionState(val inspectionState: InspectionState): DatabaseSettingsEvent()
     data class AddRepairState(val repairState: RepairState): DatabaseSettingsEvent()
+    data class ManageHospitalList(val repairState: RepairState): DatabaseSettingsEvent()
 
 
 }

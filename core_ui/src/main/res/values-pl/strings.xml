@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dark_mode">Tryb ciemny</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="cancel">Anuluj</string>
+    <string name="hide_password">Ukryj hasło</string>
+    <string name="show_password">Pokaż hasło</string>
+    <string name="today">Dzisiaj</string>
+    <string name="dismiss">Anuluj</string>
+    <string name="delete_hospital">Usuń szpital</string>
+</resources>

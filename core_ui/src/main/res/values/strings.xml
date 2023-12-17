@@ -7,4 +7,5 @@
     <string name="show_password">Show password</string>
     <string name="today">Today</string>
     <string name="dismiss">Dismiss</string>
+    <string name="delete_hospital">Delete hospital</string>
 </resources>

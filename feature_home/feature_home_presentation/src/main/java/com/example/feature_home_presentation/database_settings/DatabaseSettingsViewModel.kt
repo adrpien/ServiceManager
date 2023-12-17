@@ -35,6 +35,9 @@ class DatabaseSettingsViewModel @Inject constructor(
             }
             is DatabaseSettingsEvent.AddRepairState -> {
             }
+
+            is DatabaseSettingsEvent.ManageHospitalList -> {
+            }
         }
     }
 }

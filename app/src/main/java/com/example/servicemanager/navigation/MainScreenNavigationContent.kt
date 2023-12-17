@@ -10,6 +10,7 @@ import com.example.core.util.Screen
 import com.example.feature_home_presentation.app_settings.components.AppSettingsScreen
 import com.example.feature_home_presentation.database_settings.components.DatabaseSettingsScreen
 import com.example.feature_home_presentation.home.components.HomeScreen
+import com.example.feature_home_presentation.hospital_list_manager.HospitalListManagerScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.components.InspectionListScreen
 import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
@@ -120,6 +121,46 @@ fun MainScreenNavigationContent(
             DatabaseSettingsScreen(
                 navHostController = navHostController
             )
+        }
+
+        composable(
+            route = Screen.HospitalListManagerScreen.route
+        ) {
+            HospitalListManagerScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable(
+            route = Screen.InspectionStateListManagerScreen.route
+        ) {
+            HospitalListManagerScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable(
+            route = Screen.HospitalListManagerScreen.route
+        ) {
+            HospitalListManagerScreen(
+                navHostController = navHostController
+            )
+        }
+
+        composable(
+            route = Screen.InspectionStateListManagerScreen.route
+        ) {
+            /*InspectionStateListManagerScreen(
+                navHostController = navHostController
+            )*/
+        }
+
+        composable(
+            route = Screen.RepairStateListManagerScreen.route
+        ) {
+            /*RepairStateListManagerScreen(
+                navHostController = navHostController
+            )*/
         }
     }
 }

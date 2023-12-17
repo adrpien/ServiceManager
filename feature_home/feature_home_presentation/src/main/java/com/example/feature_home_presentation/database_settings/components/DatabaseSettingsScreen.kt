@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Helper
+import com.example.core.util.Screen
 import com.example.core.util.UiText
 import com.example.core_ui.components.menu.MenuItemState
 import com.example.core_ui.components.snackbar.AppSnackbar
@@ -54,21 +55,13 @@ fun DatabaseSettingsScreen(
         }
     }
 
-    val addInspectionStateMenuItemState = MenuItemState(
-        icon = Icons.Default.AddChart,
-        text = UiText.StringResource(R.string.add_inspection_state)
-    ) {
-        coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
-        }
-    }
-
     val manageHospitalListMenuItemState = MenuItemState(
         icon = Icons.Default.LocalHospital,
         text = UiText.StringResource(R.string.manage_hospital_list)
     ) {
         coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
+            //scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
+            navHostController.navigate(Screen.HospitalListManagerScreen.route)
         }
     }
 

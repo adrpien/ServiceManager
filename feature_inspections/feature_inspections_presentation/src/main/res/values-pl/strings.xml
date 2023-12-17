@@ -27,4 +27,6 @@
     <string name="do_you_want_save_changes">Do you want save changes?</string>
     <string name="confirm">Potwierdź</string>
     <string name="cancel">Anuluj</string>
+    <string name="search">Szukaj...</string>
+    <string name="sort">Sortuj</string>
 </resources>
