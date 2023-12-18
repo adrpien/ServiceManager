@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,11 +28,12 @@ import com.example.core_ui.R
 fun ManagerListItem(
     title: String,
     description: String,
+    icon: ImageVector,
     onDeleteClick: () -> (Unit)
 ) {
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -40,6 +42,7 @@ fun ManagerListItem(
     ) {
         Row(
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(8.dp)
                 .padding(start = 8.dp, end = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -62,7 +65,7 @@ fun ManagerListItem(
             IconButton(
                 onClick = onDeleteClick
             ) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(id = R.string.delete_hospital))
+                Icon(imageVector = icon, contentDescription = stringResource(id = R.string.delete_hospital))
             }
 
         }

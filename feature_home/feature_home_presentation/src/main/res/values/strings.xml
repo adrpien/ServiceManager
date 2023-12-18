@@ -15,4 +15,6 @@
     <string name="add_inspection_state">Add inspection state</string>
     <string name="add_repair_state">Add repair state</string>
     <string name="manage_hospital_list">Manage hospital list</string>
+    <string name="undo">Undo</string>
+    <string name="hospital_list">Hospital list</string>
 </resources>
