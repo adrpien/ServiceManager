@@ -29,6 +29,7 @@ fun ManagerListItem(
     title: String,
     description: String,
     icon: ImageVector,
+    iconDescription: String,
     onDeleteClick: () -> (Unit)
 ) {
 
@@ -65,7 +66,7 @@ fun ManagerListItem(
             IconButton(
                 onClick = onDeleteClick
             ) {
-                Icon(imageVector = icon, contentDescription = stringResource(id = R.string.delete_hospital))
+                Icon(imageVector = icon, contentDescription = iconDescription)
             }
 
         }

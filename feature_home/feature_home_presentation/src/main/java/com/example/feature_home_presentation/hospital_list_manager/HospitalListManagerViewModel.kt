@@ -42,8 +42,9 @@ class HospitalListManagerViewModel @Inject constructor(
             is HospitalListManagerEvent.AddHospital -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     _hospitalListState.value =
-                        _hospitalListState.value.plus(Hospital(hospital = hospitalListManagerEvent.hospitalName))
-                    _deletedHospitalListState.value = _deletedHospitalListState.value.minus(hospitalListManagerEvent.)
+                        _hospitalListState.value.plus(hospitalListManagerEvent.hospital)
+                    if(hospitalListState.value.contains(hospitalListManagerEvent.hospital))
+                    _deletedHospitalListState.value = _deletedHospitalListState.value.minus(hospitalListManagerEvent.hospital)
                 }
 
             }
@@ -99,7 +100,7 @@ sealed class UiEvent() {
 
 sealed class HospitalListManagerEvent() {
     data class DeleteHospital(val hospitalId: String): HospitalListManagerEvent()
-    data class AddHospital(val hospitalName: String): HospitalListManagerEvent()
+    data class AddHospital(val hospital: Hospital): HospitalListManagerEvent()
     object SaveChanges: HospitalListManagerEvent()
     object UndoChanges: HospitalListManagerEvent()
     data class ChangeOrder(val hospitalList: List<Hospital>): HospitalListManagerEvent()

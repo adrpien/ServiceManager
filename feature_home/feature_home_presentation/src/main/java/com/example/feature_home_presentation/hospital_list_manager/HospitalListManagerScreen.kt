@@ -115,7 +115,8 @@ fun HospitalListManagerScreen(
                                 ManagerListItem(
                                     title = hospitalList[index].hospital,
                                     description = hospitalList[index].hospitalId,
-                                    icon =  Icons.Default.Delete
+                                    icon =  Icons.Default.Delete,
+                                    iconDescription = stringResource(R.string.delete)
                                 ){
                                     viewModel.onEvent(HospitalListManagerEvent.DeleteHospital(hospitalList[index].hospitalId))
                                 }
@@ -131,9 +132,10 @@ fun HospitalListManagerScreen(
                                 ManagerListItem(
                                     title = deletedHospitalList[index].hospital,
                                     description = deletedHospitalList[index].hospitalId,
-                                    icon = Icons.Default.Undo
+                                    icon = Icons.Default.Undo,
+                                    iconDescription = stringResource(id = R.string.undo)
                                 ){
-                                    viewModel.onEvent(HospitalListManagerEvent.AddHospital(deletedHospitalList[index].hospitalId))
+                                    viewModel.onEvent(HospitalListManagerEvent.AddHospital(deletedHospitalList[index]))
                                 }
 
                             }
