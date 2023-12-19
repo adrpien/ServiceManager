@@ -47,7 +47,7 @@ class RepairListViewModel @Inject constructor(
 
     fun onEvent(event: RepairListEvent) {
         when(event) {
-            is RepairListEvent.onSearchQueryChange -> {
+            is RepairListEvent.OnSearchQueryChange -> {
                 _repairListState.value = _repairListState.value.copy(searchQuery = event.searchQuery)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
@@ -70,7 +70,7 @@ class RepairListViewModel @Inject constructor(
                     hospitalFilter = repairListState.value.hospital
                 )
             }
-            is RepairListEvent.orderRepairList -> {
+            is RepairListEvent.OrderRepairList -> {
                 _repairListState.value = _repairListState.value.copy(
                     repairOrderType = event.repairOrderType
                 )
@@ -113,7 +113,7 @@ class RepairListViewModel @Inject constructor(
                     isHospitalFilterSectionVisible = !_repairListState.value.isHospitalFilterSectionVisible
                 )
             }
-            is RepairListEvent.filterRepairListByHospital -> {
+            is RepairListEvent.FilterRepairListByHospital -> {
                 _repairListState.value = _repairListState.value.copy(
                     hospital = event.hospital
                 )

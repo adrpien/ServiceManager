@@ -1,5 +1,15 @@
 package com.example.feature_home_presentation.hospital_list_manager
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,7 +17,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,13 +31,13 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,6 +48,7 @@ import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun HospitalListManagerScreen(
     navHostController: NavHostController,
@@ -55,7 +65,6 @@ fun HospitalListManagerScreen(
     val snackbarHostState = remember {
         SnackbarHostState()
     }
-
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect { event ->
@@ -109,44 +118,27 @@ fun HospitalListManagerScreen(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    LazyColumn(){
+                    LazyColumn() {
                         if (hospitalList != null) {
-                            items(hospitalList.size) { index ->
+                            items(hospitalList.size, key = { it }) { index ->
                                 ManagerListItem(
                                     title = hospitalList[index].hospital,
                                     description = hospitalList[index].hospitalId,
-                                    icon =  Icons.Default.Delete,
+                                    icon = Icons.Default.Delete,
                                     iconDescription = stringResource(R.string.delete)
-                                ){
-                                    viewModel.onEvent(HospitalListManagerEvent.DeleteHospital(hospitalList[index].hospitalId))
+                                ) {
+                                    viewModel.onEvent(
+                                        HospitalListManagerEvent.DeleteHospital(
+                                            hospitalList[index].hospitalId
+                                        )
+                                    )
                                 }
-
                             }
                         }
-
                     }
 
-                    LazyColumn(){
-                        if (deletedHospitalList != null) {
-                            items(deletedHospitalList.size) { index ->
-                                ManagerListItem(
-                                    title = deletedHospitalList[index].hospital,
-                                    description = deletedHospitalList[index].hospitalId,
-                                    icon = Icons.Default.Undo,
-                                    iconDescription = stringResource(id = R.string.undo)
-                                ){
-                                    viewModel.onEvent(HospitalListManagerEvent.AddHospital(deletedHospitalList[index]))
-                                }
-
-                            }
-                        }
-
-                    }
                 }
-
-
             }
         }
     }
-
 }

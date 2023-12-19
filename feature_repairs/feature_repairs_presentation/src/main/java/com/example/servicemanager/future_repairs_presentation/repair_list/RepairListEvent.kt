@@ -6,9 +6,9 @@ import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 sealed class RepairListEvent {
 
     object Refresh: RepairListEvent()
-    data class onSearchQueryChange(val searchQuery: String): RepairListEvent()
-    data class orderRepairList(val repairOrderType: RepairOrderType): RepairListEvent()
-    data class filterRepairListByHospital(val hospital: Hospital): RepairListEvent()
+    data class OnSearchQueryChange(val searchQuery: String): RepairListEvent()
+    data class OrderRepairList(val repairOrderType: RepairOrderType): RepairListEvent()
+    data class FilterRepairListByHospital(val hospital: Hospital): RepairListEvent()
     object  ToggleSortSectionVisibility : RepairListEvent()
     object  ToggleHospitalFilterSectionVisibility : RepairListEvent()
     data class  ToggleOrderMonotonicity(val repairOrderType: RepairOrderType) : RepairListEvent()

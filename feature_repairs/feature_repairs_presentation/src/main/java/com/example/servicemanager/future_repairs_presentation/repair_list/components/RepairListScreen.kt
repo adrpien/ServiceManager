@@ -96,7 +96,7 @@ fun RepairListScreen(
                         textColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {
-                        viewModel.onEvent(RepairListEvent.onSearchQueryChange(it))
+                        viewModel.onEvent(RepairListEvent.OnSearchQueryChange(it))
                     },
                     modifier = Modifier
                         .padding(10.dp),
@@ -173,7 +173,7 @@ fun RepairListScreen(
                         selectedItem = repairListState.value.hospital ?: Hospital(),
                         onItemChanged = {
                             viewModel.onEvent(
-                                RepairListEvent.filterRepairListByHospital(
+                                RepairListEvent.FilterRepairListByHospital(
                                     hospital = it
                                 )
                             )
@@ -187,7 +187,7 @@ fun RepairListScreen(
                     exit = fadeOut() + slideOutVertically(targetOffsetY = { -it })
                 ) {
                     RepairSortSection(
-                        onOrderChange = { viewModel.onEvent(RepairListEvent.orderRepairList(it)) },
+                        onOrderChange = { viewModel.onEvent(RepairListEvent.OrderRepairList(it)) },
                         repairOrderType = repairListState.value.repairOrderType,
                         onToggleMonotonicity = {
                             viewModel.onEvent(RepairListEvent.ToggleOrderMonotonicity(it))

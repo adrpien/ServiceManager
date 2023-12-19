@@ -30,6 +30,8 @@ class HospitalListManagerViewModel @Inject constructor(
     private val _lastDeletedHospitalState = mutableStateOf<Hospital>(Hospital())
     val lastDeletedHospitalState: State<Hospital> = _lastDeletedHospitalState
 
+
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -40,13 +42,12 @@ class HospitalListManagerViewModel @Inject constructor(
     fun onEvent(hospitalListManagerEvent: HospitalListManagerEvent) {
         when (hospitalListManagerEvent) {
             is HospitalListManagerEvent.AddHospital -> {
+                val hospitalToAdd = hospitalListManagerEvent.hospital
                 viewModelScope.launch(Dispatchers.IO) {
                     _hospitalListState.value =
-                        _hospitalListState.value.plus(hospitalListManagerEvent.hospital)
-                    if(hospitalListState.value.contains(hospitalListManagerEvent.hospital))
+                        _hospitalListState.value.plus(hospitalToAdd)
                     _deletedHospitalListState.value = _deletedHospitalListState.value.minus(hospitalListManagerEvent.hospital)
                 }
-
             }
 
             is HospitalListManagerEvent.DeleteHospital -> {
