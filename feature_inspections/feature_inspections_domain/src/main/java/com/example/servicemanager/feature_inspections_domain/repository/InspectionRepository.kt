@@ -8,12 +8,12 @@ interface InspectionRepository {
 
 
     /* ***** Inspections ************************************************************************ */
-    fun getInspection(inspectionId: String): Flow<com.example.core.util.Resource<Inspection>>
-    fun getInspectionList(): Flow<com.example.core.util.Resource<List<Inspection>>>
-    fun insertInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>>
-    fun updateInspection(inspection: Inspection): Flow<com.example.core.util.Resource<String>>
+    fun getInspection(inspectionId: String): Flow<Resource<Inspection>>
+    fun getInspectionList(): Flow<Resource<List<Inspection>>>
+    fun insertInspection(inspection: Inspection): Flow<Resource<String>>
+    fun updateInspection(inspection: Inspection): Flow<Resource<String>>
 
-    fun getInspectionListFromLocal(): Flow<com.example.core.util.Resource<List<Inspection>>>
+    fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>>
 
 }
 

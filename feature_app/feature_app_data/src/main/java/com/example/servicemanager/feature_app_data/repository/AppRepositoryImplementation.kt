@@ -7,6 +7,7 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_app_data.R
+import com.example.logger_domain.logger.AppLogger
 import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
@@ -24,7 +25,8 @@ import kotlinx.coroutines.flow.*
 
 class  AppRepositoryImplementation(
     val appDatabaseDao: AppDatabaseDao,
-    val firebaseApi: AppFirebaseApi
+    val firebaseApi: AppFirebaseApi,
+    val appLogger: AppLogger
 ): AppRepository {
 
     /* ********************************* SIGNATURES ********************************************* */
@@ -66,6 +68,18 @@ class  AppRepositoryImplementation(
         }
     }
 
+    override fun updateHospital(hospital: Hospital): Flow<Resource<String>> {
+        return firebaseApi.updateHospital(hospital)
+    }
+
+    override fun createHospital(hospital: Hospital): Flow<Resource<String>> {
+        return firebaseApi.createHospital(hospital)
+    }
+
+    override fun deleteHospital(hospitalId: String): Flow<Resource<String>> {
+        return firebaseApi.deleteHospital(hospitalId)
+    }
+
     /* ********************************* TECHNICIANS ******************************************** */
     override fun getTechnicianList() = flow {
         var technicianList: List<Technician>
@@ -92,6 +106,18 @@ class  AppRepositoryImplementation(
                 )
             )
         }
+    }
+
+    override fun createTechnician(technician: Technician): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTechnician(technicianId: String): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateTechnician(technician: Technician): Flow<Resource<String>> {
+        TODO("Not yet implemented")
     }
 
     /* ********************************* INSPECTION STATES ************************************** */
@@ -122,6 +148,18 @@ class  AppRepositoryImplementation(
         }
     }
 
+    override fun createInspectionState(inspectionState: InspectionState): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteInspectionState(inspectionStateId: String): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateInspectionState(inspectionState: InspectionState): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
     /* ********************************* REPAIR STATES ****************************************** */
     override fun getRepairStateList() = flow<Resource<List<RepairState>>> {
         var repairStateList: List<RepairState>
@@ -148,6 +186,18 @@ class  AppRepositoryImplementation(
                 )
             )
         }
+    }
+
+    override fun createRepairState(repairState: RepairState): Flow<Resource<List<String>>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteRepairState(repairStateId: String): Flow<Resource<List<String>>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateRepairState(repairState: RepairState): Flow<Resource<List<String>>> {
+        TODO("Not yet implemented")
     }
 
     /* ********************************* EST STATES ********************************************* */
@@ -178,6 +228,18 @@ class  AppRepositoryImplementation(
         }
     }
 
+    override fun createEstState(estState: EstState): Flow<Resource<List<String>>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteEstState(estStateId: String): Flow<Resource<List<String>>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateEstState(estState: EstState): Flow<Resource<List<String>>> {
+        TODO("Not yet implemented")
+    }
+
     /* ********************************* USER *************************************************** */
     override fun getUser(userId: String): Flow<Resource<User>> = flow {
         var user = firebaseApi.getUser(userId)
@@ -199,6 +261,8 @@ class  AppRepositoryImplementation(
             )
         }
     }
+
+    /* ********************************* USER TYPES ********************************************* */
 
     override fun getUserTypeList(): Flow<Resource<List<UserType>>> = flow {
         var userTypeList: List<UserType>
@@ -225,6 +289,18 @@ class  AppRepositoryImplementation(
                 )
             )
         }
+    }
+
+    override fun createUserType(userType: UserType): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteUserType(userTypeId: String): Flow<Resource<String>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateUserType(userType: UserType): Flow<Resource<String>> {
+        TODO("Not yet implemented")
     }
 
 

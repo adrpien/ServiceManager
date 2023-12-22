@@ -6,4 +6,6 @@
     <string name="user_fetching_finished">User fetching finished</string>
     <string name="user_fetching_error">User fetching error</string>
     <string name="user_types_list_fetching_finished">User types list fetching finished</string>
+    <string name="hospital_list_updated">Hospital list updated</string>
+    <string name="hospital_list_update_error">Hospital list update error</string>
 </resources>

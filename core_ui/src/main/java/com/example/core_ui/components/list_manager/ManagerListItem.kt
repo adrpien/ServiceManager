@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -49,12 +50,17 @@ fun ManagerListItem(
 ) {
     val isVisibleState = remember { MutableTransitionState(true) }
 
-    AnimatedVisibility(
-        visibleState = isVisibleState,
-        modifier = Modifier.fillMaxSize(),
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
+    // TODO Animations does not work
+     AnimatedVisibility(
+         visibleState = isVisibleState,
+         modifier = Modifier.fillMaxSize(),
+         enter = fadeIn(
+             animationSpec = tween(1000)
+         ),
+         exit = fadeOut(
+             animationSpec = tween(1000)
+         )
+     ) {
         Box(
             modifier = Modifier
                 .animateEnterExit(
