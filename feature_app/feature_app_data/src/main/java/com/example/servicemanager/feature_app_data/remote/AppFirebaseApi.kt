@@ -17,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import java.lang.StringBuilder
 
 
 // Repository class
@@ -712,9 +713,12 @@ class  AppFirebaseApi(
                 "Update UserType started",
                 null)
         )
+
+        val hospitals = userType.hospitals.toString()
         val map: Map<String, String> = mapOf(
             "userTypeId" to userType.userTypeId,
             "userTypeName" to userType.userTypeName,
+            "hospitals" to hospitals // Can be like this?
             // TODO How to pass list of hospitals in here
         )
         val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
