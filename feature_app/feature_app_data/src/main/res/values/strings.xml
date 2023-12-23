@@ -39,4 +39,10 @@
     <string name="inspectionstate_create_error">InspectionState create error</string>
     <string name="inspectionstate_delete_success">InspectionState delete success</string>
     <string name="inspectionstate_delete_error">InspectionState delete error</string>
+    <string name="usertype_update_error">UserType update error</string>
+    <string name="usertype_update_success">UserType udpate success</string>
+    <string name="usertype_create_success">UserType create success</string>
+    <string name="usertype_create_error">UserType create error</string>
+    <string name="usertype_delete_error">UserType delete error</string>
+    <string name="usertype_delete_success">UserType delete success</string>
 </resources>

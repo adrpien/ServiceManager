@@ -705,4 +705,107 @@ class  AppFirebaseApi(
         return userTypeList
     }
 
+    fun updateUserType(userType: UserType): Flow<Resource<String>> = flow {
+        emit(
+            Resource(
+                ResourceState.LOADING,
+                "Update UserType started",
+                null)
+        )
+        val map: Map<String, String> = mapOf(
+            "userTypeId" to userType.userTypeId,
+            "userTypeName" to userType.userTypeName,
+            // TODO How to pass list of hospitals in here
+        )
+        val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
+        val result = documentReference.update(map)
+        result.await()
+        if (result.isSuccessful) {
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    "UserType update success",
+                    UiText.StringResource(R.string.usertype_update_success)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "UserType record update success")
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    "UserType update error",
+                    UiText.StringResource(R.string.usertype_update_error)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "UserType record update error")
+        }
+    }
+    fun createUserType(userType: UserType): Flow<Resource<String>> = flow {
+        emit(
+            Resource(
+                ResourceState.LOADING,
+                "Create UserType started",
+                null)
+        )
+        val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
+        val map: Map<String, String> = mapOf(
+            "userTypeId" to documentReference.id,
+            "userTypeName" to userType.userTypeName,
+            // TODO How to pass list of hospitals in here
+        )
+
+        val result = documentReference.set(map)
+        result.await()
+        if (result.isSuccessful) {
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    "UserType create success",
+                    UiText.StringResource(R.string.usertype_create_success)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "UserType record create success")
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    "UserType update error",
+                    UiText.StringResource(R.string.usertype_create_error)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "UserType record create error")
+        }
+    }
+    fun deleteUserType(userTypeId: String): Flow<Resource<String>> = flow {
+        emit(
+            Resource(
+                ResourceState.LOADING,
+                "Update UserType started",
+                null)
+        )
+        val documentReference = firebaseFirestore.collection("user_types").document(userTypeId)
+        val result = documentReference.delete()
+        result.await()
+        if (result.isSuccessful) {
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    "UserType delete success",
+                    UiText.StringResource(R.string.usertype_delete_success)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "UserType record delete success")
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    "UserType delete error",
+                    UiText.StringResource(R.string.usertype_delete_error)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "UserType record delete error")
+        }
+    }
+
+
 }
