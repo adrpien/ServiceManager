@@ -11,4 +11,6 @@ android {
 }
 dependencies{
     implementation(project(Modules.core))
+    implementation(project(Modules.sharedPreferences))
+    implementation(project(Modules.logger))
 }

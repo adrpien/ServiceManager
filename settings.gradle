@@ -49,7 +49,5 @@ include ':feature_home:feature_home_presentation'
 include ':common'
 include ':common:test'
 include ':common:android_test'
+include ':shared_preferences'
 include ':logger'
-include ':logger:logger_domain'
-include ':logger:logger_data'
-

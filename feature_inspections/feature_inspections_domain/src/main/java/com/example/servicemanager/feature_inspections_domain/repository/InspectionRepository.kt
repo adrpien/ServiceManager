@@ -12,7 +12,6 @@ interface InspectionRepository {
     fun getInspectionList(): Flow<Resource<List<Inspection>>>
     fun insertInspection(inspection: Inspection): Flow<Resource<String>>
     fun updateInspection(inspection: Inspection): Flow<Resource<String>>
-
     fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>>
 
 }

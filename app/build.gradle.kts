@@ -92,10 +92,12 @@ dependencies {
     implementation(project(Modules.featureHomeData))
     implementation(project(Modules.featureHomeDomain))
     implementation(project(Modules.featureHomePresentation))
-    implementation(project(Modules.loggerDomain))
-    implementation(project(Modules.loggerData))
     implementation(project(Modules.test))
     implementation(project(Modules.androidTest))
+    implementation(project(Modules.sharedPreferences))
+    implementation(project(Modules.logger))
+
+
 
     // AndroidX
     implementation(AndroidX.coreKtx)

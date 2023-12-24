@@ -48,7 +48,6 @@ dependencies{
     "kapt"(Room.roomCompiler)
     implementation(Room.roomRuntime)
     implementation(Room.roomKtx)
-
 }
 
 

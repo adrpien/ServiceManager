@@ -2,13 +2,11 @@ package com.example.servicemanager.feature_inspections_data.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
-import com.example.logger_data.logger.FirebaseLogger
-import com.example.logger_domain.logger.AppLogger
+import com.example.logger.AppLogger
 import com.example.servicemanager.feature_inspections_data.local.InspectionDatabase
 import com.example.servicemanager.feature_inspections_data.remote.InspectionFirebaseApi
 import com.example.servicemanager.feature_inspections_data.repository.InspectionRepositoryImplementation
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
@@ -48,7 +46,7 @@ object InspectionDataModule {
     fun provideInspectionRepository(
         inspectionDatabase: InspectionDatabase,
         inspectionFirebaseApi: InspectionFirebaseApi,
-        appLogger: AppLogger
+        appLogger: com.example.logger.AppLogger
     ): InspectionRepository {
         return InspectionRepositoryImplementation(
             inspectionDatabase.inspectionDatabaseDao,

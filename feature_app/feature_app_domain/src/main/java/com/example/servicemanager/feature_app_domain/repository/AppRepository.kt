@@ -31,9 +31,9 @@ interface AppRepository {
 
     /* ***** EstStates ************************************************************************** */
     fun getEstStateList(): Flow<Resource<List<EstState>>>
-    fun updateEstState(estState: EstState): Flow<Resource<List<String>>>
-    fun createEstState(estState: EstState): Flow<Resource<List<String>>>
-    fun deleteEstState(estStateId: String): Flow<Resource<List<String>>>
+    fun updateEstState(estState: EstState): Flow<Resource<String>>
+    fun createEstState(estState: EstState): Flow<Resource<String>>
+    fun deleteEstState(estStateId: String): Flow<Resource<String>>
 
 
     /* ***** InspectionState ******************************************************************** */
@@ -45,9 +45,9 @@ interface AppRepository {
 
     /* ***** RepairStates *********************************************************************** */
     fun getRepairStateList(): Flow<Resource<List<RepairState>>>
-    fun updateRepairState(repairState: RepairState): Flow<Resource<List<String>>>
-    fun createRepairState(repairState: RepairState): Flow<Resource<List<String>>>
-    fun deleteRepairState(repairStateId: String): Flow<Resource<List<String>>>
+    fun updateRepairState(repairState: RepairState): Flow<Resource<String>>
+    fun createRepairState(repairState: RepairState): Flow<Resource<String>>
+    fun deleteRepairState(repairStateId: String): Flow<Resource<String>>
 
 
     /* ***** User ******************************************************************************* */

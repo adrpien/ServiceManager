@@ -1,9 +1,5 @@
 package com.example.servicemanager.dependecy_injection
 
-import android.app.Application
-import com.example.logger_data.logger.FirebaseLogger
-import com.example.logger_domain.logger.AppLogger
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module

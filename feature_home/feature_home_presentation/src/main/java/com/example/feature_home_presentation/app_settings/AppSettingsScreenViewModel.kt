@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.preferences.AppPreferences
+import com.example.shared_preferences.AppPreferences
 import com.example.core.util.DateFormattingType
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.R
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppSettingsScreenViewModel @Inject constructor(
-    private val appPreferences: AppPreferences,
+    private val appPreferences: com.example.shared_preferences.AppPreferences,
     private val appUseCases: AppUseCases
 ): ViewModel() {
 

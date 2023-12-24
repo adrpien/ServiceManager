@@ -5,8 +5,8 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_repairs_data.R
-import com.example.logger_domain.logger.AppLogger
-import com.example.logger_domain.util.EventLogType
+import com.example.logger.AppLogger
+import com.example.logger.EventLogType
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs_data.mappers.toRepairEntity
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.*
 class  RepairRepositoryImplementation(
     val repairDatabaseDao: RepairDatabaseDao,
     val repairFirebaseApi: RepairFirebaseApi,
-    val appLogger: AppLogger
+    val appLogger: com.example.logger.AppLogger
 ): RepairRepository {
 
 
@@ -79,7 +79,7 @@ class  RepairRepositoryImplementation(
 
     override fun insertRepair(repair: Repair): Flow<Resource<String>> {
         appLogger.logRepair(
-            eventLogType = EventLogType.NewRecordLog(),
+            eventLogType = com.example.logger.EventLogType.NewRecordLog(),
             repair = repair
         )
         return repairFirebaseApi.createRepair(repair)
@@ -87,7 +87,7 @@ class  RepairRepositoryImplementation(
 
     override fun updateRepair(repair: Repair): Flow<Resource<String>> {
         appLogger.logRepair(
-            eventLogType = EventLogType.RecordUpdateLog(),
+            eventLogType = com.example.logger.EventLogType.RecordUpdateLog(),
             repair = repair
         )
         return repairFirebaseApi.updateRepair(repair)

@@ -10,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalContext
-import com.example.core.preferences.AppPreferences
-import com.example.core.preferences.AppPreferencesImplementation
 import com.example.core.values.Dimensions
 import com.example.core.values.LocalSpacing
 
@@ -34,7 +32,9 @@ private val LightColorPalette = lightColorScheme(
 
 @Composable
 fun ServiceManagerTheme(
-    appPreferences: AppPreferences = AppPreferencesImplementation(LocalContext.current),
+    appPreferences: com.example.shared_preferences.AppPreferences = com.example.shared_preferences.AppPreferencesImplementation(
+        LocalContext.current
+    ),
     content: @Composable () -> Unit,
 ) {
 

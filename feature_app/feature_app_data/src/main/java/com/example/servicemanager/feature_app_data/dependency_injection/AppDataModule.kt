@@ -2,7 +2,7 @@ package com.example.servicemanager.feature_app_data.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
-import com.example.logger_domain.logger.AppLogger
+import com.example.logger.AppLogger
 import com.example.servicemanager.feature_app_data.local.AppDatabase
 import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app_data.repository.AppRepositoryImplementation
@@ -25,7 +25,7 @@ object AppDataModule {
     fun provideAppRepository(
         appDatabase: AppDatabase,
         appFirebaseApi: AppFirebaseApi,
-        appLogger: AppLogger
+        appLogger: com.example.logger.AppLogger
     ): AppRepository {
         return AppRepositoryImplementation(
             appDatabase.appDatabaseDao,

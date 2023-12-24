@@ -7,11 +7,9 @@ object Modules {
     const val test = ":common:test"
     const val androidTest = ":common:android_test"
 
-    const val preferencesData = ":preferences:preferences_data"
-    const val preferencesDomain = ":preferences:preferences_domain"
+    const val sharedPreferences = ":shared_preferences"
 
-    const val loggerData = ":logger:logger_data"
-    const val loggerDomain = ":logger:logger_domain"
+    const val logger = ":logger"
 
     const val featureInspectionsData = ":feature_inspections:feature_inspections_data"
     const val featureInspectionsDomain = ":feature_inspections:feature_inspections_domain"
