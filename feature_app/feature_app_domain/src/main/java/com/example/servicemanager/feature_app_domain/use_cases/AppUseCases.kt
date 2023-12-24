@@ -1,16 +1,33 @@
 package com.example.servicemanager.feature_app_domain.use_cases
 
 import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
+import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstState
+import com.example.servicemanager.feature_app_domain.use_cases.est_states.DeleteEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
-import com.example.servicemanager.feature_app_domain.use_cases.other.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.SaveSignature
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.GetSignature
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.UpdateSignature
-import com.example.servicemanager.feature_app_domain.use_cases.states.GetEstStateList
-import com.example.servicemanager.feature_app_domain.use_cases.states.GetInspectionStateList
-import com.example.servicemanager.feature_app_domain.use_cases.states.GetRepairStateList
+import com.example.servicemanager.feature_app_domain.use_cases.est_states.GetEstStateList
+import com.example.servicemanager.feature_app_domain.use_cases.est_states.UpdateEstState
+import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateHospital
+import com.example.servicemanager.feature_app_domain.use_cases.hospitals.DeleteHospital
+import com.example.servicemanager.feature_app_domain.use_cases.hospitals.UpdateHospital
+import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionState
+import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.DeleteInspectionState
+import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.GetInspectionStateList
+import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.UpdateInspectionState
+import com.example.servicemanager.feature_app_domain.use_cases.repair_states.CreateRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.repair_states.DeleteRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.repair_states.GetRepairStateList
+import com.example.servicemanager.feature_app_domain.use_cases.repair_states.UpdateRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnician
+import com.example.servicemanager.feature_app_domain.use_cases.technicians.DeleteTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
+import com.example.servicemanager.feature_app_domain.use_cases.technicians.UpdateTechnician
+import com.example.servicemanager.feature_app_domain.use_cases.user_types.CreateUserType
+import com.example.servicemanager.feature_app_domain.use_cases.user_types.DeleteUserType
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.GetUserTypeList
+import com.example.servicemanager.feature_app_domain.use_cases.user_types.UpdateUserType
 import com.example.servicemanager.feature_app_domain.use_cases.users.GetUser
 
 data class AppUseCases(
@@ -18,12 +35,29 @@ data class AppUseCases(
     val getSignature: GetSignature,
     val updateSignature: UpdateSignature,
     val getHospitalList: GetHospitalList,
+    val createHospital: CreateHospital,
+    val updateHospital: UpdateHospital,
+    val deleteHospital: DeleteHospital,
     val getEstStateList: GetEstStateList,
+    val createEstState: CreateEstState,
+    val updateEstState: UpdateEstState,
+    val deleteEstState: DeleteEstState,
     val getInspectionStateList: GetInspectionStateList,
+    val createInspectionState: CreateInspectionState,
+    val updateInspectionState: UpdateInspectionState,
+    val deleteInspectionState: DeleteInspectionState,
     val getRepairStateList: GetRepairStateList,
+    val createRepairState: CreateRepairState,
+    val updateRepairState: UpdateRepairState,
+    val deleteRepairState: DeleteRepairState,
     val getTechnicianList: GetTechnicianList,
+    val createTechnician: CreateTechnician,
+    val updateTechnician: UpdateTechnician,
+    val deleteTechnician: DeleteTechnician,
     val getUser: GetUser,
-    val getDateFormattingTypes : GetDateFormattingTypes,
     val getUserTypeList: GetUserTypeList,
+    val createUserType: CreateUserType,
+    val updateUserType: UpdateUserType,
+    val deleteUserType: DeleteUserType,
     val copyToClipboard: CopyToClipboard
 )

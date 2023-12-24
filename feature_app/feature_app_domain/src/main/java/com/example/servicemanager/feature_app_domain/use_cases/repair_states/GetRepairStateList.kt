@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_app_domain.use_cases.states
+package com.example.servicemanager.feature_app_domain.use_cases.repair_states
 
 import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.repository.AppRepository

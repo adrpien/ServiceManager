@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_app_domain.use_cases.other
+package com.example.servicemanager.feature_home_domain.use_cases
 
 import com.example.core.util.DateFormattingType
 import javax.inject.Inject
