@@ -35,19 +35,18 @@ dependencies{
     implementation(Firebase.firebaseAuth)
     implementation(Firebase.firebaseStorage)
     implementation(Firebase.firebaseFirestore)
-    implementation(Firebase.firebaseAnalytics)
-    implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
 
     // Gson
     implementation(Gson.gson)
 
-    // Reflect
-    implementation(Reflect.reflect)
 
     // Room
     "kapt"(Room.roomCompiler)
     implementation(Room.roomRuntime)
     implementation(Room.roomKtx)
+
+    // implementation(project(Modules.logger))
+    // implementation(project(Modules.sharedPreferences))
 }
 
 

@@ -9,5 +9,6 @@ android {
     namespace = "com.example.shared_preferences"
 }
 dependencies{
+    // Modules
     implementation(project(Modules.core))
 }

@@ -18,10 +18,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.Dimensions.signatureHeight
-import com.example.core.theme.Dimensions.signatureWidth
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
+import com.example.core.util.Dimensions
 import com.example.core.util.Helper.Companion.toDp
 
 
@@ -32,7 +29,8 @@ fun SignatureArea(
     pathColor: Color = MaterialTheme.colorScheme.onSecondary,
     updateImageBitmap: (Bitmap) -> Unit,
 ) {
-    var bitmap = Bitmap.createBitmap(signatureWidth, signatureHeight, Bitmap.Config.ARGB_8888)
+
+    var bitmap = Bitmap.createBitmap(Dimensions.signatureWidth, Dimensions.signatureHeight, Bitmap.Config.ARGB_8888)
     val backgroundPaint = Paint()
 
     backgroundPaint.apply {
@@ -65,8 +63,8 @@ fun SignatureArea(
             ){
         Box(
             modifier = Modifier
-                .width(signatureWidth.toDp.dp)
-                .height(signatureHeight.toDp.dp)
+                .width(Dimensions.signatureWidth.toDp.dp)
+                .height(Dimensions.signatureHeight.toDp.dp)
         ) {
             Canvas(
                 modifier = Modifier

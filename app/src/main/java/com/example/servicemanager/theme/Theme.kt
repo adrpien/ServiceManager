@@ -1,4 +1,4 @@
-package com.example.core.theme
+package com.example.servicemanager.theme
 
 import android.os.Build
 import androidx.compose.material3.MaterialTheme
@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalContext
-import com.example.core.values.Dimensions
-import com.example.core.values.LocalSpacing
+import com.example.servicemanager.values.Dimensions
+import com.example.servicemanager.values.LocalSpacing
+import com.example.shared_preferences.AppPreferences
+import com.example.shared_preferences.AppPreferencesImplementation
 
 private val LocalMyColors = compositionLocalOf {
     DarkColorPalette
@@ -32,7 +34,7 @@ private val LightColorPalette = lightColorScheme(
 
 @Composable
 fun ServiceManagerTheme(
-    appPreferences: com.example.shared_preferences.AppPreferences = com.example.shared_preferences.AppPreferencesImplementation(
+    appPreferences: AppPreferences = AppPreferencesImplementation(
         LocalContext.current
     ),
     content: @Composable () -> Unit,

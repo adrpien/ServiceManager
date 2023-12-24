@@ -25,7 +25,7 @@ object AppDataModule {
     fun provideAppRepository(
         appDatabase: AppDatabase,
         appFirebaseApi: AppFirebaseApi,
-        appLogger: com.example.logger.AppLogger
+        appLogger: AppLogger<Any>
     ): AppRepository {
         return AppRepositoryImplementation(
             appDatabase.appDatabaseDao,

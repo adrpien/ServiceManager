@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.theme.Dimensions
+import com.example.core.util.Dimensions
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultDateButton

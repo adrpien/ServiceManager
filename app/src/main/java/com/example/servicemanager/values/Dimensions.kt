@@ -1,4 +1,4 @@
-package com.example.core.values
+package com.example.servicemanager.values
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp
@@ -14,4 +14,5 @@ data class Dimensions(
 )
 
 val LocalSpacing = compositionLocalOf { Dimensions() }
+
 

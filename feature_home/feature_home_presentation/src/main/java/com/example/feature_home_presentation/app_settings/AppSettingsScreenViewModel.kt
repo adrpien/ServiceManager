@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppSettingsScreenViewModel @Inject constructor(
-    private val appPreferences: com.example.shared_preferences.AppPreferences,
+    private val appPreferences: AppPreferences,
     private val appUseCases: AppUseCases
 ): ViewModel() {
 

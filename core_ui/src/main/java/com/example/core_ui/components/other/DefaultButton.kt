@@ -9,11 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.core.theme.DarkBlue
-import com.example.core.theme.MediumBeige
-import com.example.core.theme.LightBeige
+
 
 @Composable
 fun DefaultButton(

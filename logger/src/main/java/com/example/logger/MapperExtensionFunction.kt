@@ -1,4 +1,4 @@
-package com.example.core.util
+package com.example.logger
 
 import kotlin.reflect.full.declaredMemberProperties
 

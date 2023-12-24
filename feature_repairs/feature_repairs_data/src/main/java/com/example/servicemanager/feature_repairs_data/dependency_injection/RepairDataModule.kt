@@ -47,7 +47,7 @@ object RepairDataModule {
     fun provideRepairRepository(
         repairDatabase: RepairDatabase,
         repairFirebaseApi: RepairFirebaseApi,
-        appLogger: com.example.logger.AppLogger
+        appLogger: AppLogger<Any>
     ): RepairRepository {
         return RepairRepositoryImplementation(
             repairDatabaseDao = repairDatabase.repairDatabaseDao,

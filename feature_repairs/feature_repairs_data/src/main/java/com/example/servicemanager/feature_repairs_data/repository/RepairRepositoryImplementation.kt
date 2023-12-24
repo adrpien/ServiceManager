@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.*
 class  RepairRepositoryImplementation(
     val repairDatabaseDao: RepairDatabaseDao,
     val repairFirebaseApi: RepairFirebaseApi,
-    val appLogger: com.example.logger.AppLogger
+    val appLogger: AppLogger<Any>
 ): RepairRepository {
 
 
@@ -78,17 +78,17 @@ class  RepairRepositoryImplementation(
     }
 
     override fun insertRepair(repair: Repair): Flow<Resource<String>> {
-        appLogger.logRepair(
+        appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
-            repair = repair
+            dataClassObject  = repair
         )
         return repairFirebaseApi.createRepair(repair)
     }
 
     override fun updateRepair(repair: Repair): Flow<Resource<String>> {
-        appLogger.logRepair(
+        appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.RecordUpdateLog(),
-            repair = repair
+            dataClassObject = repair
         )
         return repairFirebaseApi.updateRepair(repair)
     }

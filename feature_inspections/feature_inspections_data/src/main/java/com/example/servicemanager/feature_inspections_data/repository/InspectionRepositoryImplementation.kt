@@ -6,7 +6,6 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_inspections_data.R
 import com.example.logger.AppLogger
-import com.example.logger.EventLogType
 import com.example.servicemanager.feature_inspections_data.local.InspectionDatabaseDao
 import com.example.servicemanager.feature_inspections_data.remote.InspectionFirebaseApi
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
@@ -18,7 +17,7 @@ import kotlinx.coroutines.flow.*
 class  InspectionRepositoryImplementation(
     val inspectionDatabaseDao: InspectionDatabaseDao,
     val inspectionFirebaseApi: InspectionFirebaseApi,
-    val appLogger: com.example.logger.AppLogger
+    val appLogger: AppLogger<Any>
 ): InspectionRepository {
 
     /* ********************************* INSPECTIONS ******************************************** */
@@ -83,17 +82,17 @@ class  InspectionRepositoryImplementation(
     }
 
     override fun insertInspection(inspection: Inspection): Flow<Resource<String>> {
-        appLogger.logInspection(
+        appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
-            inspection = inspection,
+            dataClassObject = inspection,
         )
         return inspectionFirebaseApi.createInspection(inspection)
     }
 
     override fun updateInspection(inspection: Inspection): Flow<Resource<String>> {
-        appLogger.logInspection(
+        appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.RecordUpdateLog(),
-            inspection = inspection,
+            dataClassObject = inspection,
             )
         return inspectionFirebaseApi.updateInspection(inspection)
     }

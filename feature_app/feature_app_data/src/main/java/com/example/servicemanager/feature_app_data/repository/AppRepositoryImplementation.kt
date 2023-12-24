@@ -8,6 +8,7 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_app_data.R
 import com.example.logger.AppLogger
+import com.example.logger.EventLogType
 import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
@@ -26,7 +27,7 @@ import kotlinx.coroutines.flow.*
 class  AppRepositoryImplementation(
     private val appDatabaseDao: AppDatabaseDao,
     private val firebaseApi: AppFirebaseApi,
-    private val appLogger: AppLogger
+    private val appLogger: AppLogger<Any>
 ): AppRepository {
 
     /* ********************************* SIGNATURES ********************************************* */
@@ -292,6 +293,7 @@ class  AppRepositoryImplementation(
     }
 
     override fun createUserType(userType: UserType): Flow<Resource<String>> {
+        //appLogger.logUserType(EventLogType.NewRecordLog, )
         return firebaseApi.createUserType(userType)
     }
 

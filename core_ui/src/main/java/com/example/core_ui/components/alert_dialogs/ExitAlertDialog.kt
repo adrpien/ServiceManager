@@ -3,10 +3,6 @@ package com.example.core_ui.components.alert_dialogs
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
-import androidx.compose.ui.graphics.RectangleShape
-import com.example.core.theme.LightBlue
-import com.example.core.theme.LightBeige
-import com.example.core.theme.VeryLightBlue
 
 @Composable
 fun ExitAlertDialog(

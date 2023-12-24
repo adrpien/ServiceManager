@@ -46,7 +46,7 @@ object InspectionDataModule {
     fun provideInspectionRepository(
         inspectionDatabase: InspectionDatabase,
         inspectionFirebaseApi: InspectionFirebaseApi,
-        appLogger: com.example.logger.AppLogger
+        appLogger: AppLogger<Any>
     ): InspectionRepository {
         return InspectionRepositoryImplementation(
             inspectionDatabase.inspectionDatabaseDao,
