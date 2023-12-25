@@ -1,14 +1,6 @@
 package com.example.feature_home_presentation.hospital_list_manager
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Divider
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.rememberScaffoldState
@@ -32,13 +22,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -49,21 +35,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.core.util.Screen
 import com.example.core.util.UiText
+import com.example.core_ui.components.list_manager.ManagerActionListItem
 import com.example.core_ui.components.list_manager.ManagerListItem
-import com.example.core_ui.components.list_manager.ManagerListItem2
-import com.example.core_ui.components.signature.SignatureArea
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.feature_home_presentation.R
+import com.example.logger.EventLogType
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
@@ -91,10 +75,7 @@ fun HospitalListManagerScreen(
     }
 
     val addHospitalDialogState = rememberMaterialDialogState()
-    val addHospitalState = remember { mutableStateOf(DefaultTextFieldState(
-        hint = "Hospital name",
-        value =""
-    )) }
+    val addHospitalState = remember { mutableStateOf(DefaultTextFieldState(hint = "Hospital name")) }
 
 
     LaunchedEffect(key1 = true) {
@@ -114,28 +95,13 @@ fun HospitalListManagerScreen(
     }
 
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    addHospitalDialogState.show()
-                },
-                backgroundColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.add),
-                    modifier = Modifier,
-                    tint = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-        },
         scaffoldState = scaffoldState,
         snackbarHost = {
             SnackbarHost(hostState = scaffoldState.snackbarHostState) {
                 AppSnackbar(
                     data = it,
                     onActionClick = {
-                        viewModel.onEvent(HospitalListManagerEvent.UndoChanges)
+                        viewModel.onEvent(HospitalListManagerEvent.`RevertDelete(val hospital: Hospital)`)
                     }
                 )
             }
@@ -143,7 +109,8 @@ fun HospitalListManagerScreen(
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(it)) {
+            .padding(it)
+            .padding(8.dp)) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -180,22 +147,12 @@ fun HospitalListManagerScreen(
                                     )
                                 }
                             }
-                        }
-                    }
-                    LazyColumn() {
-                        if (deletedHospitalList != null) {
-                            items(deletedHospitalList.size, key = { it }) { index ->
-                                ManagerListItem(
-                                    title = deletedHospitalList[index].hospital,
-                                    description = deletedHospitalList[index].hospitalId,
-                                    icon = Icons.Default.Undo,
-                                    iconDescription = stringResource(R.string.undo)
+                            item {
+                                ManagerActionListItem(
+                                    icon = Icons.Default.Add,
+                                    iconDescription = stringResource(id = R.string.add),
                                 ) {
-                                    viewModel.onEvent(
-                                        HospitalListManagerEvent.AddHospital(
-                                            deletedHospitalList[index]
-                                        )
-                                    )
+                                    addHospitalDialogState.show()
                                 }
                             }
                         }
@@ -214,13 +171,24 @@ fun HospitalListManagerScreen(
                             text = stringResource(R.string.confirm),
                             textStyle = TextStyle(
                                 color = MaterialTheme.colorScheme.onSecondary
-                            )
+                            ),
+                            onClick = {
+                                viewModel.onEvent(HospitalListManagerEvent.AddHospital(
+                                    Hospital(
+                                        hospital = addHospitalState.value.value
+                                    )
+                                ))
+                                addHospitalState.value = addHospitalState.value.copy(value = "")
+                            }
                         )
                         negativeButton(
                             text = stringResource(R.string.cancel),
                             textStyle = TextStyle(
                                 color = MaterialTheme.colorScheme.onSecondary
-                            )
+                            ),
+                            onClick = {
+                                addHospitalState.value = addHospitalState.value.copy(value = "")
+                            }
                         )
                     }
                 ) {

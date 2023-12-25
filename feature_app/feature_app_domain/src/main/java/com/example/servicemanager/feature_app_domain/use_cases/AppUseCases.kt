@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_app_domain.use_cases
 
 import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
+import com.example.servicemanager.feature_app_domain.use_cases.date_formatting_types.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstState
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.DeleteEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
@@ -59,5 +60,6 @@ data class AppUseCases(
     val createUserType: CreateUserType,
     val updateUserType: UpdateUserType,
     val deleteUserType: DeleteUserType,
-    val copyToClipboard: CopyToClipboard
+    val copyToClipboard: CopyToClipboard,
+    val getDateFormattingTypes: GetDateFormattingTypes
 )

@@ -9,6 +9,7 @@ import com.example.core.util.DateFormattingType
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AppSettingsScreenViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
-    private val appUseCases: AppUseCases
+    private val appUseCases: AppUseCases,
+    private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
     private val _appSettingsScreenState = mutableStateOf(AppSettingsScreenState())

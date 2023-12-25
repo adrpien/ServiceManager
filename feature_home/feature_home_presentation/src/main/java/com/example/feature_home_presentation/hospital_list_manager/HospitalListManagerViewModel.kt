@@ -65,8 +65,7 @@ class HospitalListManagerViewModel @Inject constructor(
             }
 
             is HospitalListManagerEvent.ChangeOrder -> Unit
-            HospitalListManagerEvent.SaveChanges -> Unit
-            HospitalListManagerEvent.UndoChanges -> {
+            is HospitalListManagerEvent.RevertHospital -> {
                 lastDeletedHospitalState.value?. let {
                     _hospitalListState.value = _hospitalListState.value.plus(lastDeletedHospitalState.value)
                     _deletedHospitalListState.value = _deletedHospitalListState.value.minus(lastDeletedHospitalState.value)
@@ -102,7 +101,6 @@ sealed class UiEvent() {
 sealed class HospitalListManagerEvent() {
     data class DeleteHospital(val hospitalId: String): HospitalListManagerEvent()
     data class AddHospital(val hospital: Hospital): HospitalListManagerEvent()
-    object SaveChanges: HospitalListManagerEvent()
-    object UndoChanges: HospitalListManagerEvent()
+    data class RevertHospital(val hospital: Hospital): HospitalListManagerEvent()
     data class ChangeOrder(val hospitalList: List<Hospital>): HospitalListManagerEvent()
 }

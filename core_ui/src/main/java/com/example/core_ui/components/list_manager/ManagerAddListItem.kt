@@ -10,15 +10,11 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -27,19 +23,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun ManagerListItem(
+fun ManagerActionListItem(
     modifier: Modifier = Modifier,
-    title: String,
-    description: String,
     icon: ImageVector,
     iconDescription: String,
-    onIconClick: () -> (Unit)
+    onItemClick: () -> (Unit)
 ) {
     val isVisibleState = remember { MutableTransitionState(true) }
 
@@ -67,32 +60,18 @@ fun ManagerListItem(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onSecondary
-                )
+                ),
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
                         .padding(start = 8.dp, end = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Column {
-                        Text(
-                            text = title,
-                            fontSize = 16.sp,
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            textAlign = TextAlign.Start
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = description,
-                            fontSize = 8.sp,
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            textAlign = TextAlign.Start
-                        )
-                    }
                     IconButton(
-                        onClick = onIconClick
+                        onClick = onItemClick,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Icon(imageVector = icon, contentDescription = iconDescription)
                     }

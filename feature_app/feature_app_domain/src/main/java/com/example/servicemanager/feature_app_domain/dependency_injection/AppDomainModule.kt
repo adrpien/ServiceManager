@@ -6,6 +6,7 @@ import android.content.Context
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
+import com.example.servicemanager.feature_app_domain.use_cases.date_formatting_types.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstState
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.DeleteEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
@@ -81,7 +82,8 @@ object AppDomainModule {
             createUserType = CreateUserType(repository),
             updateUserType = UpdateUserType(repository),
             deleteUserType = DeleteUserType(repository),
-            copyToClipboard = CopyToClipboard(clipboardManager)
+            copyToClipboard = CopyToClipboard(clipboardManager),
+            getDateFormattingTypes = GetDateFormattingTypes()
         )
     }
 

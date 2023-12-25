@@ -31,7 +31,6 @@ fun DefaultTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-                // .border(BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary), MaterialTheme.shapes.medium),
             value = state.value.value,
             label = {
                 Row(modifier = Modifier.border(
@@ -53,7 +52,7 @@ fun DefaultTextField(
                 }
 
             },
-            onValueChange = onValueChanged,
+            onValueChange = { onValueChanged(it) },
             enabled = state.value.clickable,
             singleLine = true,
             shape = MaterialTheme.shapes.medium,
