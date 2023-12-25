@@ -1,6 +1,9 @@
 package com.example.feature_home_presentation.database_settings.components
 
 import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddChart
 import androidx.compose.material.icons.filled.AddToPhotos
 import androidx.compose.material.icons.filled.LocalHospital
 import androidx.compose.material.rememberScaffoldState
@@ -46,13 +48,26 @@ fun DatabaseSettingsScreen(
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
+    val pickFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+        addCategory(Intent.CATEGORY_OPENABLE)
+        type = "application/vnd.ms-excel"
+    }
+    val pickFileLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri ->
+            }
+        }
+    }
+
     val addInspectionListMenuItemState = MenuItemState(
         icon = Icons.Default.AddToPhotos,
         text = UiText.StringResource(R.string.add_inspections_from_file)
     ) {
-        coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
-        }
+        pickFileLauncher.launch(pickFileIntent)
+        // scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
+
     }
 
     val manageHospitalListMenuItemState = MenuItemState(
@@ -118,4 +133,6 @@ fun DatabaseSettingsScreen(
             }
         }
     }
+
+
 }
