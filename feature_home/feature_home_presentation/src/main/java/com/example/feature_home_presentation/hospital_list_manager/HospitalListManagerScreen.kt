@@ -64,8 +64,6 @@ fun HospitalListManagerScreen(
     val context = LocalContext.current
 
     val hospitalList = viewModel.hospitalListState.value
-    val deletedHospitalList = viewModel.deletedHospitalListState.value
-    var lastHospital: Hospital? = null
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -101,7 +99,12 @@ fun HospitalListManagerScreen(
                 AppSnackbar(
                     data = it,
                     onActionClick = {
-                        viewModel.onEvent(HospitalListManagerEvent.`RevertDelete(val hospital: Hospital)`)
+                        if(viewModel.lastDeletedHospital != null) {
+                            val lastDeletedHospital = viewModel.lastDeletedHospital
+                            if (lastDeletedHospital != null) {
+                                viewModel.onEvent(HospitalListManagerEvent.RevertHospital(lastDeletedHospital))
+                            }
+                            }
                     }
                 )
             }
@@ -109,8 +112,10 @@ fun HospitalListManagerScreen(
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(it)
-            .padding(8.dp)) {
+            .padding(8.dp)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -141,9 +146,7 @@ fun HospitalListManagerScreen(
                                     iconDescription = stringResource(R.string.delete)
                                 ) {
                                     viewModel.onEvent(
-                                        HospitalListManagerEvent.DeleteHospital(
-                                            hospitalList[index].hospitalId
-                                        )
+                                        HospitalListManagerEvent.DeleteHospital(hospitalList[index])
                                     )
                                 }
                             }

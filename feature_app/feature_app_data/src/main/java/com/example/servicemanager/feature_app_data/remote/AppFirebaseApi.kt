@@ -181,6 +181,43 @@ class  AppFirebaseApi(
 
         }
     }
+    fun createHospitalWithId(hospital: Hospital): Flow<Resource<String>> = flow {
+        emit(
+            Resource(
+                ResourceState.LOADING,
+                "Create hospital started",
+                null)
+        )
+        val documentReference = firebaseFirestore.collection("hospitals").document(hospital.hospitalId)
+        val map: Map<String, String> = mapOf(
+            "hospitalId" to hospital.hospitalId,
+            "hospital" to hospital.hospital
+        )
+        val result = documentReference.set(map)
+        result.await()
+        if (result.isSuccessful) {
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    documentReference.id,
+                    UiText.StringResource(R.string.hospital_create_error)
+                )
+            )
+            Log.d(APP_FIREBASE_API, "Hospital record create success")
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    "Hospital create error",
+                    UiText.StringResource(R.string.hospital_create_error
+                    )
+                )
+            )
+            Log.d(APP_FIREBASE_API, "Hospital record create error")
+
+        }
+    }
+
     fun deleteHospital(hospitalId: String): Flow<Resource<String>> = flow {
         emit(
             Resource(
@@ -189,7 +226,6 @@ class  AppFirebaseApi(
                 null)
         )
         val documentReference = firebaseFirestore.collection("hospitals").document(hospitalId)
-
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {

@@ -21,6 +21,7 @@ interface AppRepository {
     fun getHospitalList(): Flow<Resource<List<Hospital>>>
     fun updateHospital(hospital: Hospital): Flow<Resource<String>>
     fun createHospital(hospital: Hospital): Flow<Resource<String>>
+    fun createHospitalWithId(hospital: Hospital): Flow<Resource<String>>
     fun deleteHospital(hospitalId: String): Flow<Resource<String>>
 
     /* ***** Technicians ************************************************************************ */

@@ -16,6 +16,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.signatures.Update
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.GetEstStateList
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.UpdateEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateHospital
+import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateHospitalWithId
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.DeleteHospital
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.UpdateHospital
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionState
@@ -83,7 +84,8 @@ object AppDomainModule {
             updateUserType = UpdateUserType(repository),
             deleteUserType = DeleteUserType(repository),
             copyToClipboard = CopyToClipboard(clipboardManager),
-            getDateFormattingTypes = GetDateFormattingTypes()
+            getDateFormattingTypes = GetDateFormattingTypes(),
+            createHospitalWithId = CreateHospitalWithId(repository)
         )
     }
 

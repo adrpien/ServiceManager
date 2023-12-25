@@ -76,6 +76,9 @@ class  AppRepositoryImplementation(
     override fun createHospital(hospital: Hospital): Flow<Resource<String>> {
         return firebaseApi.createHospital(hospital)
     }
+    override fun createHospitalWithId(hospital: Hospital): Flow<Resource<String>> {
+        return firebaseApi.createHospitalWithId(hospital)
+    }
 
     override fun deleteHospital(hospitalId: String): Flow<Resource<String>> {
         return firebaseApi.deleteHospital(hospitalId)

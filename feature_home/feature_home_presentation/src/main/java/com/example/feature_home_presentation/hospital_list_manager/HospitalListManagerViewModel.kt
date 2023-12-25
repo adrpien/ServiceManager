@@ -12,6 +12,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,13 +26,7 @@ class HospitalListManagerViewModel @Inject constructor(
     private val _hospitalListState = mutableStateOf<List<Hospital>>(emptyList())
     val hospitalListState: State<List<Hospital>?> = _hospitalListState
 
-    private val _deletedHospitalListState = mutableStateOf<List<Hospital>>(emptyList())
-    val deletedHospitalListState: State<List<Hospital>?> = _deletedHospitalListState
-
-    private val _lastDeletedHospitalState = mutableStateOf<Hospital>(Hospital())
-    val lastDeletedHospitalState: State<Hospital> = _lastDeletedHospitalState
-
-
+    var lastDeletedHospital: Hospital? = null
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -42,33 +38,49 @@ class HospitalListManagerViewModel @Inject constructor(
     fun onEvent(hospitalListManagerEvent: HospitalListManagerEvent) {
         when (hospitalListManagerEvent) {
             is HospitalListManagerEvent.AddHospital -> {
-                val hospitalToAdd = hospitalListManagerEvent.hospital
                 viewModelScope.launch(Dispatchers.IO) {
-                    _hospitalListState.value =
-                        _hospitalListState.value.plus(hospitalToAdd)
-                    _deletedHospitalListState.value = _deletedHospitalListState.value.minus(hospitalListManagerEvent.hospital)
+                    appUseCases.createHospital(hospitalListManagerEvent.hospital).collect() { result ->
+                        when(result.resourceState) {
+                            ResourceState.ERROR -> Unit
+                            ResourceState.LOADING -> Unit
+                            ResourceState.SUCCESS -> {
+                                fetchHospitalList()
+                            }
+                        }
+                    }
                 }
             }
 
             is HospitalListManagerEvent.DeleteHospital -> {
-                val hospitalToDelete =
-                    _hospitalListState.value?.first { it.hospitalId == hospitalListManagerEvent.hospitalId }
-                hospitalToDelete?.let {
-                    _lastDeletedHospitalState.value = hospitalToDelete
-                    viewModelScope.launch(Dispatchers.IO) {
-                        _hospitalListState.value = _hospitalListState.value.minus(hospitalToDelete)
-                        _deletedHospitalListState.value =
-                            _deletedHospitalListState.value.plus(hospitalToDelete)
-                        _eventFlow.emit(UiEvent.ShowSnackbar(""))
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.deleteHospital(hospitalListManagerEvent.hospital).collect() { result ->
+                        when(result.resourceState) {
+                            ResourceState.ERROR -> Unit
+                            ResourceState.SUCCESS -> {
+                                fetchHospitalList()
+                                _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
+                                lastDeletedHospital = hospitalListManagerEvent.hospital
+                            }
+                            ResourceState.LOADING -> Unit
+                        }
                     }
+
                 }
             }
 
             is HospitalListManagerEvent.ChangeOrder -> Unit
             is HospitalListManagerEvent.RevertHospital -> {
-                lastDeletedHospitalState.value?. let {
-                    _hospitalListState.value = _hospitalListState.value.plus(lastDeletedHospitalState.value)
-                    _deletedHospitalListState.value = _deletedHospitalListState.value.minus(lastDeletedHospitalState.value)
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.createHospitalWithId(hospitalListManagerEvent.hospital).collect() { result ->
+                        when(result.resourceState){
+                            ResourceState.ERROR -> Unit
+                            ResourceState.SUCCESS -> {
+                                fetchHospitalList()
+                                lastDeletedHospital = null
+                            }
+                            ResourceState.LOADING -> Unit
+                        }
+                    }
                 }
             }
         }
@@ -99,7 +111,7 @@ sealed class UiEvent() {
 }
 
 sealed class HospitalListManagerEvent() {
-    data class DeleteHospital(val hospitalId: String): HospitalListManagerEvent()
+    data class DeleteHospital(val hospital: Hospital): HospitalListManagerEvent()
     data class AddHospital(val hospital: Hospital): HospitalListManagerEvent()
     data class RevertHospital(val hospital: Hospital): HospitalListManagerEvent()
     data class ChangeOrder(val hospitalList: List<Hospital>): HospitalListManagerEvent()

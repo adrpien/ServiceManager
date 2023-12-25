@@ -11,6 +11,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.signatures.Update
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.GetEstStateList
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.UpdateEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateHospital
+import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateHospitalWithId
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.DeleteHospital
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.UpdateHospital
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionState
@@ -37,6 +38,7 @@ data class AppUseCases(
     val updateSignature: UpdateSignature,
     val getHospitalList: GetHospitalList,
     val createHospital: CreateHospital,
+    val createHospitalWithId: CreateHospitalWithId,
     val updateHospital: UpdateHospital,
     val deleteHospital: DeleteHospital,
     val getEstStateList: GetEstStateList,
