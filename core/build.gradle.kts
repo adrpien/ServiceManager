@@ -45,6 +45,10 @@ dependencies{
     implementation(Room.roomRuntime)
     implementation(Room.roomKtx)
 
+
+    // Reflect
+    implementation(Reflect.reflect)
+
     // implementation(project(Modules.logger))
     // implementation(project(Modules.sharedPreferences))
 }

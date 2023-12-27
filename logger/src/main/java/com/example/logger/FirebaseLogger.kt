@@ -2,7 +2,7 @@ package com.example.logger
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
-import com.example.logger.MapperExtensionFunction.toMap
+import com.example.core.util.MapperExtensionFunction.toMap
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class FirebaseLogger<T>(
@@ -24,6 +24,7 @@ class FirebaseLogger<T>(
         bundle.putString("type", eventLogType.logId)
         bundle.putString("message", message)
         val map = dataClassObject?.toMap()
+        // val map2 = dataClassObject?.toString() // Why i didnt do like this?
         map?.forEach { key, value ->
             bundle.putString(key, value.toString())
         }

@@ -1,7 +1,10 @@
 package com.example.feature_home_presentation.database_settings.components
 
 import android.app.Activity
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -30,10 +33,14 @@ import com.example.core.util.UiText
 import com.example.core_ui.components.menu.MenuItemState
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_home_presentation.R
+import com.example.feature_home_presentation.database_settings.DatabaseSettingsEvent
 import com.example.feature_home_presentation.database_settings.DatabaseSettingsViewModel
 import com.example.feature_home_presentation.database_settings.UiEvent
 import com.example.feature_home_presentation.home.components.MenuItem
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 @Composable
 fun DatabaseSettingsScreen(
@@ -48,6 +55,9 @@ fun DatabaseSettingsScreen(
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
+    val contentResolver: ContentResolver = context.contentResolver
+
+    /* ************************** File Picker *************************************************** */
     val pickFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
         addCategory(Intent.CATEGORY_OPENABLE)
         type = "application/vnd.ms-excel"
@@ -57,10 +67,15 @@ fun DatabaseSettingsScreen(
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
+                val file = getFileFromUri(uri, contentResolver)
+                file?.let {
+                    viewModel.onEvent(DatabaseSettingsEvent.ImportInspections(file))
+                }
             }
         }
     }
 
+    /* ************************** Database setting menu items *********************************** */
     val addInspectionListMenuItemState = MenuItemState(
         icon = Icons.Default.AddToPhotos,
         text = UiText.StringResource(R.string.add_inspections_from_file)
@@ -75,7 +90,6 @@ fun DatabaseSettingsScreen(
         text = UiText.StringResource(R.string.manage_hospital_list)
     ) {
         coroutineScope.launch {
-            //scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
             navHostController.navigate(Screen.HospitalListManagerScreen.route)
         }
     }
@@ -85,6 +99,7 @@ fun DatabaseSettingsScreen(
         addInspectionListMenuItemState,
         manageHospitalListMenuItemState
     )
+
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect() { event ->
@@ -98,6 +113,9 @@ fun DatabaseSettingsScreen(
                     )
                 }
 
+                is UiEvent.ShowImportInspectionsDialog -> {
+                    // TODO Open alert dialog here
+                }
             }
         }
     }
@@ -133,6 +151,25 @@ fun DatabaseSettingsScreen(
             }
         }
     }
+}
+fun getFileFromUri(uri: Uri, contentResolver: ContentResolver): File? {
+    // Create a temporary file to store the content
+    val tempFile = createTempFile()
 
-
+    try {
+        contentResolver.openInputStream(uri)?.use { inputStream ->
+            FileOutputStream(tempFile).use { outputStream ->
+                val buffer = ByteArray(4 * 1024) // 4k buffer size
+                var read: Int
+                while (inputStream.read(buffer).also { read = it } != -1) {
+                    outputStream.write(buffer, 0, read)
+                }
+                outputStream.flush()
+            }
+        }
+        return tempFile
+    } catch (e: IOException) {
+        e.printStackTrace()
+        return null
+    }
 }

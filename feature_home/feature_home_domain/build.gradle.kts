@@ -13,12 +13,14 @@ android {
 dependencies{
 
     // Apache POI
-    // implementation(ApachePoi.apachePoi)
-    // implementation(ApachePoi.apachePoiOoxml)
+    implementation(ApachePoi.apachePoi)
+    implementation(ApachePoi.apachePoiOoxml)
 
     // Modules
     implementation(project(Modules.core))
     implementation(project(Modules.sharedPreferences))
     implementation(project(Modules.logger))
     implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.featureInspectionsDomain))
+
 }

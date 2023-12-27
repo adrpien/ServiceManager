@@ -14,7 +14,7 @@ dependencies{
     implementation(Firebase.firebaseAnalytisPlayServiceMeasurement)
 
     // Reflect
-    implementation(Reflect.reflect)
+    // implementation(Reflect.reflect)
 
     // Modules
     implementation(project(Modules.core))

@@ -1,4 +1,8 @@
 package com.example.feature_home_presentation.database_settings
 
-class DatabaseSettingsState {
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
+
+data class DatabaseSettingsState(
+    val importedInspectionList: List<Inspection> = emptyList()
+) {
 }

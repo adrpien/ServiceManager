@@ -1,8 +1,11 @@
 package com.example.feature_home_presentation.database_settings
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.util.ResourceState
 import com.example.core.util.Screen
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.home.HomeEvent
@@ -12,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,21 +26,31 @@ class DatabaseSettingsViewModel @Inject constructor(
     private val appUseCases: AppUseCases
 ): ViewModel() {
 
+    private var _databaseSettingsState = mutableStateOf<DatabaseSettingsState>(DatabaseSettingsState())
+    val databaseSettings: State<DatabaseSettingsState> = _databaseSettingsState
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun onEvent(event: DatabaseSettingsEvent) {
         when(event) {
-            is DatabaseSettingsEvent.AddInspectionList -> {
-            }
-            is DatabaseSettingsEvent.AddHospital -> {
-            }
-            is DatabaseSettingsEvent.AddInspectionState -> {
-            }
-            is DatabaseSettingsEvent.AddRepairState -> {
-            }
+            is DatabaseSettingsEvent.ImportInspections -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    homeUseCases.importInspectionsFromFile(event.file).collect() { result ->
+                        when(result.resourceState) {
+                            ResourceState.ERROR -> Unit
+                            ResourceState.SUCCESS -> {
+                                result.data?.let { list ->
+                                    _databaseSettingsState.value = _databaseSettingsState.value.copy(
+                                        importedInspectionList = list
+                                    )
+                                }
 
-            is DatabaseSettingsEvent.ManageHospitalList -> {
+                            }
+                            ResourceState.LOADING -> Unit
+                        }
+                    }
+                }
             }
         }
     }
@@ -44,4 +58,5 @@ class DatabaseSettingsViewModel @Inject constructor(
 sealed class UiEvent() {
     data class Navigate(val screen: Screen): UiEvent()
     data class ShowSnackbar(val message: UiText): UiEvent()
+    data class ShowImportInspectionsDialog(val numberOfInspections: Int): UiEvent()
 }
