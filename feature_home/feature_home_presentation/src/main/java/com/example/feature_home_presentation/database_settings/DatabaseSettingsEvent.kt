@@ -8,6 +8,6 @@ import java.io.File
 
 sealed class DatabaseSettingsEvent {
     data class ImportInspections(val file: File): DatabaseSettingsEvent()
-
+    object SaveInspections: DatabaseSettingsEvent()
 
 }

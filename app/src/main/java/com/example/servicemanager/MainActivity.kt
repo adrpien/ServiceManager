@@ -14,7 +14,7 @@ class MainActivity (
 ) : ComponentActivity() {
 
     @Inject
-    lateinit var appPreferences: com.example.shared_preferences.AppPreferences
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

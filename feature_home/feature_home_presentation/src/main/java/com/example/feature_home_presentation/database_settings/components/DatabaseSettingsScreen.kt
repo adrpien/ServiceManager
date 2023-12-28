@@ -25,6 +25,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Helper
@@ -37,10 +39,13 @@ import com.example.feature_home_presentation.database_settings.DatabaseSettingsE
 import com.example.feature_home_presentation.database_settings.DatabaseSettingsViewModel
 import com.example.feature_home_presentation.database_settings.UiEvent
 import com.example.feature_home_presentation.home.components.MenuItem
+import com.example.feature_home_presentation.import_inspections.components.ImportInspectionsAlertDialog
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 
 @Composable
 fun DatabaseSettingsScreen(
@@ -48,6 +53,7 @@ fun DatabaseSettingsScreen(
     navHostController: NavHostController,
     viewModel: DatabaseSettingsViewModel = hiltViewModel(),
 ){
+    val importInspectionDialogState = rememberMaterialDialogState()
 
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
@@ -60,16 +66,17 @@ fun DatabaseSettingsScreen(
     /* ************************** File Picker *************************************************** */
     val pickFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
         addCategory(Intent.CATEGORY_OPENABLE)
-        type = "application/vnd.ms-excel"
+        // type = "application/vnd.ms-excel"
+        type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     }
     val pickFileLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
-                val file = getFileFromUri(uri, contentResolver)
+                val file = getFileFromUri(uri, context)
                 file?.let {
-                    viewModel.onEvent(DatabaseSettingsEvent.ImportInspections(file))
+                    viewModel.onEvent(DatabaseSettingsEvent.ImportInspections(it))
                 }
             }
         }
@@ -150,26 +157,45 @@ fun DatabaseSettingsScreen(
                 }
             }
         }
+        ImportInspectionsAlertDialog(
+            dialogState = importInspectionDialogState,
+            onClick = {
+                      viewModel.onEvent(DatabaseSettingsEvent.SaveInspections)
+                      },
+            content = stringResource(id = R.string.importing)
+        )
     }
-}
-fun getFileFromUri(uri: Uri, contentResolver: ContentResolver): File? {
-    // Create a temporary file to store the content
-    val tempFile = createTempFile()
 
+}
+
+fun getFileFromUri(uri: Uri, context: Context): File? {
+    var inputStream: InputStream? = null
+    var outputStream: FileOutputStream? = null
     try {
-        contentResolver.openInputStream(uri)?.use { inputStream ->
-            FileOutputStream(tempFile).use { outputStream ->
-                val buffer = ByteArray(4 * 1024) // 4k buffer size
-                var read: Int
-                while (inputStream.read(buffer).also { read = it } != -1) {
-                    outputStream.write(buffer, 0, read)
-                }
-                outputStream.flush()
-            }
+        val contentResolver: ContentResolver = context.contentResolver
+        inputStream = contentResolver.openInputStream(uri)
+
+        val targetFile = File(context.getExternalFilesDir(null), "temp_file.txt")
+        outputStream = FileOutputStream(targetFile)
+
+        val buffer = ByteArray(1024)
+        var bytesRead: Int
+        while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+            outputStream.write(buffer, 0, bytesRead)
         }
-        return tempFile
+
+        return targetFile
     } catch (e: IOException) {
         e.printStackTrace()
-        return null
+    } finally {
+        try {
+            inputStream?.close()
+            outputStream?.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
+
+    return null
+
 }

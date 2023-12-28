@@ -571,6 +571,8 @@ fun InspectionDetailsScreen(
                 },
                 title = stringResource(R.string.inspection_date)
             )
+
+            // TODO extract MaterialDialog to separate composable
             MaterialDialog(
                 dialogState = signatureDialogState,
                 properties = DialogProperties(

@@ -2,6 +2,7 @@ package com.example.feature_home_presentation.database_settings
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,7 @@ import com.example.core.util.UiText
 import com.example.feature_home_presentation.home.HomeEvent
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
+import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class DatabaseSettingsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val homeUseCases: HomeUseCases,
-    private val appUseCases: AppUseCases
+    private val appUseCases: AppUseCases,
+    private val inspectionUseCases: InspectionUseCases
 ): ViewModel() {
 
     private var _databaseSettingsState = mutableStateOf<DatabaseSettingsState>(DatabaseSettingsState())
@@ -52,9 +55,19 @@ class DatabaseSettingsViewModel @Inject constructor(
                     }
                 }
             }
+
+            DatabaseSettingsEvent.SaveInspections -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    _databaseSettingsState.value.importedInspectionList.forEach() {
+                        inspectionUseCases.saveInspection(it).collect()
+
+                    }
+                }
+            }
         }
     }
 }
+
 sealed class UiEvent() {
     data class Navigate(val screen: Screen): UiEvent()
     data class ShowSnackbar(val message: UiText): UiEvent()

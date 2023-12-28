@@ -15,21 +15,23 @@ import com.example.core.util.UiText
 import com.example.feature_home_domain.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
+
 import javax.inject.Inject
 
 class ImportInspectionsFromFile @Inject constructor () {
     operator fun invoke(file: File): Flow<Resource<List<Inspection>>> = flow {
         val data = mutableListOf<Inspection>()
-        try {
+        // try {
             FileInputStream(file).use { fileInputStream ->
-                val workbook = WorkbookFactory.create(fileInputStream)
+                val workbook = XSSFWorkbook(fileInputStream)
+                // val workbook = WorkbookFactory.create(fileInputStream)
                 val sheet = workbook.getSheetAt(0)
 
                 for (row in sheet){
@@ -43,6 +45,8 @@ class ImportInspectionsFromFile @Inject constructor () {
                     val inspection = mapToObject(mapOfData, Inspection::class)
                     data.add(inspection)
                 }
+                workbook.close()
+                fileInputStream.close()
                 emit(
                     Resource(
                         ResourceState.SUCCESS,
@@ -52,7 +56,7 @@ class ImportInspectionsFromFile @Inject constructor () {
                 )
 
             }
-        } catch (e: Exception) {
+        // } catch (e: Exception) {
             // TODO ImportInspectionsFromFile error handling (SnackBar or something)
             emit(
                 Resource(
@@ -61,7 +65,7 @@ class ImportInspectionsFromFile @Inject constructor () {
                     UiText.StringResource(R.string.inspection_import_from_file_success)
                 )
             )
-        }
+        //}
     }
 }
 

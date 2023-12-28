@@ -15,6 +15,9 @@ dependencies{
     // Apache POI
     implementation(ApachePoi.apachePoi)
     implementation(ApachePoi.apachePoiOoxml)
+    implementation(ApachePoi.staxApi)
+    implementation(ApachePoi.aaltoXml)
+    implementation(ApachePoi.xmlBeans)
 
     // Modules
     implementation(project(Modules.core))
