@@ -2,14 +2,12 @@ package com.example.feature_home_presentation.database_settings
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
 import com.example.core.util.Screen
 import com.example.core.util.UiText
-import com.example.feature_home_presentation.home.HomeEvent
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
@@ -39,7 +37,7 @@ class DatabaseSettingsViewModel @Inject constructor(
         when(event) {
             is DatabaseSettingsEvent.ImportInspections -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    homeUseCases.importInspectionsFromFile(event.file).collect() { result ->
+                    homeUseCases.importInspectionsFromFile(event.inputStream).collect() { result ->
                         when(result.resourceState) {
                             ResourceState.ERROR -> Unit
                             ResourceState.SUCCESS -> {
@@ -47,8 +45,9 @@ class DatabaseSettingsViewModel @Inject constructor(
                                     _databaseSettingsState.value = _databaseSettingsState.value.copy(
                                         importedInspectionList = list
                                     )
+                                    _eventFlow.emit(UiEvent.ShowImportInspectionsDialog)
                                 }
-
+                                    _databaseSettingsState.value = _databaseSettingsState.value.copy(materialDialogMessage = result.message ?: UiText.DynamicString(""))
                             }
                             ResourceState.LOADING -> Unit
                         }
@@ -71,5 +70,5 @@ class DatabaseSettingsViewModel @Inject constructor(
 sealed class UiEvent() {
     data class Navigate(val screen: Screen): UiEvent()
     data class ShowSnackbar(val message: UiText): UiEvent()
-    data class ShowImportInspectionsDialog(val numberOfInspections: Int): UiEvent()
+    object ShowImportInspectionsDialog: UiEvent()
 }

@@ -2,9 +2,7 @@ package com.example.feature_home_presentation.database_settings.components
 
 import android.app.Activity
 import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -25,8 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Helper
@@ -39,12 +35,9 @@ import com.example.feature_home_presentation.database_settings.DatabaseSettingsE
 import com.example.feature_home_presentation.database_settings.DatabaseSettingsViewModel
 import com.example.feature_home_presentation.database_settings.UiEvent
 import com.example.feature_home_presentation.home.components.MenuItem
-import com.example.feature_home_presentation.import_inspections.components.ImportInspectionsAlertDialog
+import com.example.feature_home_presentation.import_inspections.components.ImportInspectionsMaterialDialog
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.io.InputStream
 
 @Composable
@@ -53,6 +46,7 @@ fun DatabaseSettingsScreen(
     navHostController: NavHostController,
     viewModel: DatabaseSettingsViewModel = hiltViewModel(),
 ){
+
     val importInspectionDialogState = rememberMaterialDialogState()
 
     val context = LocalContext.current
@@ -66,7 +60,6 @@ fun DatabaseSettingsScreen(
     /* ************************** File Picker *************************************************** */
     val pickFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
         addCategory(Intent.CATEGORY_OPENABLE)
-        // type = "application/vnd.ms-excel"
         type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     }
     val pickFileLauncher = rememberLauncherForActivityResult(
@@ -74,8 +67,8 @@ fun DatabaseSettingsScreen(
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
-                val file = getFileFromUri(uri, context)
-                file?.let {
+                val inputStream: InputStream? = contentResolver.openInputStream(uri)
+                inputStream?.let {
                     viewModel.onEvent(DatabaseSettingsEvent.ImportInspections(it))
                 }
             }
@@ -88,8 +81,6 @@ fun DatabaseSettingsScreen(
         text = UiText.StringResource(R.string.add_inspections_from_file)
     ) {
         pickFileLauncher.launch(pickFileIntent)
-        // scaffoldState.snackbarHostState.showSnackbar("Wait for implementation")
-
     }
 
     val manageHospitalListMenuItemState = MenuItemState(
@@ -121,7 +112,7 @@ fun DatabaseSettingsScreen(
                 }
 
                 is UiEvent.ShowImportInspectionsDialog -> {
-                    // TODO Open alert dialog here
+                    importInspectionDialogState.show()
                 }
             }
         }
@@ -133,7 +124,6 @@ fun DatabaseSettingsScreen(
             SnackbarHost(hostState = scaffoldState.snackbarHostState) {
                 AppSnackbar(
                     data = it,
-                    // can be mutableState here, but for me like this is ok
                     onActionClick = {
                         it.dismiss()
                     }
@@ -157,45 +147,14 @@ fun DatabaseSettingsScreen(
                 }
             }
         }
-        ImportInspectionsAlertDialog(
+        ImportInspectionsMaterialDialog(
             dialogState = importInspectionDialogState,
             onClick = {
                       viewModel.onEvent(DatabaseSettingsEvent.SaveInspections)
                       },
-            content = stringResource(id = R.string.importing)
+            content = viewModel.databaseSettings.value.materialDialogMessage.asString(context),
+            amount = viewModel.databaseSettings.value.importedInspectionList.size
         )
     }
-
-}
-
-fun getFileFromUri(uri: Uri, context: Context): File? {
-    var inputStream: InputStream? = null
-    var outputStream: FileOutputStream? = null
-    try {
-        val contentResolver: ContentResolver = context.contentResolver
-        inputStream = contentResolver.openInputStream(uri)
-
-        val targetFile = File(context.getExternalFilesDir(null), "temp_file.txt")
-        outputStream = FileOutputStream(targetFile)
-
-        val buffer = ByteArray(1024)
-        var bytesRead: Int
-        while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-            outputStream.write(buffer, 0, bytesRead)
-        }
-
-        return targetFile
-    } catch (e: IOException) {
-        e.printStackTrace()
-    } finally {
-        try {
-            inputStream?.close()
-            outputStream?.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    return null
 
 }

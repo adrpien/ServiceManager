@@ -1,11 +1,5 @@
 package com.example.servicemanager.feature_home_domain.use_cases
 
-import android.content.ContentResolver
-import android.content.Context
-import android.net.Uri
-import android.provider.DocumentsContract
-import android.provider.MediaStore
-import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import com.example.core.util.MapperExtensionFunction.mapToObject
 import com.example.core.util.Resource
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
@@ -15,30 +9,26 @@ import com.example.core.util.UiText
 import com.example.feature_home_domain.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
-import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.File
-import java.io.FileInputStream
+import java.io.InputStream
 
 import javax.inject.Inject
 
 class ImportInspectionsFromFile @Inject constructor () {
-    operator fun invoke(file: File): Flow<Resource<List<Inspection>>> = flow {
+    operator fun invoke(inputStream: InputStream): Flow<Resource<List<Inspection>>> = flow {
         val data = mutableListOf<Inspection>()
-        // try {
-            FileInputStream(file).use { fileInputStream ->
+         try {
+            inputStream.use { fileInputStream ->
                 val workbook = XSSFWorkbook(fileInputStream)
-                // val workbook = WorkbookFactory.create(fileInputStream)
                 val sheet = workbook.getSheetAt(0)
-
-                for (row in sheet){
+                for(i in 1 until sheet.physicalNumberOfRows){
+                    val row = sheet.getRow(i)
                     val cellIterator = row.cellIterator()
                     val mapOfData: MutableMap<String, String> = mutableMapOf<String, String>()
                     val listOfKeys = Inspection().toMap().keys.toList()
-                    for (i in 0..listOfKeys.size){
+                    for (i in 0..listOfKeys.size-1){
                         val cellValue = getStringCellValue(cellIterator.next())
                         mapOfData.set(listOfKeys.get(i), cellValue)
                     }
@@ -47,25 +37,27 @@ class ImportInspectionsFromFile @Inject constructor () {
                 }
                 workbook.close()
                 fileInputStream.close()
+                val listSize: Int = data.size
                 emit(
                     Resource(
                         ResourceState.SUCCESS,
                         data,
-                        UiText.StringResource(R.string.inspection_import_from_file_error)
+                        UiText.StringResource(R.string.found_records, listOf(listSize.toString()))
                     )
+
                 )
 
             }
-        // } catch (e: Exception) {
+         } catch (e: Exception) {
             // TODO ImportInspectionsFromFile error handling (SnackBar or something)
             emit(
                 Resource(
                     ResourceState.ERROR,
                     data,
-                    UiText.StringResource(R.string.inspection_import_from_file_success)
+                    UiText.StringResource(R.string.unknown_error)
                 )
             )
-        //}
+        }
     }
 }
 
