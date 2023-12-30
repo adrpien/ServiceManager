@@ -9,6 +9,7 @@ import kotlin.reflect.full.memberProperties
 
 
 object MapperExtensionFunction {
+    // TODO function can not sort arguments alphabetically
     fun <T : Any> T.toMap(): Map<String, Any?> {
         if(!this::class.isData) {
           throw IllegalArgumentException("dataClassObject must be data class")

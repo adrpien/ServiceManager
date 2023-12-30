@@ -3,7 +3,6 @@ package com.example.servicemanager.feature_home_domain.use_cases
 import com.example.core.util.MapperExtensionFunction.mapToObject
 import com.example.core.util.Resource
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
-import com.example.core.util.MapperExtensionFunction.toMap
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_home_domain.R
@@ -17,7 +16,10 @@ import java.io.InputStream
 import javax.inject.Inject
 
 class ImportInspectionsFromFile @Inject constructor () {
+    // TODO Write test for ImportInspectionsFromFile
     operator fun invoke(inputStream: InputStream): Flow<Resource<List<Inspection>>> = flow {
+        val listOfKeys = Inspection.listOfProperties
+        val mapOfData: MutableMap<String, String> = mutableMapOf<String, String>()
         val data = mutableListOf<Inspection>()
          try {
             inputStream.use { fileInputStream ->
@@ -26,11 +28,9 @@ class ImportInspectionsFromFile @Inject constructor () {
                 for(i in 1 until sheet.physicalNumberOfRows){
                     val row = sheet.getRow(i)
                     val cellIterator = row.cellIterator()
-                    val mapOfData: MutableMap<String, String> = mutableMapOf<String, String>()
-                    val listOfKeys = Inspection().toMap().keys.toList()
                     for (i in 0..listOfKeys.size-1){
                         val cellValue = getStringCellValue(cellIterator.next())
-                        mapOfData.set(listOfKeys.get(i), cellValue)
+                        mapOfData.set(listOfKeys[i], cellValue)
                     }
                     val inspection = mapToObject(mapOfData, Inspection::class)
                     data.add(inspection)
