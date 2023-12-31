@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="getuser_uknown_error">getUser uknown error</string>
+    <string name="inspection_import_from_file_success">Inspection import from file success</string>
+    <string name="inspection_import_from_file_error">Inspection import from file error</string>
+    <string name="unknown_error">Nieznany błąd</string>
+    <string name="found_records">Znaleziono rekordów</string>
+    <string name="wrong_file_format">Zły format pliku</string>
+
+</resources>

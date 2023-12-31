@@ -18,8 +18,7 @@ import com.vanpra.composematerialdialogs.MaterialDialogState
 fun ImportInspectionsMaterialDialog(
     dialogState: MaterialDialogState,
     onClick: () -> Unit,
-    content: String,
-    amount: Int
+    text: String,
 ) {
     MaterialDialog(
         dialogState = dialogState,
@@ -30,7 +29,7 @@ fun ImportInspectionsMaterialDialog(
         backgroundColor = MaterialTheme.colorScheme.secondary,
         buttons = {
             positiveButton(
-                text = stringResource(com.example.core_ui.R.string.confirm),
+                text = stringResource(R.string.import_records),
                 onClick = onClick,
                 textStyle = TextStyle(
                     color = MaterialTheme.colorScheme.onSecondary
@@ -50,7 +49,7 @@ fun ImportInspectionsMaterialDialog(
                 .padding(8.dp)
         ) {
             Text(
-                text = content + ": " + amount?.let {  amount.toString() },
+                text = text,
                 color = MaterialTheme.colorScheme.onSecondary
                 )
         }

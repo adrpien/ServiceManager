@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
 import com.example.core.util.Screen
 import com.example.core.util.UiText
+import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
@@ -39,17 +40,48 @@ class DatabaseSettingsViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     homeUseCases.importInspectionsFromFile(event.inputStream).collect() { result ->
                         when(result.resourceState) {
-                            ResourceState.ERROR -> Unit
+                            ResourceState.ERROR -> {
+                                _eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(
+                                    R.string.unknown_error)))
+                            }
                             ResourceState.SUCCESS -> {
+                                result.message?.let {text ->
+                                    _eventFlow.emit(UiEvent.UpdateImportInspectionsLoadingDialogState(
+                                        text = text,
+                                        progress = 0.0F,
+                                        counter = result.data?.size
+                                    ))
+                                    _eventFlow.emit(UiEvent.UpdateImportInspectionsDialogState(
+                                        text = text,
+                                        counter = result.data?.size
+                                    ))
+                                }
                                 result.data?.let { list ->
                                     _databaseSettingsState.value = _databaseSettingsState.value.copy(
                                         importedInspectionList = list
                                     )
                                     _eventFlow.emit(UiEvent.ShowImportInspectionsDialog)
                                 }
-                                    _databaseSettingsState.value = _databaseSettingsState.value.copy(materialDialogMessage = result.message ?: UiText.DynamicString(""))
                             }
-                            ResourceState.LOADING -> Unit
+                            ResourceState.LOADING -> {
+                                result.data?.let { list ->
+                                    _databaseSettingsState.value = _databaseSettingsState.value.copy(
+                                        importedInspectionList = list,
+                                    )
+                                }
+                                result.message?.let {text ->
+                                    _eventFlow.emit(UiEvent.UpdateImportInspectionsLoadingDialogState(
+                                        text = text,
+                                        progress = 0.0F,
+                                        counter = result.data?.size
+                                    ))
+                                    _eventFlow.emit(UiEvent.UpdateImportInspectionsDialogState(
+                                        text = text,
+                                        counter = result.data?.size
+                                    ))
+                                }
+
+                            }
                         }
                     }
                 }
@@ -57,7 +89,7 @@ class DatabaseSettingsViewModel @Inject constructor(
 
             DatabaseSettingsEvent.SaveInspections -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    _databaseSettingsState.value.importedInspectionList.forEach() {
+                    _databaseSettingsState.value.importedInspectionList?.forEach() {
                         inspectionUseCases.saveInspection(it).collect()
 
                     }
@@ -71,4 +103,7 @@ sealed class UiEvent() {
     data class Navigate(val screen: Screen): UiEvent()
     data class ShowSnackbar(val message: UiText): UiEvent()
     object ShowImportInspectionsDialog: UiEvent()
+    data class UpdateImportInspectionsLoadingDialogState(val text: UiText, val counter: Int?, val progress: Float): UiEvent()
+    data class UpdateImportInspectionsDialogState(val text: UiText, val counter: Int?): UiEvent()
+
 }

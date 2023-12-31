@@ -18,6 +18,12 @@ import javax.inject.Inject
 class ImportInspectionsFromFile @Inject constructor () {
     // TODO Write test for ImportInspectionsFromFile
     operator fun invoke(inputStream: InputStream): Flow<Resource<List<Inspection>>> = flow {
+        emit(
+            Resource(
+                ResourceState.SUCCESS,
+                null,
+                UiText.StringResource(R.string.importing_initiation))
+        )
         val listOfKeys = Inspection.listOfProperties
         val mapOfData: MutableMap<String, String> = mutableMapOf<String, String>()
         val data = mutableListOf<Inspection>()
@@ -34,6 +40,13 @@ class ImportInspectionsFromFile @Inject constructor () {
                     }
                     val inspection = mapToObject(mapOfData, Inspection::class)
                     data.add(inspection)
+                    emit(
+                        Resource(
+                            ResourceState.LOADING,
+                            data,
+                            UiText.StringResource(R.string.found_records)
+                    )
+                    )
                 }
                 workbook.close()
                 fileInputStream.close()
@@ -42,11 +55,8 @@ class ImportInspectionsFromFile @Inject constructor () {
                     Resource(
                         ResourceState.SUCCESS,
                         data,
-                        UiText.StringResource(R.string.found_records, listOf(listSize.toString()))
+                        UiText.StringResource(R.string.found_records))
                     )
-
-                )
-
             }
          } catch (e: Exception) {
             // TODO ImportInspectionsFromFile error handling (SnackBar or something)
@@ -54,7 +64,7 @@ class ImportInspectionsFromFile @Inject constructor () {
                 Resource(
                     ResourceState.ERROR,
                     data,
-                    UiText.StringResource(R.string.unknown_error)
+                    UiText.StringResource(R.string.wrong_file_format)
                 )
             )
         }

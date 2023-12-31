@@ -22,5 +22,9 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="importing">Import</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="wrong_file_format">Wrong file format</string>
+    <string name="records_found">Records found</string>
+    <string name="import_records">Importuj</string>
 
 </resources>

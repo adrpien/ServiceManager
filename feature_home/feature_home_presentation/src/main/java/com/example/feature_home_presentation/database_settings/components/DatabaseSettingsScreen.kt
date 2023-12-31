@@ -19,6 +19,8 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +37,9 @@ import com.example.feature_home_presentation.database_settings.DatabaseSettingsE
 import com.example.feature_home_presentation.database_settings.DatabaseSettingsViewModel
 import com.example.feature_home_presentation.database_settings.UiEvent
 import com.example.feature_home_presentation.home.components.MenuItem
+import com.example.feature_home_presentation.import_inspections.components.DefaultInspectionsDialogState
+import com.example.feature_home_presentation.import_inspections.components.DefaultInspectionsLoadingDialogState
+import com.example.feature_home_presentation.import_inspections.components.ImportInspectionsLoadingMaterialDialog
 import com.example.feature_home_presentation.import_inspections.components.ImportInspectionsMaterialDialog
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
@@ -46,11 +51,29 @@ fun DatabaseSettingsScreen(
     navHostController: NavHostController,
     viewModel: DatabaseSettingsViewModel = hiltViewModel(),
 ){
-
-    val importInspectionDialogState = rememberMaterialDialogState()
-
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
+
+    val state = viewModel.databaseSettings
+
+    val importInspectionsLoadingMaterialDialogState = rememberMaterialDialogState()
+    val importInspectionsLoadingDialogState = remember {
+        mutableStateOf(
+            DefaultInspectionsLoadingDialogState(
+                text = "",
+                progress = 0.0F,
+                counter = null
+            )
+        )
+    }
+
+    val importInspectionsDialogState = remember {
+        mutableStateOf(DefaultInspectionsDialogState(
+            text = "",
+            counter = null
+        ))
+    }
+    val importInspectionMaterialDialogState = rememberMaterialDialogState()
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -69,6 +92,7 @@ fun DatabaseSettingsScreen(
             result.data?.data?.let { uri ->
                 val inputStream: InputStream? = contentResolver.openInputStream(uri)
                 inputStream?.let {
+                    importInspectionsLoadingMaterialDialogState.show()
                     viewModel.onEvent(DatabaseSettingsEvent.ImportInspections(it))
                 }
             }
@@ -112,7 +136,23 @@ fun DatabaseSettingsScreen(
                 }
 
                 is UiEvent.ShowImportInspectionsDialog -> {
-                    importInspectionDialogState.show()
+                    importInspectionsLoadingMaterialDialogState.hide()
+                    importInspectionMaterialDialogState.show()
+                }
+
+                is UiEvent.UpdateImportInspectionsLoadingDialogState -> {
+                    importInspectionsLoadingDialogState.value = importInspectionsLoadingDialogState.value.copy(
+                        text = event.text.asString(context),
+                        counter = event.counter,
+                        progress = event.progress
+                    )
+                }
+
+                is UiEvent.UpdateImportInspectionsDialogState -> {
+                    importInspectionsDialogState.value = importInspectionsDialogState.value.copy(
+                        text = event.text.asString(context),
+                        counter = event.counter,
+                    )
                 }
             }
         }
@@ -148,12 +188,16 @@ fun DatabaseSettingsScreen(
             }
         }
         ImportInspectionsMaterialDialog(
-            dialogState = importInspectionDialogState,
+            dialogState = importInspectionMaterialDialogState,
             onClick = {
                       viewModel.onEvent(DatabaseSettingsEvent.SaveInspections)
                       },
-            content = viewModel.databaseSettings.value.materialDialogMessage.asString(context),
-            amount = viewModel.databaseSettings.value.importedInspectionList.size
+            text = importInspectionsDialogState.value.text + ": " + importInspectionsDialogState.value.counter,
+        )
+
+        ImportInspectionsLoadingMaterialDialog(
+            dialogState = importInspectionsLoadingMaterialDialogState,
+            state = importInspectionsLoadingDialogState
         )
     }
 

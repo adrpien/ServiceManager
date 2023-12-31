@@ -15,4 +15,15 @@
     <string name="add_inspection_state">Dodaj stan przeglądu</string>
     <string name="add_repair_state">Dodaj stan naprawy</string>
     <string name="manage_hospital_list">Zarządzaj listą szpitali</string>
+    <string name="undo">Cofnij</string>
+    <string name="hospital_list">Lista szpitali</string>
+    <string name="delete">Usuń</string>
+    <string name="add">Dodaj</string>
+    <string name="confirm">Zatwierdź</string>
+    <string name="cancel">Anuluj</string>
+    <string name="importing">Importowanie</string>
+    <string name="unknown_error">Nieznany błąd</string>
+    <string name="wrong_file_format">Zły format pliku</string>
+    <string name="records_found">Znalezione rekordy</string>
+    <string name="import_records">Importuj rekordy</string>
 </resources>

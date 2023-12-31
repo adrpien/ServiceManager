@@ -5,5 +5,8 @@
     <string name="inspection_import_from_file_error">Inspection import from file error</string>
     <string name="unknown_error">Unknown error</string>
     <string name="found_records">Found records</string>
+    <string name="wrong_file_format">Wrong file format</string>
+    <string name="importing_initiatialization">Importing initialization</string>
+    <string name="importing_initiation">Importing initialization</string>
 
 </resources>
