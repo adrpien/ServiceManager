@@ -140,7 +140,7 @@ class InspectionDetailsViewModel @Inject constructor(
     // TODO Bug needs to be fixed - fetches signature even if there no signature
     private fun fetchSignature() {
         if (currentInspectionId != "0") {
-            viewModelScope.launch(Dispatchers.Main) {
+            viewModelScope.launch(Dispatchers.IO) {
                 appUseCases
                     .getSignature(currentInspectionId.toString())
                     .collect { result ->
@@ -162,7 +162,7 @@ class InspectionDetailsViewModel @Inject constructor(
     }
 
     private fun fetchHospitalList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             hospitalListIsLoading = true
             setIsLoadingStatus()
             appUseCases.getHospitalList().collect { result ->
@@ -186,7 +186,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private fun fetchInspectionStateList() {
         inspectionStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getInspectionStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -208,7 +208,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private fun fetchEstStateList() {
         estStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getEstStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -230,7 +230,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private fun fetchTechnicianList() {
         technicianListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

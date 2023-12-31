@@ -50,7 +50,7 @@ class RepairListViewModel @Inject constructor(
             is RepairListEvent.OnSearchQueryChange -> {
                 _repairListState.value = _repairListState.value.copy(searchQuery = event.searchQuery)
                 searchJob?.cancel()
-                searchJob = viewModelScope.launch {
+                searchJob = viewModelScope.launch(Dispatchers.IO) {
                     launch {
                         delay(500L)
                         fetchRepairList(

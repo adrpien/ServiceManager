@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchUser() {
         userId = savedStateHandle.get<String>("userId") ?: ""
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getUser(userId).collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

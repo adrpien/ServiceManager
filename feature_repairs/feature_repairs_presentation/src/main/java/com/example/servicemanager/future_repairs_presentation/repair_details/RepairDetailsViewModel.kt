@@ -112,7 +112,7 @@ class RepairDetailsViewModel @Inject constructor(
         setIsLoadingStatus()
         currentRepairId = savedStateHandle.get<String?>("repairId")
         if (currentRepairId != "0") {
-            viewModelScope.launch(Dispatchers.Main) {
+            viewModelScope.launch(Dispatchers.IO) {
                 repairUseCases
                     .getRepair(repairId = currentRepairId.toString())
                     .collect { result ->
@@ -146,7 +146,7 @@ class RepairDetailsViewModel @Inject constructor(
     // TODO Bug needs to be fixed - fetches signature even if there no signature
     private fun fetchSignature() {
         if (currentRepairId != "0") {
-            viewModelScope.launch(Dispatchers.Main) {
+            viewModelScope.launch(Dispatchers.IO) {
                 appUseCases
                     .getSignature(currentRepairId.toString())
                     .collect { result ->
@@ -167,7 +167,7 @@ class RepairDetailsViewModel @Inject constructor(
         }
     }
     private fun fetchHospitalList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             hospitalListIsLoading = true
             setIsLoadingStatus()
             appUseCases.getHospitalList().collect { result ->
@@ -190,7 +190,7 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchRepairStateList() {
         repairStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getRepairStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -211,7 +211,7 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchEstStateList() {
         estStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getEstStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -232,7 +232,7 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchTechnicianList() {
         technicianListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

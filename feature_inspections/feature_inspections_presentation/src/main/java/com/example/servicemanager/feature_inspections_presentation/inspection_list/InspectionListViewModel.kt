@@ -62,7 +62,7 @@ class InspectionListViewModel @Inject constructor(
             is InspectionListEvent.OnSearchQueryChange -> {
                 _inspectionListState.value = _inspectionListState.value.copy(searchQuery = event.searchQuery)
                 searchJob?.cancel()
-                searchJob = viewModelScope.launch {
+                searchJob = viewModelScope.launch(Dispatchers.IO) {
                     launch {
                         delay(500L)
                         fetchInspectionList(

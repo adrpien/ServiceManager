@@ -14,7 +14,7 @@ class FirebaseLogger<T>(
         firebaseAnalytics.logEvent(eventLogType.logId, params)
     }
 
-
+    // TODO logEvent in Logger should be suspend function
     override fun logEvent(
         eventLogType: EventLogType,
         message: String,
@@ -24,7 +24,6 @@ class FirebaseLogger<T>(
         bundle.putString("type", eventLogType.logId)
         bundle.putString("message", message)
         val map = dataClassObject?.toMap()
-        // val map2 = dataClassObject?.toString() // Why i didnt do like this?
         map?.forEach { key, value ->
             bundle.putString(key, value.toString())
         }
