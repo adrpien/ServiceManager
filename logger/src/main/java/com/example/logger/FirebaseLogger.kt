@@ -9,13 +9,13 @@ class FirebaseLogger<T>(
     val firebaseAnalytics: FirebaseAnalytics
 ): AppLogger<T> {
 
-    override fun logEventWithBundle(eventLogType: EventLogType, message: String, params: Bundle) {
+    override suspend fun logEventWithBundle(eventLogType: EventLogType, message: String, params: Bundle) {
         params.putString("message", message)
         firebaseAnalytics.logEvent(eventLogType.logId, params)
     }
 
     // TODO logEvent in Logger should be suspend function
-    override fun logEvent(
+    override suspend fun logEvent(
         eventLogType: EventLogType,
         message: String,
         dataClassObject: T

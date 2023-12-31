@@ -15,18 +15,16 @@ class UpdateRepair @Inject constructor (
 ) {
 
     // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
-    operator fun invoke(repair: Repair): Flow<Resource<String>> {
-        return if (repair.repairId != "0")  repository.updateRepair(repair)
-        else {
-            flow<Resource<String>> {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Repair update unknown error",
-                        UiText.StringResource(R.string.repair_update_unknown_error)
-                    )
-                )
-            }
+    suspend operator fun invoke(repair: Repair): Resource<String> {
+        if (repair.repairId != "0") {
+            return repository.updateRepair(repair)
+        } else {
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.repair_update_unknown_error)
+            )
+
         }
     }
 }

@@ -9,7 +9,14 @@ import kotlin.reflect.full.memberProperties
 
 
 object MapperExtensionFunction {
-    // TODO function can not sort arguments alphabetically
+
+    /**
+     * toMap function maps instance od data class object into
+     * map of class member properties names as key, and their values as values
+     *
+     *  toMap function can not sort arguments alphabetically,
+     *  at this moment remains unused
+     */
     fun <T : Any> T.toMap(): Map<String, Any?> {
         if(!this::class.isData) {
           throw IllegalArgumentException("dataClassObject must be data class")
@@ -18,6 +25,10 @@ object MapperExtensionFunction {
             .associate { it.name to it.getter.call(this)}
     }
 
+    /**
+     *  mapToDataClass function is old version of mapToObject function implementation,
+     *  at this stage remains unused
+     */
     fun <T : Any> mapToDataClass(clazz: KClass<T>, properties: Map<String, Any>): T {
         val instance = clazz.createInstance()
         clazz.memberProperties.forEach { property ->

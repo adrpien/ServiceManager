@@ -51,14 +51,8 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    fun createInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+    suspend fun createInspection(inspection: Inspection): Resource<String> {
         // TODO Caching mechanism in createInspection fun for InspectionFirebaseApi
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "0",
-null            )
-        )
         var documentReference = firebaseFirestore.collection("inspections")
             .document()
         var map = mapOf<String, String>(
@@ -81,36 +75,24 @@ null            )
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
-                    ResourceState.SUCCESS,
-                    documentReference.id,
-                    UiText.StringResource(R.string.inspection_record_created)
-                )
-            )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
-
-        } else {
-            emit(
-                Resource(
-                    ResourceState.ERROR,
-                    "Inspection record creation error",
-                    UiText.StringResource(R.string.inspection_record_creation_error)
-                )
+            return Resource(
+                ResourceState.SUCCESS,
+                documentReference.id,
+                UiText.StringResource(R.string.inspection_record_created)
             )
+        } else {
             Log.d(INSPECTION_FIREBASE_API, "Inspection record creation error")
-
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.inspection_record_creation_error)
+            )
         }
     }
-    fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
+    suspend fun updateInspection(inspection: Inspection): Resource<String> {
         // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "0",
-                null
-            )
-        )
+
         var map = mapOf<String, String>(
             "inspectionId" to inspection.inspectionId,
             "inspectionStateId" to inspection.inspectionStateId,
@@ -132,24 +114,19 @@ null            )
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
-                    ResourceState.SUCCESS,
-                    "Inspection record updated",
-                    UiText.StringResource(R.string.inspection_record_updated)
-                )
-            )
             Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
-        } else {
-
-            emit(
-                Resource(
-                    ResourceState.ERROR,
-                    result.exception?.message ?: "Unknown error",
-                    UiText.StringResource(R.string.update_inspection_unknown_error)
-                )
+            return Resource(
+                ResourceState.SUCCESS,
+                documentReference.id,
+                UiText.StringResource(R.string.inspection_record_updated)
             )
+        } else {
             Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.update_inspection_unknown_error)
+            )
         }
 
     }

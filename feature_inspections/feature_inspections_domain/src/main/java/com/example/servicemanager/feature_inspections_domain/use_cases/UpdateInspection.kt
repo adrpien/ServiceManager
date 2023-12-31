@@ -14,18 +14,16 @@ class UpdateInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
 
-    operator fun invoke(inspection: Inspection): Flow<Resource<String>> {
-        return if(inspection.inspectionId != "") repository.updateInspection(inspection)
+    suspend operator fun invoke(inspection: Inspection): Resource<String> {
+        if(inspection.inspectionId != ""){
+            return repository.updateInspection(inspection)
+        }
         else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Inspection update unknown error",
-                        UiText.StringResource(R.string.inspection_update_unknown_error)
-                    )
-                )
-            }
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.inspection_update_unknown_error)
+            )
         }
     }
 }

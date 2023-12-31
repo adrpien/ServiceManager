@@ -89,9 +89,14 @@ class DatabaseSettingsViewModel @Inject constructor(
 
             DatabaseSettingsEvent.SaveInspections -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    _databaseSettingsState.value.importedInspectionList?.forEach() {
-                        inspectionUseCases.saveInspection(it).collect()
-
+                    homeUseCases.saveInspections(_databaseSettingsState.value.importedInspectionList).collect() { result ->
+                        when(result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                _eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(R.string.unknown_error)))
+                            }
+                            ResourceState.ERROR -> Unit
+                            ResourceState.LOADING -> Unit
+                        }
                     }
                 }
             }

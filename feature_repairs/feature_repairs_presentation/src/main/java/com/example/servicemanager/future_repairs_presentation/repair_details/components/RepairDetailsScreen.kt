@@ -49,6 +49,7 @@ import com.example.feature_repairs_presentation.R
 import androidx.compose.material3.SnackbarHostState
 import com.example.core.util.Dimensions
 import com.example.core_ui.components.snackbar.AppSnackbar
+import kotlinx.coroutines.Dispatchers
 
 
 @Composable
@@ -63,11 +64,11 @@ fun RepairDetailsScreen(
 
 /* ********************** STATES **************************************************************** */
     val repairDetailsState = viewModel.repairDetailsState
-    val hospitalList = viewModel.repairDetailsState.value.hospitalList
-    val estStateList = viewModel.repairDetailsState.value.estStateList
-    val repairStateList = viewModel.repairDetailsState.value.repairStateList
-    val technicianList = viewModel.repairDetailsState.value.technicianList
-    val isInEditMode = viewModel.repairDetailsState.value.isInEditMode
+    val hospitalList = repairDetailsState.value.hospitalList
+    val estStateList = repairDetailsState.value.estStateList
+    val repairStateList = repairDetailsState.value.repairStateList
+    val technicianList = repairDetailsState.value.technicianList
+    val isInEditMode = repairDetailsState.value.isInEditMode
 
 /* ********************** DIALOGS *************************************************************** */
     val repairingDateDialogState = rememberMaterialDialogState()

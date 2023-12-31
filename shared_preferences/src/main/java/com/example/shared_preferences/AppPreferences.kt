@@ -12,9 +12,12 @@ interface AppPreferences {
     fun getIsDarkModeEnabled(): Boolean
     fun setIsDarkModeEnabled(isDarkModeEnabled: Boolean)
 
+    // TODO implementation of manually changing language functionality
+
     companion object {
         const val DARK_MODE = "dark_mode"
         const val DATE_FORMATTING_TYPE = "date_formatting_type"
+        const val LANGUAGE = "PL"
     }
 
 }

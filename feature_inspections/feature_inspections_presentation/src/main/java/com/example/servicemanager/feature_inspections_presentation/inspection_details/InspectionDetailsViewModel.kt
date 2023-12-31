@@ -51,41 +51,51 @@ class InspectionDetailsViewModel @Inject constructor(
     }
 
     fun onEvent(inspectionDetailsEvent: InspectionDetailsEvent) {
-        when(inspectionDetailsEvent) {
+        when (inspectionDetailsEvent) {
             is InspectionDetailsEvent.UpdateInspectionState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                     inspection = inspectionDetailsEvent.inspection
                 )
             }
+
             is InspectionDetailsEvent.UpdateSignatureState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                     signature = inspectionDetailsEvent.signature
                 )
             }
+
             is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection).collect() { result ->
-                        when(result.resourceState) {
-                            ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> {
-                                _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
+                    val result =
+                        inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection)
+                    when (result.resourceState) {
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> {
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
+                        }
+
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { inspectionId ->
+                                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                    inspection = _inspectionDetailsState.value.inspection.copy(
+                                        inspectionId = inspectionId
+                                    )
+                                )
                             }
-                            ResourceState.SUCCESS ->  {
-                                result.data?.let { inspectionId ->
-                                    _inspectionDetailsState.value = _inspectionDetailsState.value.copy(inspection = _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId))
-                                }
-                                viewModelScope.launch(Dispatchers.IO) {
-                                    appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
-                                }
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                            viewModelScope.launch(Dispatchers.IO) {
+                                appUseCases.saveSignature(
+                                    inspectionDetailsState.value.inspection.inspectionId,
+                                    bitmapToByteArray(inspectionDetailsState.value.signature)
+                                ).collect()
                             }
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                         }
                     }
                 }
             }
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection).collect()
+                    inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
                 }
                 viewModelScope.launch(Dispatchers.IO) {
                     appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
@@ -140,7 +150,7 @@ class InspectionDetailsViewModel @Inject constructor(
     // TODO Bug needs to be fixed - fetches signature even if there no signature
     private fun fetchSignature() {
         if (currentInspectionId != "0") {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Main) {
                 appUseCases
                     .getSignature(currentInspectionId.toString())
                     .collect { result ->
@@ -162,7 +172,7 @@ class InspectionDetailsViewModel @Inject constructor(
     }
 
     private fun fetchHospitalList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             hospitalListIsLoading = true
             setIsLoadingStatus()
             appUseCases.getHospitalList().collect { result ->
@@ -186,7 +196,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private fun fetchInspectionStateList() {
         inspectionStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getInspectionStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -208,7 +218,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private fun fetchEstStateList() {
         estStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getEstStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -230,7 +240,7 @@ class InspectionDetailsViewModel @Inject constructor(
     private fun fetchTechnicianList() {
         technicianListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

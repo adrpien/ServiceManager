@@ -16,21 +16,16 @@ class SaveRepair @Inject constructor (
 ) {
 
     // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
-    operator fun invoke(repair: Repair): Flow<Resource<String>> {
-        return if (repair.deviceSn.isNotEmpty() && repair.deviceIn.isNotEmpty())
+    suspend operator fun invoke(repair: Repair): Resource<String> {
+        if (repair.deviceSn.isNotEmpty() && repair.deviceIn.isNotEmpty())
         {
-            repository.insertRepair(repair)
+            return repository.insertRepair(repair)
         } else {
-        flow {
-            emit(
-                Resource(
-                    ResourceState.ERROR,
-                    //UiText.StringResource(R.string.)
-                    "TextFields deviceSn and deviceIn are empty",
-                    UiText.StringResource(R.string.textfields_devicesn_or_devicein_is_empty)
-                )
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.textfields_devicesn_or_devicein_is_empty)
             )
-        }
         }
     }
 }

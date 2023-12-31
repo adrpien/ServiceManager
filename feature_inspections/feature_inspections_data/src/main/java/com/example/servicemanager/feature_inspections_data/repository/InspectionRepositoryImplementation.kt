@@ -81,7 +81,7 @@ class  InspectionRepositoryImplementation(
         }
     }
 
-    override fun insertInspection(inspection: Inspection): Flow<Resource<String>> {
+    override suspend fun insertInspection(inspection: Inspection): Resource<String> {
         appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
             dataClassObject = inspection,
@@ -89,7 +89,7 @@ class  InspectionRepositoryImplementation(
         return inspectionFirebaseApi.createInspection(inspection)
     }
 
-    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> {
+    override suspend fun updateInspection(inspection: Inspection): Resource<String> {
         appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.RecordUpdateLog(),
             dataClassObject = inspection,

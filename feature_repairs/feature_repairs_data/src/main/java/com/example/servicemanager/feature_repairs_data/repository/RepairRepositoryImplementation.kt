@@ -77,7 +77,7 @@ class  RepairRepositoryImplementation(
         }
     }
 
-    override fun insertRepair(repair: Repair): Flow<Resource<String>> {
+    override suspend fun insertRepair(repair: Repair): Resource<String> {
         appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
             dataClassObject  = repair
@@ -85,7 +85,7 @@ class  RepairRepositoryImplementation(
         return repairFirebaseApi.createRepair(repair)
     }
 
-    override fun updateRepair(repair: Repair): Flow<Resource<String>> {
+    override suspend fun updateRepair(repair: Repair): Resource<String> {
         appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.RecordUpdateLog(),
             dataClassObject = repair

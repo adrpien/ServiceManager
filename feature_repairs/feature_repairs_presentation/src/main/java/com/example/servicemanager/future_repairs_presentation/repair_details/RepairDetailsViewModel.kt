@@ -15,6 +15,8 @@ import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -34,6 +36,9 @@ class RepairDetailsViewModel @Inject constructor(
     private var repairStateListIsLoading = true
 
     private var currentRepairId: String? = null
+
+     // private val _repairDetailsState = MutableStateFlow(RepairDetailsState())
+     // val repairDetailsState: StateFlow<RepairDetailsState> = _repairDetailsState
 
     private val _repairDetailsState = mutableStateOf(RepairDetailsState())
     val repairDetailsState: State<RepairDetailsState> = _repairDetailsState
@@ -64,33 +69,32 @@ class RepairDetailsViewModel @Inject constructor(
             }
             is RepairDetailsEvent.SaveRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    repairUseCases.saveRepair(repairDetailsState.value.repair).collect() { result ->
-                        when(result.resourceState) {
-                            ResourceState.SUCCESS -> {
-                                result.data?.let { repairId ->
-                                    _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
-                                }
-                                viewModelScope.launch(Dispatchers.IO) {
-                                    appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
-                                }
-                                _eventFlow.emit(
-                                    UiEvent.NavigateTo(
-                                        Screen.RepairListScreen.route
-                                    )
+                    val result = repairUseCases.saveRepair(repairDetailsState.value.repair)
+                    when(result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { repairId ->
+                                _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
+                            }
+                            viewModelScope.launch(Dispatchers.IO) {
+                                appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
+                            }
+                            _eventFlow.emit(
+                                UiEvent.NavigateTo(
+                                    Screen.RepairListScreen.route
                                 )
+                            )
 
-                            }
-                            ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> {
-                                _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
-                            }
+                        }
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> {
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
                         }
                     }
                 }
             }
             is RepairDetailsEvent.UpdateRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    repairUseCases.updateRepair(repairDetailsState.value.repair).collect()
+                    repairUseCases.updateRepair(repairDetailsState.value.repair)
                 }
                 viewModelScope.launch(Dispatchers.IO) {
                     appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
@@ -112,7 +116,7 @@ class RepairDetailsViewModel @Inject constructor(
         setIsLoadingStatus()
         currentRepairId = savedStateHandle.get<String?>("repairId")
         if (currentRepairId != "0") {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Main) {
                 repairUseCases
                     .getRepair(repairId = currentRepairId.toString())
                     .collect { result ->
@@ -146,7 +150,7 @@ class RepairDetailsViewModel @Inject constructor(
     // TODO Bug needs to be fixed - fetches signature even if there no signature
     private fun fetchSignature() {
         if (currentRepairId != "0") {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Main) {
                 appUseCases
                     .getSignature(currentRepairId.toString())
                     .collect { result ->
@@ -167,7 +171,7 @@ class RepairDetailsViewModel @Inject constructor(
         }
     }
     private fun fetchHospitalList() {
-        viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Main) {
             hospitalListIsLoading = true
             setIsLoadingStatus()
             appUseCases.getHospitalList().collect { result ->
@@ -190,7 +194,7 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchRepairStateList() {
         repairStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getRepairStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -211,7 +215,7 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchEstStateList() {
         estStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getEstStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
@@ -232,7 +236,7 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchTechnicianList() {
         technicianListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

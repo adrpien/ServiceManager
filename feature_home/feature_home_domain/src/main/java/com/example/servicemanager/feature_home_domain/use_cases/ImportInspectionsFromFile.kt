@@ -58,7 +58,6 @@ class ImportInspectionsFromFile @Inject constructor () {
                     )
             }
          } catch (e: Exception) {
-            // TODO ImportInspectionsFromFile error handling (SnackBar or something)
             emit(
                 Resource(
                     ResourceState.ERROR,
