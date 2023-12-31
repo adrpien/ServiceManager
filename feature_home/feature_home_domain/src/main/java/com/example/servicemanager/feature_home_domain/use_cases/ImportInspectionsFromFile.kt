@@ -50,7 +50,6 @@ class ImportInspectionsFromFile @Inject constructor () {
                 }
                 workbook.close()
                 fileInputStream.close()
-                val listSize: Int = data.size
                 emit(
                     Resource(
                         ResourceState.SUCCESS,

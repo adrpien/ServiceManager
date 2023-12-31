@@ -61,7 +61,6 @@ fun DatabaseSettingsScreen(
         mutableStateOf(
             DefaultInspectionsLoadingDialogState(
                 text = "",
-                progress = 0.0F,
                 counter = null
             )
         )
@@ -144,7 +143,6 @@ fun DatabaseSettingsScreen(
                     importInspectionsLoadingDialogState.value = importInspectionsLoadingDialogState.value.copy(
                         text = event.text.asString(context),
                         counter = event.counter,
-                        progress = event.progress
                     )
                 }
 
@@ -153,6 +151,11 @@ fun DatabaseSettingsScreen(
                         text = event.text.asString(context),
                         counter = event.counter,
                     )
+                }
+
+                UiEvent.HideImportInspectionsDialogs -> {
+                    importInspectionsLoadingMaterialDialogState.hide()
+                    importInspectionMaterialDialogState.hide()
                 }
             }
         }

@@ -43,12 +43,13 @@ class DatabaseSettingsViewModel @Inject constructor(
                             ResourceState.ERROR -> {
                                 _eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(
                                     R.string.unknown_error)))
+                                _eventFlow.emit(UiEvent.HideImportInspectionsDialogs)
                             }
+
                             ResourceState.SUCCESS -> {
                                 result.message?.let {text ->
                                     _eventFlow.emit(UiEvent.UpdateImportInspectionsLoadingDialogState(
                                         text = text,
-                                        progress = 0.0F,
                                         counter = result.data?.size
                                     ))
                                     _eventFlow.emit(UiEvent.UpdateImportInspectionsDialogState(
@@ -72,7 +73,6 @@ class DatabaseSettingsViewModel @Inject constructor(
                                 result.message?.let {text ->
                                     _eventFlow.emit(UiEvent.UpdateImportInspectionsLoadingDialogState(
                                         text = text,
-                                        progress = 0.0F,
                                         counter = result.data?.size
                                     ))
                                     _eventFlow.emit(UiEvent.UpdateImportInspectionsDialogState(
@@ -103,7 +103,8 @@ sealed class UiEvent() {
     data class Navigate(val screen: Screen): UiEvent()
     data class ShowSnackbar(val message: UiText): UiEvent()
     object ShowImportInspectionsDialog: UiEvent()
-    data class UpdateImportInspectionsLoadingDialogState(val text: UiText, val counter: Int?, val progress: Float): UiEvent()
+    object HideImportInspectionsDialogs: UiEvent()
+    data class UpdateImportInspectionsLoadingDialogState(val text: UiText, val counter: Int?): UiEvent()
     data class UpdateImportInspectionsDialogState(val text: UiText, val counter: Int?): UiEvent()
 
 }

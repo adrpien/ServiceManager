@@ -46,14 +46,6 @@ fun ImportInspectionsLoadingMaterialDialog(
                 color = MaterialTheme.colorScheme.onSecondary
                 )
             Spacer(modifier = Modifier.height(8.dp))
-            LinearProgressIndicator(
-                progress = state.value.progress,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp)
-                    .background(MaterialTheme.colorScheme.secondary),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
         }
     }
 }
