@@ -234,6 +234,7 @@ fun InspectionDetailsScreen(
                                 )
                             )
                         }
+                        navHostController.popBackStack(Screen.InspectionDetailsScreen.route + "/{inspectionId}", true )
                         navHostController.navigate(Screen.InspectionListScreen.route + "/{userId}")
                     } else {
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))

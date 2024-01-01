@@ -290,7 +290,7 @@ fun RepairDetailsScreen(
                             viewModel.onEvent(RepairDetailsEvent.SaveRepair(repairDetailsState.value.repair))
 
                         }
-
+                        navHostController.popBackStack(Screen.RepairDetailsScreen.route + "/{repairId}", true )
                         navHostController.navigate(Screen.RepairListScreen.route + "/{userId}")
 
                     } else {
