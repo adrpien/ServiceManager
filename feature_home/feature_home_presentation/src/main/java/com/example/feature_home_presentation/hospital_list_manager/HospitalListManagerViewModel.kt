@@ -39,7 +39,7 @@ class HospitalListManagerViewModel @Inject constructor(
         when (hospitalListManagerEvent) {
             is HospitalListManagerEvent.AddHospital -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.createHospital(hospitalListManagerEvent.hospital).collect() { result ->
+                    val result = appUseCases.createHospital(hospitalListManagerEvent.hospital)
                         when(result.resourceState) {
                             ResourceState.ERROR -> Unit
                             ResourceState.LOADING -> Unit
@@ -49,11 +49,9 @@ class HospitalListManagerViewModel @Inject constructor(
                         }
                     }
                 }
-            }
-
             is HospitalListManagerEvent.DeleteHospital -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.deleteHospital(hospitalListManagerEvent.hospital).collect() { result ->
+                    val result = appUseCases.deleteHospital(hospitalListManagerEvent.hospital)
                         when(result.resourceState) {
                             ResourceState.ERROR -> Unit
                             ResourceState.SUCCESS -> {
@@ -66,12 +64,10 @@ class HospitalListManagerViewModel @Inject constructor(
                     }
 
                 }
-            }
-
             is HospitalListManagerEvent.ChangeOrder -> Unit
             is HospitalListManagerEvent.RevertHospital -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.createHospitalWithId(hospitalListManagerEvent.hospital).collect() { result ->
+                val result = viewModelScope.launch(Dispatchers.IO) {
+                    val result = appUseCases.createHospitalWithId(hospitalListManagerEvent.hospital)
                         when(result.resourceState){
                             ResourceState.ERROR -> Unit
                             ResourceState.SUCCESS -> {
@@ -81,7 +77,6 @@ class HospitalListManagerViewModel @Inject constructor(
                             ResourceState.LOADING -> Unit
                         }
                     }
-                }
             }
         }
     }

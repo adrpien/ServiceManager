@@ -15,19 +15,15 @@ class CreateInspectionState @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(inspectionState: InspectionState): Flow<Resource<String>> {
+    suspend operator fun invoke(inspectionState: InspectionState): Resource<String> {
         return if(inspectionState.inspectionStateId != "") {
             repository.createInspectionState(inspectionState)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Inspection state name can not be empty",
-                        UiText.StringResource(R.string.inspection_state_name_can_not_be_empty)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.inspection_state_name_can_not_be_empty)
+            )
         }
     }
 

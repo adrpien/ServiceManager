@@ -34,10 +34,10 @@ class  AppRepositoryImplementation(
     override fun getSignature(signatureId: String): Flow<Resource<ByteArray>> {
         return firebaseApi.getSignature(signatureId)
     }
-    override fun updateSignature(signatureId: String, byteArray: ByteArray): Flow<Resource<String>> {
+    override suspend fun updateSignature(signatureId: String, byteArray: ByteArray): Resource<String> {
         return firebaseApi.uploadSignature(signatureId, byteArray)
     }
-    override fun createSignature(signatureId: String, byteArray: ByteArray): Flow<Resource<String>> {
+    override suspend fun createSignature(signatureId: String, byteArray: ByteArray): Resource<String> {
         return firebaseApi.uploadSignature(signatureId, byteArray)
     }
 
@@ -69,18 +69,18 @@ class  AppRepositoryImplementation(
         }
     }
 
-    override fun updateHospital(hospital: Hospital): Flow<Resource<String>> {
+    override suspend fun updateHospital(hospital: Hospital): Resource<String> {
         return firebaseApi.updateHospital(hospital)
     }
 
-    override fun createHospital(hospital: Hospital): Flow<Resource<String>> {
+    override suspend fun createHospital(hospital: Hospital): Resource<String> {
         return firebaseApi.createHospital(hospital)
     }
-    override fun createHospitalWithId(hospital: Hospital): Flow<Resource<String>> {
+    override suspend fun createHospitalWithId(hospital: Hospital): Resource<String> {
         return firebaseApi.createHospitalWithId(hospital)
     }
 
-    override fun deleteHospital(hospitalId: String): Flow<Resource<String>> {
+    override suspend fun deleteHospital(hospitalId: String): Resource<String> {
         return firebaseApi.deleteHospital(hospitalId)
     }
 
@@ -112,15 +112,15 @@ class  AppRepositoryImplementation(
         }
     }
 
-    override fun createTechnician(technician: Technician): Flow<Resource<String>> {
+    override suspend fun createTechnician(technician: Technician): Resource<String> {
         return firebaseApi.createTechnician(technician)
     }
 
-    override fun deleteTechnician(technicianId: String): Flow<Resource<String>> {
+    override suspend fun deleteTechnician(technicianId: String): Resource<String> {
         return  firebaseApi.deleteTechnician(technicianId)
     }
 
-    override fun updateTechnician(technician: Technician): Flow<Resource<String>> {
+    override suspend fun updateTechnician(technician: Technician): Resource<String> {
         return firebaseApi.updateTechnician(technician)
     }
 
@@ -152,15 +152,15 @@ class  AppRepositoryImplementation(
         }
     }
 
-    override fun createInspectionState(inspectionState: InspectionState): Flow<Resource<String>> {
+    override suspend fun createInspectionState(inspectionState: InspectionState): Resource<String> {
         return firebaseApi.createInspectionState(inspectionState)
     }
 
-    override fun deleteInspectionState(inspectionStateId: String): Flow<Resource<String>> {
+    override suspend fun deleteInspectionState(inspectionStateId: String): Resource<String> {
         return firebaseApi.deleteInspectionState(inspectionStateId)
     }
 
-    override fun updateInspectionState(inspectionState: InspectionState): Flow<Resource<String>> {
+    override suspend fun updateInspectionState(inspectionState: InspectionState): Resource<String> {
         return firebaseApi.updateInspectionState(inspectionState)
     }
 
@@ -192,15 +192,15 @@ class  AppRepositoryImplementation(
         }
     }
 
-    override fun createRepairState(repairState: RepairState): Flow<Resource<String>> {
+    override suspend fun createRepairState(repairState: RepairState): Resource<String> {
         return firebaseApi.createRepairState(repairState)
     }
 
-    override fun deleteRepairState(repairStateId: String): Flow<Resource<String>> {
+    override suspend fun deleteRepairState(repairStateId: String): Resource<String> {
         return firebaseApi.deleteRepairState(repairStateId)
     }
 
-    override fun updateRepairState(repairState: RepairState): Flow<Resource<String>> {
+    override suspend fun updateRepairState(repairState: RepairState): Resource<String> {
         return firebaseApi.updateRepairState(repairState)
     }
 
@@ -232,15 +232,15 @@ class  AppRepositoryImplementation(
         }
     }
 
-    override fun createEstState(estState: EstState): Flow<Resource<String>> {
+    override suspend fun createEstState(estState: EstState): Resource<String> {
         return createEstState(estState)
     }
 
-    override fun deleteEstState(estStateId: String): Flow<Resource<String>> {
+    override suspend fun deleteEstState(estStateId: String): Resource<String> {
         return deleteRepairState(estStateId)
     }
 
-    override fun updateEstState(estState: EstState): Flow<Resource<String>> {
+    override suspend fun updateEstState(estState: EstState): Resource<String> {
         return updateEstState(estState)
     }
 
@@ -295,16 +295,16 @@ class  AppRepositoryImplementation(
         }
     }
 
-    override fun createUserType(userType: UserType): Flow<Resource<String>> {
+    override suspend fun createUserType(userType: UserType): Resource<String> {
         //appLogger.logUserType(EventLogType.NewRecordLog, )
         return firebaseApi.createUserType(userType)
     }
 
-    override fun deleteUserType(userTypeId: String): Flow<Resource<String>> {
+    override suspend fun deleteUserType(userTypeId: String): Resource<String> {
         return firebaseApi.deleteUserType(userTypeId)
     }
 
-    override fun updateUserType(userType: UserType): Flow<Resource<String>> {
+    override suspend fun updateUserType(userType: UserType): Resource<String> {
         return updateUserType(userType)
     }
 

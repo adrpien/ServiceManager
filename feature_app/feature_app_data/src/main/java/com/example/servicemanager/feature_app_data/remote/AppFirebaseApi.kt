@@ -30,37 +30,29 @@ class  AppFirebaseApi(
 
 
     /* ********************************* SIGNATURES ********************************************* */
-    fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Flow<Resource<String>> = flow {
+    suspend fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Resource<String>  {
         // TODO Caching mechanism in uploadSignature fun for AppFirebaseApi implementation
         Log.d(APP_FIREBASE_API, "Signature uploading started")
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                null
-            )
-        )
         val documentReference = firebaseStorage.getReference("signatures")
             .child("${signatureId}.jpg")
             val result = documentReference.putBytes(signatureBytes)
             result.await()
-                    if (result.isSuccessful) {
-                        emit(
-                            Resource(
-                                ResourceState.SUCCESS,
-                                documentReference.downloadUrl.toString()
-                            )
-                        )
-                        Log.d(APP_FIREBASE_API, "Signature uploaded")
+            if (result.isSuccessful) {
+                Log.d(APP_FIREBASE_API, "Signature uploaded")
+                return Resource(
+                        ResourceState.SUCCESS,
+                        documentReference.downloadUrl.toString(),
+                        UiText.StringResource(R.string.upload_signature_success)
+                    )
 
-                    } else {
-                        emit(
-                            Resource(
-                                ResourceState.ERROR,
-                                null
-                            )
-                        )
-                        Log.d(APP_FIREBASE_API, "Signature uploading error")
-                    }
+            } else {
+                Log.d(APP_FIREBASE_API, "Signature uploading error")
+                return Resource(
+                        ResourceState.ERROR,
+                        null,
+                    UiText.StringResource(R.string.unknown_error)
+                    )
+            }
 
     }
     fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
@@ -111,13 +103,8 @@ class  AppFirebaseApi(
         }
         return hospitalList
     }
-    fun updateHospital(hospital: Hospital): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update hospital started",
-                null)
-        )
+    suspend fun updateHospital(hospital: Hospital): Resource<String> {
+
             val map: Map<String, String> = mapOf(
                 "hospitalId" to hospital.hospitalId,
                 "hospital" to hospital.hospital
@@ -126,32 +113,23 @@ class  AppFirebaseApi(
             val result = documentReference.update(map)
             result.await()
             if (result.isSuccessful) {
-                emit(
-                    Resource(
+                Log.d(APP_FIREBASE_API, "Hospital record update success")
+                return Resource(
                         ResourceState.SUCCESS,
-                        "Hospital update success",
+                    null,
                         UiText.StringResource(R.string.hospital_update_success)
                     )
-                )
-                Log.d(APP_FIREBASE_API, "Hospital record update success")
+
             } else {
-                emit(
-                    Resource(
+                Log.d(APP_FIREBASE_API, "Hospital record update error")
+                return Resource(
                         ResourceState.ERROR,
-                        "Hospital update error",
+                    null,
                         UiText.StringResource(R.string.hospital_update_error)
                     )
-                )
-                Log.d(APP_FIREBASE_API, "Hospital record update error")
             }
     }
-    fun createHospital(hospital: Hospital): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Create hospital started",
-                null)
-        )
+    suspend fun createHospital(hospital: Hospital): Resource<String> {
         val documentReference = firebaseFirestore.collection("hospitals").document()
         val map: Map<String, String> = mapOf(
             "hospitalId" to documentReference.id,
@@ -160,34 +138,23 @@ class  AppFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Hospital record create success")
+            return Resource(
                     ResourceState.SUCCESS,
                     documentReference.id,
                     UiText.StringResource(R.string.hospital_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Hospital record create success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Hospital record create error")
+            return  Resource(
                     ResourceState.ERROR,
-                    "Hospital create error",
+                null,
                     UiText.StringResource(R.string.hospital_create_error
                 )
             )
-            )
-            Log.d(APP_FIREBASE_API, "Hospital record create error")
-
         }
     }
-    fun createHospitalWithId(hospital: Hospital): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Create hospital started",
-                null)
-        )
+    suspend fun createHospitalWithId(hospital: Hospital): Resource<String> {
         val documentReference = firebaseFirestore.collection("hospitals").document(hospital.hospitalId)
         val map: Map<String, String> = mapOf(
             "hospitalId" to hospital.hospitalId,
@@ -196,56 +163,42 @@ class  AppFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Hospital record create success")
+            return Resource(
                     ResourceState.SUCCESS,
                     documentReference.id,
                     UiText.StringResource(R.string.hospital_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Hospital record create success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Hospital record create error")
+
+            return Resource(
                     ResourceState.ERROR,
-                    "Hospital create error",
+                    null,
                     UiText.StringResource(R.string.hospital_create_error
                     )
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Hospital record create error")
-
         }
     }
 
-    fun deleteHospital(hospitalId: String): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Delete hospital started",
-                null)
-        )
+    suspend fun deleteHospital(hospitalId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("hospitals").document(hospitalId)
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Hospital delete success")
+                return Resource(
                     ResourceState.SUCCESS,
-                    "Hospital delete success",
+                    null,
                     UiText.StringResource(R.string.hospital_delete_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Hospital delete success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Hospital delete error")
+            return Resource(
                     ResourceState.ERROR,
-                    "Hospital delete error",
+                    null,
                     UiText.StringResource(R.string.hospital_delete_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Hospital delete error")
         }
     }
 
@@ -265,13 +218,7 @@ class  AppFirebaseApi(
         }
         return technicianList
     }
-    fun updateTechnician(technician: Technician): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update technician started",
-                null)
-        )
+    suspend fun updateTechnician(technician: Technician): Resource<String> {
         val map: Map<String, String> = mapOf(
             "technicianId" to technician.technicianId,
             "name" to technician.name
@@ -280,34 +227,23 @@ class  AppFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Technician record update success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "Technician update success",
+                null,
                     UiText.StringResource(R.string.technician_update_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Technician record update success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Technician record update error")
+            return Resource(
                     ResourceState.ERROR,
-                    "Technician update error",
+                null,
                     UiText.StringResource(R.string.technician_update_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Technician record update error")
         }
     }
-    fun createTechnician(technician: Technician): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Create technician started",
-                null)
-        )
+    suspend fun createTechnician(technician: Technician): Resource<String> {
         val documentReference = firebaseFirestore.collection("technicians").document()
-
         val map: Map<String, String> = mapOf(
             "technicianId" to documentReference.id,
             "name" to technician.name
@@ -315,53 +251,40 @@ class  AppFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Technician record create success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "Technician create success",
+                documentReference.id,
                     UiText.StringResource(R.string.technician_create_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Technician record create success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Technician record create error")
+
+            return Resource(
                     ResourceState.ERROR,
-                    "Technician create error",
+                null,
                     UiText.StringResource(R.string.technician_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Technician record create error")
         }
     }
-    fun deleteTechnician(technicianId: String): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Delete technician started",
-                null)
-        )
+    suspend fun deleteTechnician(technicianId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("technicians").document(technicianId)
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Technician record delete success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "Technician delete success",
+                null,
                     UiText.StringResource(R.string.technician_delete_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Technician record delete success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "Technician record delete error")
+            return Resource(
                     ResourceState.ERROR,
-                    "Technician delete error",
+                null,
                     UiText.StringResource(R.string.technician_delete_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "Technician record delete error")
         }
     }
 
@@ -381,13 +304,7 @@ class  AppFirebaseApi(
         }
         return hospitalList
     }
-    fun updateEstState(estState: EstState): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update EstState started",
-                null)
-        )
+    suspend fun updateEstState(estState: EstState): Resource<String> {
         val map: Map<String, String> = mapOf(
             "estStateId" to estState.estStateId,
             "estState" to estState.estState
@@ -396,32 +313,22 @@ class  AppFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "EstState record update success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "EstState update success",
+                null,
                     UiText.StringResource(R.string.eststate_update_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "EstState record update success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "EstState record update error")
+            return Resource(
                     ResourceState.ERROR,
-                    "EstState update error",
+                null,
                     UiText.StringResource(R.string.eststate_update_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "EstState record update error")
         }
     }
-    fun createEstState(estState: EstState): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Create EstState started",
-                null)
-        )
+    suspend fun createEstState(estState: EstState): Resource<String> {
         val documentReference = firebaseFirestore.collection("est_states").document()
         val map: Map<String, String> = mapOf(
             "estStateId" to documentReference.id,
@@ -430,53 +337,39 @@ class  AppFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "EstState record create success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "EstState create success",
+                documentReference.id,
                     UiText.StringResource(R.string.eststate_create_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "EstState record create success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "EstState record create error")
+            return Resource(
                     ResourceState.ERROR,
-                    "EstState create error",
+                null,
                     UiText.StringResource(R.string.eststate_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "EstState record create error")
         }
     }
-    fun deleteEstState(estStateId: String): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Delete EstState started",
-                null)
-        )
+    suspend fun deleteEstState(estStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("est_state").document(estStateId)
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "EstState record delete success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "EstState delete success",
+                null,
                     UiText.StringResource(R.string.eststate_delete_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "EstState record delete success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "EstState record delete error")
+            return Resource(
                     ResourceState.ERROR,
-                    "EstState delete error",
+                null,
                     UiText.StringResource(R.string.eststate_delete_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "EstState record delete error")
         }
     }
 
@@ -496,13 +389,7 @@ class  AppFirebaseApi(
         }
         return repairStateList
     }
-    fun updateRepairState(repairState: RepairState): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update RepairState started",
-                null)
-        )
+    suspend fun updateRepairState(repairState: RepairState): Resource<String> {
         val map: Map<String, String> = mapOf(
             "repairStateId" to repairState.repairStateId,
             "repairState" to repairState.repairState
@@ -511,32 +398,22 @@ class  AppFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "RepairState record update success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "RepairState update success",
+                null,
                     UiText.StringResource(R.string.repairstate_update_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "RepairState record update success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "RepairState record update error")
+            return Resource(
                     ResourceState.ERROR,
-                    "RepairState update error",
+                null,
                     UiText.StringResource(R.string.repairstate_update_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "RepairState record update error")
         }
     }
-    fun createRepairState(repairState: RepairState): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Create RepairState started",
-                null)
-        )
+    suspend fun createRepairState(repairState: RepairState): Resource<String> {
         val documentReference = firebaseFirestore.collection("repair_states").document()
         val map: Map<String, String> = mapOf(
             "repairStateId" to documentReference.id,
@@ -546,53 +423,39 @@ class  AppFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "RepairState record update success")
+            return Resource(
                     ResourceState.SUCCESS,
-                    "RepairState create success",
+                documentReference.id,
                     UiText.StringResource(R.string.repairstate_create_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "RepairState record update success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "RepairState record create error")
+            return Resource(
                     ResourceState.ERROR,
-                    "RepairState update error",
+                null,
                     UiText.StringResource(R.string.repairstate_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "RepairState record create error")
         }
     }
-    fun deleteRepairState(repairStateId: String): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Delete RepairState started",
-                null)
-        )
+    suspend fun deleteRepairState(repairStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("repair_states").document(repairStateId)
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
-                    ResourceState.SUCCESS,
-                    "RepairState delete success",
-                    UiText.StringResource(R.string.repairstate_delete_success)
-                )
-            )
             Log.d(APP_FIREBASE_API, "RepairState record delete success")
+            return Resource(
+                    ResourceState.SUCCESS,
+                null,
+                    UiText.StringResource(R.string.repairstate_delete_success)
+            )
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "RepairState record delete error")
+            return Resource(
                     ResourceState.ERROR,
-                    "RepairState delete error",
+                    null,
                     UiText.StringResource(R.string.repairstate_delete_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "RepairState record delete error")
         }
     }
 
@@ -613,13 +476,7 @@ class  AppFirebaseApi(
         }
         return inspectionStateList
     }
-    fun updateInspectionState(inspectionState: InspectionState): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update InspectionState started",
-                null)
-        )
+    suspend fun updateInspectionState(inspectionState: InspectionState): Resource<String> {
         val map: Map<String, String> = mapOf(
             "inspectionStateId" to inspectionState.inspectionStateId,
             "inspectionState" to inspectionState.inspectionState
@@ -628,32 +485,22 @@ class  AppFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "InspectionState record update success")
+            return Resource(
                     ResourceState.SUCCESS,
                     "InspectionState update success",
                     UiText.StringResource(R.string.inspectionstate_update_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "InspectionState record update success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "InspectionState record update error")
+            return Resource(
                     ResourceState.ERROR,
                     "InspectionState update error",
                     UiText.StringResource(R.string.inspectionstate_update_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "InspectionState record update error")
         }
     }
-    fun createInspectionState(inspectionState: InspectionState): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update InspectionState started",
-                null)
-        )
+    suspend fun createInspectionState(inspectionState: InspectionState): Resource<String> {
         val documentReference = firebaseFirestore.collection("inspection_states").document()
         val map: Map<String, String> = mapOf(
             "inspectionStateId" to documentReference.id,
@@ -662,54 +509,40 @@ class  AppFirebaseApi(
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "InspectionState record create success")
+            return Resource(
                     ResourceState.SUCCESS,
                     "InspectionState create success",
                     UiText.StringResource(R.string.inspectionstate_create_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "InspectionState record create success")
+
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "InspectionState record create error")
+            return Resource(
                     ResourceState.ERROR,
                     "InspectionState create error",
                     UiText.StringResource(R.string.inspectionstate_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "InspectionState record create error")
         }
     }
-    fun deleteInspectionState(inspectionStateId: String): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Delete InspectionState started",
-                null)
-        )
+    suspend fun deleteInspectionState(inspectionStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("inspection_states").document(inspectionStateId)
-
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "InspectionState record delete success")
+            return Resource(
                     ResourceState.SUCCESS,
                     "InspectionState delete success",
                     UiText.StringResource(R.string.inspectionstate_delete_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "InspectionState record delete success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "InspectionState record delete error")
+            return Resource(
                     ResourceState.ERROR,
                     "InspectionState delete error",
                     UiText.StringResource(R.string.inspectionstate_delete_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "InspectionState record delete error")
         }
     }
 
@@ -741,14 +574,7 @@ class  AppFirebaseApi(
         return userTypeList
     }
 
-    fun updateUserType(userType: UserType): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update UserType started",
-                null)
-        )
-
+    suspend fun updateUserType(userType: UserType): Resource<String> {
         val hospitals = userType.hospitals.toString()
         val map: Map<String, String> = mapOf(
             "userTypeId" to userType.userTypeId,
@@ -760,32 +586,22 @@ class  AppFirebaseApi(
         val result = documentReference.update(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "UserType record update success")
+            return Resource(
                     ResourceState.SUCCESS,
                     "UserType update success",
                     UiText.StringResource(R.string.usertype_update_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "UserType record update success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "UserType record update error")
+            return Resource(
                     ResourceState.ERROR,
                     "UserType update error",
                     UiText.StringResource(R.string.usertype_update_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "UserType record update error")
         }
     }
-    fun createUserType(userType: UserType): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Create UserType started",
-                null)
-        )
+    suspend fun createUserType(userType: UserType): Resource<String> {
         val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
         val map: Map<String, String> = mapOf(
             "userTypeId" to documentReference.id,
@@ -793,57 +609,42 @@ class  AppFirebaseApi(
             "hospitals" to userType.hospitals.toString()
             // TODO How to pass list of hospitals in here
         )
-
         val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "UserType record create success")
+            return Resource(
                     ResourceState.SUCCESS,
                     "UserType create success",
                     UiText.StringResource(R.string.usertype_create_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "UserType record create success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "UserType record create error")
+            return Resource(
                     ResourceState.ERROR,
                     "UserType update error",
                     UiText.StringResource(R.string.usertype_create_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "UserType record create error")
         }
     }
-    fun deleteUserType(userTypeId: String): Flow<Resource<String>> = flow {
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                "Update UserType started",
-                null)
-        )
+    suspend fun deleteUserType(userTypeId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("user_types").document(userTypeId)
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "UserType record delete success")
+            return Resource(
                     ResourceState.SUCCESS,
                     "UserType delete success",
                     UiText.StringResource(R.string.usertype_delete_success)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "UserType record delete success")
         } else {
-            emit(
-                Resource(
+            Log.d(APP_FIREBASE_API, "UserType record delete error")
+            return Resource(
                     ResourceState.ERROR,
                     "UserType delete error",
                     UiText.StringResource(R.string.usertype_delete_error)
                 )
-            )
-            Log.d(APP_FIREBASE_API, "UserType record delete error")
         }
     }
 

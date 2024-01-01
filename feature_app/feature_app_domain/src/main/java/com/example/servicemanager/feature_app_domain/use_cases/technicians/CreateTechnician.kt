@@ -14,19 +14,15 @@ class CreateTechnician @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(technician: Technician): Flow<Resource<String>> {
+    suspend operator fun invoke(technician: Technician): Resource<String> {
         return if(technician.technicianId != "") {
             repository.createTechnician(technician)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Technician name create can not be empty",
-                        UiText.StringResource(R.string.technician_name_can_not_be_empty)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.technician_name_can_not_be_empty)
+            )
         }
     }
 

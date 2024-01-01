@@ -16,19 +16,15 @@ class DeleteRepairState @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(repairState: RepairState): Flow<Resource<String>> {
+    suspend operator fun invoke(repairState: RepairState): Resource<String> {
         return if(repairState.repairStateId != "") {
             repository.deleteRepairState(repairState.repairStateId)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Repair State delete unknown error",
-                        UiText.StringResource(R.string.repair_state_delete_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.repair_state_delete_unknown_error)
+            )
         }
     }
 

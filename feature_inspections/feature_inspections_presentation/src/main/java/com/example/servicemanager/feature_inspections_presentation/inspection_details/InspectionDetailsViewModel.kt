@@ -86,7 +86,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                 appUseCases.saveSignature(
                                     inspectionDetailsState.value.inspection.inspectionId,
                                     bitmapToByteArray(inspectionDetailsState.value.signature)
-                                ).collect()
+                                )
                             }
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                         }
@@ -98,7 +98,7 @@ class InspectionDetailsViewModel @Inject constructor(
                     inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
                 }
                 viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature)).collect()
+                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                 }
             }
             is InspectionDetailsEvent.SetIsInEditMode -> {
@@ -139,7 +139,7 @@ class InspectionDetailsViewModel @Inject constructor(
         } else {
             _inspectionDetailsState.value =
                 _inspectionDetailsState.value.copy(
-                    inspection = Inspection(),
+                    inspection = Inspection(inspectionId = "0"),
                     isInEditMode = true
                 )
             inspectionDetailsIsLoading = false

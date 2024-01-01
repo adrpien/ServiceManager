@@ -14,19 +14,15 @@ class CreateHospitalWithId @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(hospital: Hospital): Flow<Resource<String>> {
+    suspend operator fun invoke(hospital: Hospital): Resource<String> {
         return if(hospital.hospital != "") {
             repository.createHospitalWithId(hospital)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Hospital create can not be empty",
-                        UiText.StringResource(R.string.hospital_name_can_not_be_empty)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.hospital_name_can_not_be_empty)
+            )
         }
     }
 

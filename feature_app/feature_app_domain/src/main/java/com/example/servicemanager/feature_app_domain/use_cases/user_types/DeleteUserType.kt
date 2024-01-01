@@ -16,19 +16,15 @@ class DeleteUserType @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(userType: UserType): Flow<Resource<String>> {
+    suspend operator fun invoke(userType: UserType): Resource<String> {
         return if(userType.userTypeId != "") {
             repository.deleteHospital(userType.userTypeId)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "UserType delete unknown error",
-                        UiText.StringResource(R.string.usertype_delete_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.usertype_delete_unknown_error)
+            )
         }
     }
 

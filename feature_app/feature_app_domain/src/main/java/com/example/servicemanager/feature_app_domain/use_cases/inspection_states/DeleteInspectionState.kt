@@ -16,19 +16,15 @@ class DeleteInspectionState @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(inspectionState: InspectionState): Flow<Resource<String>> {
+    suspend operator fun invoke(inspectionState: InspectionState): Resource<String> {
         return if(inspectionState.inspectionStateId != "") {
             repository.deleteInspectionState(inspectionState.inspectionStateId)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Inspection State delete unknown error",
-                        UiText.StringResource(R.string.inspection_state_delete_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.inspection_state_delete_unknown_error)
+            )
         }
     }
 

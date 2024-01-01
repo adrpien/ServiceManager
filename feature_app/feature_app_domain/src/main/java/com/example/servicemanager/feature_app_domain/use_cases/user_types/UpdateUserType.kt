@@ -15,20 +15,15 @@ class UpdateUserType @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(userType: UserType): Flow<Resource<String>> {
+    suspend operator fun invoke(userType: UserType): Resource<String> {
         return if(userType.userTypeId != "") {
             repository.updateUserType(userType)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "UserType update unknown error",
-                        UiText.StringResource(R.string.usertype_update_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.usertype_update_unknown_error)
+            )
         }
     }
-
 }

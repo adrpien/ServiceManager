@@ -14,19 +14,15 @@ class UpdateHospital @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(hospital: Hospital): Flow<Resource<String>> {
+    suspend operator fun invoke(hospital: Hospital): Resource<String> {
         return if(hospital.hospitalId != "") {
             repository.updateHospital(hospital)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Hospital update unknown error",
-                        UiText.StringResource(R.string.hospital_update_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                "Hospital update unknown error",
+                UiText.StringResource(R.string.hospital_update_unknown_error)
+            )
         }
     }
 

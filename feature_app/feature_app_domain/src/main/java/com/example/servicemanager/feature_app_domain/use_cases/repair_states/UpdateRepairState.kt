@@ -15,19 +15,16 @@ class UpdateRepairState @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(repairState: RepairState): Flow<Resource<String>> {
+    suspend operator fun invoke(repairState: RepairState): Resource<String> {
         return if(repairState.repairStateId != "") {
             repository.updateRepairState(repairState)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Repair State update unknown error",
-                        UiText.StringResource(R.string.repair_state_update_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                "Repair State update unknown error",
+                UiText.StringResource(R.string.repair_state_update_unknown_error)
+            )
+
         }
     }
 

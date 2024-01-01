@@ -14,19 +14,15 @@ class DeleteTechnician @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(technician: Technician): Flow<Resource<String>> {
+    suspend operator fun invoke(technician: Technician): Resource<String> {
         return if(technician.technicianId != "") {
             repository.deleteTechnician(technician.technicianId)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Technician delete unknown error",
-                        UiText.StringResource(R.string.technician_delete_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.technician_delete_unknown_error)
+            )
         }
     }
 

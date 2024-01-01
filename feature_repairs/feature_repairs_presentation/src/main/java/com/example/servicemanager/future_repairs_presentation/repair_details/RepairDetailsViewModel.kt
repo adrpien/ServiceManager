@@ -76,7 +76,7 @@ class RepairDetailsViewModel @Inject constructor(
                                 _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
                             }
                             viewModelScope.launch(Dispatchers.IO) {
-                                appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
+                                appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
                             _eventFlow.emit(
                                 UiEvent.NavigateTo(
@@ -97,7 +97,7 @@ class RepairDetailsViewModel @Inject constructor(
                     repairUseCases.updateRepair(repairDetailsState.value.repair)
                 }
                 viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature)).collect()
+                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
                 }
             }
             is RepairDetailsEvent.SetIsInEditMode -> {
@@ -140,7 +140,7 @@ class RepairDetailsViewModel @Inject constructor(
         } else {
             _repairDetailsState.value =
                 _repairDetailsState.value.copy(
-                    repair = Repair(),
+                    repair = Repair(repairId = "0"),
                     isInEditMode = true
                 )
             repairIsLoading = false

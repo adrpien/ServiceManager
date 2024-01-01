@@ -14,19 +14,15 @@ class CreateUserType @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(userType: UserType): Flow<Resource<String>> {
+    suspend operator fun invoke(userType: UserType): Resource<String> {
         return if(userType.userTypeName != "") {
             repository.createUserType(userType)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "UserType name can not be empty",
-                        UiText.StringResource(R.string.usertype_name_can_not_be_empty)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.usertype_name_can_not_be_empty)
+            )
         }
     }
 

@@ -15,19 +15,15 @@ class CreateRepairState @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(repairState: RepairState): Flow<Resource<String>> {
+    suspend operator fun invoke(repairState: RepairState): Resource<String> {
         return if(repairState.repairStateId != "") {
             repository.createRepairState(repairState)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Repair state name can not be empty",
-                        UiText.StringResource(R.string.repair_state_name_can_not_be_empty)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.repair_state_name_can_not_be_empty)
+            )
         }
     }
 

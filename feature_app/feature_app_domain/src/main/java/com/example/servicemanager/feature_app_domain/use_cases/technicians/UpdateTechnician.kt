@@ -14,19 +14,15 @@ class UpdateTechnician @Inject constructor (
     private val repository: AppRepository
 ) {
 
-    operator fun invoke(technician: Technician): Flow<Resource<String>> {
+    suspend operator fun invoke(technician: Technician): Resource<String> {
         return if(technician.technicianId != "") {
             repository.updateTechnician(technician)
         } else {
-            flow {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        "Technician update unknown error",
-                        UiText.StringResource(R.string.technician_update_unknown_error)
-                    )
-                )
-            }
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.technician_update_unknown_error)
+            )
         }
     }
 
