@@ -50,15 +50,15 @@ class EstStateListManagerViewModel @Inject constructor(
             is EstStateListManagerEvent.DeleteEstState -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = appUseCases.deleteEstState(estStateListManagerEvent.estState)
-                        when(result.resourceState) {
-                            ResourceState.ERROR -> Unit
-                            ResourceState.SUCCESS -> {
-                                fetchEstStateList()
-                                _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
-                                lastDeletedEstState = estStateListManagerEvent.estState
-                            }
-                            ResourceState.LOADING -> Unit
+                    when(result.resourceState) {
+                        ResourceState.ERROR -> Unit
+                        ResourceState.SUCCESS -> {
+                            fetchEstStateList()
+                            _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
+                            lastDeletedEstState = estStateListManagerEvent.estState
                         }
+                        ResourceState.LOADING -> Unit
+                    }
                     }
 
                 }

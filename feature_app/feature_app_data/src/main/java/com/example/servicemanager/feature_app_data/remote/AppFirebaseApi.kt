@@ -403,7 +403,7 @@ class  AppFirebaseApi(
     }
 
     suspend fun deleteEstState(estStateId: String): Resource<String> {
-        val documentReference = firebaseFirestore.collection("est_state").document(estStateId)
+        val documentReference = firebaseFirestore.collection("est_states").document(estStateId)
         val result = documentReference.delete()
         result.await()
         if (result.isSuccessful) {
@@ -470,10 +470,10 @@ class  AppFirebaseApi(
             "repairState" to repairState.repairState
         )
 
-        val result = documentReference.update(map)
+        val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            Log.d(APP_FIREBASE_API, "RepairState record update success")
+            Log.d(APP_FIREBASE_API, "RepairState record created successfully")
             return Resource(
                     ResourceState.SUCCESS,
                 null,
@@ -495,10 +495,10 @@ class  AppFirebaseApi(
             "repairState" to repairState.repairState
         )
 
-        val result = documentReference.update(map)
+        val result = documentReference.set(map)
         result.await()
         if (result.isSuccessful) {
-            Log.d(APP_FIREBASE_API, "RepairState record update success")
+            Log.d(APP_FIREBASE_API, "RepairState record with Id created successfully")
             return Resource(
                 ResourceState.SUCCESS,
                 null,

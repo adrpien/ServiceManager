@@ -17,7 +17,7 @@ class DeleteEstState @Inject constructor (
 
     suspend operator fun invoke(estState: EstState): Resource<String> {
         return try {
-            repository.deleteHospital(estState.estStateId)
+            repository.deleteEstState(estState.estStateId)
         } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,

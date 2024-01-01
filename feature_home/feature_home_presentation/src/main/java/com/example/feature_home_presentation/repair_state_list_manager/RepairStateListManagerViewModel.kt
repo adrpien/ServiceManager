@@ -50,31 +50,31 @@ class RepairStateListManagerViewModel @Inject constructor(
             is RepairStateListManagerEvent.DeleteRepairState -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = appUseCases.deleteRepairState(repairStateListManagerEvent.repairState)
-                        when(result.resourceState) {
-                            ResourceState.ERROR -> Unit
-                            ResourceState.SUCCESS -> {
-                                fetchRepairStateList()
-                                _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
-                                lastDeletedRepairState = repairStateListManagerEvent.repairState
-                            }
-                            ResourceState.LOADING -> Unit
+                    when(result.resourceState) {
+                        ResourceState.ERROR -> Unit
+                        ResourceState.SUCCESS -> {
+                            fetchRepairStateList()
+                            _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
+                            lastDeletedRepairState = repairStateListManagerEvent.repairState
                         }
+                        ResourceState.LOADING -> Unit
+                    }
                     }
 
                 }
             is RepairStateListManagerEvent.ChangeOrder -> Unit
             is RepairStateListManagerEvent.RevertRepairState -> {
-                val result = viewModelScope.launch(Dispatchers.IO) {
-                    val result = appUseCases.createRepairStateWithId(repairStateListManagerEvent.repairState)
-                        when(result.resourceState){
-                            ResourceState.ERROR -> Unit
-                            ResourceState.SUCCESS -> {
-                                fetchRepairStateList()
-                                lastDeletedRepairState = null
-                            }
-                            ResourceState.LOADING -> Unit
-                        }
+                viewModelScope.launch(Dispatchers.IO) {
+                val result = appUseCases.createRepairStateWithId(repairStateListManagerEvent.repairState)
+                when(result.resourceState){
+                    ResourceState.ERROR -> Unit
+                    ResourceState.SUCCESS -> {
+                        fetchRepairStateList()
+                        lastDeletedRepairState = null
                     }
+                    ResourceState.LOADING -> Unit
+                }
+                }
             }
         }
     }
