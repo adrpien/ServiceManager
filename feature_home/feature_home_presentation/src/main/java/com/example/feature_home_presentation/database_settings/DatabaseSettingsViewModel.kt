@@ -1,5 +1,6 @@
 package com.example.feature_home_presentation.database_settings
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -95,7 +96,9 @@ class DatabaseSettingsViewModel @Inject constructor(
                                 _eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(R.string.unknown_error)))
                             }
                             ResourceState.ERROR -> Unit
-                            ResourceState.LOADING -> Unit
+                            ResourceState.LOADING -> {
+                                //_eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(R.string.unknown_error)))
+                            }
                         }
                     }
                 }

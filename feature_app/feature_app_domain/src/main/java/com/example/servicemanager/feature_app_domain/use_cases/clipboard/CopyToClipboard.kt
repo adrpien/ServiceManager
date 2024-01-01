@@ -14,7 +14,6 @@ class CopyToClipboard @Inject constructor (
 ) {
 
     operator fun invoke(string: String) {
-        val textToCopy = string
         val clip = ClipData.newPlainText("copied_text", string)
         clipboardManager.setPrimaryClip(clip)
     }

@@ -8,5 +8,8 @@
     <string name="wrong_file_format">Wrong file format</string>
     <string name="importing_initiatialization">Importing initialization</string>
     <string name="importing_initiation">Importing initialization</string>
+    <string name="saving_inspections_finished_successfully">Saving inspections finished successfully</string>
+    <string name="saving_inspections_error">Saving inspections error</string>
+    <string name="saved_x_inspections">Saved %1$s inspections</string>
 
 </resources>

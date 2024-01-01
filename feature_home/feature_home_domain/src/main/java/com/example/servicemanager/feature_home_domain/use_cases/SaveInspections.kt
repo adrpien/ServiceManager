@@ -32,7 +32,12 @@ class SaveInspections @Inject constructor (
                         Resource(
                             ResourceState.LOADING,
                             null,
-                            UiText.DynamicString("Saved ${index} inspections")
+                            UiText.StringResource(
+                                id = com.example.feature_home_domain.R.string.saved_x_inspections,
+                                args = listOf<String>(
+                                    (index + 1).toString()
+                                )
+                            )
                         )
                     )
                 }
@@ -46,7 +51,7 @@ class SaveInspections @Inject constructor (
                     Resource(
                         ResourceState.SUCCESS,
                         null,
-                        UiText.DynamicString("Saving inspections finished successfully")
+                        UiText.StringResource(com.example.feature_home_domain.R.string.saving_inspections_finished_successfully)
                     )
                 )
             } else {
@@ -54,7 +59,7 @@ class SaveInspections @Inject constructor (
                     Resource(
                         ResourceState.ERROR,
                         null,
-                        UiText.DynamicString("Saving inspections error")
+                        UiText.StringResource(com.example.feature_home_domain.R.string.saving_inspections_error)
                     )
                 )
             }
