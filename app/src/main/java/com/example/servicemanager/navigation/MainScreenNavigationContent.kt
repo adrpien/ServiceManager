@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.example.core.util.Screen
 import com.example.feature_home_presentation.app_settings.components.AppSettingsScreen
 import com.example.feature_home_presentation.database_settings.components.DatabaseSettingsScreen
-import com.example.feature_home_presentation.estState_list_manager.EstStateListManagerScreen
+import com.example.feature_home_presentation.est_state_list_manager.EstStateListManagerScreen
 import com.example.feature_home_presentation.home.components.HomeScreen
 import com.example.feature_home_presentation.hospital_list_manager.HospitalListManagerScreen
 import com.example.feature_home_presentation.inspection_state_list_manager.InspectionStateListManagerScreen

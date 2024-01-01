@@ -1,4 +1,4 @@
-package com.example.feature_home_presentation.estState_list_manager
+package com.example.feature_home_presentation.est_state_list_manager
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -38,13 +38,13 @@ class EstStateListManagerViewModel @Inject constructor(
             is EstStateListManagerEvent.AddEstState -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = appUseCases.createEstState(estStateListManagerEvent.estState)
-                        when(result.resourceState) {
-                            ResourceState.ERROR -> Unit
-                            ResourceState.LOADING -> Unit
-                            ResourceState.SUCCESS -> {
-                                fetchEstStateList()
-                            }
+                    when(result.resourceState) {
+                        ResourceState.ERROR -> Unit
+                        ResourceState.LOADING -> Unit
+                        ResourceState.SUCCESS -> {
+                            fetchEstStateList()
                         }
+                    }
                     }
                 }
             is EstStateListManagerEvent.DeleteEstState -> {
@@ -66,14 +66,14 @@ class EstStateListManagerViewModel @Inject constructor(
             is EstStateListManagerEvent.RevertEstState -> {
                 val result = viewModelScope.launch(Dispatchers.IO) {
                     val result = appUseCases.createEstStateWithId(estStateListManagerEvent.estState)
-                        when(result.resourceState){
-                            ResourceState.ERROR -> Unit
-                            ResourceState.SUCCESS -> {
-                                fetchEstStateList()
-                                lastDeletedEstState = null
-                            }
-                            ResourceState.LOADING -> Unit
+                    when(result.resourceState){
+                        ResourceState.ERROR -> Unit
+                        ResourceState.SUCCESS -> {
+                            fetchEstStateList()
+                            lastDeletedEstState = null
                         }
+                        ResourceState.LOADING -> Unit
+                    }
                     }
             }
         }

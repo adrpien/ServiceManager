@@ -1,4 +1,4 @@
-package com.example.feature_home_presentation.estState_list_manager
+package com.example.feature_home_presentation.est_state_list_manager
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -177,7 +177,8 @@ fun EstStateListManagerScreen(
                             onClick = {
                                 viewModel.onEvent(EstStateListManagerEvent.AddEstState(
                                     EstState(
-                                        estState = addEstStateState.value.value
+                                        estState = addEstStateState.value.value,
+                                        estStateId = "0"
                                     )
                                 ))
                                 addEstStateState.value = addEstStateState.value.copy(value = "")

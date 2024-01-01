@@ -180,7 +180,6 @@ class  AppFirebaseApi(
                 )
         }
     }
-
     suspend fun deleteHospital(hospitalId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("hospitals").document(hospitalId)
         val result = documentReference.delete()
@@ -269,7 +268,7 @@ class  AppFirebaseApi(
     }
 
     suspend fun createTechnicianWithId(technician: Technician): Resource<String> {
-        val documentReference = firebaseFirestore.collection("technicians").document()
+        val documentReference = firebaseFirestore.collection("technicians").document(technician.technicianId)
         val map: Map<String, String> = mapOf(
             "technicianId" to technician.technicianId,
             "name" to technician.name
@@ -379,7 +378,7 @@ class  AppFirebaseApi(
         }
     }
     suspend fun createEstStateWithId(estState: EstState): Resource<String> {
-        val documentReference = firebaseFirestore.collection("est_states").document()
+        val documentReference = firebaseFirestore.collection("est_states").document(estState.estStateId)
         val map: Map<String, String> = mapOf(
             "estStateId" to estState.estStateId,
             "estState" to estState.estState
@@ -490,7 +489,7 @@ class  AppFirebaseApi(
         }
     }
     suspend fun createRepairStateWithId(repairState: RepairState): Resource<String> {
-        val documentReference = firebaseFirestore.collection("repair_states").document()
+        val documentReference = firebaseFirestore.collection("repair_states").document(repairState.repairStateId)
         val map: Map<String, String> = mapOf(
             "repairStateId" to repairState.repairStateId,
             "repairState" to repairState.repairState
@@ -603,7 +602,7 @@ class  AppFirebaseApi(
         }
     }
     suspend fun createInspectionStateWithId(inspectionState: InspectionState): Resource<String> {
-        val documentReference = firebaseFirestore.collection("inspection_states").document()
+        val documentReference = firebaseFirestore.collection("inspection_states").document(inspectionState.inspectionStateId)
         val map: Map<String, String> = mapOf(
             "inspectionStateId" to inspectionState.inspectionStateId,
             "inspectionState" to inspectionState.inspectionState
