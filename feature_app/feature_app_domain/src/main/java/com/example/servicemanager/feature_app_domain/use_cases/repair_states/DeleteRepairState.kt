@@ -17,9 +17,9 @@ class DeleteRepairState @Inject constructor (
 ) {
 
     suspend operator fun invoke(repairState: RepairState): Resource<String> {
-        return if(repairState.repairStateId != "") {
+        return try {
             repository.deleteRepairState(repairState.repairStateId)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,

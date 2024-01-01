@@ -60,20 +60,13 @@ class UserLoginViewModel @Inject constructor(
             }
             is UserLoginEvent.GetCurrentUser -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    authenticationUseCases.getCurrentUser().collect { result ->
-                        when(result.resourceState) {
-                            ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.Authenticate(result.data ?: "0"))
-                            }
-                            ResourceState.ERROR -> {
-                                _eventFlow.emit(
-                                    UiEvent.ShowSnackbar(
-                                        messege = result.message ?: UiText.StringResource(R.string.unknown_error)
-                                    )
-                                )
-                            }
-                            ResourceState.LOADING -> Unit
+                    val result = authenticationUseCases.getCurrentUser()
+                    when(result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            _eventFlow.emit(UiEvent.Authenticate(result.data ?: "0"))
                         }
+                        ResourceState.ERROR -> Unit
+                        ResourceState.LOADING -> Unit
                     }
                 }
             }

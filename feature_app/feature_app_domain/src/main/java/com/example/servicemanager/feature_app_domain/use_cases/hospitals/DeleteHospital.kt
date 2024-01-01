@@ -15,13 +15,13 @@ class DeleteHospital @Inject constructor (
 ) {
 
     suspend operator fun invoke(hospital: Hospital): Resource<String> {
-        return if(hospital.hospitalId != "") {
+        return try {
             repository.deleteHospital(hospital.hospitalId)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.hospital_delete_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.example.core_ui.R
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 
-
+// TODO Fit PasswordTextField style to other composables
 @Composable
 fun PasswordTextField(
     state: MutableState<DefaultTextFieldState>,

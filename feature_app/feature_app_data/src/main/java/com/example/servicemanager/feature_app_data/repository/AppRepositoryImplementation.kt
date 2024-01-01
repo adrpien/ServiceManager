@@ -70,17 +70,29 @@ class  AppRepositoryImplementation(
     }
 
     override suspend fun updateHospital(hospital: Hospital): Resource<String> {
+        if (hospital.hospitalId == ""){
+            throw IllegalArgumentException("hospitalId can not be empty")
+        }
         return firebaseApi.updateHospital(hospital)
     }
 
     override suspend fun createHospital(hospital: Hospital): Resource<String> {
+        if (hospital.hospitalId == ""){
+            throw IllegalArgumentException("hospitalId can not be empty")
+        }
         return firebaseApi.createHospital(hospital)
     }
     override suspend fun createHospitalWithId(hospital: Hospital): Resource<String> {
+        if (hospital.hospitalId == ""){
+            throw IllegalArgumentException("hospitalId can not be empty")
+        }
         return firebaseApi.createHospitalWithId(hospital)
     }
 
     override suspend fun deleteHospital(hospitalId: String): Resource<String> {
+        if (hospitalId == ""){
+            throw IllegalArgumentException("hospitalId can not be empty")
+        }
         return firebaseApi.deleteHospital(hospitalId)
     }
 
@@ -113,14 +125,23 @@ class  AppRepositoryImplementation(
     }
 
     override suspend fun createTechnician(technician: Technician): Resource<String> {
+        if (technician.technicianId == ""){
+            throw IllegalArgumentException("technicianId can not be empty")
+        }
         return firebaseApi.createTechnician(technician)
     }
 
     override suspend fun deleteTechnician(technicianId: String): Resource<String> {
+        if (technicianId == ""){
+            throw IllegalArgumentException("technicianId can not be empty")
+        }
         return  firebaseApi.deleteTechnician(technicianId)
     }
 
     override suspend fun updateTechnician(technician: Technician): Resource<String> {
+        if (technician.technicianId == ""){
+            throw IllegalArgumentException("technicianId can not be empty")
+        }
         return firebaseApi.updateTechnician(technician)
     }
 
@@ -153,14 +174,23 @@ class  AppRepositoryImplementation(
     }
 
     override suspend fun createInspectionState(inspectionState: InspectionState): Resource<String> {
+        if (inspectionState.inspectionStateId == ""){
+            throw IllegalArgumentException("inspectionStateId can not be empty")
+        }
         return firebaseApi.createInspectionState(inspectionState)
     }
 
     override suspend fun deleteInspectionState(inspectionStateId: String): Resource<String> {
+        if (inspectionStateId == ""){
+            throw IllegalArgumentException("inspectionStateId can not be empty")
+        }
         return firebaseApi.deleteInspectionState(inspectionStateId)
     }
 
     override suspend fun updateInspectionState(inspectionState: InspectionState): Resource<String> {
+        if (inspectionState.inspectionStateId == ""){
+            throw IllegalArgumentException("inspectionStateId can not be empty")
+        }
         return firebaseApi.updateInspectionState(inspectionState)
     }
 
@@ -193,14 +223,23 @@ class  AppRepositoryImplementation(
     }
 
     override suspend fun createRepairState(repairState: RepairState): Resource<String> {
+        if (repairState.repairStateId == ""){
+            throw IllegalArgumentException("repairStateId can not be empty")
+        }
         return firebaseApi.createRepairState(repairState)
     }
 
     override suspend fun deleteRepairState(repairStateId: String): Resource<String> {
+        if (repairStateId == ""){
+            throw IllegalArgumentException("repairStateId can not be empty")
+        }
         return firebaseApi.deleteRepairState(repairStateId)
     }
 
     override suspend fun updateRepairState(repairState: RepairState): Resource<String> {
+        if (repairState.repairStateId == ""){
+            throw IllegalArgumentException("repairStateId can not be empty")
+        }
         return firebaseApi.updateRepairState(repairState)
     }
 
@@ -233,19 +272,31 @@ class  AppRepositoryImplementation(
     }
 
     override suspend fun createEstState(estState: EstState): Resource<String> {
+        if (estState.estStateId == ""){
+            throw IllegalArgumentException("estStateId can not be empty")
+        }
         return createEstState(estState)
     }
 
     override suspend fun deleteEstState(estStateId: String): Resource<String> {
+        if (estStateId == ""){
+            throw IllegalArgumentException("estStateId can not be empty")
+        }
         return deleteRepairState(estStateId)
     }
 
     override suspend fun updateEstState(estState: EstState): Resource<String> {
+        if (estState.estStateId == ""){
+            throw IllegalArgumentException("estStateId can not be empty")
+        }
         return updateEstState(estState)
     }
 
     /* ********************************* USER *************************************************** */
     override fun getUser(userId: String): Flow<Resource<User>> = flow {
+        if (userId == ""){
+            throw IllegalArgumentException("userId can not be empty")
+        }
         var user = firebaseApi.getUser(userId)
         if (user != null){
             emit(
@@ -296,15 +347,23 @@ class  AppRepositoryImplementation(
     }
 
     override suspend fun createUserType(userType: UserType): Resource<String> {
-        //appLogger.logUserType(EventLogType.NewRecordLog, )
+        if (userType.userTypeId == ""){
+            throw IllegalArgumentException("userTypeId can not be empty")
+        }
         return firebaseApi.createUserType(userType)
     }
 
     override suspend fun deleteUserType(userTypeId: String): Resource<String> {
+        if (userTypeId == ""){
+            throw IllegalArgumentException("userTypeId can not be empty")
+        }
         return firebaseApi.deleteUserType(userTypeId)
     }
 
     override suspend fun updateUserType(userType: UserType): Resource<String> {
+        if (userType.userTypeId == ""){
+            throw IllegalArgumentException("userTypeId can not be empty")
+        }
         return updateUserType(userType)
     }
 

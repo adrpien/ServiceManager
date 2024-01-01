@@ -2,4 +2,5 @@
 <resources>
     <string name="textfields_devicesn_or_devicein_is_empty">Field Sn or In is empty</string>
     <string name="repair_update_unknown_error">Unknown error</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>

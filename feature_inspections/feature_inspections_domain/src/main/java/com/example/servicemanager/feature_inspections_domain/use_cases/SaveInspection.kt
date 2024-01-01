@@ -8,20 +8,36 @@ import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
     suspend operator fun invoke(inspection: Inspection): Resource<String> {
-        if (inspection.deviceSn.isNotEmpty() && inspection.deviceIn.isNotEmpty()) {
-            return repository.insertInspection(inspection)
-        } else {
+        try {
+            if (inspection.deviceSn.isNotEmpty() && inspection.deviceIn.isNotEmpty()) {
+                return repository.insertInspection(inspection)
+            } else if (inspection.inspectionDate.any{ !it.isDigit() }) {
+                return Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.wrong_date_format)
+                )
+            } else {
+                return Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.textfields_devicesn_and_devicein_are_empty)
+                )
+            }
+        } catch (e: IllegalArgumentException) {
             return Resource(
                 ResourceState.ERROR,
-                "TextFields deviceSn and deviceIn are empty",
-                UiText.StringResource(R.string.textfields_devicesn_and_devicein_are_empty)
+                null,
+                UiText.StringResource(R.string.unknown_error)
             )
         }
+
     }
 }

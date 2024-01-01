@@ -15,13 +15,13 @@ class CreateHospital @Inject constructor (
 ) {
 
     suspend operator fun invoke(hospital: Hospital): Resource<String> {
-        return if(hospital.hospital != "") {
+        return try {
             repository.createHospital(hospital)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.hospital_name_can_not_be_empty)
+                UiText.StringResource(R.string.unknown_error)
             )
             }
         }

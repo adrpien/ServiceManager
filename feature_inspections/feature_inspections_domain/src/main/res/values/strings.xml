@@ -3,4 +3,6 @@
     <string name="get_inspection_unknown_error">Unknown error</string>
     <string name="textfields_devicesn_and_devicein_are_empty">Field Sn or In is empty</string>
     <string name="inspection_update_unknown_error">Unknown error</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="wrong_date_format">Wrong date format</string>
 </resources>

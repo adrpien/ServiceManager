@@ -53,6 +53,9 @@ class  RepairRepositoryImplementation(
 
 
     override fun getRepair(repairId: String): Flow<Resource<Repair>> = flow{
+        if (repairId == ""){
+            throw IllegalArgumentException("repairId can not be empty")
+        }
         var repair: Repair
         repair = repairDatabaseDao.getRepair(repairId).toRepair()
         emit(
@@ -78,6 +81,9 @@ class  RepairRepositoryImplementation(
     }
 
     override suspend fun insertRepair(repair: Repair): Resource<String> {
+        if (repair.repairId == ""){
+            throw IllegalArgumentException("repairId can not be empty")
+        }
         appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
             dataClassObject  = repair
@@ -86,6 +92,9 @@ class  RepairRepositoryImplementation(
     }
 
     override suspend fun updateRepair(repair: Repair): Resource<String> {
+        if (repair.repairId == ""){
+            throw IllegalArgumentException("repairId can not be empty")
+        }
         appLogger.logEvent(
             eventLogType = com.example.logger.EventLogType.RecordUpdateLog(),
             dataClassObject = repair

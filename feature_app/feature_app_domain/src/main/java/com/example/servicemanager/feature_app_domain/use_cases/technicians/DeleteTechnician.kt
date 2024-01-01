@@ -15,13 +15,13 @@ class DeleteTechnician @Inject constructor (
 ) {
 
     suspend operator fun invoke(technician: Technician): Resource<String> {
-        return if(technician.technicianId != "") {
+        return try {
             repository.deleteTechnician(technician.technicianId)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.technician_delete_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

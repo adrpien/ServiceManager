@@ -15,13 +15,13 @@ class CreateUserType @Inject constructor (
 ) {
 
     suspend operator fun invoke(userType: UserType): Resource<String> {
-        return if(userType.userTypeName != "") {
+        return try {
             repository.createUserType(userType)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.usertype_name_can_not_be_empty)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

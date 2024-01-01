@@ -17,13 +17,13 @@ class DeleteUserType @Inject constructor (
 ) {
 
     suspend operator fun invoke(userType: UserType): Resource<String> {
-        return if(userType.userTypeId != "") {
+        return try {
             repository.deleteHospital(userType.userTypeId)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.usertype_delete_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

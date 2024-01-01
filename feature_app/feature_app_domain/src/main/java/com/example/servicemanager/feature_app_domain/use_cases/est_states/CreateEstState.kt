@@ -15,13 +15,13 @@ class CreateEstState @Inject constructor (
 ) {
 
     suspend operator fun invoke(estState: EstState): Resource<String> {
-        return if(estState.estState != "") {
+        return try {
             repository.createEstState(estState)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.eststate_name_can_not_be_empty)
+                UiText.StringResource(R.string.unknown_error)
             )
 
         }

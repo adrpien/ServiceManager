@@ -15,18 +15,18 @@ class GetInspection @Inject constructor (
 ) {
 
     operator fun invoke(inspectionId: String): Flow<Resource<Inspection>> {
-        return if(inspectionId.isEmpty()) {
+        return try {
+            repository.getInspection(inspectionId)
+        } catch (e: IllegalArgumentException) {
             flow {
                 emit(
                     Resource(
                         ERROR,
                         Inspection(),
-                        UiText.StringResource(R.string.get_inspection_unknown_error)
+                        UiText.StringResource(R.string.unknown_error)
                     )
                 )
             }
-        } else {
-            repository.getInspection(inspectionId)
         }
     }
 }

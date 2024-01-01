@@ -6,8 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     fun authenticate(mail: String, password: String): Flow<Resource<String>>
 
-    // TODO This should be asynchronous?
-    fun getCurrentUser(): Flow<Resource<String>>
+    suspend fun getCurrentUser(): Resource<String>
 
     fun logOut()
 

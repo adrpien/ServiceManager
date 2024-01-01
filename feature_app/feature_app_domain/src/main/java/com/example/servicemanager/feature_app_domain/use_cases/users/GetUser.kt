@@ -1,6 +1,9 @@
 package com.example.servicemanager.feature_app_domain.use_cases.users
 
 import com.example.core.util.Resource
+import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_app_domain.R
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
@@ -12,10 +15,20 @@ class GetUser @Inject constructor(
 ) {
 
     operator fun invoke(userId: String): Flow<Resource<User>> {
-        if (userId.isBlank()) {
-            return flow {  }
-        } else {
-            return appRepository.getUser(userId)
+        return try {
+            appRepository.getUser(userId)
+        } catch (e: IllegalArgumentException) {
+            flow {
+                emit(
+                    Resource(
+                        ResourceState.ERROR,
+                        null,
+                        UiText.StringResource(R.string.unknown_error)
+                    )
+                )
+            }
+
         }
+
     }
 }

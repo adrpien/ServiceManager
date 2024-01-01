@@ -15,14 +15,15 @@ class UpdateSignature @Inject constructor (
 ) {
 
     suspend operator fun invoke(signatureId: String, byteArray: ByteArray): Resource<String> {
-        if(signatureId.isEmpty()){
-            return Resource(
-                        ResourceState.ERROR,
-                        null,
-                        UiText.StringResource(R.string.update_signature_unknown_error)
-                    )
+        return try {
+            repository.updateSignature(signatureId, byteArray)
+        } catch (e: IllegalArgumentException) {
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.unknown_error)
+            )
         }
-        return repository.updateSignature(signatureId, byteArray)
     }
 
 }

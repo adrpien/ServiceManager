@@ -83,7 +83,7 @@ class HospitalListManagerViewModel @Inject constructor(
 
     private fun fetchHospitalList(){
         var hospitalList: List<Hospital>? = null
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getHospitalList().collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

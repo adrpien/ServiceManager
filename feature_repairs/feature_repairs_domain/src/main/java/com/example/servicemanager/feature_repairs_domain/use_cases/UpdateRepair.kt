@@ -16,15 +16,14 @@ class UpdateRepair @Inject constructor (
 
     // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
     suspend operator fun invoke(repair: Repair): Resource<String> {
-        if (repair.repairId != "0") {
-            return repository.updateRepair(repair)
-        } else {
-            return Resource(
+        return try {
+            repository.updateRepair(repair)
+        } catch (e: IllegalArgumentException) {
+            Resource(
                 ResourceState.ERROR,
                 null,
                 UiText.StringResource(R.string.repair_update_unknown_error)
             )
-
         }
     }
 }

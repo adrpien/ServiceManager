@@ -15,13 +15,13 @@ class CreateTechnician @Inject constructor (
 ) {
 
     suspend operator fun invoke(technician: Technician): Resource<String> {
-        return if(technician.technicianId != "") {
+        return try {
             repository.createTechnician(technician)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.technician_name_can_not_be_empty)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

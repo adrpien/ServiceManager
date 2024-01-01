@@ -16,13 +16,13 @@ class UpdateRepairState @Inject constructor (
 ) {
 
     suspend operator fun invoke(repairState: RepairState): Resource<String> {
-        return if(repairState.repairStateId != "") {
+        return try {
             repository.updateRepairState(repairState)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
-                "Repair State update unknown error",
-                UiText.StringResource(R.string.repair_state_update_unknown_error)
+                null,
+                UiText.StringResource(R.string.unknown_error)
             )
 
         }

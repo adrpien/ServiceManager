@@ -16,13 +16,13 @@ class UpdateUserType @Inject constructor (
 ) {
 
     suspend operator fun invoke(userType: UserType): Resource<String> {
-        return if(userType.userTypeId != "") {
+        return try {
             repository.updateUserType(userType)
-        } else {
+        } catch (e: Exception) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.usertype_update_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

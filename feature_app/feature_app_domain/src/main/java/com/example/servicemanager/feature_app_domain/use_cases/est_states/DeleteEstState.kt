@@ -16,13 +16,13 @@ class DeleteEstState @Inject constructor (
 ) {
 
     suspend operator fun invoke(estState: EstState): Resource<String> {
-        return if(estState.estStateId != "") {
+        return try {
             repository.deleteHospital(estState.estStateId)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.eststate_delete_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
 
         }

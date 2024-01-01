@@ -15,15 +15,15 @@ class UpdateInspection @Inject constructor (
 ) {
 
     suspend operator fun invoke(inspection: Inspection): Resource<String> {
-        if(inspection.inspectionId != ""){
-            return repository.updateInspection(inspection)
-        }
-        else {
-            return Resource(
+        return try {
+            repository.updateInspection(inspection)
+        } catch (e: IllegalArgumentException) {
+            Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.inspection_update_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
+
     }
 }

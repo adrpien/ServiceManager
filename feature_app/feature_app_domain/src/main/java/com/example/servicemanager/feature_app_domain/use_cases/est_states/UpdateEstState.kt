@@ -15,13 +15,13 @@ class UpdateEstState @Inject constructor (
 ) {
 
     suspend operator fun invoke(estState: EstState): Resource<String> {
-        return if(estState.estStateId != "") {
+        return try {
             repository.updateEstState(estState)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.eststate_update_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

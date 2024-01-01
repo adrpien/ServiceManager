@@ -17,14 +17,13 @@ class SaveRepair @Inject constructor (
 
     // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
     suspend operator fun invoke(repair: Repair): Resource<String> {
-        if (repair.deviceSn.isNotEmpty() && repair.deviceIn.isNotEmpty())
-        {
-            return repository.insertRepair(repair)
-        } else {
-            return Resource(
+        return try {
+            repository.insertRepair(repair)
+        } catch (e: IllegalArgumentException) {
+            Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.textfields_devicesn_or_devicein_is_empty)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

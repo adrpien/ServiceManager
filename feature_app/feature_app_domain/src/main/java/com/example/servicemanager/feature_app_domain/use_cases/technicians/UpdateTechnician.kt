@@ -15,9 +15,9 @@ class UpdateTechnician @Inject constructor (
 ) {
 
     suspend operator fun invoke(technician: Technician): Resource<String> {
-        return if(technician.technicianId != "") {
+        return try {
             repository.updateTechnician(technician)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,

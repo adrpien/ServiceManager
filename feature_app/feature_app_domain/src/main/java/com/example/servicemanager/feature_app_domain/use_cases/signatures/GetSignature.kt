@@ -13,18 +13,19 @@ class GetSignature @Inject constructor (
 ) {
 
     operator fun invoke(signatureId: String): Flow<Resource<ByteArray>> {
-        if(signatureId.isEmpty()){
-            return flow {
+        return try {
+            repository.getSignature(signatureId)
+        } catch (e: Exception) {
+            flow {
                 emit(
                     Resource(
                         com.example.core.util.ResourceState.ERROR,
                         null,
-                        UiText.StringResource(R.string.get_signature_unknown_error)
+                        UiText.StringResource(R.string.unknown_error)
                     )
                 )
             }
-        }
-        return repository.getSignature(signatureId)
-    }
 
+        }
+    }
 }

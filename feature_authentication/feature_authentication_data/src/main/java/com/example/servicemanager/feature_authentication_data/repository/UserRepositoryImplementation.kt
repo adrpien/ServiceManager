@@ -20,24 +20,20 @@ class  UserRepositoryImplementation(
     return userFirebaseApi.authenticate(mail, password)
     }
 
-    override fun getCurrentUser(): Flow<Resource<String>> = flow {
+    override suspend fun getCurrentUser(): Resource<String> {
         var data: String
         data = userFirebaseApi.getCurrentUser() ?: "0"
         if (data != "0"){
-            emit(
-                Resource(
-                    ResourceState.SUCCESS,
-                    data,
-                    UiText.StringResource(R.string.current_user_logged_in)
-                )
+            return Resource(
+                ResourceState.SUCCESS,
+                data,
+                UiText.StringResource(R.string.current_user_logged_in)
             )
         } else {
-            emit(
-                Resource(
-                    ResourceState.ERROR,
-                    data,
-                    UiText.StringResource(R.string.current_user_not_logged_in)
-                )
+            return Resource(
+                ResourceState.ERROR,
+                data,
+                UiText.StringResource(R.string.current_user_not_logged_in)
             )
         }
     }

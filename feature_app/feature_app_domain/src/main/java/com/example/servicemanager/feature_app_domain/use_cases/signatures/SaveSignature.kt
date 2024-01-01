@@ -14,14 +14,15 @@ class SaveSignature @Inject constructor (
     ) {
 
     suspend operator fun invoke(signatureId: String, byteArray: ByteArray): Resource<String> {
-        if(signatureId.isEmpty()){
-            return Resource(
+        return try {
+            repository.createSignature(signatureId, byteArray)
+        } catch (e: IllegalArgumentException) {
+            Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.update_signature_unknown_error)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
-        return repository.createSignature(signatureId, byteArray)
     }
 
 }

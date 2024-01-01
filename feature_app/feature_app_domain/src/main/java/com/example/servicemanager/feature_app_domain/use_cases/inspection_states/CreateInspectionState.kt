@@ -16,9 +16,9 @@ class CreateInspectionState @Inject constructor (
 ) {
 
     suspend operator fun invoke(inspectionState: InspectionState): Resource<String> {
-        return if(inspectionState.inspectionStateId != "") {
+        return try {
             repository.createInspectionState(inspectionState)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,

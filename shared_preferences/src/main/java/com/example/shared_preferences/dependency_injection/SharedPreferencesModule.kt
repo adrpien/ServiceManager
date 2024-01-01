@@ -1,4 +1,4 @@
-package com.example.shared_preferences
+package com.example.shared_preferences.dependency_injection
 
 import android.app.Application
 import com.example.shared_preferences.AppPreferencesImplementation

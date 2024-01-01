@@ -15,13 +15,13 @@ class UpdateHospital @Inject constructor (
 ) {
 
     suspend operator fun invoke(hospital: Hospital): Resource<String> {
-        return if(hospital.hospitalId != "") {
+        return try {
             repository.updateHospital(hospital)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
-                "Hospital update unknown error",
-                UiText.StringResource(R.string.hospital_update_unknown_error)
+                null,
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }

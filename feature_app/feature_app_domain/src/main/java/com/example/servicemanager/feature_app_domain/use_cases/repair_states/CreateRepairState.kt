@@ -16,13 +16,13 @@ class CreateRepairState @Inject constructor (
 ) {
 
     suspend operator fun invoke(repairState: RepairState): Resource<String> {
-        return if(repairState.repairStateId != "") {
+        return try {
             repository.createRepairState(repairState)
-        } else {
+        } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.repair_state_name_can_not_be_empty)
+                UiText.StringResource(R.string.unknown_error)
             )
         }
     }
