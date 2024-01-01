@@ -9,8 +9,12 @@ import androidx.navigation.navArgument
 import com.example.core.util.Screen
 import com.example.feature_home_presentation.app_settings.components.AppSettingsScreen
 import com.example.feature_home_presentation.database_settings.components.DatabaseSettingsScreen
+import com.example.feature_home_presentation.estState_list_manager.EstStateListManagerScreen
 import com.example.feature_home_presentation.home.components.HomeScreen
 import com.example.feature_home_presentation.hospital_list_manager.HospitalListManagerScreen
+import com.example.feature_home_presentation.inspection_state_list_manager.InspectionStateListManagerScreen
+import com.example.feature_home_presentation.repair_state_list_manager.RepairStateListManagerScreen
+import com.example.feature_home_presentation.technician_list_manager.TechnicianListManagerScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.components.InspectionListScreen
 import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
@@ -132,9 +136,9 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screen.InspectionStateListManagerScreen.route
+            route = Screen.EstStateListManagerScreen.route
         ) {
-            HospitalListManagerScreen(
+            EstStateListManagerScreen(
                 navHostController = navHostController
             )
         }
@@ -150,17 +154,24 @@ fun MainScreenNavigationContent(
         composable(
             route = Screen.InspectionStateListManagerScreen.route
         ) {
-            /*InspectionStateListManagerScreen(
+            InspectionStateListManagerScreen(
                 navHostController = navHostController
-            )*/
+            )
         }
 
         composable(
             route = Screen.RepairStateListManagerScreen.route
         ) {
-            /*RepairStateListManagerScreen(
+            RepairStateListManagerScreen(
                 navHostController = navHostController
-            )*/
+            )
+        }
+        composable(
+            route = Screen.TechnicianListManagerScreen.route
+        ) {
+            TechnicianListManagerScreen(
+                navHostController = navHostController
+            )
         }
     }
 }

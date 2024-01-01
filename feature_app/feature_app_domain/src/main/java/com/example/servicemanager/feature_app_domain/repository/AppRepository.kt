@@ -28,12 +28,16 @@ interface AppRepository {
     fun getTechnicianList(): Flow<Resource<List<Technician>>>
     suspend fun updateTechnician(technician: Technician): Resource<String>
     suspend fun createTechnician(technician: Technician): Resource<String>
+    suspend fun createTechnicianWithId(technician: Technician): Resource<String>
+
     suspend fun deleteTechnician(technicianId: String): Resource<String>
 
     /* ***** EstStates ************************************************************************** */
     fun getEstStateList(): Flow<Resource<List<EstState>>>
     suspend fun updateEstState(estState: EstState): Resource<String>
     suspend fun createEstState(estState: EstState): Resource<String>
+    suspend fun createEstStateWithId(estState: EstState): Resource<String>
+
     suspend fun deleteEstState(estStateId: String): Resource<String>
 
 
@@ -41,6 +45,8 @@ interface AppRepository {
     fun getInspectionStateList(): Flow<Resource<List<InspectionState>>>
     suspend fun updateInspectionState(inspectionState: InspectionState): Resource<String>
     suspend fun createInspectionState(inspectionState: InspectionState): Resource<String>
+    suspend fun createInspectionStateWithId(inspectionState: InspectionState): Resource<String>
+
     suspend fun deleteInspectionState(inspectionStateId: String): Resource<String>
 
 
@@ -48,6 +54,8 @@ interface AppRepository {
     fun getRepairStateList(): Flow<Resource<List<RepairState>>>
     suspend fun updateRepairState(repairState: RepairState): Resource<String>
     suspend fun createRepairState(repairState: RepairState): Resource<String>
+    suspend fun createRepairStateWithId(repairState: RepairState): Resource<String>
+
     suspend fun deleteRepairState(repairStateId: String): Resource<String>
 
 

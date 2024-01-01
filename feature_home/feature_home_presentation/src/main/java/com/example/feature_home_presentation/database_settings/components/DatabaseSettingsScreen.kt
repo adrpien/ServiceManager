@@ -14,6 +14,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddToPhotos
+import androidx.compose.material.icons.filled.AdminPanelSettings
 import androidx.compose.material.icons.filled.LocalHospital
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +46,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.io.InputStream
 
+// TODO Add MaterialDialog for showing saving inspections progress
 @Composable
 fun DatabaseSettingsScreen(
     modifier: Modifier = Modifier,
@@ -107,7 +109,7 @@ fun DatabaseSettingsScreen(
     }
 
     val manageHospitalListMenuItemState = MenuItemState(
-        icon = Icons.Default.LocalHospital,
+        icon = Icons.Default.AdminPanelSettings,
         text = UiText.StringResource(R.string.manage_hospital_list)
     ) {
         coroutineScope.launch {
@@ -115,10 +117,48 @@ fun DatabaseSettingsScreen(
         }
     }
 
+    val manageRepairStateListMenuItemState = MenuItemState(
+        icon = Icons.Default.AdminPanelSettings,
+        text = UiText.StringResource(R.string.manage_repair_state_list)
+    ) {
+        coroutineScope.launch {
+            navHostController.navigate(Screen.RepairStateListManagerScreen.route)
+        }
+    }
+    val manageInspectionStateListMenuItemState = MenuItemState(
+        icon = Icons.Default.AdminPanelSettings,
+        text = UiText.StringResource(R.string.manage_inspection_state_list)
+    ) {
+        coroutineScope.launch {
+            navHostController.navigate(Screen.InspectionStateListManagerScreen.route)
+        }
+    }
+
+    val manageEstStateListMenuItemState = MenuItemState(
+        icon = Icons.Default.AdminPanelSettings,
+        text = UiText.StringResource(R.string.manage_est_state_list)
+    ) {
+        coroutineScope.launch {
+            navHostController.navigate(Screen.EstStateListManagerScreen.route)
+        }
+    }
+
+    val manageTechnicianListMenuItemState = MenuItemState(
+        icon = Icons.Default.AdminPanelSettings,
+        text = UiText.StringResource(R.string.manage_technician_list)
+    ) {
+        coroutineScope.launch {
+            navHostController.navigate(Screen.TechnicianListManagerScreen.route)
+        }
+    }
 
     val menuItems = listOf(
         addInspectionListMenuItemState,
-        manageHospitalListMenuItemState
+        manageHospitalListMenuItemState,
+        manageTechnicianListMenuItemState,
+        manageEstStateListMenuItemState,
+        manageInspectionStateListMenuItemState,
+        manageRepairStateListMenuItemState
     )
 
 

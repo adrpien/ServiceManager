@@ -3,6 +3,7 @@ package com.example.servicemanager.feature_app_domain.use_cases
 import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
 import com.example.servicemanager.feature_app_domain.use_cases.date_formatting_types.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstState
+import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstStateWithId
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.DeleteEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.SaveSignature
@@ -15,14 +16,17 @@ import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateH
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.DeleteHospital
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.UpdateHospital
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionState
+import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionStateWithId
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.DeleteInspectionState
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.GetInspectionStateList
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.UpdateInspectionState
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.CreateRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.repair_states.CreateRepairStateWithId
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.DeleteRepairState
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.GetRepairStateList
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.UpdateRepairState
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnician
+import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnicianWithId
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.DeleteTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.UpdateTechnician
@@ -43,18 +47,22 @@ data class AppUseCases(
     val deleteHospital: DeleteHospital,
     val getEstStateList: GetEstStateList,
     val createEstState: CreateEstState,
+    val createEstStateWithId: CreateEstStateWithId,
     val updateEstState: UpdateEstState,
     val deleteEstState: DeleteEstState,
     val getInspectionStateList: GetInspectionStateList,
     val createInspectionState: CreateInspectionState,
+    val createInspectionStateWithId: CreateInspectionStateWithId,
     val updateInspectionState: UpdateInspectionState,
     val deleteInspectionState: DeleteInspectionState,
     val getRepairStateList: GetRepairStateList,
     val createRepairState: CreateRepairState,
+    val createRepairStateWithId: CreateRepairStateWithId,
     val updateRepairState: UpdateRepairState,
     val deleteRepairState: DeleteRepairState,
     val getTechnicianList: GetTechnicianList,
     val createTechnician: CreateTechnician,
+    val createTechnicianWithId: CreateTechnicianWithId,
     val updateTechnician: UpdateTechnician,
     val deleteTechnician: DeleteTechnician,
     val getUser: GetUser,

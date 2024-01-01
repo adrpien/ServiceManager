@@ -1,4 +1,4 @@
-package com.example.feature_home_presentation.hospital_list_manager
+package com.example.feature_home_presentation.technician_list_manager
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -47,7 +47,7 @@ import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.feature_home_presentation.R
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.Technician
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
@@ -55,14 +55,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun HospitalListManagerScreen(
+fun TechnicianListManagerScreen(
     navHostController: NavHostController,
-    viewModel: HospitalListManagerViewModel = hiltViewModel(),
+    viewModel: TechnicianListManagerViewModel = hiltViewModel(),
 ) {
 
     val context = LocalContext.current
 
-    val hospitalList = viewModel.hospitalListState.value
+    val technicianList = viewModel.technicianListState.value
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -71,8 +71,8 @@ fun HospitalListManagerScreen(
         SnackbarHostState()
     }
 
-    val addHospitalDialogState = rememberMaterialDialogState()
-    val addHospitalState = remember { mutableStateOf(DefaultTextFieldState(hint = "Hospital name")) }
+    val addTechnicianDialogState = rememberMaterialDialogState()
+    val addTechnicianState = remember { mutableStateOf(DefaultTextFieldState(hint = "Technician name")) }
 
 
     LaunchedEffect(key1 = true) {
@@ -98,10 +98,10 @@ fun HospitalListManagerScreen(
                 AppSnackbar(
                     data = it,
                     onActionClick = {
-                        if(viewModel.lastDeletedHospital != null) {
-                            val lastDeletedHospital = viewModel.lastDeletedHospital
-                            if (lastDeletedHospital != null) {
-                                viewModel.onEvent(HospitalListManagerEvent.RevertHospital(lastDeletedHospital))
+                        if(viewModel.lastDeletedTechnician != null) {
+                            val lastDeletedTechnician = viewModel.lastDeletedTechnician
+                            if (lastDeletedTechnician != null) {
+                                viewModel.onEvent(TechnicianListManagerEvent.RevertTechnician(lastDeletedTechnician))
                             }
                             }
                     }
@@ -121,7 +121,7 @@ fun HospitalListManagerScreen(
                     .background(MaterialTheme.colorScheme.secondary)
             ) {
                 Text(
-                    text = stringResource(R.string.hospital_list),
+                    text = stringResource(R.string.technician_list),
                     fontSize = 20.sp,
                     color = MaterialTheme.colorScheme.onSecondary
                 )
@@ -136,16 +136,16 @@ fun HospitalListManagerScreen(
                     modifier = Modifier.fillMaxHeight()
                 ) {
                     LazyColumn() {
-                        if (hospitalList != null) {
-                            items(hospitalList.size, key = { it }) { index ->
+                        if (technicianList != null) {
+                            items(technicianList.size, key = { it }) { index ->
                                 ManagerListItem(
-                                    title = hospitalList[index].hospital,
-                                    description = hospitalList[index].hospitalId,
+                                    title = technicianList[index].name,
+                                    description = technicianList[index].technicianId,
                                     icon = Icons.Default.Delete,
                                     iconDescription = stringResource(R.string.delete)
                                 ) {
                                     viewModel.onEvent(
-                                        HospitalListManagerEvent.DeleteHospital(hospitalList[index])
+                                        TechnicianListManagerEvent.DeleteTechnician(technicianList[index])
                                     )
                                 }
                             }
@@ -154,14 +154,14 @@ fun HospitalListManagerScreen(
                                     icon = Icons.Default.Add,
                                     iconDescription = stringResource(id = R.string.add),
                                 ) {
-                                    addHospitalDialogState.show()
+                                    addTechnicianDialogState.show()
                                 }
                             }
                         }
                     }
                 }
                 MaterialDialog(
-                    dialogState = addHospitalDialogState,
+                    dialogState = addTechnicianDialogState,
                     properties = DialogProperties(
                         dismissOnBackPress = true,
                         dismissOnClickOutside = true
@@ -175,13 +175,13 @@ fun HospitalListManagerScreen(
                                 color = MaterialTheme.colorScheme.onSecondary
                             ),
                             onClick = {
-                                viewModel.onEvent(HospitalListManagerEvent.AddHospital(
-                                    Hospital(
-                                        hospitalId = "0",
-                                        hospital = addHospitalState.value.value
+                                viewModel.onEvent(TechnicianListManagerEvent.AddTechnician(
+                                    Technician(
+                                        technicianId = "0",
+                                        name = addTechnicianState.value.value
                                     )
                                 ))
-                                addHospitalState.value = addHospitalState.value.copy(value = "")
+                                addTechnicianState.value = addTechnicianState.value.copy(value = "")
                             }
                         )
                         negativeButton(
@@ -190,7 +190,7 @@ fun HospitalListManagerScreen(
                                 color = MaterialTheme.colorScheme.onSecondary
                             ),
                             onClick = {
-                                addHospitalState.value = addHospitalState.value.copy(value = "")
+                                addTechnicianState.value = addTechnicianState.value.copy(value = "")
                             }
                         )
                     }
@@ -206,10 +206,10 @@ fun HospitalListManagerScreen(
                                 Spacer(modifier = Modifier.height(8.dp))
                                 DefaultTextField(
                                     onValueChanged = { string ->
-                                        addHospitalState.value =
-                                            addHospitalState.value.copy(value = string)
+                                        addTechnicianState.value =
+                                            addTechnicianState.value.copy(value = string)
                                     },
-                                    state = addHospitalState
+                                    state = addTechnicianState
                                 )
                             }
                         }

@@ -8,6 +8,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_app_domain.use_cases.clipboard.CopyToClipboard
 import com.example.servicemanager.feature_app_domain.use_cases.date_formatting_types.GetDateFormattingTypes
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstState
+import com.example.servicemanager.feature_app_domain.use_cases.est_states.CreateEstStateWithId
 import com.example.servicemanager.feature_app_domain.use_cases.est_states.DeleteEstState
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.GetHospitalList
 import com.example.servicemanager.feature_app_domain.use_cases.signatures.GetSignature
@@ -20,14 +21,17 @@ import com.example.servicemanager.feature_app_domain.use_cases.hospitals.CreateH
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.DeleteHospital
 import com.example.servicemanager.feature_app_domain.use_cases.hospitals.UpdateHospital
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionState
+import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.CreateInspectionStateWithId
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.DeleteInspectionState
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.GetInspectionStateList
 import com.example.servicemanager.feature_app_domain.use_cases.inspection_states.UpdateInspectionState
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.CreateRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.repair_states.CreateRepairStateWithId
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.DeleteRepairState
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.GetRepairStateList
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.UpdateRepairState
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnician
+import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnicianWithId
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.DeleteTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.UpdateTechnician
@@ -85,7 +89,11 @@ object AppDomainModule {
             deleteUserType = DeleteUserType(repository),
             copyToClipboard = CopyToClipboard(clipboardManager),
             getDateFormattingTypes = GetDateFormattingTypes(),
-            createHospitalWithId = CreateHospitalWithId(repository)
+            createHospitalWithId = CreateHospitalWithId(repository),
+            createEstStateWithId = CreateEstStateWithId(repository),
+            createInspectionStateWithId = CreateInspectionStateWithId(repository),
+            createRepairStateWithId = CreateRepairStateWithId(repository),
+            createTechnicianWithId = CreateTechnicianWithId(repository)
         )
     }
 

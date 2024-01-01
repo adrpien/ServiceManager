@@ -141,7 +141,7 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "Hospital record create success")
             return Resource(
                     ResourceState.SUCCESS,
-                    documentReference.id,
+                    null,
                     UiText.StringResource(R.string.hospital_create_error)
                 )
         } else {
@@ -254,7 +254,7 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "Technician record create success")
             return Resource(
                     ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                     UiText.StringResource(R.string.technician_create_success)
                 )
         } else {
@@ -265,6 +265,32 @@ class  AppFirebaseApi(
                 null,
                     UiText.StringResource(R.string.technician_create_error)
                 )
+        }
+    }
+
+    suspend fun createTechnicianWithId(technician: Technician): Resource<String> {
+        val documentReference = firebaseFirestore.collection("technicians").document()
+        val map: Map<String, String> = mapOf(
+            "technicianId" to technician.technicianId,
+            "name" to technician.name
+        )
+        val result = documentReference.set(map)
+        result.await()
+        if (result.isSuccessful) {
+            Log.d(APP_FIREBASE_API, "Technician record create success")
+            return Resource(
+                ResourceState.SUCCESS,
+                documentReference.id,
+                UiText.StringResource(R.string.technician_create_success)
+            )
+        } else {
+            Log.d(APP_FIREBASE_API, "Technician record create error")
+
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.technician_create_error)
+            )
         }
     }
     suspend fun deleteTechnician(technicianId: String): Resource<String> {
@@ -340,7 +366,7 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "EstState record create success")
             return Resource(
                     ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                     UiText.StringResource(R.string.eststate_create_success)
                 )
         } else {
@@ -352,6 +378,31 @@ class  AppFirebaseApi(
                 )
         }
     }
+    suspend fun createEstStateWithId(estState: EstState): Resource<String> {
+        val documentReference = firebaseFirestore.collection("est_states").document()
+        val map: Map<String, String> = mapOf(
+            "estStateId" to estState.estStateId,
+            "estState" to estState.estState
+        )
+        val result = documentReference.set(map)
+        result.await()
+        if (result.isSuccessful) {
+            Log.d(APP_FIREBASE_API, "EstState record create success")
+            return Resource(
+                ResourceState.SUCCESS,
+                null,
+                UiText.StringResource(R.string.eststate_create_success)
+            )
+        } else {
+            Log.d(APP_FIREBASE_API, "EstState record create error")
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.eststate_create_error)
+            )
+        }
+    }
+
     suspend fun deleteEstState(estStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("est_state").document(estStateId)
         val result = documentReference.delete()
@@ -426,7 +477,7 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "RepairState record update success")
             return Resource(
                     ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                     UiText.StringResource(R.string.repairstate_create_success)
                 )
         } else {
@@ -438,6 +489,32 @@ class  AppFirebaseApi(
                 )
         }
     }
+    suspend fun createRepairStateWithId(repairState: RepairState): Resource<String> {
+        val documentReference = firebaseFirestore.collection("repair_states").document()
+        val map: Map<String, String> = mapOf(
+            "repairStateId" to repairState.repairStateId,
+            "repairState" to repairState.repairState
+        )
+
+        val result = documentReference.update(map)
+        result.await()
+        if (result.isSuccessful) {
+            Log.d(APP_FIREBASE_API, "RepairState record update success")
+            return Resource(
+                ResourceState.SUCCESS,
+                null,
+                UiText.StringResource(R.string.repairstate_create_success)
+            )
+        } else {
+            Log.d(APP_FIREBASE_API, "RepairState record create error")
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.repairstate_create_error)
+            )
+        }
+    }
+
     suspend fun deleteRepairState(repairStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("repair_states").document(repairStateId)
         val result = documentReference.delete()
@@ -488,14 +565,14 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "InspectionState record update success")
             return Resource(
                     ResourceState.SUCCESS,
-                    "InspectionState update success",
+                    null,
                     UiText.StringResource(R.string.inspectionstate_update_success)
                 )
         } else {
             Log.d(APP_FIREBASE_API, "InspectionState record update error")
             return Resource(
                     ResourceState.ERROR,
-                    "InspectionState update error",
+                    null,
                     UiText.StringResource(R.string.inspectionstate_update_error)
                 )
         }
@@ -512,7 +589,7 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "InspectionState record create success")
             return Resource(
                     ResourceState.SUCCESS,
-                    "InspectionState create success",
+                    null,
                     UiText.StringResource(R.string.inspectionstate_create_success)
                 )
 
@@ -520,11 +597,37 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "InspectionState record create error")
             return Resource(
                     ResourceState.ERROR,
-                    "InspectionState create error",
+                    null,
                     UiText.StringResource(R.string.inspectionstate_create_error)
                 )
         }
     }
+    suspend fun createInspectionStateWithId(inspectionState: InspectionState): Resource<String> {
+        val documentReference = firebaseFirestore.collection("inspection_states").document()
+        val map: Map<String, String> = mapOf(
+            "inspectionStateId" to inspectionState.inspectionStateId,
+            "inspectionState" to inspectionState.inspectionState
+        )
+        val result = documentReference.set(map)
+        result.await()
+        if (result.isSuccessful) {
+            Log.d(APP_FIREBASE_API, "InspectionState record create success")
+            return Resource(
+                ResourceState.SUCCESS,
+                null,
+                UiText.StringResource(R.string.inspectionstate_create_success)
+            )
+
+        } else {
+            Log.d(APP_FIREBASE_API, "InspectionState record create error")
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.inspectionstate_create_error)
+            )
+        }
+    }
+
     suspend fun deleteInspectionState(inspectionStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("inspection_states").document(inspectionStateId)
         val result = documentReference.delete()
@@ -533,14 +636,14 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "InspectionState record delete success")
             return Resource(
                     ResourceState.SUCCESS,
-                    "InspectionState delete success",
+                    null,
                     UiText.StringResource(R.string.inspectionstate_delete_success)
                 )
         } else {
             Log.d(APP_FIREBASE_API, "InspectionState record delete error")
             return Resource(
                     ResourceState.ERROR,
-                    "InspectionState delete error",
+                    null,
                     UiText.StringResource(R.string.inspectionstate_delete_error)
                 )
         }
@@ -589,14 +692,14 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "UserType record update success")
             return Resource(
                     ResourceState.SUCCESS,
-                    "UserType update success",
+                    null,
                     UiText.StringResource(R.string.usertype_update_success)
                 )
         } else {
             Log.d(APP_FIREBASE_API, "UserType record update error")
             return Resource(
                     ResourceState.ERROR,
-                    "UserType update error",
+                    null,
                     UiText.StringResource(R.string.usertype_update_error)
                 )
         }
@@ -615,14 +718,14 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "UserType record create success")
             return Resource(
                     ResourceState.SUCCESS,
-                    "UserType create success",
+                    null,
                     UiText.StringResource(R.string.usertype_create_success)
                 )
         } else {
             Log.d(APP_FIREBASE_API, "UserType record create error")
             return Resource(
                     ResourceState.ERROR,
-                    "UserType update error",
+                    null,
                     UiText.StringResource(R.string.usertype_create_error)
                 )
         }
@@ -635,14 +738,14 @@ class  AppFirebaseApi(
             Log.d(APP_FIREBASE_API, "UserType record delete success")
             return Resource(
                     ResourceState.SUCCESS,
-                    "UserType delete success",
+                    null,
                     UiText.StringResource(R.string.usertype_delete_success)
                 )
         } else {
             Log.d(APP_FIREBASE_API, "UserType record delete error")
             return Resource(
                     ResourceState.ERROR,
-                    "UserType delete error",
+                    null,
                     UiText.StringResource(R.string.usertype_delete_error)
                 )
         }

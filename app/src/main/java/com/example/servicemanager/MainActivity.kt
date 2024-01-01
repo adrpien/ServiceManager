@@ -10,6 +10,9 @@ import com.example.servicemanager.navigation.MainScreenNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// TODO Clean up ap dependencies
+// TODO Add app documentation, readme, test data
+// TODO Finish app testing
 
 @AndroidEntryPoint
 class MainActivity (

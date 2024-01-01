@@ -85,7 +85,7 @@ class  RepairFirebaseApi(
             Log.d(REPAIR_REPOSITORY_API, "Repair record created")
             return Resource(
                 ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                 UiText.StringResource(R.string.repair_record_created)
             )
 
@@ -131,7 +131,7 @@ class  RepairFirebaseApi(
             Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
             return Resource(
                 ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                 UiText.StringResource(R.string.repair_record_updated)
             )
         } else {

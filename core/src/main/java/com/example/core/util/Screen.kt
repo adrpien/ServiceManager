@@ -4,6 +4,9 @@ package com.example.core.util
 sealed class Screen(val route: String){
     object InspectionStateListManagerScreen: Screen(NavigationRoutes.ROUTE_INSPECTION_STATE_LIST_MANAGER_SCREEN)
     object RepairStateListManagerScreen: Screen(NavigationRoutes.ROUTE_REPAIR_STATE_LIST_MANAGER_SCREEN)
+    object EstStateListManagerScreen: Screen(NavigationRoutes.ROUTE_EST_STATE_LIST_MANAGER_SCREEN)
+    object TechnicianListManagerScreen: Screen(NavigationRoutes.ROUTE_TECHNICIAN_LIST_MANAGER_SCREEN)
+    object HospitalListManagerScreen: Screen(NavigationRoutes.ROUTE_HOSPITAL_LIST_MANAGER_SCREEN)
     object HomeScreen: Screen(NavigationRoutes.ROUTE_HOME_SCREEN)
     object InspectionListScreen: Screen(NavigationRoutes.ROUTE_INSPECTION_LIST_SCREEN)
     object InspectionDetailsScreen: Screen(NavigationRoutes.ROUTE_INSPECTION_DETAILS_SCREEN)
@@ -15,7 +18,6 @@ sealed class Screen(val route: String){
 
     object AppSettingsScreen: Screen(NavigationRoutes.APP_SETTINGS_SCREEN)
     object DatabaseSettingsScreen: Screen(NavigationRoutes.DATABASE_SETTINGS_SCREEN)
-    object HospitalListManagerScreen: Screen(NavigationRoutes.ROUTE_HOSPITAL_LIST_MANAGER_SCREEN)
 
     fun withArgs(vararg args: String): String {
         return buildString {

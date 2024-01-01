@@ -75,7 +75,6 @@ class  AppRepositoryImplementation(
         }
         return firebaseApi.updateHospital(hospital)
     }
-
     override suspend fun createHospital(hospital: Hospital): Resource<String> {
         if (hospital.hospitalId == ""){
             throw IllegalArgumentException("hospitalId can not be empty")
@@ -130,7 +129,12 @@ class  AppRepositoryImplementation(
         }
         return firebaseApi.createTechnician(technician)
     }
-
+    override suspend fun createTechnicianWithId(technician: Technician): Resource<String> {
+        if (technician.technicianId == ""){
+            throw IllegalArgumentException("technicianId can not be empty")
+        }
+        return firebaseApi.createTechnicianWithId(technician)
+    }
     override suspend fun deleteTechnician(technicianId: String): Resource<String> {
         if (technicianId == ""){
             throw IllegalArgumentException("technicianId can not be empty")
@@ -179,6 +183,12 @@ class  AppRepositoryImplementation(
         }
         return firebaseApi.createInspectionState(inspectionState)
     }
+    override suspend fun createInspectionStateWithId(inspectionState: InspectionState): Resource<String> {
+        if (inspectionState.inspectionStateId == ""){
+            throw IllegalArgumentException("inspectionStateId can not be empty")
+        }
+        return firebaseApi.createInspectionStateWithId(inspectionState)
+    }
 
     override suspend fun deleteInspectionState(inspectionStateId: String): Resource<String> {
         if (inspectionStateId == ""){
@@ -206,7 +216,7 @@ class  AppRepositoryImplementation(
             )
         )
         val list = firebaseApi.getRepairStateList()
-        if(list.isNotEmpty()) {
+        if (list.isNotEmpty()) {
             appDatabaseDao.deleteAllRepairStates()
             for (repairState in list) {
                 appDatabaseDao.insertRepairState(repairState.toRepairStateEntity())
@@ -229,6 +239,12 @@ class  AppRepositoryImplementation(
         return firebaseApi.createRepairState(repairState)
     }
 
+    override suspend fun createRepairStateWithId(repairState: RepairState): Resource<String> {
+        if (repairState.repairStateId == ""){
+            throw IllegalArgumentException("repairStateId can not be empty")
+        }
+        return firebaseApi.createRepairStateWithId(repairState)
+    }
     override suspend fun deleteRepairState(repairStateId: String): Resource<String> {
         if (repairStateId == ""){
             throw IllegalArgumentException("repairStateId can not be empty")
@@ -276,6 +292,12 @@ class  AppRepositoryImplementation(
             throw IllegalArgumentException("estStateId can not be empty")
         }
         return createEstState(estState)
+    }
+    override suspend fun createEstStateWithId(estState: EstState): Resource<String> {
+        if (estState.estStateId == ""){
+            throw IllegalArgumentException("estStateId can not be empty")
+        }
+        return createEstStateWithId(estState)
     }
 
     override suspend fun deleteEstState(estStateId: String): Resource<String> {

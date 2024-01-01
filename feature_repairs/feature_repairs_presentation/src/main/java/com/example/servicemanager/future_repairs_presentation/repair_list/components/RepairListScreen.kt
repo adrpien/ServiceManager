@@ -90,6 +90,7 @@ fun RepairListScreen(
                 OutlinedTextField(
                     value = repairListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
+                        placeholderColor = MaterialTheme.colorScheme.onSecondary,
                         focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
                         cursorColor = MaterialTheme.colorScheme.onSecondary,

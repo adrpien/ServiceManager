@@ -1,94 +1,92 @@
-package com.example.feature_home_presentation.hospital_list_manager
+package com.example.feature_home_presentation.technician_list_manager
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HospitalListManagerViewModel @Inject constructor(
+class TechnicianListManagerViewModel @Inject constructor(
     private val appUseCases: AppUseCases,
     private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
-    private val _hospitalListState = mutableStateOf<List<Hospital>>(emptyList())
-    val hospitalListState: State<List<Hospital>?> = _hospitalListState
+    private val _TechnicianListState = mutableStateOf<List<Technician>>(emptyList())
+    val technicianListState: State<List<Technician>?> = _TechnicianListState
 
-    var lastDeletedHospital: Hospital? = null
+    var lastDeletedTechnician: Technician? = null
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        fetchHospitalList()
+        fetchTechnicianList()
     }
 
-    fun onEvent(hospitalListManagerEvent: HospitalListManagerEvent) {
-        when (hospitalListManagerEvent) {
-            is HospitalListManagerEvent.AddHospital -> {
+    fun onEvent(TechnicianListManagerEvent: TechnicianListManagerEvent) {
+        when (TechnicianListManagerEvent) {
+            is TechnicianListManagerEvent.AddTechnician -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = appUseCases.createHospital(hospitalListManagerEvent.hospital)
+                    val result = appUseCases.createTechnician(TechnicianListManagerEvent.technician)
                     when(result.resourceState) {
                         ResourceState.ERROR -> Unit
                         ResourceState.LOADING -> Unit
                         ResourceState.SUCCESS -> {
-                            fetchHospitalList()
+                            fetchTechnicianList()
                         }
                     }
                     }
                 }
-            is HospitalListManagerEvent.DeleteHospital -> {
+            is TechnicianListManagerEvent.DeleteTechnician -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = appUseCases.deleteHospital(hospitalListManagerEvent.hospital)
+                    val result = appUseCases.deleteTechnician(TechnicianListManagerEvent.technician)
                     when(result.resourceState) {
                         ResourceState.ERROR -> Unit
                         ResourceState.SUCCESS -> {
-                            fetchHospitalList()
+                            fetchTechnicianList()
                             _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
-                            lastDeletedHospital = hospitalListManagerEvent.hospital
+                            lastDeletedTechnician = TechnicianListManagerEvent.technician
                         }
                         ResourceState.LOADING -> Unit
                     }
                     }
 
                 }
-            is HospitalListManagerEvent.ChangeOrder -> Unit
-            is HospitalListManagerEvent.RevertHospital -> {
+            is TechnicianListManagerEvent.ChangeOrder -> Unit
+            is TechnicianListManagerEvent.RevertTechnician -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = appUseCases.createHospitalWithId(hospitalListManagerEvent.hospital)
+                val result = appUseCases.createTechnicianWithId(TechnicianListManagerEvent.technician)
                     when(result.resourceState){
                         ResourceState.ERROR -> Unit
                         ResourceState.SUCCESS -> {
-                            fetchHospitalList()
-                            lastDeletedHospital = null
+                            fetchTechnicianList()
+                            lastDeletedTechnician = null
                         }
                         ResourceState.LOADING -> Unit
                     }
-                    }
+                }
             }
         }
     }
 
-    private fun fetchHospitalList(){
-        var hospitalList: List<Hospital>? = null
+    private fun fetchTechnicianList(){
+        var TechnicianList: List<Technician>? = null
         viewModelScope.launch(Dispatchers.Main) {
-            appUseCases.getHospitalList().collect() { result ->
+            appUseCases.getTechnicianList().collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
-                            _hospitalListState.value = list
+                            _TechnicianListState.value = list
                         }
                     }
                     ResourceState.ERROR -> Unit
@@ -105,9 +103,9 @@ sealed class UiEvent() {
     data class ShowSnackbar(val message: String): UiEvent()
 }
 
-sealed class HospitalListManagerEvent() {
-    data class DeleteHospital(val hospital: Hospital): HospitalListManagerEvent()
-    data class AddHospital(val hospital: Hospital): HospitalListManagerEvent()
-    data class RevertHospital(val hospital: Hospital): HospitalListManagerEvent()
-    data class ChangeOrder(val hospitalList: List<Hospital>): HospitalListManagerEvent()
+sealed class TechnicianListManagerEvent() {
+    data class DeleteTechnician(val technician: Technician): TechnicianListManagerEvent()
+    data class AddTechnician(val technician: Technician): TechnicianListManagerEvent()
+    data class RevertTechnician(val technician: Technician): TechnicianListManagerEvent()
+    data class ChangeOrder(val technicianList: List<Technician>): TechnicianListManagerEvent()
 }

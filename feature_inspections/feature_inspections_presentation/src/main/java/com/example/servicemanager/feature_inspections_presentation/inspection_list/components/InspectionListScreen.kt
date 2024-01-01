@@ -106,10 +106,10 @@ fun InspectionListScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // TODO Change color of text in OutlinedTextField
                 OutlinedTextField(
                     value = inspectionListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
+                        placeholderColor = MaterialTheme.colorScheme.onSecondary,
                         focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
                         textColor = MaterialTheme.colorScheme.onSecondary,

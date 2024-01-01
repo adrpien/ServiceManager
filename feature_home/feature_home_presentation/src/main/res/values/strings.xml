@@ -26,5 +26,14 @@
     <string name="wrong_file_format">Wrong file format</string>
     <string name="records_found">Records found</string>
     <string name="import_records">Importuj</string>
+    <string name="technician_list">Technician list</string>
+    <string name="est_state_list">EstState list</string>
+    <string name="repair_state_list">RepairState list</string>
+    <string name="inspection_state_list">InspectionState list</string>
+    <string name="manage_repair_list">Manage repair list</string>
+    <string name="manage_repair_state_list">Manage RepairState list</string>
+    <string name="manage_inspection_state_list">Manage InspectionState list</string>
+    <string name="manage_est_state_list">Manage EstState list</string>
+    <string name="manage_technician_list">Manage Technician list</string>
 
 </resources>

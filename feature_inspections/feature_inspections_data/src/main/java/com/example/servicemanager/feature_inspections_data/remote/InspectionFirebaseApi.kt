@@ -78,7 +78,7 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
             return Resource(
                 ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                 UiText.StringResource(R.string.inspection_record_created)
             )
         } else {
@@ -117,7 +117,7 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
             return Resource(
                 ResourceState.SUCCESS,
-                documentReference.id,
+                null,
                 UiText.StringResource(R.string.inspection_record_updated)
             )
         } else {

@@ -5,6 +5,8 @@ object NavigationRoutes {
     const val ROUTE_REPAIR_STATE_LIST_MANAGER_SCREEN = "repair_state_list_manager"
     const val ROUTE_INSPECTION_STATE_LIST_MANAGER_SCREEN = "inspection_state_list_manager"
     const val ROUTE_HOSPITAL_LIST_MANAGER_SCREEN = "hospital_list_manager"
+    const val ROUTE_TECHNICIAN_LIST_MANAGER_SCREEN = "technician_list_manager"
+    const val ROUTE_EST_STATE_LIST_MANAGER_SCREEN = "est_state_list_manager"
     const val DATABASE_SETTINGS_SCREEN = "database_settings"
     const val APP_SETTINGS_SCREEN = "app_settings"
     const val ROUTE_HOME_SCREEN = "home"
