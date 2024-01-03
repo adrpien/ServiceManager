@@ -20,16 +20,4 @@ sealed class UiText {
             )
         }
     }
-
-    @Composable
-    fun asString(): String {
-        val context = LocalContext.current.applicationContext
-        return when(this) {
-            is DynamicString -> value
-            is StringResource -> context.getString(
-                id,
-                *args.toTypedArray()
-            )
-        }
-    }
 }

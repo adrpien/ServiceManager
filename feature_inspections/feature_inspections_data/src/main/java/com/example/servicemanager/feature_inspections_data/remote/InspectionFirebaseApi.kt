@@ -8,8 +8,6 @@ import com.example.feature_inspections_data.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
 class  InspectionFirebaseApi(
@@ -51,7 +49,7 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    suspend fun createInspection(inspection: Inspection): Resource<String> {
+    suspend fun createInspection(inspection: Inspection): Resource<Inspection> {
         // TODO Caching mechanism in createInspection fun for InspectionFirebaseApi
         var documentReference = firebaseFirestore.collection("inspections")
             .document()
@@ -78,19 +76,19 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
             return Resource(
                 ResourceState.SUCCESS,
-                null,
+                inspection,
                 UiText.StringResource(R.string.inspection_record_created)
             )
         } else {
-            Log.d(INSPECTION_FIREBASE_API, "Inspection record creation error")
+            Log.d(INSPECTION_FIREBASE_API, "Error creating new inspection record")
             return Resource(
                 ResourceState.ERROR,
-                null,
-                UiText.StringResource(R.string.inspection_record_creation_error)
+                inspection,
+                UiText.StringResource(R.string.error_creating_new_inspection_record)
             )
         }
     }
-    suspend fun updateInspection(inspection: Inspection): Resource<String> {
+    suspend fun updateInspection(inspection: Inspection): Resource<Inspection> {
         // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
 
         var map = mapOf<String, String>(
@@ -117,15 +115,15 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
             return Resource(
                 ResourceState.SUCCESS,
-                null,
+                inspection,
                 UiText.StringResource(R.string.inspection_record_updated)
             )
         } else {
             Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
             return Resource(
                 ResourceState.ERROR,
-                null,
-                UiText.StringResource(R.string.update_inspection_unknown_error)
+                inspection,
+                UiText.StringResource(R.string.update_inspection_error)
             )
         }
 

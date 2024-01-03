@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="inspection_record_created">Inspection record created</string>
-    <string name="inspection_record_creation_error">Inspection record creation error</string>
+    <string name="error_creating_new_inspection_record">Error creating new inspection record</string>
     <string name="inspection_record_updated">Inspection record updated</string>
-    <string name="update_inspection_unknown_error">Update inspection unknown error</string>
+    <string name="update_inspection_error">Update inspection error</string>
     <string name="locally_cached_list">Locally cached list</string>
     <string name="inspection_list_fetching_finished">Inspection list fetching finished</string>
     <string name="locally_cached_record">Locally cached record</string>

@@ -4,5 +4,6 @@ data class InspectionUseCases(
     val saveInspection: SaveInspection,
     val getInspection: GetInspection,
     val getInspectionList: GetInspectionList,
-    val updateInspection: UpdateInspection
+    val updateInspection: UpdateInspection,
+    val cacheInspection: CacheInspection
 )

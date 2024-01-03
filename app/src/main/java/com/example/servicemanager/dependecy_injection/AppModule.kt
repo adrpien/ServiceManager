@@ -1,5 +1,7 @@
 package com.example.servicemanager.dependecy_injection
 
+import android.app.Application
+import com.example.servicemanager.network_connection.RequestNetworkObserver
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
@@ -22,6 +24,12 @@ object AppModule {
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRequestNetworkCallback(app: Application): RequestNetworkObserver {
+        return RequestNetworkObserver(app)
     }
 
 }

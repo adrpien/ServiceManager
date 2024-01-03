@@ -14,7 +14,7 @@ import javax.inject.Inject
 class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
-    suspend operator fun invoke(inspection: Inspection): Resource<String> {
+    suspend operator fun invoke(inspection: Inspection): Resource<Inspection> {
         try {
             if (inspection.deviceSn.isNotEmpty() && inspection.deviceIn.isNotEmpty()) {
                 return repository.insertInspection(inspection)

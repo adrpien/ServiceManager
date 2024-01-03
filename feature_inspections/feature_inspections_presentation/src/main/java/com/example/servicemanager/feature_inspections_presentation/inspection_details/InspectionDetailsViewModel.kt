@@ -9,6 +9,8 @@ import com.example.core.util.Helper.Companion.byteArrayToBitmap
 import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
 import com.example.core.util.Screen
+import com.example.core.util.UiText
+import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
@@ -71,15 +73,15 @@ class InspectionDetailsViewModel @Inject constructor(
                     when (result.resourceState) {
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
-                        }
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.StringResource(
+                                R.string.unknown_error)))
+                            // TODO Here you should cache inspection, use broadcast receiver or something
 
+                        }
                         ResourceState.SUCCESS -> {
-                            result.data?.let { inspectionId ->
+                            result.data?.let { inspection ->
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection = _inspectionDetailsState.value.inspection.copy(
-                                        inspectionId = inspectionId
-                                    )
+                                    inspection =  inspection
                                 )
                             }
                             viewModelScope.launch(Dispatchers.IO) {
@@ -279,7 +281,7 @@ class InspectionDetailsViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
-        data class ShowSnackBar(val messege: String): UiEvent()
+        data class ShowSnackBar(val messege: UiText): UiEvent()
         data class UpdateTextFields(val inspection: Inspection): UiEvent()
         data class NavigateTo(val route: String): UiEvent()
         data class SetFieldsIsEditable(val value: Boolean): UiEvent()

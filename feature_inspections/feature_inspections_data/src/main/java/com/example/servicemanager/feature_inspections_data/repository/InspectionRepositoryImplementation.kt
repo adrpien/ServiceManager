@@ -84,7 +84,7 @@ class  InspectionRepositoryImplementation(
         }
     }
 
-    override suspend fun insertInspection(inspection: Inspection): Resource<String> {
+    override suspend fun insertInspection(inspection: Inspection): Resource<Inspection> {
         if(inspection.inspectionId == "") {
             throw IllegalArgumentException("inspectionId can not be empty")
         }
@@ -95,7 +95,7 @@ class  InspectionRepositoryImplementation(
         return inspectionFirebaseApi.createInspection(inspection)
     }
 
-    override suspend fun updateInspection(inspection: Inspection): Resource<String> {
+    override suspend fun updateInspection(inspection: Inspection): Resource<Inspection> {
         if(inspection.inspectionId == "") {
             throw IllegalArgumentException("inspectionId can not be empty")
         }
