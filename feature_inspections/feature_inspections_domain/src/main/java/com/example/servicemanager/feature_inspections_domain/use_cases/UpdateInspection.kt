@@ -6,8 +6,6 @@ import com.example.core.util.UiText
 import com.example.feature_inspections_domain.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UpdateInspection @Inject constructor (

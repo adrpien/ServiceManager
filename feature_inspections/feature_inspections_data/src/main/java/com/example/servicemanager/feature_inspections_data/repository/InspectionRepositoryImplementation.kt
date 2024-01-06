@@ -106,6 +106,7 @@ class  InspectionRepositoryImplementation(
         return inspectionFirebaseApi.updateInspection(inspection)
     }
 
+    // TODO this should not be flow, the same situation with repairs
     override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
         var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
         emit(

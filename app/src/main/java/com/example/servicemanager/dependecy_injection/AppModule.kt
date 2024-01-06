@@ -28,7 +28,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRequestNetworkCallback(app: Application): RequestNetworkObserver {
+    fun provideRequestNetworkObserver(app: Application): RequestNetworkObserver {
         return RequestNetworkObserver(app)
     }
 

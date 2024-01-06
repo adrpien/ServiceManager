@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wrong_date_format">Wrong date format</string>
+    <string name="textfields_device_sn_and_device_in_are_empty">Textfield deviceSn and deviceIn are empty.</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="inspection_cached">Inspection cached</string>
+    <string name="data_synced">Data synced</string>
+    <string name="data_sync_error">Data sync error</string>
+    <string name="field_sn_or_in_is_empty">Field Sn or In is empty</string>
+</resources>

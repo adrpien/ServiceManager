@@ -11,6 +11,10 @@ object Modules {
 
     const val logger = ":logger"
 
+    const val caching = ":cashing"
+    const val cachingDomain = ":caching:caching_domain"
+    const val cachingData = ":caching:caching_data"
+
     const val featureInspectionsData = ":feature_inspections:feature_inspections_data"
     const val featureInspectionsDomain = ":feature_inspections:feature_inspections_domain"
     const val featureInspectionsPresentation = ":feature_inspections:feature_inspections_presentation"

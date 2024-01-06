@@ -6,8 +6,6 @@ import com.example.core.util.UiText
 import com.example.feature_inspections_domain.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
@@ -28,7 +26,7 @@ class SaveInspection @Inject constructor (
                 return Resource(
                     ResourceState.ERROR,
                     null,
-                    UiText.StringResource(R.string.textfields_devicesn_and_devicein_are_empty)
+                    UiText.StringResource(R.string.textfields_device_sn_and_device_in_are_empty)
                 )
             }
         } catch (e: IllegalArgumentException) {

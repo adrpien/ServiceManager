@@ -12,6 +12,7 @@ interface InspectionRepository {
     fun getInspectionList(): Flow<Resource<List<Inspection>>>
     suspend fun insertInspection(inspection: Inspection): Resource<Inspection>
     suspend fun updateInspection(inspection: Inspection): Resource<Inspection>
+    // TODO This not have to be flow i think
     fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>>
 
 }

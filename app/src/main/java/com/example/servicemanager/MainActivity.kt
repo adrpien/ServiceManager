@@ -1,14 +1,19 @@
 package com.example.servicemanager
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.servicemanager.navigation.LoginNavigation
 import com.example.servicemanager.navigation.MainScreenNavigation
 import com.example.servicemanager.network_connection.RequestNetworkObserver
@@ -28,6 +33,7 @@ class MainActivity (
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
     @Inject
     lateinit var requestNetworkObserver: RequestNetworkObserver
 
@@ -36,30 +42,30 @@ class MainActivity (
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        permissionResultListener = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { result ->
-            when(result) {
-                true -> Unit
-                false -> ActivityCompat.startActivityForResult(this, intent, 0, null)
-                else -> ActivityCompat.startActivityForResult(this, intent, 0, null)
+/* *********************  Getting android.permission.WRITE_SETTINGS permission *****************  */
+        if (
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            permissionResultListener = registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { result ->
+                when (result) {
+                    true -> Unit
+                    false -> requestWriteSettingsPermission() // permissionResultListener.launch(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                    else -> requestWriteSettingsPermission() // permissionResultListener.launch(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                }
             }
+            requestWriteSettingsPermission()
         }
 
-        permissionResultListener.launch(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-
-        if (!Settings.System.canWrite(this)) {
-            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-            intent.data = Uri.parse("package:" + this.packageName)
-            ActivityCompat.startActivityForResult(this, intent, 0, null)
-        }
-
+/* ******************************** Network observer ******************************************** */
         requestNetworkObserver(
             activity = this,
             onLost = null,
             onAvailable = null
         )
-
+/* ******************************** Content ***************************************************** */
         setContent {
             ServiceManagerTheme(appPreferences) {
                 // LoginNavigation()
@@ -70,7 +76,12 @@ class MainActivity (
 
         }
     }
-
-
-
+    fun requestWriteSettingsPermission() {
+        if (!Settings.System.canWrite(this)) {
+            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+            intent.data = Uri.parse("package:" + this.packageName)
+            permissionResultListener.launch(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+            ActivityCompat.startActivityForResult(this, intent, 0, null)
+        }
+    }
 }

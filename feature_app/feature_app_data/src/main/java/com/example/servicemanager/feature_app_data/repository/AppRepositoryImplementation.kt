@@ -8,7 +8,6 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_app_data.R
 import com.example.logger.AppLogger
-import com.example.logger.EventLogType
 import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity

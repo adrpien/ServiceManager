@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="inspection_cached">Inspection cached</string>
+    <string name="inspections_successfully_synced">Inspections successfully synced</string>
+    <string name="inspections_sync_error">Inspections sync error</string>
+</resources>

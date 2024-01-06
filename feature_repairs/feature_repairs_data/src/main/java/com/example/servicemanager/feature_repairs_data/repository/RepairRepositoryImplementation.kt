@@ -6,7 +6,6 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_repairs_data.R
 import com.example.logger.AppLogger
-import com.example.logger.EventLogType
 import com.example.servicemanager.feature_repairs_data.local.RepairDatabaseDao
 import com.example.servicemanager.feature_repairs_data.mappers.toRepairEntity
 import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
