@@ -17,7 +17,6 @@ import javax.inject.Inject
 class RequestNetworkObserver @Inject constructor (
     private val context: Context,
 ) {
-    private var ispermissionGranted: Boolean = false
 
     operator fun invoke(
         activity: Activity,

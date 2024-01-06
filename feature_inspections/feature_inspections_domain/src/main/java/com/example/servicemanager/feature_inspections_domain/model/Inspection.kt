@@ -30,7 +30,8 @@ data class Inspection(
     val deviceManufacturer: String = "",
     val deviceModel: String = "",
     val deviceSn: String = "",
-    val deviceIn: String = ""
+    val deviceIn: String = "",
+    val signatureId: String = "0",
     ) {
 
     companion object {
@@ -48,7 +49,8 @@ data class Inspection(
             "deviceManufacturer",
             "deviceModel",
             "deviceSn",
-            "deviceIn"
+            "deviceIn",
+            "signatureId"
         )
     }
 

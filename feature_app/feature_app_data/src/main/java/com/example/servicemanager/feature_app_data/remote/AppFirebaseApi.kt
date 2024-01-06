@@ -56,6 +56,9 @@ class  AppFirebaseApi(
 
     }
     fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
+        if (signatureId.isEmpty()) {
+            throw IllegalArgumentException("signatureId can not be empty")
+        }
         Log.d(APP_FIREBASE_API, "Signature fetching started")
         emit(
             Resource(

@@ -45,7 +45,7 @@ class InspectionDetailsViewModel @Inject constructor(
 
     init {
         fetchInspection()
-        fetchSignature()
+        // fetchSignature()
         fetchHospitalList()
         fetchEstStateList()
         fetchInspectionStateList()
@@ -84,15 +84,16 @@ class InspectionDetailsViewModel @Inject constructor(
                                     inspection =  inspection
                                 )
                             }
-                            viewModelScope.launch(Dispatchers.IO) {
-                                appUseCases.saveSignature(
-                                    inspectionDetailsState.value.inspection.inspectionId,
-                                    bitmapToByteArray(inspectionDetailsState.value.signature)
-                                )
-                            }
+
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                         }
                     }
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.saveSignature(
+                        inspectionDetailsState.value.inspection.inspectionId,
+                        bitmapToByteArray(inspectionDetailsState.value.signature)
+                    )
                 }
             }
             is InspectionDetailsEvent.UpdateInspection -> {
@@ -130,6 +131,7 @@ class InspectionDetailsViewModel @Inject constructor(
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
                                     inspectionDetailsIsLoading = false
+                                    result.data?.let {  fetchSignature(it) }
                                     setIsLoadingStatus()
                                 }
                             }
@@ -149,27 +151,25 @@ class InspectionDetailsViewModel @Inject constructor(
 
         }
     }
-    // TODO Bug needs to be fixed - fetches signature even if there no signature
-    private fun fetchSignature() {
-        if (currentInspectionId != "0") {
-            viewModelScope.launch(Dispatchers.Main) {
-                appUseCases
-                    .getSignature(currentInspectionId.toString())
-                    .collect { result ->
-                        when (result.resourceState) {
-                            ResourceState.SUCCESS -> {
-                                result.data?.let { signature ->
-                                    _inspectionDetailsState.value =
-                                        _inspectionDetailsState.value.copy(
-                                            signature = byteArrayToBitmap(signature)
-                                        )
-                                }
+    private fun fetchSignature(inspection: Inspection) {
+        viewModelScope.launch(Dispatchers.Main) {
+            appUseCases
+                .getSignature(inspection.signatureId)
+                .collect { result ->
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { signature ->
+                                _inspectionDetailsState.value =
+                                    _inspectionDetailsState.value.copy(
+                                        signature = byteArrayToBitmap(signature)
+                                    )
                             }
-                            ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
                         }
+
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> Unit
                     }
-            }
+                }
         }
     }
 

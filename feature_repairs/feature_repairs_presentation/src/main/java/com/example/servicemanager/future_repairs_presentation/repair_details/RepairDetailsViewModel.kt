@@ -48,7 +48,7 @@ class RepairDetailsViewModel @Inject constructor(
 
     init {
         fetchRepair()
-        fetchSignature()
+        // fetchSignature()
         fetchHospitalList()
         fetchEstStateList()
         fetchRepairStateList()
@@ -123,13 +123,15 @@ class RepairDetailsViewModel @Inject constructor(
                         when (result.resourceState) {
                             ResourceState.SUCCESS -> {
                                 result.data?.let { repair ->
-                                    repairIsLoading = false
-                                    setIsLoadingStatus()
+
                                     _repairDetailsState.value =
                                         _repairDetailsState.value.copy(
                                             repair = repair,
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(repair))
+                                    repairIsLoading = false
+                                    setIsLoadingStatus()
+                                    fetchSignature(repair)
                                 }
                             }
                             ResourceState.LOADING -> Unit
@@ -147,27 +149,24 @@ class RepairDetailsViewModel @Inject constructor(
             setIsLoadingStatus()
         }
     }
-    // TODO Bug needs to be fixed - fetches signature even if there no signature
-    private fun fetchSignature() {
-        if (currentRepairId != "0") {
-            viewModelScope.launch(Dispatchers.Main) {
-                appUseCases
-                    .getSignature(currentRepairId.toString())
-                    .collect { result ->
-                        when (result.resourceState) {
-                            ResourceState.SUCCESS -> {
-                                result.data?.let { signature ->
-                                    _repairDetailsState.value =
-                                        _repairDetailsState.value.copy(
-                                            signature = byteArrayToBitmap(signature)
-                                        )
-                                }
+    private fun fetchSignature(repair: Repair) {
+        viewModelScope.launch(Dispatchers.Main) {
+            appUseCases
+                .getSignature(repair.signatureId)
+                .collect { result ->
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { signature ->
+                                _repairDetailsState.value =
+                                    _repairDetailsState.value.copy(
+                                        signature = byteArrayToBitmap(signature)
+                                    )
                             }
-                            ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
                         }
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> Unit
                     }
-            }
+                }
         }
     }
     private fun fetchHospitalList() {

@@ -37,6 +37,7 @@ data class Repair(
     val deviceModel: String = "",
     val deviceSn: String = "",
     val deviceIn: String = "",
+    val signatureId: String = "0"
     ) {
 }
 

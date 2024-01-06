@@ -15,7 +15,7 @@ class GetSignature @Inject constructor (
     operator fun invoke(signatureId: String): Flow<Resource<ByteArray>> {
         return try {
             repository.getSignature(signatureId)
-        } catch (e: Exception) {
+        } catch (e: IllegalArgumentException) {
             flow {
                 emit(
                     Resource(
