@@ -4,21 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.servicemanager.feature_inspections_data.local.entities.InspectionEntity
-import com.example.servicemanager.feature_repairs_data.local.entities.RepairEntity
+import com.example.caching_data.local.entities.PhotoEntity
 
 @Dao
 interface CachingDatabaseDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun cacheInspection(inspectionEntity: InspectionEntity)
-    @Query( "SELECT * FROM inspectionentity")
-    suspend fun getCachedInspections(): List<InspectionEntity>
+    suspend fun cachePhoto(photoEntity: PhotoEntity)
 
+    @Query("SELECT * FROM photoentity")
+    suspend fun getCachedPhotos(): List<PhotoEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun cacheRepair(repairEntity: RepairEntity)
-
-    @Query("SELECT * FROM repairentity")
-    suspend fun getCachedRepairs(): List<RepairEntity>
+    @Query("DELETE FROM photoentity WHERE photoId LIKE :photoId")
+    suspend fun cleanCachedPhoto(photoId: String)
 }

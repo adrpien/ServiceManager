@@ -13,6 +13,7 @@ import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.model.UserType
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -31,28 +32,37 @@ class  AppFirebaseApi(
 
     /* ********************************* SIGNATURES ********************************************* */
     suspend fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Resource<String>  {
-        // TODO Caching mechanism in uploadSignature fun for AppFirebaseApi implementation
-        Log.d(APP_FIREBASE_API, "Signature uploading started")
-        val documentReference = firebaseStorage.getReference("signatures")
-            .child("${signatureId}.jpg")
+        try {
+            // TODO Caching mechanism in uploadSignature fun for AppFirebaseApi implementation
+            Log.d(APP_FIREBASE_API, "Signature uploading started")
+            val documentReference = firebaseStorage.getReference("signatures")
+                .child("${signatureId}.jpg")
             val result = documentReference.putBytes(signatureBytes)
             result.await()
             if (result.isSuccessful) {
                 Log.d(APP_FIREBASE_API, "Signature uploaded")
                 return Resource(
-                        ResourceState.SUCCESS,
-                        documentReference.downloadUrl.toString(),
-                        UiText.StringResource(R.string.upload_signature_success)
-                    )
+                    ResourceState.SUCCESS,
+                    documentReference.downloadUrl.toString(),
+                    UiText.StringResource(R.string.upload_signature_success)
+                )
 
             } else {
                 Log.d(APP_FIREBASE_API, "Signature uploading error")
                 return Resource(
-                        ResourceState.ERROR,
-                        null,
+                    ResourceState.ERROR,
+                    null,
                     UiText.StringResource(R.string.unknown_error)
-                    )
+                )
             }
+        } catch (e: FirebaseFirestoreException) {
+            Log.d(APP_FIREBASE_API, "Signature uploading error")
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.unknown_error)
+            )
+        }
 
     }
     fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
@@ -92,18 +102,17 @@ class  AppFirebaseApi(
 
     /* ********************************* HOSPITALS ********************************************** */
     suspend fun getHospitalList(): List<Hospital> {
-        var hospitalList = emptyList<Hospital>()
-        Log.d(APP_FIREBASE_API, "Hospital list fetching started")
-        val documentReference = firebaseFirestore.collection("hospitals")
-        val data = documentReference.get()
-        data.await()
-        if(data.isSuccessful) {
-            hospitalList = data.result.toObjects(Hospital::class.java)
-            Log.d(APP_FIREBASE_API, "Hospital list fetched")
-
-        } else {
-            Log.d(APP_FIREBASE_API, "Hospital list fetching error")
-        }
+            var hospitalList = emptyList<Hospital>()
+            Log.d(APP_FIREBASE_API, "Hospital list fetching started")
+            val documentReference = firebaseFirestore.collection("hospitals")
+            val data = documentReference.get()
+            data.await()
+            if(data.isSuccessful) {
+                hospitalList = data.result.toObjects(Hospital::class.java)
+                Log.d(APP_FIREBASE_API, "Hospital list fetched")
+            } else {
+                Log.d(APP_FIREBASE_API, "Hospital list fetching error")
+            }
         return hospitalList
     }
     suspend fun updateHospital(hospital: Hospital): Resource<String> {
@@ -206,18 +215,17 @@ class  AppFirebaseApi(
 
     /* ********************************* TECHNICIANS ******************************************** */
     suspend  fun getTechnicianList(): List<Technician> {
-        var technicianList = emptyList<Technician>()
-        Log.d(APP_FIREBASE_API, "Technician list fetching error")
-        val documentReference = firebaseFirestore.collection("technicians")
-        val data = documentReference.get()
-        data.await()
-        if(data.isSuccessful) {
-            technicianList = data.result.toObjects(Technician::class.java)
-            Log.d(APP_FIREBASE_API, "Technician list fetched")
-
-        } else {
+            var technicianList = emptyList<Technician>()
             Log.d(APP_FIREBASE_API, "Technician list fetching error")
-        }
+            val documentReference = firebaseFirestore.collection("technicians")
+            val data = documentReference.get()
+            data.await()
+            if(data.isSuccessful) {
+                technicianList = data.result.toObjects(Technician::class.java)
+                Log.d(APP_FIREBASE_API, "Technician list fetched")
+            } else {
+                Log.d(APP_FIREBASE_API, "Technician list fetching error")
+            }
         return technicianList
     }
     suspend fun updateTechnician(technician: Technician): Resource<String> {
@@ -228,20 +236,20 @@ class  AppFirebaseApi(
         val documentReference = firebaseFirestore.collection("technicians").document(technician.technicianId)
         val result = documentReference.update(map)
         result.await()
-        if (result.isSuccessful) {
+        return if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Technician record update success")
-            return Resource(
-                    ResourceState.SUCCESS,
+            Resource(
+                ResourceState.SUCCESS,
                 null,
-                    UiText.StringResource(R.string.technician_update_success)
-                )
+                UiText.StringResource(R.string.technician_update_success)
+            )
         } else {
             Log.d(APP_FIREBASE_API, "Technician record update error")
-            return Resource(
-                    ResourceState.ERROR,
+            Resource(
+                ResourceState.ERROR,
                 null,
-                    UiText.StringResource(R.string.technician_update_error)
-                )
+                UiText.StringResource(R.string.technician_update_error)
+            )
         }
     }
     suspend fun createTechnician(technician: Technician): Resource<String> {
@@ -296,41 +304,49 @@ class  AppFirebaseApi(
         }
     }
     suspend fun deleteTechnician(technicianId: String): Resource<String> {
-        val documentReference = firebaseFirestore.collection("technicians").document(technicianId)
-        val result = documentReference.delete()
-        result.await()
-        if (result.isSuccessful) {
-            Log.d(APP_FIREBASE_API, "Technician record delete success")
-            return Resource(
+        try {
+            val documentReference = firebaseFirestore.collection("technicians").document(technicianId)
+            val result = documentReference.delete()
+            result.await()
+            return if (result.isSuccessful) {
+                Log.d(APP_FIREBASE_API, "Technician record delete success")
+                Resource(
                     ResourceState.SUCCESS,
-                null,
+                    null,
                     UiText.StringResource(R.string.technician_delete_success)
                 )
-        } else {
-            Log.d(APP_FIREBASE_API, "Technician record delete error")
-            return Resource(
+            } else {
+                Log.d(APP_FIREBASE_API, "Technician record delete error")
+                Resource(
                     ResourceState.ERROR,
-                null,
-                    UiText.StringResource(R.string.technician_delete_error)
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.check_internet_connection)
+            )
         }
+
     }
 
     /* ********************************* EST STATES ********************************************* */
     suspend fun getEstStateList(): List<EstState> {
-        var hospitalList = emptyList<EstState>()
+        var estStateList = emptyList<EstState>()
         Log.d(APP_FIREBASE_API, "Est states list fetching started")
         val documentReference = firebaseFirestore.collection("est_states")
         val data = documentReference.get()
         data.await()
         if(data.isSuccessful) {
-            hospitalList = data.result.toObjects(EstState::class.java)
+            estStateList = data.result.toObjects(EstState::class.java)
             Log.d(APP_FIREBASE_API, "Est states list fetched")
-
         } else {
             Log.d(APP_FIREBASE_API, "Est states list fetching error")
         }
-        return hospitalList
+        return estStateList
     }
     suspend fun updateEstState(estState: EstState): Resource<String> {
         val map: Map<String, String> = mapOf(
@@ -428,18 +444,17 @@ class  AppFirebaseApi(
 
     /* ********************************* REPAIR STATES ****************************************** */
     suspend fun getRepairStateList(): List<RepairState> {
-        var repairStateList = emptyList<RepairState>()
-        Log.d(APP_FIREBASE_API, "Repair states list fetching started")
-        val documentReference = firebaseFirestore.collection("repair_states")
-        val data = documentReference.get()
-        data.await()
-        if(data.isSuccessful) {
-            repairStateList = data.result.toObjects(RepairState::class.java)
-            Log.d(APP_FIREBASE_API, "Repair states list fetched")
-
-        } else {
-            Log.d(APP_FIREBASE_API, "Repair states list fetching error")
-        }
+            var repairStateList = emptyList<RepairState>()
+            Log.d(APP_FIREBASE_API, "Repair states list fetching started")
+            val documentReference = firebaseFirestore.collection("repair_states")
+            val data = documentReference.get()
+            data.await()
+            if(data.isSuccessful) {
+                repairStateList = data.result.toObjects(RepairState::class.java)
+                Log.d(APP_FIREBASE_API, "Repair states list fetched")
+            } else {
+                Log.d(APP_FIREBASE_API, "Repair states list fetching error")
+            }
         return repairStateList
     }
     suspend fun updateRepairState(repairState: RepairState): Resource<String> {
@@ -541,19 +556,18 @@ class  AppFirebaseApi(
 
     /* ********************************* INSPECTIONS STATES ************************************* */
     suspend fun getInspectionStateList(): List<InspectionState> {
-        var inspectionStateList = emptyList<InspectionState>()
-        Log.d(APP_FIREBASE_API, "Inspection states list fetching started")
-        val documentReference = firebaseFirestore.collection("inspection_states")
-        val data = documentReference.get()
-        data.await()
-        if(data.isSuccessful) {
-            inspectionStateList = data.result.toObjects(InspectionState::class.java)
-            Log.d(APP_FIREBASE_API, "Inspection states list fetched")
-
-        } else {
-            Log.d(APP_FIREBASE_API, "Inspection states list fetching error")
-        }
-        return inspectionStateList
+            var inspectionStateList = emptyList<InspectionState>()
+            Log.d(APP_FIREBASE_API, "Inspection states list fetching started")
+            val documentReference = firebaseFirestore.collection("inspection_states")
+            val data = documentReference.get()
+            data.await()
+            if(data.isSuccessful) {
+                inspectionStateList = data.result.toObjects(InspectionState::class.java)
+                Log.d(APP_FIREBASE_API, "Inspection states list fetched")
+            } else {
+                Log.d(APP_FIREBASE_API, "Inspection states list fetching error")
+            }
+            return inspectionStateList
     }
     suspend fun updateInspectionState(inspectionState: InspectionState): Resource<String> {
         val map: Map<String, String> = mapOf(
@@ -653,29 +667,28 @@ class  AppFirebaseApi(
 
     /* ********************************* USER ************************************* */
     suspend fun getUser(userId: String): User? {
-        var user: User? = null
-        val documentReference = firebaseFirestore.collection("users").document(userId)
-        val result = documentReference.get()
-        result.await()
-        if(result.isSuccessful) {
-            user = result.result.toObject(User::class.java)
-        }
+            var user: User? = null
+            val documentReference = firebaseFirestore.collection("users").document(userId)
+            val result = documentReference.get()
+            result.await()
+            if(result.isSuccessful) {
+                user = result.result.toObject(User::class.java)
+            }
         return user
     }
 
     suspend fun getUserTypeList(): List<UserType> {
-        var userTypeList = emptyList<UserType>()
-        Log.d(APP_FIREBASE_API, "User types list fetching started")
-        val documentReference = firebaseFirestore.collection("user_types")
-        val data = documentReference.get()
-        data.await()
-        if(data.isSuccessful) {
-            userTypeList = data.result.toObjects(UserType::class.java)
-            Log.d(APP_FIREBASE_API, "User types list fetched")
-
-        } else {
-            Log.d(APP_FIREBASE_API, "User types list fetching error")
-        }
+            var userTypeList = emptyList<UserType>()
+            Log.d(APP_FIREBASE_API, "User types list fetching started")
+            val documentReference = firebaseFirestore.collection("user_types")
+            val data = documentReference.get()
+            data.await()
+            if(data.isSuccessful) {
+                userTypeList = data.result.toObjects(UserType::class.java)
+                Log.d(APP_FIREBASE_API, "User types list fetched")
+            } else {
+                Log.d(APP_FIREBASE_API, "User types list fetching error")
+            }
         return userTypeList
     }
 
@@ -707,50 +720,69 @@ class  AppFirebaseApi(
         }
     }
     suspend fun createUserType(userType: UserType): Resource<String> {
-        val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
-        val map: Map<String, String> = mapOf(
-            "userTypeId" to documentReference.id,
-            "userTypeName" to userType.userTypeName,
-            "hospitals" to userType.hospitals.toString()
-            // TODO How to pass list of hospitals in here
-        )
-        val result = documentReference.set(map)
-        result.await()
-        if (result.isSuccessful) {
-            Log.d(APP_FIREBASE_API, "UserType record create success")
-            return Resource(
+        try {
+            val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
+            val map: Map<String, String> = mapOf(
+                "userTypeId" to documentReference.id,
+                "userTypeName" to userType.userTypeName,
+                "hospitals" to userType.hospitals.toString()
+                // TODO How to pass list of hospitals in here
+            )
+            val result = documentReference.set(map)
+            result.await()
+            if (result.isSuccessful) {
+                Log.d(APP_FIREBASE_API, "UserType record create success")
+                return Resource(
                     ResourceState.SUCCESS,
                     null,
                     UiText.StringResource(R.string.usertype_create_success)
                 )
-        } else {
-            Log.d(APP_FIREBASE_API, "UserType record create error")
-            return Resource(
+            } else {
+                Log.d(APP_FIREBASE_API, "UserType record create error")
+                return Resource(
                     ResourceState.ERROR,
                     null,
                     UiText.StringResource(R.string.usertype_create_error)
                 )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.check_internet_connection)
+            )
         }
+
     }
     suspend fun deleteUserType(userTypeId: String): Resource<String> {
-        val documentReference = firebaseFirestore.collection("user_types").document(userTypeId)
-        val result = documentReference.delete()
-        result.await()
-        if (result.isSuccessful) {
-            Log.d(APP_FIREBASE_API, "UserType record delete success")
-            return Resource(
+        try {
+            val documentReference = firebaseFirestore.collection("user_types").document(userTypeId)
+            val result = documentReference.delete()
+            result.await()
+            if (result.isSuccessful) {
+                Log.d(APP_FIREBASE_API, "UserType record delete success")
+                return Resource(
                     ResourceState.SUCCESS,
                     null,
                     UiText.StringResource(R.string.usertype_delete_success)
                 )
-        } else {
-            Log.d(APP_FIREBASE_API, "UserType record delete error")
-            return Resource(
+            } else {
+                Log.d(APP_FIREBASE_API, "UserType record delete error")
+                return Resource(
                     ResourceState.ERROR,
                     null,
-                    UiText.StringResource(R.string.usertype_delete_error)
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            Log.d(APP_FIREBASE_API, "UserType record delete error")
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.check_internet_connection)
+            )
         }
+
     }
 
 

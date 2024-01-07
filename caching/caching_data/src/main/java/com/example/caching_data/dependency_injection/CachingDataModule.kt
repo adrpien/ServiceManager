@@ -3,12 +3,9 @@ package com.example.caching_data.dependency_injection
 import android.app.Application
 import androidx.room.Room
 import com.example.caching_data.local.CachingDatabase
-import com.example.caching_data.local.CachingDatabaseDao
 import com.example.caching_data.repository.CachingRepositoryImplementation
 import com.example.caching_domain.repository.CachingRepository
-import com.example.servicemanager.feature_inspections_data.local.InspectionDatabase
-import com.example.servicemanager.feature_inspections_data.remote.InspectionFirebaseApi
-import com.example.servicemanager.feature_repairs_data.remote.RepairFirebaseApi
+import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,9 +15,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CachingDataModule {
+
     @Provides
     @Singleton
-    fun provideCachingDatabase(app: Application): CachingDatabase {
+    fun provideInspectionDatabase(app: Application): CachingDatabase {
         return Room.databaseBuilder(
             app,
             CachingDatabase::class.java,
@@ -31,14 +29,12 @@ object CachingDataModule {
     @Provides
     @Singleton
     fun providesCachingRepository(
-        repairFirebaseApi: RepairFirebaseApi,
-        inspectionFirebaseApi: InspectionFirebaseApi,
-        cachingDatabase: CachingDatabase
+        appFirebaseApi: AppFirebaseApi,
+        cachingDatabase:CachingDatabase
     ): CachingRepository {
         return CachingRepositoryImplementation(
             cachingDatabaseDao = cachingDatabase.cachingDatabaseDao,
-            repairFirebaseApi = repairFirebaseApi,
-            inspectionFirebaseApi = inspectionFirebaseApi,
+            appFirebaseApi = appFirebaseApi,
         )
     }
 }

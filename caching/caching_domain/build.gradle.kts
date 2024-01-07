@@ -11,7 +11,6 @@ android {
 dependencies{
     // Modules
     implementation(project(Modules.core))
-    implementation(project(Modules.featureInspectionsDomain))
-    implementation(project(Modules.featureRepairsDomain))
+    implementation(project(Modules.featureAppDomain))
 
 }

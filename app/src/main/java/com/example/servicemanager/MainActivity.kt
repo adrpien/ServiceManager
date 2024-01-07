@@ -1,25 +1,26 @@
 package com.example.servicemanager
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.caching_domain.use_cases.CachingUseCases
 import com.example.servicemanager.navigation.LoginNavigation
 import com.example.servicemanager.navigation.MainScreenNavigation
 import com.example.servicemanager.network_connection.RequestNetworkObserver
 import com.example.servicemanager.theme.ServiceManagerTheme
 import com.example.shared_preferences.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -33,6 +34,9 @@ class MainActivity (
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var cachingUseCases: CachingUseCases
 
     @Inject
     lateinit var requestNetworkObserver: RequestNetworkObserver
@@ -52,8 +56,8 @@ class MainActivity (
             ) { result ->
                 when (result) {
                     true -> Unit
-                    false -> requestWriteSettingsPermission() // permissionResultListener.launch(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                    else -> requestWriteSettingsPermission() // permissionResultListener.launch(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                    false -> requestWriteSettingsPermission()
+                    else -> requestWriteSettingsPermission()
                 }
             }
             requestWriteSettingsPermission()
@@ -63,7 +67,11 @@ class MainActivity (
         requestNetworkObserver(
             activity = this,
             onLost = null,
-            onAvailable = null
+            onAvailable = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    // TODO Signatures Synchronization
+                }
+            }
         )
 /* ******************************** Content ***************************************************** */
         setContent {

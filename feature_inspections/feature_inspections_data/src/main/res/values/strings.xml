@@ -9,4 +9,6 @@
     <string name="locally_cached_record">Locally cached record</string>
     <string name="inspection_record_fetching_finished">Inspection record fetching finished</string>
     <string name="inspection_record_fetching_error">Inspection record fetching error</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="check_internet_connection">Check internet connection</string>
 </resources>

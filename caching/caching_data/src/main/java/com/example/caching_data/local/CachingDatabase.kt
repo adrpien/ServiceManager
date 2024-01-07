@@ -1,15 +1,13 @@
 package com.example.caching_data.local
 
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.servicemanager.feature_inspections_data.local.entities.InspectionEntity
-import com.example.servicemanager.feature_repairs_data.local.entities.RepairEntity
+import com.example.caching_data.local.entities.PhotoEntity
+import com.example.caching_domain.model.Photo
 
 @Database (
     entities = [
-        InspectionEntity::class,
-        RepairEntity::class
+        PhotoEntity::class,
     ],
     version = 1
 )

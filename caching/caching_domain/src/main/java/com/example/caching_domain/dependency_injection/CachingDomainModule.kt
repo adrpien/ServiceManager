@@ -1,10 +1,13 @@
 package com.example.caching_domain.dependency_injection
 
+import android.app.Application
 import com.example.caching_domain.repository.CachingRepository
-import com.example.caching_domain.use_cases.CacheInspection
-import com.example.caching_domain.use_cases.CacheRepair
+import com.example.caching_domain.use_cases.CachePhoto
 import com.example.caching_domain.use_cases.CachingUseCases
-import com.example.caching_domain.use_cases.SyncData
+import com.example.caching_domain.use_cases.GetCachedPhotos
+import com.example.caching_domain.use_cases.SavePhotoLocally
+import com.example.caching_domain.use_cases.SyncCachedPhoto
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,12 +21,15 @@ object CachingDomainModule {
     @Provides
     @Singleton
     fun provideCachingUseCases(
-        cachingRepository: CachingRepository
+        app: Application,
+        cachingRepository: CachingRepository,
+        appRepository: AppRepository
     ): CachingUseCases {
         return CachingUseCases(
-            cacheInspection = CacheInspection(cachingRepository),
-            cacheRepair = CacheRepair(cachingRepository),
-            syncData = SyncData(cachingRepository)
+            cachePhoto = CachePhoto(cachingRepository),
+            syncCachedPhoto = SyncCachedPhoto(appRepository),
+            savePhotoLocally = SavePhotoLocally(app.applicationContext),
+            getCachedPhotos = GetCachedPhotos(cachingRepository)
         )
     }
 }

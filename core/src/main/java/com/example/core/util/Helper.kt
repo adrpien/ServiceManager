@@ -7,7 +7,9 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +30,17 @@ class Helper {
             get() = (this / getSystem().displayMetrics.density).toInt()
         val Int.toPx: Int
             get() = (this * getSystem().displayMetrics.density).toInt()
+
+        fun getBitmapFromUri(context: Context, uri: Uri): Bitmap? {
+            try {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                inputStream?.close()
+                return bitmap
+            } catch (e: Exception) {
+                return null
+            }
+        }
 
         fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
             val signatureByteArrayOutputStream = ByteArrayOutputStream()
@@ -57,7 +70,7 @@ class Helper {
             return stream.toByteArray()
         }
 
-        private fun drawableToBitmap(drawable: Drawable): Bitmap {
+        fun drawableToBitmap(drawable: Drawable): Bitmap {
             if (drawable is BitmapDrawable) {
                 return drawable.bitmap
             }
@@ -79,5 +92,25 @@ class Helper {
             return bitmap
         }
 
+        fun uriToByteArray(context: Context, uri: Uri): ByteArray? {
+            try {
+                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                val buffer = ByteArray(1024)
+                var length: Int
+                if (inputStream != null) {
+                    while (inputStream.read(buffer).also { length = it } > 0) {
+                        byteArrayOutputStream.write(buffer, 0, length)
+                    }
+                    inputStream.close()
+                    return byteArrayOutputStream.toByteArray()
+                } else {
+                    return null
+
+                }
+            } catch (e: Exception) {
+                return null
+            }
+        }
     }
 }

@@ -45,7 +45,6 @@ class InspectionDetailsViewModel @Inject constructor(
 
     init {
         fetchInspection()
-        // fetchSignature()
         fetchHospitalList()
         fetchEstStateList()
         fetchInspectionStateList()
@@ -112,6 +111,8 @@ class InspectionDetailsViewModel @Inject constructor(
                     _eventFlow.emit(UiEvent.SetFieldsIsEditable(inspectionDetailsState.value.isInEditMode))
                 }
             }
+
+            else -> Unit
         }
     }
 

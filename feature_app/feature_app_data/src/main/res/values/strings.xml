@@ -47,4 +47,13 @@
     <string name="usertype_delete_success">UserType delete success</string>
     <string name="unknown_error">Unknown error</string>
     <string name="upload_signature_success">Upload signature success</string>
+    <string name="check_internet_connection">Check internet connection</string>
+    <string name="hospital_list_fetched">Hospital list fetched</string>
+    <string name="technician_list_fetched">Technician list fetched</string>
+    <string name="est_state_list_fetched">EstState list fetched</string>
+    <string name="repair_state_list_fetched">RepairState list fetched</string>
+    <string name="inspection_state_list_fetched">Inspection state list fetched</string>
+    <string name="user_fetched">User fetched</string>
+    <string name="user_type_list_fetched">UserType list fetched</string>
+    <string name="device_list_fetching_error">Device list fetching error</string>
 </resources>

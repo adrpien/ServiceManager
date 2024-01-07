@@ -14,4 +14,5 @@ dependencies{
     implementation(project(Modules.logger))
     implementation(project(Modules.featureAppDomain))
     implementation(project(Modules.featureInspectionsDomain))
+    implementation((project(Modules.cachingDomain)))
 }

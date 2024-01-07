@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_app_data.repository
 
+import com.example.core.util.MapperExtensionFunction.toMap
 import com.example.servicemanager.feature_app_data.local.AppDatabaseDao
 import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
@@ -21,12 +22,13 @@ import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.model.UserType
+import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.flow.*
 
 class  AppRepositoryImplementation(
     private val appDatabaseDao: AppDatabaseDao,
     private val firebaseApi: AppFirebaseApi,
-    private val appLogger: AppLogger<Any>
+    private val appLogger: AppLogger<Any>,
 ): AppRepository {
 
     /* ********************************* SIGNATURES ********************************************* */
@@ -51,21 +53,40 @@ class  AppRepositoryImplementation(
                 UiText.StringResource(R.string.locally_cached_list)
             )
         )
-        val list = firebaseApi.getHospitalList()
-        if(list.isNotEmpty()) {
-            appDatabaseDao.deleteAllHospitals()
-            for (hospital in list) {
-                appDatabaseDao.insertHospital(hospital.toHospitalEntity())
+        try {
+            val list = firebaseApi.getHospitalList()
+            if(list.isNotEmpty()) {
+                appDatabaseDao.deleteAllHospitals()
+                for (hospital in list) {
+                    appDatabaseDao.insertHospital(hospital.toHospitalEntity())
+                }
+                hospitalList = appDatabaseDao.getHospitalList().map { it.toHospital() }
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        hospitalList,
+                        UiText.StringResource(R.string.device_list_fetching_finished)
+                    )
+                )
+            } else {
+                emit(
+                    Resource(
+                        ResourceState.ERROR,
+                        hospitalList,
+                        UiText.StringResource(R.string.locally_cached_list)
+                    )
+                )
             }
-            hospitalList = appDatabaseDao.getHospitalList().map { it.toHospital() }
+        } catch (e: FirebaseFirestoreException) {
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
-                    hospitalList,
-                    UiText.StringResource(R.string.device_list_fetching_finished)
-                )
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
+            )
             )
         }
+
     }
 
     override suspend fun updateHospital(hospital: Hospital): Resource<String> {
@@ -96,30 +117,49 @@ class  AppRepositoryImplementation(
 
     /* ********************************* TECHNICIANS ******************************************** */
     override fun getTechnicianList() = flow {
-        var technicianList: List<Technician>
-        technicianList = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                technicianList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
-        )
-        val list = firebaseApi.getTechnicianList()
-        if(list.isNotEmpty()) {
-            appDatabaseDao.deleteAllTechnicians()
-            for (technician in list) {
-                appDatabaseDao.insertTechnician(technician.toTechnicianEntity())
-            }
+        try {
+            var technicianList: List<Technician>
             technicianList = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
+                    ResourceState.LOADING,
                     technicianList,
-                    UiText.StringResource(R.string.device_list_fetching_finished)
+                    UiText.StringResource(R.string.locally_cached_list)
+                )
+            )
+            val list = firebaseApi.getTechnicianList()
+            if(list.isNotEmpty()) {
+                appDatabaseDao.deleteAllTechnicians()
+                for (technician in list) {
+                    appDatabaseDao.insertTechnician(technician.toTechnicianEntity())
+                }
+                technicianList = appDatabaseDao.getTechnicianList().map { it.toTechnician() }
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        technicianList,
+                        UiText.StringResource(R.string.device_list_fetching_finished)
+                    )
+                )
+            } else {
+                emit(
+                    Resource(
+                        ResourceState.ERROR,
+                        technicianList,
+                        UiText.StringResource(R.string.locally_cached_list)
+                    )
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
             )
         }
+
     }
 
     override suspend fun createTechnician(technician: Technician): Resource<String> {
@@ -150,30 +190,41 @@ class  AppRepositoryImplementation(
 
     /* ********************************* INSPECTION STATES ************************************** */
     override fun getInspectionStateList() = flow {
-        var inspectionStateList: List<InspectionState>
-        inspectionStateList = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                inspectionStateList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
-        )
-        val list = firebaseApi.getInspectionStateList()
-        if(list.isNotEmpty()) {
-            appDatabaseDao.deleteAllInspectionStates()
-            for (inspectionState in list) {
-                appDatabaseDao.insertInspectionState(inspectionState.toInspectionStateEntity())
-            }
+        try {
+            var inspectionStateList: List<InspectionState>
             inspectionStateList = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
+                    ResourceState.LOADING,
                     inspectionStateList,
-                    UiText.StringResource(R.string.inspection_state_list_fetching_finished)
+                    UiText.StringResource(R.string.locally_cached_list)
                 )
             )
+            val list = firebaseApi.getInspectionStateList()
+            if(list.isNotEmpty()) {
+                appDatabaseDao.deleteAllInspectionStates()
+                for (inspectionState in list) {
+                    appDatabaseDao.insertInspectionState(inspectionState.toInspectionStateEntity())
+                }
+                inspectionStateList = appDatabaseDao.getInspectionStateList().map { it.toInspectionState() }
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        inspectionStateList,
+                        UiText.StringResource(R.string.inspection_state_list_fetching_finished)
+                    )
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
+             emit(
+                 Resource(
+                     ResourceState.ERROR,
+                     null,
+                     UiText.StringResource(R.string.check_internet_connection)
+             )
+             )
         }
+
     }
 
     override suspend fun createInspectionState(inspectionState: InspectionState): Resource<String> {
@@ -205,30 +256,41 @@ class  AppRepositoryImplementation(
 
     /* ********************************* REPAIR STATES ****************************************** */
     override fun getRepairStateList() = flow<Resource<List<RepairState>>> {
-        var repairStateList: List<RepairState>
-        repairStateList = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                repairStateList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
-        )
-        val list = firebaseApi.getRepairStateList()
-        if (list.isNotEmpty()) {
-            appDatabaseDao.deleteAllRepairStates()
-            for (repairState in list) {
-                appDatabaseDao.insertRepairState(repairState.toRepairStateEntity())
-            }
+        try {
+            var repairStateList: List<RepairState>
             repairStateList = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
+                    ResourceState.LOADING,
                     repairStateList,
-                    UiText.StringResource(R.string.inspection_state_list_fetching_finished)
+                    UiText.StringResource(R.string.locally_cached_list)
+                )
+            )
+            val list = firebaseApi.getRepairStateList()
+            if (list.isNotEmpty()) {
+                appDatabaseDao.deleteAllRepairStates()
+                for (repairState in list) {
+                    appDatabaseDao.insertRepairState(repairState.toRepairStateEntity())
+                }
+                repairStateList = appDatabaseDao.getRepairStateList().map { it.toRepairState() }
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        repairStateList,
+                        UiText.StringResource(R.string.inspection_state_list_fetching_finished)
+                    )
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
             )
         }
+
     }
 
     override suspend fun createRepairState(repairState: RepairState): Resource<String> {
@@ -258,30 +320,41 @@ class  AppRepositoryImplementation(
 
     /* ********************************* EST STATES ********************************************* */
     override fun getEstStateList() = flow<Resource<List<EstState>>> {
-        var estStateList: List<EstState>
-        estStateList = appDatabaseDao.getEstStateList().map { it.toEstState() }
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                estStateList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
-        )
-        val list = firebaseApi.getEstStateList()
-        if(list.isNotEmpty()) {
-            appDatabaseDao.deleteAllEstStates()
-            for (estState in list) {
-                appDatabaseDao.insertEstState(estState.toEstStateEntity())
-            }
+        try {
+            var estStateList: List<EstState>
             estStateList = appDatabaseDao.getEstStateList().map { it.toEstState() }
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
+                    ResourceState.LOADING,
                     estStateList,
-                    UiText.StringResource(R.string.device_list_fetching_finished)
+                    UiText.StringResource(R.string.locally_cached_list)
+                )
+            )
+            val list = firebaseApi.getEstStateList()
+            if(list.isNotEmpty()) {
+                appDatabaseDao.deleteAllEstStates()
+                for (estState in list) {
+                    appDatabaseDao.insertEstState(estState.toEstStateEntity())
+                }
+                estStateList = appDatabaseDao.getEstStateList().map { it.toEstState() }
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        estStateList,
+                        UiText.StringResource(R.string.device_list_fetching_finished)
+                    )
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
             )
         }
+
     }
 
     override suspend fun createEstState(estState: EstState): Resource<String> {
@@ -311,53 +384,74 @@ class  AppRepositoryImplementation(
 
     /* ********************************* USER *************************************************** */
     override fun getUser(userId: String): Flow<Resource<User>> = flow {
-        if (userId == ""){
-            throw IllegalArgumentException("userId can not be empty")
-        }
-        var user = firebaseApi.getUser(userId)
-        if (user != null){
+        try {
+            if (userId == ""){
+                throw IllegalArgumentException("userId can not be empty")
+            }
+            var user = firebaseApi.getUser(userId)
+            if (user != null){
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        user,
+                        UiText.StringResource(R.string.user_fetching_finished)
+                    )
+                )
+            } else {
+                emit(
+                    Resource(
+                        ResourceState.ERROR,
+                        user,
+                        UiText.StringResource(R.string.user_fetching_error)
+                    )
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
-                    user,
-                    UiText.StringResource(R.string.user_fetching_finished)
-                )
+                ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
             )
-        } else {
-            emit(
-                Resource(
-                    ResourceState.ERROR,
-                    user,
-                    UiText.StringResource(R.string.user_fetching_error)
-                )
             )
         }
+
     }
 
     /* ********************************* USER TYPES ********************************************* */
 
     override fun getUserTypeList(): Flow<Resource<List<UserType>>> = flow {
-        var userTypeList: List<UserType>
-        userTypeList = appDatabaseDao.getUserTypeList().map { it.toUserType() }
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                userTypeList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
-        )
-        val list = firebaseApi.getUserTypeList()
-        if(list.isNotEmpty()) {
-            appDatabaseDao.deleteAllUserTypes()
-            for (userType in list) {
-                appDatabaseDao.insertUserType(userType.toUserTypeEntity())
-            }
+        try {
+            var userTypeList: List<UserType>
             userTypeList = appDatabaseDao.getUserTypeList().map { it.toUserType() }
             emit(
                 Resource(
-                    ResourceState.SUCCESS,
+                    ResourceState.LOADING,
                     userTypeList,
-                    UiText.StringResource(R.string.user_types_list_fetching_finished)
+                    UiText.StringResource(R.string.locally_cached_list)
+                )
+            )
+            val list = firebaseApi.getUserTypeList()
+            if(list.isNotEmpty()) {
+                appDatabaseDao.deleteAllUserTypes()
+                for (userType in list) {
+                    appDatabaseDao.insertUserType(userType.toUserTypeEntity())
+                }
+                userTypeList = appDatabaseDao.getUserTypeList().map { it.toUserType() }
+                emit(
+                    Resource(
+                        ResourceState.SUCCESS,
+                        userTypeList,
+                        UiText.StringResource(R.string.user_types_list_fetching_finished)
+                    )
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
             )
         }
