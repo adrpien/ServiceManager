@@ -1,4 +1,4 @@
-package com.example.servicemanager.feature_app_data.local
+package com.example.servicemanager.feature_app_data.local.room
 
 import androidx.room.TypeConverter
 

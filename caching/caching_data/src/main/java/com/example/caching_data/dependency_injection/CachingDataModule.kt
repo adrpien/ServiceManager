@@ -6,6 +6,7 @@ import com.example.caching_data.local.CachingDatabase
 import com.example.caching_data.repository.CachingRepositoryImplementation
 import com.example.caching_domain.repository.CachingRepository
 import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,12 +30,13 @@ object CachingDataModule {
     @Provides
     @Singleton
     fun providesCachingRepository(
-        appFirebaseApi: AppFirebaseApi,
+        appRepository: AppRepository,
         cachingDatabase:CachingDatabase
     ): CachingRepository {
         return CachingRepositoryImplementation(
             cachingDatabaseDao = cachingDatabase.cachingDatabaseDao,
-            appFirebaseApi = appFirebaseApi,
+            appRepository = appRepository
+
         )
     }
 }

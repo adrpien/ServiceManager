@@ -1,6 +1,6 @@
 package com.example.servicemanager.feature_app_data.mappers
 
-import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.HospitalEntity
 import com.example.servicemanager.feature_app_data.remote.dto.HospitalDto
 import com.example.servicemanager.feature_app_domain.model.Hospital
 

@@ -1,9 +1,9 @@
-package com.example.servicemanager.feature_app_data.local.entities
+package com.example.servicemanager.feature_app_data.local.room.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.servicemanager.feature_app_data.local.TypeConverterList
+import com.example.servicemanager.feature_app_data.local.room.TypeConverterList
 import com.example.servicemanager.feature_app_domain.model.UserType
 
 @TypeConverters(TypeConverterList::class)

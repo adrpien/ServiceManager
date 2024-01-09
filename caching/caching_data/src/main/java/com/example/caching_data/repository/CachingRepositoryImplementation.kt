@@ -5,22 +5,22 @@ import com.example.caching_data.mappers.toPhotoEntity
 import com.example.caching_domain.model.Photo
 import com.example.caching_domain.repository.CachingRepository
 import com.example.core.util.Resource
-import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 
 class CachingRepositoryImplementation(
     private val cachingDatabaseDao: CachingDatabaseDao,
-    private val appFirebaseApi: AppFirebaseApi
+    private val appRepository: AppRepository
 ): CachingRepository {
+
     override suspend fun cachePhoto(photo: Photo) {
         cachingDatabaseDao.cachePhoto(photo.toPhotoEntity())
     }
 
     override suspend fun syncCachedPhoto(photo: Photo, byteArray: ByteArray): Resource<String> {
-            return appFirebaseApi.uploadSignature(
-                signatureBytes = byteArray,
+            return appRepository.createSignature(
+                byteArray = byteArray,
                 signatureId = photo.photoId
             )
-
     }
 
     override suspend fun getCachedPhotos(): List<Photo> {
@@ -30,6 +30,5 @@ class CachingRepositoryImplementation(
     override suspend fun deleteCachedPhoto(photoId: String) {
         return cachingDatabaseDao.cleanCachedPhoto(photoId)
     }
-
 
 }

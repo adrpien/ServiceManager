@@ -12,6 +12,6 @@ dependencies{
     // Modules
     implementation(project(Modules.core))
     implementation(project(Modules.featureAppDomain))
-    implementation(project(Modules.featureAppData))
     implementation(project(Modules.cachingDomain))
+    implementation(project(":feature_app:feature_app_data"))
 }

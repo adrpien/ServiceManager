@@ -7,6 +7,6 @@ fun Photo.toPhotoEntity(): PhotoEntity {
     return PhotoEntity(
         photoId = photoId,
         photoDescription = photoDescription,
-        uri = uri
+        path = path
     )
 }

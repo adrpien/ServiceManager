@@ -1,12 +1,12 @@
-package com.example.servicemanager.feature_app_data.local
+package com.example.servicemanager.feature_app_data.local.room
 
 import androidx.room.*
-import com.example.servicemanager.feature_app_data.local.entities.EstStateEntity
-import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
-import com.example.servicemanager.feature_app_data.local.entities.InspectionStateEntity
-import com.example.servicemanager.feature_app_data.local.entities.RepairStateEntity
-import com.example.servicemanager.feature_app_data.local.entities.TechnicianEntity
-import com.example.servicemanager.feature_app_data.local.entities.UserTypeEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.EstStateEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.HospitalEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.InspectionStateEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.RepairStateEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.TechnicianEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.UserTypeEntity
 import com.example.servicemanager.feature_app_domain.model.UserType
 
 

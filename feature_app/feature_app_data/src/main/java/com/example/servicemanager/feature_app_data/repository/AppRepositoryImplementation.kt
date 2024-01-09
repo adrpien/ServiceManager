@@ -1,7 +1,8 @@
 package com.example.servicemanager.feature_app_data.repository
 
-import com.example.core.util.MapperExtensionFunction.toMap
-import com.example.servicemanager.feature_app_data.local.AppDatabaseDao
+import com.example.caching_domain.model.Photo
+import com.example.caching_domain.use_cases.CachingUseCases
+import com.example.servicemanager.feature_app_data.local.room.AppDatabaseDao
 import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.example.core.util.Resource
@@ -9,6 +10,7 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_app_data.R
 import com.example.logger.AppLogger
+import com.example.servicemanager.feature_app_data.local.local_image_source.LocalImageSource
 import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
@@ -29,16 +31,27 @@ class  AppRepositoryImplementation(
     private val appDatabaseDao: AppDatabaseDao,
     private val firebaseApi: AppFirebaseApi,
     private val appLogger: AppLogger<Any>,
+    private val localImageSource: LocalImageSource
 ): AppRepository {
 
     /* ********************************* SIGNATURES ********************************************* */
     override fun getSignature(signatureId: String): Flow<Resource<ByteArray>> {
+
         return firebaseApi.getSignature(signatureId)
     }
     override suspend fun updateSignature(signatureId: String, byteArray: ByteArray): Resource<String> {
-        return firebaseApi.uploadSignature(signatureId, byteArray)
+        return try {
+            firebaseApi.uploadSignature(signatureId, byteArray)
+        } catch (e: FirebaseFirestoreException) {
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.check_internet_connection)
+            )
+        }
     }
     override suspend fun createSignature(signatureId: String, byteArray: ByteArray): Resource<String> {
+        localImageSource.savePhotoLocally(byteArray, signatureId)
         return firebaseApi.uploadSignature(signatureId, byteArray)
     }
 

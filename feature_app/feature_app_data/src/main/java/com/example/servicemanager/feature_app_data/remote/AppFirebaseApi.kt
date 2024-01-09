@@ -12,19 +12,21 @@ import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import kotlin.jvm.Throws
 
 
 // Repository class
 
 class  AppFirebaseApi(
     val firebaseFirestore: FirebaseFirestore,
-    val firebaseStorage: FirebaseStorage
+    val firebaseStorage: FirebaseStorage,
 ) {
 
     private val APP_FIREBASE_API = "APP_FIREBASE_API"
@@ -111,6 +113,7 @@ class  AppFirebaseApi(
                 hospitalList = data.result.toObjects(Hospital::class.java)
                 Log.d(APP_FIREBASE_API, "Hospital list fetched")
             } else {
+
                 Log.d(APP_FIREBASE_API, "Hospital list fetching error")
             }
         return hospitalList

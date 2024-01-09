@@ -69,7 +69,7 @@ class MainActivity (
             onLost = null,
             onAvailable = {
                 CoroutineScope(Dispatchers.IO).launch {
-                    // TODO Signatures Synchronization
+                    // TODO Synchronization
                 }
             }
         )
