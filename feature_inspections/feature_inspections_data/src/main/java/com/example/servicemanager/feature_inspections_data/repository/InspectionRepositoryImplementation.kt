@@ -1,7 +1,6 @@
 package com.example.servicemanager.feature_inspections_data.repository
 
 
-import com.example.caching_domain.repository.CachingRepository
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText

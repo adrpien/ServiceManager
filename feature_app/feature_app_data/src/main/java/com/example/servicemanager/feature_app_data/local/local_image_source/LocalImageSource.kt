@@ -64,4 +64,44 @@ class LocalImageSource @Inject constructor(val context: Context) {
         }
     }
 
+    suspend fun getPhotoWithName(name: String): Resource<ByteArray> {
+        return withContext(Dispatchers.IO) {
+            try {
+                var uri: Uri = Uri.EMPTY
+                val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager")
+                val fileList = storageDir?.listFiles()
+                if (fileList != null) {
+                    for (file in fileList) {
+                        if (!file.isDirectory && file.name == name) {
+                            uri = Uri.fromFile(file)
+                        }
+                    }
+                }
+                val contentResolver: ContentResolver = context.contentResolver
+                val inputStream: InputStream? = contentResolver.openInputStream(uri)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+
+                inputStream?.use { input ->
+                    val buffer = ByteArray(4 * 1024)
+                    var read: Int
+                    while (input.read(buffer).also { read = it } != -1) {
+                        byteArrayOutputStream.write(buffer, 0, read)
+                    }
+                    byteArrayOutputStream.flush()
+                }
+
+                Resource(
+                    ResourceState.SUCCESS,
+                    byteArrayOutputStream.toByteArray(),
+                    null
+                )
+            } catch (e: Exception) {
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.unknown_error)
+                )
+            }
+        }
+    }
 }

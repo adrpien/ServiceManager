@@ -74,8 +74,31 @@ class InspectionDetailsViewModel @Inject constructor(
                         ResourceState.ERROR -> {
                             _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.StringResource(
                                 R.string.unknown_error)))
-                            // TODO Here you should cache inspection, use broadcast receiver or something
+                        }
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { inspection ->
+                                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                    inspection =  inspection
+                                )
+                            }
+                            appUseCases.saveSignature(
+                                inspectionDetailsState.value.inspection.inspectionId,
+                                bitmapToByteArray(inspectionDetailsState.value.signature)
+                            )
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                        }
+                    }
+                }
 
+            }
+            is InspectionDetailsEvent.UpdateInspection -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    val result = inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
+                    when (result.resourceState) {
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> {
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.StringResource(
+                                R.string.unknown_error)))
                         }
                         ResourceState.SUCCESS -> {
                             result.data?.let { inspection ->
@@ -87,19 +110,6 @@ class InspectionDetailsViewModel @Inject constructor(
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                         }
                     }
-                }
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.saveSignature(
-                        inspectionDetailsState.value.inspection.inspectionId,
-                        bitmapToByteArray(inspectionDetailsState.value.signature)
-                    )
-                }
-            }
-            is InspectionDetailsEvent.UpdateInspection -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
-                }
-                viewModelScope.launch(Dispatchers.IO) {
                     appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                 }
             }

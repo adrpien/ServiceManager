@@ -67,39 +67,29 @@ class  AppFirebaseApi(
         }
 
     }
-    fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
+    suspend fun getSignature(signatureId: String): Resource<ByteArray> {
         if (signatureId.isEmpty()) {
             throw IllegalArgumentException("signatureId can not be empty")
         }
         Log.d(APP_FIREBASE_API, "Signature fetching started")
-        emit(
-            Resource(
-                ResourceState.LOADING,
-                null
-            )
-        )
         val documentReference = firebaseStorage.getReference("signatures")
             .child("${signatureId}.jpg")
-            val result = documentReference.getBytes(10000000) //  10MB
-            result.await()
-                    if (result.isSuccessful){
-                        val data =  result.result
-                        emit(
-                            Resource(
-                                ResourceState.SUCCESS,
-                                data
-                            )
-                        )
-                        Log.d(APP_FIREBASE_API, "Signature fetched")
-                    } else {
-                        emit(
-                            Resource(
-                                ResourceState.ERROR,
-                                null
-                            )
-                        )
-                        Log.d(APP_FIREBASE_API, "Signature fetching error")
-                    }
+        val result = documentReference.getBytes(10000000) //  10MB
+        result.await()
+        return if (result.isSuccessful){
+            Log.d(APP_FIREBASE_API, "Signature fetched")
+            val data =  result.result
+            Resource(
+                ResourceState.SUCCESS,
+                data
+            )
+        } else {
+            Log.d(APP_FIREBASE_API, "Signature fetching error")
+            Resource(
+                    ResourceState.ERROR,
+                    null
+                )
+        }
     }
 
     /* ********************************* HOSPITALS ********************************************** */

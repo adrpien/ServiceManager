@@ -51,6 +51,4 @@ include ':common:test'
 include ':common:android_test'
 include ':shared_preferences'
 include ':logger'
-include ':caching'
-include ':caching:caching_domain'
-include ':caching:caching_data'
+

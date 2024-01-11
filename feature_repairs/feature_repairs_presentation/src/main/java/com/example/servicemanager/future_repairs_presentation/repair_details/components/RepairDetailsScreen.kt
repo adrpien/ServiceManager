@@ -249,13 +249,14 @@ fun RepairDetailsScreen(
                 is UiEvent.ShowSnackBar -> {
                     coroutineScope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
-                            message = event.messege,
+                            message = event.messege.asString(context),
                             actionLabel = "Ok",
                             duration = SnackbarDuration.Short
                         )
                     }
                 }
                 is UiEvent.NavigateTo -> {
+                    navHostController.popBackStack()
                     navHostController.navigate(event.route + "/{userId}")
                 }
                 is UiEvent.SetFieldsIsEditable -> {
@@ -290,9 +291,6 @@ fun RepairDetailsScreen(
                             viewModel.onEvent(RepairDetailsEvent.SaveRepair(repairDetailsState.value.repair))
 
                         }
-                        navHostController.popBackStack(Screen.RepairDetailsScreen.route + "/{repairId}", true )
-                        navHostController.navigate(Screen.RepairListScreen.route + "/{userId}")
-
                     } else {
                         viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(true))
                     }

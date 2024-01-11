@@ -9,6 +9,7 @@ import com.example.core.util.Helper.Companion.byteArrayToBitmap
 import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
 import com.example.core.util.Screen
+import com.example.core.util.UiText
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
@@ -72,32 +73,33 @@ class RepairDetailsViewModel @Inject constructor(
                     val result = repairUseCases.saveRepair(repairDetailsState.value.repair)
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                             result.data?.let { repairId ->
                                 _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
+                                    appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
-                            viewModelScope.launch(Dispatchers.IO) {
-                                appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
-                            }
-                            _eventFlow.emit(
-                                UiEvent.NavigateTo(
-                                    Screen.RepairListScreen.route
-                                )
-                            )
-
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                         }
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.data ?: "Uknown error"))
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
                         }
                     }
                 }
             }
             is RepairDetailsEvent.UpdateRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    repairUseCases.updateRepair(repairDetailsState.value.repair)
-                }
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
+                    val result = repairUseCases.updateRepair(repairDetailsState.value.repair)
+                    when(result.resourceState) {
+                        ResourceState.ERROR -> {
+                            UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Unknown error"))
+                        }
+                        ResourceState.SUCCESS -> {
+                            appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                        }
+                        ResourceState.LOADING -> Unit
+                    }
                 }
             }
             is RepairDetailsEvent.SetIsInEditMode -> {
@@ -272,7 +274,7 @@ class RepairDetailsViewModel @Inject constructor(
         }
     }
     sealed class UiEvent {
-        data class ShowSnackBar(val messege: String): UiEvent()
+        data class ShowSnackBar(val messege: UiText): UiEvent()
 
         data class UpdateTextFields(val text: Repair): UiEvent()
         data class NavigateTo(val route: String): UiEvent()
