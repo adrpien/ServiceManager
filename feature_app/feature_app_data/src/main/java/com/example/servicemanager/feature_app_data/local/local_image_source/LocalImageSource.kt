@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import androidx.core.content.FileProvider
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
@@ -23,6 +24,10 @@ import javax.inject.Inject
 
 class LocalImageSource @Inject constructor(val context: Context) {
 
+    companion object {
+        const val localImageSourceTag = "LOCAL_IMAGE_SOURCE"
+    }
+
     suspend fun savePhotoLocally(byteArray: ByteArray, filename: String) {
         return withContext(Dispatchers.IO) {
             try {
@@ -36,7 +41,7 @@ class LocalImageSource @Inject constructor(val context: Context) {
                 outputStream.write(byteArray)
                 outputStream.close()
             } catch (e: Exception) {
-
+                Log.d(localImageSourceTag, "savePhotoLocally threw exception")
             }
         }
     }

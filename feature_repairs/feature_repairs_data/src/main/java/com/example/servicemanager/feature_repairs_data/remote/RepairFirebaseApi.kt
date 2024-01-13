@@ -5,6 +5,7 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_repairs_data.R
+import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -83,7 +84,7 @@ class  RepairFirebaseApi(
             Log.d(REPAIR_REPOSITORY_API, "Repair record created")
             return Resource(
                 ResourceState.SUCCESS,
-                null,
+                repair.repairId,
                 UiText.StringResource(R.string.repair_record_created)
             )
 
@@ -129,7 +130,7 @@ class  RepairFirebaseApi(
             Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
             return Resource(
                 ResourceState.SUCCESS,
-                null,
+                repair.repairId,
                 UiText.StringResource(R.string.repair_record_updated)
             )
         } else {

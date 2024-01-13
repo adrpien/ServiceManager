@@ -17,8 +17,9 @@ data class InspectionDto(
     val deviceName: String = "",
     val deviceManufacturer: String = "",
     val deviceModel: String = "",
-    val deviceSN: String = "",
-    val deviceIN: String = "",
+    val deviceSn: String = "",
+    val deviceIn: String = "",
+    val signatureId: String = ""
 ) {
 
     fun toInspectionEntity(): InspectionEntity {
@@ -35,8 +36,9 @@ data class InspectionDto(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSn = deviceSN,
-            deviceIn = deviceIN
+            deviceSn = deviceSn,
+            deviceIn = deviceIn,
+            signatureId = signatureId
         )
     }
 
@@ -55,8 +57,9 @@ data class InspectionDto(
             deviceName = deviceName,
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
-            deviceSN = deviceSN,
-            deviceIN = deviceIN
+            deviceSn = deviceSn,
+            deviceIn = deviceIn,
+            signatureId = signatureId
 
         )
     }

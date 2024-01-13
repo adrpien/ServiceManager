@@ -101,16 +101,16 @@ class InspectionDetailsViewModel @Inject constructor(
                                 R.string.unknown_error)))
                         }
                         ResourceState.SUCCESS -> {
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+
                             result.data?.let { inspection ->
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                     inspection =  inspection
                                 )
                             }
-
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                            appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                         }
                     }
-                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                 }
             }
             is InspectionDetailsEvent.SetIsInEditMode -> {
@@ -142,7 +142,9 @@ class InspectionDetailsViewModel @Inject constructor(
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
                                     inspectionDetailsIsLoading = false
-                                    result.data?.let {  fetchSignature(it) }
+                                    result.data?.let {
+                                        fetchSignature(it)
+                                    }
                                     setIsLoadingStatus()
                                 }
                             }
@@ -177,7 +179,14 @@ class InspectionDetailsViewModel @Inject constructor(
                             }
                         }
 
-                        ResourceState.LOADING -> Unit
+                        ResourceState.LOADING -> {
+                            result.data?.let { signature ->
+                                _inspectionDetailsState.value =
+                                    _inspectionDetailsState.value.copy(
+                                        signature = byteArrayToBitmap(signature)
+                                    )
+                            }
+                        }
                         ResourceState.ERROR -> Unit
                     }
                 }

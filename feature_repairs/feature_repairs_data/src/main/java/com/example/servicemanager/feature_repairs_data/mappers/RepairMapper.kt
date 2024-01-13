@@ -4,6 +4,7 @@ import com.example.servicemanager.feature_repairs_data.local.entities.RepairEnti
 import com.example.servicemanager.feature_repairs_data.remote.dto.RepairDto
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import java.time.LocalDate
+import kotlin.math.sin
 
 fun Repair.toRepairEntity(): RepairEntity {
     return RepairEntity(
@@ -28,7 +29,8 @@ fun Repair.toRepairEntity(): RepairEntity {
         deviceManufacturer = deviceManufacturer,
         deviceModel = deviceModel,
         deviceSn = deviceSn,
-        deviceIn = deviceIn
+        deviceIn = deviceIn,
+        signatureId = signatureId
     )
 }
 
@@ -55,7 +57,8 @@ fun Repair.toRepairDto(): RepairDto {
         deviceManufacturer = deviceManufacturer,
         deviceModel = deviceModel,
         deviceSn = deviceSn,
-        deviceIn = deviceIn
+        deviceIn = deviceIn,
+        signatureId = signatureId
     )
 }
 

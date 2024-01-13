@@ -95,6 +95,10 @@ class RepairDetailsViewModel @Inject constructor(
                             UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Unknown error"))
                         }
                         ResourceState.SUCCESS -> {
+                            result.data?.let { repairId ->
+                                _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
+                                appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))
+                            }
                             appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                         }

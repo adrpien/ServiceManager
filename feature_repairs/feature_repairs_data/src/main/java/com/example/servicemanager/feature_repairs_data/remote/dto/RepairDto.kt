@@ -28,6 +28,7 @@ data class RepairDto(
     val deviceModel: String = "",
     val deviceSn: String = "",
     val deviceIn: String = "",
+    val signatureId: String = ""
     ) {
 
     fun toRepairEntity(): RepairEntity {

@@ -31,6 +31,7 @@ data class RepairEntity(
     val deviceModel: String = "",
     val deviceSn: String = "",
     val deviceIn: String = "",
+    val signatureId: String = ""
 ) {
 
     fun toRepair(): Repair {
@@ -58,7 +59,8 @@ data class RepairEntity(
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
             deviceSn = deviceSn,
-            deviceIn = deviceIn
+            deviceIn = deviceIn,
+            signatureId = signatureId
         )
     }
 }

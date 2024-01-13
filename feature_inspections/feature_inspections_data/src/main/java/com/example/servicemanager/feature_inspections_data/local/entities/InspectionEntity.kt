@@ -22,6 +22,7 @@ data class InspectionEntity(
     val deviceModel: String = "",
     val deviceSn: String = "",
     val deviceIn: String = "",
+    val signatureId: String = ""
     ) {
 
     fun toInspection(): Inspection {
@@ -39,7 +40,8 @@ data class InspectionEntity(
             deviceManufacturer = deviceManufacturer,
             deviceModel = deviceModel,
             deviceSn = deviceSn,
-            deviceIn = deviceIn
+            deviceIn = deviceIn,
+            signatureId = signatureId
         )
     }
 }

@@ -53,7 +53,6 @@ class  AppRepositoryImplementation(
                     )
                 )
             }
-
             val remoteSignatureResource = firebaseApi.getSignature(signatureId)
             emit(remoteSignatureResource)
 

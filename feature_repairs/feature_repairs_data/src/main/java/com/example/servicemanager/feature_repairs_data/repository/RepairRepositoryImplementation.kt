@@ -55,7 +55,7 @@ class  RepairRepositoryImplementation(
         if (repairId == ""){
             throw IllegalArgumentException("repairId can not be empty")
         }
-        var repair: Repair
+        var repair: Repair? = null
         repair = repairDatabaseDao.getRepair(repairId).toRepair()
         emit(
             Resource(
@@ -64,16 +64,24 @@ class  RepairRepositoryImplementation(
                 UiText.StringResource(R.string.locally_cached_record)
             )
         )
-        val record = repairFirebaseApi.getRepair(repairId)
-        if(record != null) {
+        repair = repairFirebaseApi.getRepair(repairId)
+        if(repair != null) {
             repairDatabaseDao.deleteRepair(repairId)
-            repairDatabaseDao.insertRepair(record.toRepairEntity())
+            repairDatabaseDao.insertRepair(repair.toRepairEntity())
             repair = repairDatabaseDao.getRepair(repairId).toRepair()
             emit(
                 Resource(
                     ResourceState.SUCCESS,
                     repair,
                     UiText.StringResource(R.string.repair_record_fetching_finished)
+                )
+            )
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.repair_record_fetching_error)
                 )
             )
         }
