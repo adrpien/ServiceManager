@@ -76,9 +76,9 @@ class InspectionDetailsViewModel @Inject constructor(
                                 R.string.unknown_error)))
                         }
                         ResourceState.SUCCESS -> {
-                            result.data?.let { inspection ->
+                            result.data?.let { inspectionId ->
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection =  inspection
+                                    inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
                                 )
                             }
                             appUseCases.saveSignature(
@@ -102,10 +102,9 @@ class InspectionDetailsViewModel @Inject constructor(
                         }
                         ResourceState.SUCCESS -> {
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
-
-                            result.data?.let { inspection ->
+                            result.data?.let { inspectionId ->
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection =  inspection
+                                    inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
                                 )
                             }
                             appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))

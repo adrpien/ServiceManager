@@ -33,24 +33,10 @@ fun DefaultTextField(
                 .padding(8.dp),
             value = state.value.value,
             label = {
-                Row(modifier = Modifier.border(
-                    border = BorderStroke(
-                        width = 1.dp,
-                        color = if(state.value.clickable) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
-                        ),
-                    shape = MaterialTheme.shapes.extraSmall
+                Text(
+                    text = state.value.hint,
+                    modifier = Modifier.background(Color.Transparent)
                 )
-                    .padding(start = 8.dp, end = 8.dp)
-                    .background(
-                        Color.Transparent
-                    )
-                ) {
-                    Text(
-                        text = state.value.hint,
-                        modifier = Modifier.background(Color.Transparent)
-                    )
-                }
-
             },
             onValueChange = { onValueChanged(it) },
             enabled = state.value.clickable,
@@ -60,16 +46,16 @@ fun DefaultTextField(
                 unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
                 focusedTextColor = MaterialTheme.colorScheme.onPrimary,
                 disabledTextColor = MaterialTheme.colorScheme.onPrimary,
-                focusedContainerColor = MaterialTheme.colorScheme.primary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.primary,
-                disabledContainerColor = MaterialTheme.colorScheme.primary,
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                disabledContainerColor = MaterialTheme.colorScheme.secondary,
                 focusedLabelColor = MaterialTheme.colorScheme.onSecondary,
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSecondary,
                 disabledLabelColor = MaterialTheme.colorScheme.onSecondary,
                 cursorColor = MaterialTheme.colorScheme.onPrimary,
-                focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                disabledBorderColor = MaterialTheme.colorScheme.onSecondary,
+                focusedBorderColor = if(state.value.clickable) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary,
+                unfocusedBorderColor = if(state.value.clickable) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary,
+                disabledBorderColor = if(state.value.clickable) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary,
             )
         )
         Spacer(modifier = Modifier.height(8.dp))

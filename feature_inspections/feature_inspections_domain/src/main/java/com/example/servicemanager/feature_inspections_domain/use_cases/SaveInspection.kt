@@ -12,7 +12,7 @@ import javax.inject.Inject
 class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
-    suspend operator fun invoke(inspection: Inspection): Resource<Inspection> {
+    suspend operator fun invoke(inspection: Inspection): Resource<String> {
         try {
             if (inspection.inspectionDate.any{ !it.isDigit() }) {
                 return Resource(

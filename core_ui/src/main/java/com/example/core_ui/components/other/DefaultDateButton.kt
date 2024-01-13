@@ -27,8 +27,8 @@ fun DefaultDateButton(
         enabled = enabled,
         shape = MaterialTheme.shapes.medium,
         colors = androidx.compose.material.ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colorScheme.primary,
-            disabledBackgroundColor = MaterialTheme.colorScheme.primary
+            backgroundColor = MaterialTheme.colorScheme.secondary,
+            disabledBackgroundColor = MaterialTheme.colorScheme.secondary
         ),
         border = BorderStroke(
             width = 1.dp,

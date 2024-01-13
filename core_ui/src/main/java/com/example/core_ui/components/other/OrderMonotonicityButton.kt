@@ -26,7 +26,7 @@ fun OrderMonotonicityButton(
         Button(
             onClick = onClick,
             shape = MaterialTheme.shapes.medium,
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
             modifier = Modifier,
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,

@@ -12,7 +12,7 @@ class UpdateInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
 
-    suspend operator fun invoke(inspection: Inspection): Resource<Inspection> {
+    suspend operator fun invoke(inspection: Inspection): Resource<String> {
         return try {
             repository.updateInspection(inspection)
         } catch (e: IllegalArgumentException) {

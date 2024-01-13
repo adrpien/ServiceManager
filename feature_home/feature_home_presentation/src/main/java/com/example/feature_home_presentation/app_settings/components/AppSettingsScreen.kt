@@ -72,11 +72,11 @@ fun AppSettingsScreen(
                 )
             }
         },
-    ) {
+    ) { padding ->
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.secondary)
-                .padding(it)
+                .padding(padding)
                 .padding(8.dp)
                 .fillMaxSize()
                 .verticalScroll(scrollState)

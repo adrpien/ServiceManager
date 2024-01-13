@@ -50,7 +50,7 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    suspend fun createInspection(inspection: Inspection): Resource<Inspection> {
+    suspend fun createInspection(inspection: Inspection): Resource<String> {
         try {
             var documentReference = firebaseFirestore.collection("inspections")
                 .document()
@@ -77,14 +77,14 @@ class  InspectionFirebaseApi(
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
                 return Resource(
                     ResourceState.SUCCESS,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.inspection_record_created)
                 )
             } else {
                 Log.d(INSPECTION_FIREBASE_API, "Error creating new inspection record")
                 return Resource(
                     ResourceState.ERROR,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.check_internet_connection)
                 )
             }
@@ -92,13 +92,12 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Error creating new inspection record")
             return Resource(
                 ResourceState.ERROR,
-                inspection,
+                null,
                 UiText.StringResource(R.string.check_internet_connection)
             )
         }
     }
-    suspend fun updateInspection(inspection: Inspection): Resource<Inspection> {
-        // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
+    suspend fun updateInspection(inspection: Inspection): Resource<String> {
         try {
             var map = mapOf<String, String>(
                 "inspectionId" to inspection.inspectionId,
@@ -124,21 +123,21 @@ class  InspectionFirebaseApi(
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
                 return Resource(
                     ResourceState.SUCCESS,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.inspection_record_updated)
                 )
             } else {
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
                 return Resource(
                     ResourceState.ERROR,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.check_internet_connection)
                 )
             }
         } catch (e: FirebaseFirestoreException) {
             return Resource(
                 ResourceState.ERROR,
-                inspection,
+                null,
                 UiText.StringResource(R.string.check_internet_connection)
             )
         }

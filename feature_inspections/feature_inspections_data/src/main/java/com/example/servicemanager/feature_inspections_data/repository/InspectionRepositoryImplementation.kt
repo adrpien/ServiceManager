@@ -84,7 +84,7 @@ class  InspectionRepositoryImplementation(
         }
     }
 
-    override suspend fun insertInspection(inspection: Inspection): Resource<Inspection> {
+    override suspend fun insertInspection(inspection: Inspection): Resource<String> {
         if(inspection.inspectionId == "") {
             throw IllegalArgumentException("inspectionId can not be empty")
         }
@@ -96,11 +96,7 @@ class  InspectionRepositoryImplementation(
         return result
     }
 
-    override suspend fun cacheInspection(inspection: Inspection): Resource<Inspection> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateInspection(inspection: Inspection): Resource<Inspection> {
+    override suspend fun updateInspection(inspection: Inspection): Resource<String> {
         if(inspection.inspectionId == "") {
             throw IllegalArgumentException("inspectionId can not be empty")
         }

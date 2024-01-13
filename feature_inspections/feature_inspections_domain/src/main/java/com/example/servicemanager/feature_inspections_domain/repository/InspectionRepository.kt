@@ -10,10 +10,8 @@ interface InspectionRepository {
     /* ***** Inspections ************************************************************************ */
     fun getInspection(inspectionId: String): Flow<Resource<Inspection>>
     fun getInspectionList(): Flow<Resource<List<Inspection>>>
-    suspend fun insertInspection(inspection: Inspection): Resource<Inspection>
-    suspend fun cacheInspection(inspection: Inspection): Resource<Inspection>
-
-    suspend fun updateInspection(inspection: Inspection): Resource<Inspection>
+    suspend fun insertInspection(inspection: Inspection): Resource<String>
+    suspend fun updateInspection(inspection: Inspection): Resource<String>
     // TODO This not have to be flow i think
     fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>>
 

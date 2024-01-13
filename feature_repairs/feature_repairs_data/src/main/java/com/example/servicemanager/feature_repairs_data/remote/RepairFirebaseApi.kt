@@ -51,7 +51,6 @@ class  RepairFirebaseApi(
         return repair
     }
     suspend fun createRepair(repair: Repair): Resource<String> {
-        // TODO Caching mechanism in createRepair fun for RepairFirebaseApi
         var documentReference = firebaseFirestore.collection("repairs")
             .document()
         var map = mapOf<String, String>(
@@ -98,7 +97,6 @@ class  RepairFirebaseApi(
         }
     }
     suspend fun updateRepair(repair: Repair): Resource<String> {
-        // TODO Caching mechanism in updateRepair fun for RepairFirebaseApi
         var map = mapOf<String, String>(
             "repairId" to repair.repairId,
             "repairStateId" to repair.repairStateId,

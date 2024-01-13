@@ -25,12 +25,12 @@ fun <T> DefaultSelectionSection(
 
     Column(
         modifier = modifier
-            .padding(4.dp)
+            .padding(8.dp)
             .fillMaxWidth()
             .border(
                 BorderStroke(
                 width = 1.dp,
-                color = if(enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
             ),
                 MaterialTheme.shapes.medium)
             .background(MaterialTheme.colorScheme.secondary)

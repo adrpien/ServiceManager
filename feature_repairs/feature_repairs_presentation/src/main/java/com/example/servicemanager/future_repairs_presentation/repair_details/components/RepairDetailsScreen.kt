@@ -699,8 +699,8 @@ fun RepairDetailsScreen(
                 onClick = { signatureDialogState.show() },
                 shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor = MaterialTheme.colorScheme.primary
+                    backgroundColor = MaterialTheme.colorScheme.secondary,
+                    disabledBackgroundColor = MaterialTheme.colorScheme.secondary
                 ),
                 border = BorderStroke(
                     width = 1.dp,
