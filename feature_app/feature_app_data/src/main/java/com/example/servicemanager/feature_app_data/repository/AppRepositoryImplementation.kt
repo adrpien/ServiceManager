@@ -1,5 +1,7 @@
 package com.example.servicemanager.feature_app_data.repository
 
+import android.net.Uri
+import com.example.core.util.Helper.Companion.uriToByteArray
 import com.example.servicemanager.feature_app_data.local.room.AppDatabaseDao
 import com.example.servicemanager.feature_app_data.remote.AppFirebaseApi
 import com.example.servicemanager.feature_app_domain.repository.AppRepository
@@ -9,12 +11,15 @@ import com.example.core.util.UiText
 import com.example.feature_app_data.R
 import com.example.logger.AppLogger
 import com.example.servicemanager.feature_app_data.local.local_image_source.LocalImageSource
+import com.example.servicemanager.feature_app_data.local.room.entities.CachedSignatureEntity
+import com.example.servicemanager.feature_app_data.mappers.toCachedSignatureEntity
 import com.example.servicemanager.feature_app_data.mappers.toEstStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toHospitalEntity
 import com.example.servicemanager.feature_app_data.mappers.toInspectionStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toRepairStateEntity
 import com.example.servicemanager.feature_app_data.mappers.toTechnicianEntity
 import com.example.servicemanager.feature_app_data.mappers.toUserTypeEntity
+import com.example.servicemanager.feature_app_domain.model.CachedSignature
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
@@ -22,6 +27,7 @@ import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.feature_app_domain.util.CacheOperationType
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.flow.*
 
@@ -31,6 +37,62 @@ class  AppRepositoryImplementation(
     private val appLogger: AppLogger<Any>,
     private val localImageSource: LocalImageSource
 ): AppRepository {
+
+    /* *************************************** SYNC ********************************************* */
+    override suspend fun getCachedSignatureList(): Resource<List<CachedSignature>> {
+        return try {
+            Resource(
+                ResourceState.SUCCESS,
+                appDatabaseDao.getCachedSignatureList().map { it.toCachedSignature() },
+                UiText.StringResource(R.string.cached_signatures_fetching_success)
+            )
+        } catch (e: Exception) {
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.unknown_error)
+            )
+        }
+    }
+
+
+    override suspend fun syncSignature(signature: CachedSignature): Resource<String> {
+        return firebaseApi.uploadSignature(signature.signatureId, localImageSource.getPhotoWithUri(signature.uri) ?: byteArrayOf())
+    }
+
+    override suspend fun deleteCachedSignature(signatureId: String): Resource<String> {
+        return try {
+            appDatabaseDao.deleteCachedSignature(signatureId)
+            Resource(
+                ResourceState.SUCCESS,
+                signatureId,
+                UiText.StringResource(R.string.cached_signature_deleted)
+            )
+        } catch (e: Exception){
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.unknown_error)
+            )
+        }
+    }
+
+    override suspend fun insertCachedSignature(cachedSignature: CachedSignature): Resource<String> {
+        return try {
+            appDatabaseDao.insertCachedSignature(cachedSignature.toCachedSignatureEntity())
+            Resource(
+                ResourceState.SUCCESS,
+                cachedSignature.signatureId,
+                UiText.StringResource(R.string.cached_signature_deleted)
+            )
+        } catch (e: Exception){
+            Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.unknown_error)
+            )
+        }
+    }
 
     /* ********************************* SIGNATURES ********************************************* */
     override fun getSignature(signatureId: String): Flow<Resource<ByteArray>> = flow {
@@ -68,14 +130,21 @@ class  AppRepositoryImplementation(
     }
     override suspend fun updateSignature(signatureId: String, byteArray: ByteArray): Resource<String> {
         return try {
-            localImageSource.savePhotoLocally(byteArray, signatureId)
-            firebaseApi.uploadSignature(signatureId, byteArray)
-        } catch (e: FirebaseFirestoreException) {
+            val uri = localImageSource.savePhotoLocally(byteArray, signatureId)
+            val result = firebaseApi.uploadSignature(signatureId, byteArray)
+            if(result.resourceState == ResourceState.ERROR) {
+                appDatabaseDao.insertCachedSignature(CachedSignature(
+                    signatureId = signatureId,
+                    operationType = CacheOperationType.Update(),
+                    uri = uri
+                ).toCachedSignatureEntity())
+            }
+            result
+        } catch (e: Exception) {
             Resource(
                 ResourceState.ERROR,
                 null,
-                UiText.StringResource(R.string.check_internet_connection)
-            )
+                UiText.StringResource(R.string.unknown_error))
         }
     }
     override suspend fun createSignature(signatureId: String, byteArray: ByteArray): Resource<String> {

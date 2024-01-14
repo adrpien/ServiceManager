@@ -22,4 +22,6 @@
     <string name="usertype_delete_unknown_error">UserType delete unknown error</string>
     <string name="usertype_update_unknown_error">UserType update unknown error</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="syncing_data_error">Syncing data error</string>
+    <string name="syncing_data_success">Syncing data success</string>
 </resources>

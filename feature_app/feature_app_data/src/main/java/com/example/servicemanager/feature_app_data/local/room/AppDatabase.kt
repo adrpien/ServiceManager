@@ -3,6 +3,7 @@ package com.example.servicemanager.feature_app_data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.servicemanager.feature_app_data.local.room.entities.CachedSignatureEntity
 
 import com.example.servicemanager.feature_app_data.local.room.entities.EstStateEntity
 import com.example.servicemanager.feature_app_data.local.room.entities.HospitalEntity
@@ -19,7 +20,8 @@ import com.example.servicemanager.feature_app_data.local.room.entities.UserTypeE
         InspectionStateEntity::class,
         RepairStateEntity::class,
         TechnicianEntity::class,
-        UserTypeEntity::class
+        UserTypeEntity::class,
+        CachedSignatureEntity::class
                ],
     version = 1
 )

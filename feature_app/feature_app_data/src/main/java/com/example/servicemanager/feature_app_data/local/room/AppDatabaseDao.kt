@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_app_data.local.room
 
 import androidx.room.*
+import com.example.servicemanager.feature_app_data.local.room.entities.CachedSignatureEntity
 import com.example.servicemanager.feature_app_data.local.room.entities.EstStateEntity
 import com.example.servicemanager.feature_app_data.local.room.entities.HospitalEntity
 import com.example.servicemanager.feature_app_data.local.room.entities.InspectionStateEntity
@@ -12,6 +13,18 @@ import com.example.servicemanager.feature_app_domain.model.UserType
 
 @Dao
 interface AppDatabaseDao {
+
+    /* ***** Cached Signatures ****************************************************************** */
+    @Query("SELECT * FROM cachedsignatureentity")
+    suspend fun getCachedSignatureList(): List<CachedSignatureEntity>
+    @Query("DELETE FROM cachedsignatureentity WHERE signatureId LIKE :signatureId")
+    suspend fun deleteCachedSignature(signatureId: String)
+    @Query("DELETE FROM cachedsignatureentity")
+    suspend fun deleteAllCachedSignatures()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCachedSignature(cachedSignatureEntity: CachedSignatureEntity)
+    @Query("SELECT * FROM cachedsignatureentity WHERE signatureId LIKE :signatureId")
+    suspend fun getCachedSignature(signatureId: String): CachedSignatureEntity
 
     /* ***** Hospitals ************************************************************************** */
     @Query("SELECT * FROM hospitalentity")

@@ -6,10 +6,13 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_inspections_data.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
+import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
+import java.net.UnknownHostException
 
 class  InspectionFirebaseApi(
     private val firebaseFirestore: FirebaseFirestore,
@@ -72,7 +75,9 @@ class  InspectionFirebaseApi(
                 "deviceIn" to inspection.deviceIn
             )
             val result = documentReference.set(map)
-            result.await()
+            withTimeout(3000){
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
                 return Resource(
@@ -118,7 +123,9 @@ class  InspectionFirebaseApi(
             )
             val documentReference = firebaseFirestore.collection("inspections").document(inspection.inspectionId)
             val result = documentReference.update(map)
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
                 return Resource(
@@ -130,14 +137,20 @@ class  InspectionFirebaseApi(
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
                 return Resource(
                     ResourceState.ERROR,
-                    inspection.inspectionId,
+                    "CONNECTION_ERROR",
                     UiText.StringResource(R.string.check_internet_connection)
                 )
             }
-        } catch (e: FirebaseFirestoreException) {
+        } catch (e: Exception) {
             return Resource(
                 ResourceState.ERROR,
-                null,
+                "CONNECTION_ERROR",
+                UiText.StringResource(R.string.check_internet_connection)
+            )
+        } catch (e: UnknownHostException) {
+            return Resource(
+                ResourceState.ERROR,
+                "CONNECTION_ERROR",
                 UiText.StringResource(R.string.check_internet_connection)
             )
         }

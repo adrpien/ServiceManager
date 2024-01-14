@@ -17,9 +17,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 class LocalImageSource @Inject constructor(val context: Context) {
@@ -28,12 +25,14 @@ class LocalImageSource @Inject constructor(val context: Context) {
         const val localImageSourceTag = "LOCAL_IMAGE_SOURCE"
     }
 
-    suspend fun savePhotoLocally(byteArray: ByteArray, filename: String) {
+    suspend fun savePhotoLocally(byteArray: ByteArray, filename: String): Uri {
+        var uri: Uri = Uri.EMPTY
         return withContext(Dispatchers.IO) {
             try {
                 val fileName = "$filename.jpg"
                 val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager")
                 val photoFile = File(storageDir, fileName)
+                uri = FileProvider.getUriForFile(context, Environment.getExternalStorageDirectory().toString() + "/ServiceManager", photoFile)
                 if (photoFile.exists()) {
                     photoFile.delete()
                 }
@@ -43,6 +42,7 @@ class LocalImageSource @Inject constructor(val context: Context) {
             } catch (e: Exception) {
                 Log.d(localImageSourceTag, "savePhotoLocally threw exception")
             }
+            uri
         }
     }
 
@@ -108,5 +108,11 @@ class LocalImageSource @Inject constructor(val context: Context) {
                 )
             }
         }
+    }
+
+    suspend fun getLocalListOfPhotos(): List<String> {
+        val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager")
+        val fileList: List<String> = storageDir?.listFiles()?.map { it.name } ?: emptyList()
+        return fileList
     }
 }

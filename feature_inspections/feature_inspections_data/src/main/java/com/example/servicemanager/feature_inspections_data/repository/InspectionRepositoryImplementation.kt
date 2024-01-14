@@ -92,8 +92,7 @@ class  InspectionRepositoryImplementation(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
             dataClassObject = inspection,
         )
-        val result = inspectionFirebaseApi.createInspection(inspection)
-        return result
+        return inspectionFirebaseApi.createInspection(inspection)
     }
 
     override suspend fun updateInspection(inspection: Inspection): Resource<String> {

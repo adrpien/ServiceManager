@@ -82,6 +82,10 @@ class RepairDetailsViewModel @Inject constructor(
                         }
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
+                            if (result.data == "CONNECTION_ERROR") {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                                appUseCases.saveSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
+                            }
                             _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
                         }
                     }
@@ -92,6 +96,10 @@ class RepairDetailsViewModel @Inject constructor(
                     val result = repairUseCases.updateRepair(repairDetailsState.value.repair)
                     when(result.resourceState) {
                         ResourceState.ERROR -> {
+                            if (result.data == "CONNECTION_ERROR") {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                                appUseCases.updateSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
+                            }
                             UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Unknown error"))
                         }
                         ResourceState.SUCCESS -> {

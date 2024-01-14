@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
 import kotlin.jvm.Throws
 
 
@@ -40,7 +41,9 @@ class  AppFirebaseApi(
             val documentReference = firebaseStorage.getReference("signatures")
                 .child("${signatureId}.jpg")
             val result = documentReference.putBytes(signatureBytes)
-            result.await()
+            withTimeout(3000){
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(APP_FIREBASE_API, "Signature uploaded")
                 return Resource(
@@ -53,15 +56,15 @@ class  AppFirebaseApi(
                 Log.d(APP_FIREBASE_API, "Signature uploading error")
                 return Resource(
                     ResourceState.ERROR,
-                    null,
+                    "CONNECTION_ERROR",
                     UiText.StringResource(R.string.unknown_error)
                 )
             }
-        } catch (e: FirebaseFirestoreException) {
+        } catch (e: Exception) {
             Log.d(APP_FIREBASE_API, "Signature uploading error")
             return Resource(
                 ResourceState.ERROR,
-                null,
+                "CONNECTION_ERROR",
                 UiText.StringResource(R.string.unknown_error)
             )
         }
@@ -91,6 +94,11 @@ class  AppFirebaseApi(
                 )
         }
     }
+
+/*    suspend fun getListOfPhotos() {
+        Log.d(APP_FIREBASE_API, "Signature fetching started")
+        val documentReference = firebaseStorage.getReference("signatures")
+    }*/
 
     /* ********************************* HOSPITALS ********************************************** */
     suspend fun getHospitalList(): List<Hospital> {

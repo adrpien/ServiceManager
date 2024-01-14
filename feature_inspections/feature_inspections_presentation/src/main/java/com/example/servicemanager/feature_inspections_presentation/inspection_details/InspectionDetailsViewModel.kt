@@ -72,8 +72,10 @@ class InspectionDetailsViewModel @Inject constructor(
                     when (result.resourceState) {
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.StringResource(
-                                R.string.unknown_error)))
+                            if(result.data == "CONNECTION_ERROR") {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                                appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                            }
                         }
                         ResourceState.SUCCESS -> {
                             result.data?.let { inspectionId ->
@@ -97,17 +99,20 @@ class InspectionDetailsViewModel @Inject constructor(
                     when (result.resourceState) {
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.StringResource(
-                                R.string.unknown_error)))
+                            if(result.data == "CONNECTION_ERROR") {
+                                appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                            }
                         }
                         ResourceState.SUCCESS -> {
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                             result.data?.let { inspectionId ->
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                                     inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
                                 )
                             }
                             appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+
                         }
                     }
                 }

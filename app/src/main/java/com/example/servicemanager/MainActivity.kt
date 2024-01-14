@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.navigation.LoginNavigation
 import com.example.servicemanager.navigation.MainScreenNavigation
 import com.example.servicemanager.network_connection.RequestNetworkObserver
@@ -30,6 +31,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity (
 ) : ComponentActivity() {
+
+    @Inject
+    lateinit var appUseCases: AppUseCases
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -65,7 +69,7 @@ class MainActivity (
             onLost = null,
             onAvailable = {
                 CoroutineScope(Dispatchers.IO).launch {
-                    // TODO Synchronization
+                    appUseCases.syncData()
                 }
             }
         )

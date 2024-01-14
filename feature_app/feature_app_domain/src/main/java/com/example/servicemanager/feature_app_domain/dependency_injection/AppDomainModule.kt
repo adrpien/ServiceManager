@@ -30,6 +30,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.repair_states.Cre
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.DeleteRepairState
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.GetRepairStateList
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.UpdateRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.sync_data.SyncData
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnicianWithId
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.DeleteTechnician
@@ -93,7 +94,8 @@ object AppDomainModule {
             createEstStateWithId = CreateEstStateWithId(repository),
             createInspectionStateWithId = CreateInspectionStateWithId(repository),
             createRepairStateWithId = CreateRepairStateWithId(repository),
-            createTechnicianWithId = CreateTechnicianWithId(repository)
+            createTechnicianWithId = CreateTechnicianWithId(repository),
+            syncData = SyncData(repository)
         )
     }
 

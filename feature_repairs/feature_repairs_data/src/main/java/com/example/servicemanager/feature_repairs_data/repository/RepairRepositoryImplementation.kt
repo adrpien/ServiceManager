@@ -99,7 +99,7 @@ class  RepairRepositoryImplementation(
     }
 
     override suspend fun updateRepair(repair: Repair): Resource<String> {
-        if (repair.repairId == ""){
+        if (repair.repairId == "") {
             throw IllegalArgumentException("repairId can not be empty")
         }
         appLogger.logEvent(

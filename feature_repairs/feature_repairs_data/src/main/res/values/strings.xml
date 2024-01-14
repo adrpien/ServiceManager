@@ -9,4 +9,5 @@
     <string name="locally_cached_record">Locally cached record</string>
     <string name="repair_record_fetching_finished">Repair record fetching finished</string>
     <string name="repair_record_fetching_error">Repair record fetching error</string>
+    <string name="check_internet_connection">Check internet connection</string>
 </resources>
