@@ -27,7 +27,9 @@ class  InspectionFirebaseApi(
         var inspectionList: List<Inspection> = emptyList()
         val documentReference = firebaseFirestore.collection("inspections")
         val result = documentReference.get()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             inspectionList =  result.result.toObjects(Inspection::class.java)
             Log.d(INSPECTION_FIREBASE_API, "Inspection list fetched")
@@ -43,7 +45,9 @@ class  InspectionFirebaseApi(
         val documentReference = firebaseFirestore.collection("inspections")
             .document(inspectionId)
             val result = documentReference.get()
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 inspection =  result.result.toObject(Inspection::class.java)
                 Log.d(INSPECTION_FIREBASE_API, "Inspection list fetched")

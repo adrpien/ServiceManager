@@ -25,7 +25,9 @@ class  RepairFirebaseApi(
         var repairList: List<Repair> = emptyList()
         val documentReference = firebaseFirestore.collection("repairs")
         val result = documentReference.get()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             repairList =  result.result.toObjects(Repair::class.java)
             Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
@@ -40,15 +42,17 @@ class  RepairFirebaseApi(
         var repair: Repair? = Repair()
         val documentReference = firebaseFirestore.collection("repairs")
             .document(repairId)
-            val result = documentReference.get()
+        val result = documentReference.get()
+        withTimeout(3000) {
             result.await()
-            if (result.isSuccessful) {
-                repair =  result.result.toObject(Repair::class.java)
-                Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
+        }
+        if (result.isSuccessful) {
+            repair =  result.result.toObject(Repair::class.java)
+            Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
 
-            } else {
-                Log.d(REPAIR_REPOSITORY_API, "Repair list fetch error")
-            }
+        } else {
+            Log.d(REPAIR_REPOSITORY_API, "Repair list fetch error")
+        }
         return repair
     }
     suspend fun createRepair(repair: Repair): Resource<String> {

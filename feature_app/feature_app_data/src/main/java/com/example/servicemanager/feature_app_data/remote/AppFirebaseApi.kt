@@ -12,15 +12,11 @@ import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.model.User
 import com.example.servicemanager.feature_app_domain.model.UserType
-import com.example.servicemanager.feature_app_domain.repository.AppRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
-import kotlin.jvm.Throws
 
 
 // Repository class
@@ -78,7 +74,9 @@ class  AppFirebaseApi(
         val documentReference = firebaseStorage.getReference("signatures")
             .child("${signatureId}.jpg")
         val result = documentReference.getBytes(10000000) //  10MB
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         return if (result.isSuccessful){
             Log.d(APP_FIREBASE_API, "Signature fetched")
             val data =  result.result
@@ -105,10 +103,12 @@ class  AppFirebaseApi(
             var hospitalList = emptyList<Hospital>()
             Log.d(APP_FIREBASE_API, "Hospital list fetching started")
             val documentReference = firebaseFirestore.collection("hospitals")
-            val data = documentReference.get()
-            data.await()
-            if(data.isSuccessful) {
-                hospitalList = data.result.toObjects(Hospital::class.java)
+            val result = documentReference.get()
+            withTimeout(3000) {
+                result.await()
+            }
+            if(result.isSuccessful) {
+                hospitalList = result.result.toObjects(Hospital::class.java)
                 Log.d(APP_FIREBASE_API, "Hospital list fetched")
             } else {
 
@@ -124,7 +124,9 @@ class  AppFirebaseApi(
             )
             val documentReference = firebaseFirestore.collection("hospitals").document(hospital.hospitalId)
             val result = documentReference.update(map)
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(APP_FIREBASE_API, "Hospital record update success")
                 return Resource(
@@ -149,7 +151,9 @@ class  AppFirebaseApi(
             "hospital" to hospital.hospital
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Hospital record create success")
             return Resource(
@@ -174,7 +178,9 @@ class  AppFirebaseApi(
             "hospital" to hospital.hospital
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Hospital record create success")
             return Resource(
@@ -196,7 +202,9 @@ class  AppFirebaseApi(
     suspend fun deleteHospital(hospitalId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("hospitals").document(hospitalId)
         val result = documentReference.delete()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Hospital delete success")
                 return Resource(
@@ -219,10 +227,12 @@ class  AppFirebaseApi(
             var technicianList = emptyList<Technician>()
             Log.d(APP_FIREBASE_API, "Technician list fetching error")
             val documentReference = firebaseFirestore.collection("technicians")
-            val data = documentReference.get()
-            data.await()
-            if(data.isSuccessful) {
-                technicianList = data.result.toObjects(Technician::class.java)
+            val result = documentReference.get()
+            withTimeout(3000) {
+                result.await()
+            }
+            if(result.isSuccessful) {
+                technicianList = result.result.toObjects(Technician::class.java)
                 Log.d(APP_FIREBASE_API, "Technician list fetched")
             } else {
                 Log.d(APP_FIREBASE_API, "Technician list fetching error")
@@ -236,7 +246,9 @@ class  AppFirebaseApi(
         )
         val documentReference = firebaseFirestore.collection("technicians").document(technician.technicianId)
         val result = documentReference.update(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         return if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Technician record update success")
             Resource(
@@ -260,7 +272,9 @@ class  AppFirebaseApi(
             "name" to technician.name
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Technician record create success")
             return Resource(
@@ -286,7 +300,9 @@ class  AppFirebaseApi(
             "name" to technician.name
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "Technician record create success")
             return Resource(
@@ -308,7 +324,9 @@ class  AppFirebaseApi(
         try {
             val documentReference = firebaseFirestore.collection("technicians").document(technicianId)
             val result = documentReference.delete()
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             return if (result.isSuccessful) {
                 Log.d(APP_FIREBASE_API, "Technician record delete success")
                 Resource(
@@ -339,10 +357,12 @@ class  AppFirebaseApi(
         var estStateList = emptyList<EstState>()
         Log.d(APP_FIREBASE_API, "Est states list fetching started")
         val documentReference = firebaseFirestore.collection("est_states")
-        val data = documentReference.get()
-        data.await()
-        if(data.isSuccessful) {
-            estStateList = data.result.toObjects(EstState::class.java)
+        val result = documentReference.get()
+        withTimeout(3000) {
+            result.await()
+        }
+        if(result.isSuccessful) {
+            estStateList = result.result.toObjects(EstState::class.java)
             Log.d(APP_FIREBASE_API, "Est states list fetched")
         } else {
             Log.d(APP_FIREBASE_API, "Est states list fetching error")
@@ -356,7 +376,9 @@ class  AppFirebaseApi(
         )
         val documentReference = firebaseFirestore.collection("est_states").document(estState.estStateId)
         val result = documentReference.update(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "EstState record update success")
             return Resource(
@@ -380,7 +402,9 @@ class  AppFirebaseApi(
             "estState" to estState.estState
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "EstState record create success")
             return Resource(
@@ -404,7 +428,9 @@ class  AppFirebaseApi(
             "estState" to estState.estState
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "EstState record create success")
             return Resource(
@@ -425,7 +451,9 @@ class  AppFirebaseApi(
     suspend fun deleteEstState(estStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("est_states").document(estStateId)
         val result = documentReference.delete()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "EstState record delete success")
             return Resource(
@@ -448,10 +476,12 @@ class  AppFirebaseApi(
             var repairStateList = emptyList<RepairState>()
             Log.d(APP_FIREBASE_API, "Repair states list fetching started")
             val documentReference = firebaseFirestore.collection("repair_states")
-            val data = documentReference.get()
-            data.await()
-            if(data.isSuccessful) {
-                repairStateList = data.result.toObjects(RepairState::class.java)
+            val result = documentReference.get()
+            withTimeout(3000) {
+                result.await()
+            }
+            if(result.isSuccessful) {
+                repairStateList = result.result.toObjects(RepairState::class.java)
                 Log.d(APP_FIREBASE_API, "Repair states list fetched")
             } else {
                 Log.d(APP_FIREBASE_API, "Repair states list fetching error")
@@ -465,7 +495,9 @@ class  AppFirebaseApi(
         )
         val documentReference = firebaseFirestore.collection("repair_states").document(repairState.repairStateId)
         val result = documentReference.update(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "RepairState record update success")
             return Resource(
@@ -490,7 +522,9 @@ class  AppFirebaseApi(
         )
 
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "RepairState record created successfully")
             return Resource(
@@ -515,7 +549,9 @@ class  AppFirebaseApi(
         )
 
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "RepairState record with Id created successfully")
             return Resource(
@@ -536,7 +572,9 @@ class  AppFirebaseApi(
     suspend fun deleteRepairState(repairStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("repair_states").document(repairStateId)
         val result = documentReference.delete()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "RepairState record delete success")
             return Resource(
@@ -560,10 +598,12 @@ class  AppFirebaseApi(
             var inspectionStateList = emptyList<InspectionState>()
             Log.d(APP_FIREBASE_API, "Inspection states list fetching started")
             val documentReference = firebaseFirestore.collection("inspection_states")
-            val data = documentReference.get()
-            data.await()
-            if(data.isSuccessful) {
-                inspectionStateList = data.result.toObjects(InspectionState::class.java)
+            val result = documentReference.get()
+            withTimeout(3000) {
+                result.await()
+            }
+            if(result.isSuccessful) {
+                inspectionStateList = result.result.toObjects(InspectionState::class.java)
                 Log.d(APP_FIREBASE_API, "Inspection states list fetched")
             } else {
                 Log.d(APP_FIREBASE_API, "Inspection states list fetching error")
@@ -577,7 +617,9 @@ class  AppFirebaseApi(
         )
         val documentReference = firebaseFirestore.collection("inspection_states").document(inspectionState.inspectionStateId)
         val result = documentReference.update(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "InspectionState record update success")
             return Resource(
@@ -601,7 +643,9 @@ class  AppFirebaseApi(
             "inspectionState" to inspectionState.inspectionState
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "InspectionState record create success")
             return Resource(
@@ -626,7 +670,9 @@ class  AppFirebaseApi(
             "inspectionState" to inspectionState.inspectionState
         )
         val result = documentReference.set(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "InspectionState record create success")
             return Resource(
@@ -648,7 +694,9 @@ class  AppFirebaseApi(
     suspend fun deleteInspectionState(inspectionStateId: String): Resource<String> {
         val documentReference = firebaseFirestore.collection("inspection_states").document(inspectionStateId)
         val result = documentReference.delete()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "InspectionState record delete success")
             return Resource(
@@ -671,7 +719,9 @@ class  AppFirebaseApi(
             var user: User? = null
             val documentReference = firebaseFirestore.collection("users").document(userId)
             val result = documentReference.get()
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if(result.isSuccessful) {
                 user = result.result.toObject(User::class.java)
             }
@@ -682,10 +732,12 @@ class  AppFirebaseApi(
             var userTypeList = emptyList<UserType>()
             Log.d(APP_FIREBASE_API, "User types list fetching started")
             val documentReference = firebaseFirestore.collection("user_types")
-            val data = documentReference.get()
-            data.await()
-            if(data.isSuccessful) {
-                userTypeList = data.result.toObjects(UserType::class.java)
+            val result = documentReference.get()
+            withTimeout(3000) {
+                result.await()
+            }
+            if(result.isSuccessful) {
+                userTypeList = result.result.toObjects(UserType::class.java)
                 Log.d(APP_FIREBASE_API, "User types list fetched")
             } else {
                 Log.d(APP_FIREBASE_API, "User types list fetching error")
@@ -703,7 +755,9 @@ class  AppFirebaseApi(
         )
         val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
         val result = documentReference.update(map)
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             Log.d(APP_FIREBASE_API, "UserType record update success")
             return Resource(
@@ -730,7 +784,9 @@ class  AppFirebaseApi(
                 // TODO How to pass list of hospitals in here
             )
             val result = documentReference.set(map)
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(APP_FIREBASE_API, "UserType record create success")
                 return Resource(
@@ -759,7 +815,9 @@ class  AppFirebaseApi(
         try {
             val documentReference = firebaseFirestore.collection("user_types").document(userTypeId)
             val result = documentReference.delete()
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(APP_FIREBASE_API, "UserType record delete success")
                 return Resource(

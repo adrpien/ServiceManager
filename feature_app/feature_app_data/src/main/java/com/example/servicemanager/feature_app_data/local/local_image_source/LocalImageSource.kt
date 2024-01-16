@@ -30,15 +30,16 @@ class LocalImageSource @Inject constructor(val context: Context) {
         return withContext(Dispatchers.IO) {
             try {
                 val fileName = "$filename.jpg"
-                val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager")
+                val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager/Signatures")
                 val photoFile = File(storageDir, fileName)
-                uri = FileProvider.getUriForFile(context, Environment.getExternalStorageDirectory().toString() + "/ServiceManager", photoFile)
                 if (photoFile.exists()) {
                     photoFile.delete()
                 }
                 val outputStream: OutputStream = FileOutputStream(photoFile.path)
                 outputStream.write(byteArray)
                 outputStream.close()
+                val authority = "${context.packageName}.fileprovider"
+                uri = FileProvider.getUriForFile(context, authority, photoFile)
             } catch (e: Exception) {
                 Log.d(localImageSourceTag, "savePhotoLocally threw exception")
             }
@@ -73,7 +74,7 @@ class LocalImageSource @Inject constructor(val context: Context) {
         return withContext(Dispatchers.IO) {
             try {
                 var uri: Uri = Uri.EMPTY
-                val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager")
+                val storageDir: File? = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString() + "/ServiceManager/Signatures")
                 val fileList = storageDir?.listFiles()
                 if (fileList != null) {
                     for (file in fileList) {
@@ -85,7 +86,8 @@ class LocalImageSource @Inject constructor(val context: Context) {
                 val contentResolver: ContentResolver = context.contentResolver
                 val inputStream: InputStream? = contentResolver.openInputStream(uri)
                 val byteArrayOutputStream = ByteArrayOutputStream()
-
+/*                val authority = "${context.packageName}.fileprovider"
+                uri = FileProvider.getUriForFile(context, authority, photoFile)*/
                 inputStream?.use { input ->
                     val buffer = ByteArray(4 * 1024)
                     var read: Int

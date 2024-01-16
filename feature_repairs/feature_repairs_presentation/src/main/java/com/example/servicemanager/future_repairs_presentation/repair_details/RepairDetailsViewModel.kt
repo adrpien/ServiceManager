@@ -38,9 +38,6 @@ class RepairDetailsViewModel @Inject constructor(
 
     private var currentRepairId: String? = null
 
-     // private val _repairDetailsState = MutableStateFlow(RepairDetailsState())
-     // val repairDetailsState: StateFlow<RepairDetailsState> = _repairDetailsState
-
     private val _repairDetailsState = mutableStateOf(RepairDetailsState())
     val repairDetailsState: State<RepairDetailsState> = _repairDetailsState
 
@@ -49,7 +46,6 @@ class RepairDetailsViewModel @Inject constructor(
 
     init {
         fetchRepair()
-        // fetchSignature()
         fetchHospitalList()
         fetchEstStateList()
         fetchRepairStateList()
@@ -143,12 +139,21 @@ class RepairDetailsViewModel @Inject constructor(
                                             repair = repair,
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(repair))
-                                    repairIsLoading = false
-                                    setIsLoadingStatus()
                                     fetchSignature(repair)
                                 }
+                                repairIsLoading = false
+                                setIsLoadingStatus()
                             }
-                            ResourceState.LOADING -> Unit
+                            ResourceState.LOADING -> {
+                                result.data?.let { repair ->
+                                    _repairDetailsState.value =
+                                        _repairDetailsState.value.copy(
+                                            repair = repair,)
+                                    _eventFlow.emit(UiEvent.UpdateTextFields(repair))
+                                }
+                                repairIsLoading = true
+                                setIsLoadingStatus()
+                            }
                             ResourceState.ERROR -> Unit
                         }
                     }
@@ -177,7 +182,14 @@ class RepairDetailsViewModel @Inject constructor(
                                     )
                             }
                         }
-                        ResourceState.LOADING -> Unit
+                        ResourceState.LOADING -> {
+                            result.data?.let { signature ->
+                                _repairDetailsState.value =
+                                    _repairDetailsState.value.copy(
+                                        signature = byteArrayToBitmap(signature)
+                                    )
+                            }
+                        }
                         ResourceState.ERROR -> Unit
                     }
                 }

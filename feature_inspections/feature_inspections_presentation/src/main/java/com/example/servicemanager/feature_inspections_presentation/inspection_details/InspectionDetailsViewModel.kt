@@ -152,8 +152,24 @@ class InspectionDetailsViewModel @Inject constructor(
                                     setIsLoadingStatus()
                                 }
                             }
-                            ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
+                            ResourceState.LOADING -> {
+                                result.data?.let { inspection ->
+                                    _inspectionDetailsState.value =
+                                        _inspectionDetailsState.value.copy(
+                                            inspection = inspection
+                                        )
+                                    _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
+                                    inspectionDetailsIsLoading = true
+                                    result.data?.let {
+                                        fetchSignature(it)
+                                    }
+                                    setIsLoadingStatus()
+                                }
+                            }
+                            ResourceState.ERROR -> {
+                                inspectionDetailsIsLoading = false
+                                setIsLoadingStatus()
+                            }
                         }
                     }
             }
@@ -212,8 +228,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                hospitalList = list,
+                            )
+                            hospitalListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        hospitalListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -234,8 +261,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                inspectionStateList = list,
+                            )
+                            inspectionStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        inspectionStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -256,8 +294,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                estStateList = list,
+                            )
+                            estStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        estStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -278,8 +327,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                technicianList = list,
+                            )
+                            technicianListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        technicianListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
