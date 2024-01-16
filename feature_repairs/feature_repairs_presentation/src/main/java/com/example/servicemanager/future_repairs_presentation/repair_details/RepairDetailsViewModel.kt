@@ -210,8 +210,19 @@ class RepairDetailsViewModel @Inject constructor(
                             )
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairDetailsState.value = _repairDetailsState.value.copy(
+                                hospitalList = list,
+                            )
+                            hospitalListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        hospitalListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -231,8 +242,20 @@ class RepairDetailsViewModel @Inject constructor(
                             )
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+
+                            _repairDetailsState.value = _repairDetailsState.value.copy(
+                                repairStateList = list,
+                            )
+                        }
+                        repairStateListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        repairStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -252,8 +275,19 @@ class RepairDetailsViewModel @Inject constructor(
                             )
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairDetailsState.value = _repairDetailsState.value.copy(
+                                estStateList = list,
+                            )
+                        }
+                        estStateListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        estStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -273,8 +307,19 @@ class RepairDetailsViewModel @Inject constructor(
                             )
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            technicianListIsLoading = false
+                            setIsLoadingStatus()
+                            _repairDetailsState.value = _repairDetailsState.value.copy(
+                                technicianList = list,
+                            )
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        estStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }

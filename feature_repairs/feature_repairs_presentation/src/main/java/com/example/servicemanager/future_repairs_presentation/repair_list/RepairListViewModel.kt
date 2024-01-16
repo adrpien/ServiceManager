@@ -153,8 +153,19 @@ class RepairListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairListState.value = _repairListState.value.copy(
+                                repairList = list
+                            )
+                        }
+                        repairListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        repairListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -173,8 +184,19 @@ class RepairListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairListState.value = _repairListState.value.copy(
+                                hospitalList = list,
+                            )
+                        }
+                        hospitalListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        hospitalListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -193,8 +215,20 @@ class RepairListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairListState.value = _repairListState.value.copy(
+                                repairStateList = list,
+                            )
+                        }
+                        repairStateListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        repairStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -213,8 +247,19 @@ class RepairListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairListState.value = _repairListState.value.copy(
+                                estStateList = list,
+                            )
+                        }
+                        estStateListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        estStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -233,8 +278,19 @@ class RepairListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _repairListState.value = _repairListState.value.copy(
+                                technicianList = list,
+                            )
+                        }
+                        technicianListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        technicianListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
