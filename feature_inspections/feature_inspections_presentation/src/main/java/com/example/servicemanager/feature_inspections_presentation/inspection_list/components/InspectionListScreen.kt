@@ -112,7 +112,7 @@ fun InspectionListScreen(
                         placeholderColor = MaterialTheme.colorScheme.onSecondary,
                         focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
-                        textColor = MaterialTheme.colorScheme.onSecondary,
+                        textColor = MaterialTheme.colorScheme.onPrimary,
                         cursorColor = MaterialTheme.colorScheme.onSecondary
                     ),
                     onValueChange = {

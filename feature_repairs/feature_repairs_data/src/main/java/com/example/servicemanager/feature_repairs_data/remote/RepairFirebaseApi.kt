@@ -5,10 +5,12 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_repairs_data.R
+import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
 
 class  RepairFirebaseApi(
     val firebaseFirestore: FirebaseFirestore,
@@ -23,7 +25,9 @@ class  RepairFirebaseApi(
         var repairList: List<Repair> = emptyList()
         val documentReference = firebaseFirestore.collection("repairs")
         val result = documentReference.get()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             repairList =  result.result.toObjects(Repair::class.java)
             Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
@@ -38,109 +42,129 @@ class  RepairFirebaseApi(
         var repair: Repair? = Repair()
         val documentReference = firebaseFirestore.collection("repairs")
             .document(repairId)
-            val result = documentReference.get()
+        val result = documentReference.get()
+        withTimeout(3000) {
             result.await()
-            if (result.isSuccessful) {
-                repair =  result.result.toObject(Repair::class.java)
-                Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
+        }
+        if (result.isSuccessful) {
+            repair =  result.result.toObject(Repair::class.java)
+            Log.d(REPAIR_REPOSITORY_API, "Repair list fetched")
 
-            } else {
-                Log.d(REPAIR_REPOSITORY_API, "Repair list fetch error")
-            }
+        } else {
+            Log.d(REPAIR_REPOSITORY_API, "Repair list fetch error")
+        }
         return repair
     }
     suspend fun createRepair(repair: Repair): Resource<String> {
-        // TODO Caching mechanism in createRepair fun for RepairFirebaseApi
-        var documentReference = firebaseFirestore.collection("repairs")
-            .document()
-        var map = mapOf<String, String>(
-            "repairId" to documentReference.id,
-            "repairStateId" to repair.repairStateId,
-            "hospitalId" to repair.hospitalId,
-            "ward" to repair.ward,
-            "defectDescription" to repair.defectDescription,
-            "repairDescription" to repair.repairDescription,
-            "partDescription" to repair.partDescription,
-            "estStateId" to repair.estStateId,
-            "closingDate" to repair.closingDate,
-            "openingDate" to repair.openingDate,
-            "repairingDate" to repair.repairingDate,
-            "pickupTechnicianId" to repair.pickupTechnicianId,
-            "repairTechnicianId" to repair.repairTechnicianId,
-            "returnTechnicianId" to repair.returnTechnicianId,
-            "rate" to repair.rate,
-            "recipient" to repair.recipient,
-            "signatureId" to repair.repairId,
-            "deviceName" to repair.deviceName,
-            "deviceManufacturer" to repair.deviceManufacturer,
-            "deviceModel" to repair.deviceModel,
-            "deviceSn" to repair.deviceSn,
-            "deviceIn" to repair.deviceIn
-        )
-        val result = documentReference.set(map)
-        result.await()
-        if (result.isSuccessful) {
-            Log.d(REPAIR_REPOSITORY_API, "Repair record created")
-            return Resource(
-                ResourceState.SUCCESS,
-                null,
-                UiText.StringResource(R.string.repair_record_created)
+        try {
+            var documentReference = firebaseFirestore.collection("repairs")
+                .document()
+            var map = mapOf<String, String>(
+                "repairId" to documentReference.id,
+                "repairStateId" to repair.repairStateId,
+                "hospitalId" to repair.hospitalId,
+                "ward" to repair.ward,
+                "defectDescription" to repair.defectDescription,
+                "repairDescription" to repair.repairDescription,
+                "partDescription" to repair.partDescription,
+                "estStateId" to repair.estStateId,
+                "closingDate" to repair.closingDate,
+                "openingDate" to repair.openingDate,
+                "repairingDate" to repair.repairingDate,
+                "pickupTechnicianId" to repair.pickupTechnicianId,
+                "repairTechnicianId" to repair.repairTechnicianId,
+                "returnTechnicianId" to repair.returnTechnicianId,
+                "rate" to repair.rate,
+                "recipient" to repair.recipient,
+                "signatureId" to repair.repairId,
+                "deviceName" to repair.deviceName,
+                "deviceManufacturer" to repair.deviceManufacturer,
+                "deviceModel" to repair.deviceModel,
+                "deviceSn" to repair.deviceSn,
+                "deviceIn" to repair.deviceIn
             )
+            val result = documentReference.set(map)
+            withTimeout(3000){
+                result.await()
+            }
+            if (result.isSuccessful) {
+                Log.d(REPAIR_REPOSITORY_API, "Repair record created")
+                return Resource(
+                    ResourceState.SUCCESS,
+                    repair.repairId,
+                    UiText.StringResource(R.string.repair_record_created)
+                )
 
-        } else {
-            Log.d(REPAIR_REPOSITORY_API, "Repair record creation error")
+            } else {
+                Log.d(REPAIR_REPOSITORY_API, "Repair record creation error")
+                return Resource(
+                    ResourceState.ERROR,
+                    "CONNECTION_ERROR",
+                    UiText.StringResource(R.string.check_internet_connection)
+                )
+            }
+        } catch (e: Exception) {
             return Resource(
                 ResourceState.ERROR,
-                null,
-                UiText.StringResource(R.string.repair_record_creation_error)
+                "CONNECTION_ERROR",
+                UiText.StringResource(R.string.check_internet_connection)
             )
         }
+
     }
     suspend fun updateRepair(repair: Repair): Resource<String> {
-        // TODO Caching mechanism in updateRepair fun for RepairFirebaseApi
-        var map = mapOf<String, String>(
-            "repairId" to repair.repairId,
-            "repairStateId" to repair.repairStateId,
-            "hospitalId" to repair.hospitalId,
-            "ward" to repair.ward,
-            "defectDescription" to repair.defectDescription,
-            "repairDescription" to repair.repairDescription,
-            "partDescription" to repair.partDescription,
-            "estTestId" to repair.estStateId,
-            "closingDate" to repair.closingDate,
-            "openingDate" to repair.openingDate,
-            "repairingDate" to repair.repairingDate,
-            "pickupTechnicianId" to repair.pickupTechnicianId,
-            "repairTechnicianId" to repair.repairTechnicianId,
-            "returnTechnicianId" to repair.returnTechnicianId,
-            "rate" to repair.rate,
-            "recipient" to repair.recipient,
-            "signatureId" to repair.repairId,
-            "deviceName" to repair.deviceName,
-            "deviceManufacturer" to repair.deviceManufacturer,
-            "deviceModel" to repair.deviceModel,
-            "deviceSn" to repair.deviceSn,
-            "deviceIn" to repair.deviceIn
-        )
-        val documentReference = firebaseFirestore.collection("repairs").document(repair.repairId)
-        val result = documentReference.update(map)
-        result.await()
-        if (result.isSuccessful) {
-            Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
-            return Resource(
-                ResourceState.SUCCESS,
-                null,
-                UiText.StringResource(R.string.repair_record_updated)
+        try {
+            var map = mapOf<String, String>(
+                "repairId" to repair.repairId,
+                "repairStateId" to repair.repairStateId,
+                "hospitalId" to repair.hospitalId,
+                "ward" to repair.ward,
+                "defectDescription" to repair.defectDescription,
+                "repairDescription" to repair.repairDescription,
+                "partDescription" to repair.partDescription,
+                "estTestId" to repair.estStateId,
+                "closingDate" to repair.closingDate,
+                "openingDate" to repair.openingDate,
+                "repairingDate" to repair.repairingDate,
+                "pickupTechnicianId" to repair.pickupTechnicianId,
+                "repairTechnicianId" to repair.repairTechnicianId,
+                "returnTechnicianId" to repair.returnTechnicianId,
+                "rate" to repair.rate,
+                "recipient" to repair.recipient,
+                "signatureId" to repair.repairId,
+                "deviceName" to repair.deviceName,
+                "deviceManufacturer" to repair.deviceManufacturer,
+                "deviceModel" to repair.deviceModel,
+                "deviceSn" to repair.deviceSn,
+                "deviceIn" to repair.deviceIn
             )
-        } else {
-            Log.d(REPAIR_REPOSITORY_API, "Repair record update error")
+            val documentReference =
+                firebaseFirestore.collection("repairs").document(repair.repairId)
+            val result = documentReference.update(map)
+            withTimeout(3000) {
+                result.await()
+            }
+            if (result.isSuccessful) {
+                Log.d(REPAIR_REPOSITORY_API, "Repair record updated")
+                return Resource(
+                    ResourceState.SUCCESS,
+                    repair.repairId,
+                    UiText.StringResource(R.string.repair_record_updated)
+                )
+            } else {
+                Log.d(REPAIR_REPOSITORY_API, "Repair record update error")
+                return Resource(
+                    ResourceState.ERROR,
+                    "CONNECTION_ERROR",
+                    UiText.StringResource(R.string.check_internet_connection)
+                )
+            }
+        } catch (e: Exception) {
             return Resource(
                 ResourceState.ERROR,
-                null,
-                UiText.StringResource(R.string.repair_record_update_error)
+                "CONNECTION_ERROR",
+                UiText.StringResource(R.string.check_internet_connection)
             )
         }
-
     }
-
-    }
+}

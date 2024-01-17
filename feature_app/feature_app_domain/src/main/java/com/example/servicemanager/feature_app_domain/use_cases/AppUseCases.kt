@@ -25,6 +25,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.repair_states.Cre
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.DeleteRepairState
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.GetRepairStateList
 import com.example.servicemanager.feature_app_domain.use_cases.repair_states.UpdateRepairState
+import com.example.servicemanager.feature_app_domain.use_cases.sync_data.SyncData
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.CreateTechnicianWithId
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.DeleteTechnician
@@ -71,5 +72,6 @@ data class AppUseCases(
     val updateUserType: UpdateUserType,
     val deleteUserType: DeleteUserType,
     val copyToClipboard: CopyToClipboard,
-    val getDateFormattingTypes: GetDateFormattingTypes
+    val getDateFormattingTypes: GetDateFormattingTypes,
+    val syncData: SyncData
 )

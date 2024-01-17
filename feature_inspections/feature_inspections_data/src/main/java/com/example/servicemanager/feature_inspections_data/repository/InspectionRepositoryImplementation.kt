@@ -1,7 +1,6 @@
 package com.example.servicemanager.feature_inspections_data.repository
 
 
-import com.example.caching_domain.repository.CachingRepository
 import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
@@ -85,7 +84,7 @@ class  InspectionRepositoryImplementation(
         }
     }
 
-    override suspend fun insertInspection(inspection: Inspection): Resource<Inspection> {
+    override suspend fun insertInspection(inspection: Inspection): Resource<String> {
         if(inspection.inspectionId == "") {
             throw IllegalArgumentException("inspectionId can not be empty")
         }
@@ -93,15 +92,10 @@ class  InspectionRepositoryImplementation(
             eventLogType = com.example.logger.EventLogType.NewRecordLog(),
             dataClassObject = inspection,
         )
-        val result = inspectionFirebaseApi.createInspection(inspection)
-        return result
+        return inspectionFirebaseApi.createInspection(inspection)
     }
 
-    override suspend fun cacheInspection(inspection: Inspection): Resource<Inspection> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateInspection(inspection: Inspection): Resource<Inspection> {
+    override suspend fun updateInspection(inspection: Inspection): Resource<String> {
         if(inspection.inspectionId == "") {
             throw IllegalArgumentException("inspectionId can not be empty")
         }

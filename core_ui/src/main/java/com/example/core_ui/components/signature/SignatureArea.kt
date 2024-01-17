@@ -26,7 +26,7 @@ import com.example.core.util.Helper.Companion.toDp
 @Composable
 fun SignatureArea(
     modifier: Modifier = Modifier,
-    pathColor: Color = MaterialTheme.colorScheme.onSecondary,
+    pathColor: Color = Color.Black,
     updateImageBitmap: (Bitmap) -> Unit,
 ) {
 
@@ -34,7 +34,7 @@ fun SignatureArea(
     val backgroundPaint = Paint()
 
     backgroundPaint.apply {
-        MaterialTheme.colorScheme.secondary.also { color = it }
+        Color.White.also { color = it }
         style = PaintingStyle.Fill
     }
 
@@ -58,7 +58,7 @@ fun SignatureArea(
 
     Surface(
         modifier = Modifier
-            .border(1.dp, MaterialTheme.colorScheme.onSecondary),
+            .border(1.dp, Color.White),
         color = Color.White
             ){
         Box(
@@ -69,7 +69,7 @@ fun SignatureArea(
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.primary)
+                    .background(Color.White)
                     .pointerInteropFilter { motionEvent ->
                         when (motionEvent.action) {
                             MotionEvent.ACTION_DOWN -> {

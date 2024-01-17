@@ -13,4 +13,5 @@ dependencies{
     implementation(project(Modules.sharedPreferences))
     implementation(project(Modules.logger))
     implementation(project(Modules.featureAppDomain))
+
 }

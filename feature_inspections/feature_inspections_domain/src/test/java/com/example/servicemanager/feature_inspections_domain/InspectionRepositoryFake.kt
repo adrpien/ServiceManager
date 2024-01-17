@@ -30,24 +30,24 @@ class InspectionRepositoryFake : InspectionRepository {
         }
     }
 
-    override fun insertInspection(inspection: Inspection): Flow<Resource<String>> = flow {
-        if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR))
+    override suspend fun insertInspection(inspection: Inspection): Resource<String> {
+        return if (shouldReturnError) {
+            Resource(ResourceState.ERROR)
         } else {
             inspectionList.add(inspection)
-            emit(Resource(ResourceState.SUCCESS, inspection.inspectionId))
+            Resource(ResourceState.SUCCESS, inspection.inspectionId)
         }
     }
 
-    override fun updateInspection(inspection: Inspection): Flow<Resource<String>> = flow {
-        if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR))
+    override suspend fun updateInspection(inspection: Inspection): Resource<String> {
+        return if (shouldReturnError) {
+            Resource(ResourceState.ERROR)
         } else {
             val inspectionIndex =
                 inspectionList.indexOf(inspectionList.find { it.inspectionId == inspection.inspectionId })
             inspectionList.removeAt(inspectionIndex)
             inspectionList.add(inspection)
-            emit(Resource(ResourceState.SUCCESS, inspection.inspectionId))
+            Resource(ResourceState.SUCCESS, inspection.inspectionId)
         }
     }
 

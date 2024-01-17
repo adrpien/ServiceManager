@@ -174,8 +174,19 @@ class InspectionListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionListState.value = _inspectionListState.value.copy(
+                                inspectionList = list
+                            )
+                        }
+                        inspectionListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        inspectionListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -194,8 +205,19 @@ class InspectionListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionListState.value = _inspectionListState.value.copy(
+                                hospitalList = list,
+                            )
+                        }
+                        hospitalListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        hospitalListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -214,8 +236,19 @@ class InspectionListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionListState.value = _inspectionListState.value.copy(
+                                inspectionStateList = list,
+                            )
+                        }
+                        inspectionStateListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        inspectionStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -234,8 +267,19 @@ class InspectionListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionListState.value = _inspectionListState.value.copy(
+                                estStateList = list,
+                            )
+                        }
+                        estStateListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        estStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -254,8 +298,19 @@ class InspectionListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionListState.value = _inspectionListState.value.copy(
+                                technicianList = list,
+                            )
+                        }
+                        technicianListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        technicianListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -272,8 +327,18 @@ class InspectionListViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.ERROR -> Unit
-                    ResourceState.LOADING -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let {
+                            _inspectionListState.value = _inspectionListState.value.copy(userTypeList = it)
+
+                        }
+                        userTypeListIsLoading = true
+                        setIsLoadingStatus()
+                    }
+                    ResourceState.ERROR -> {
+                        userTypeListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -299,6 +364,7 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 
+    // TODO need tyo handle somehow error state are other stuff
     private fun fetchUser() {
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
         viewModelScope.launch(Dispatchers.Main) {

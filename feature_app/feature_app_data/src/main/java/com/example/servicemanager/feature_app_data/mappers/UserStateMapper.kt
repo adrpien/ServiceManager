@@ -1,6 +1,6 @@
 package com.example.servicemanager.feature_app_data.mappers
 
-import com.example.servicemanager.feature_app_data.local.entities.UserTypeEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.UserTypeEntity
 import com.example.servicemanager.feature_app_domain.model.UserType
 
 

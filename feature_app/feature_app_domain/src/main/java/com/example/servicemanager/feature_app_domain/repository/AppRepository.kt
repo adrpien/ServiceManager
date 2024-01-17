@@ -1,6 +1,7 @@
 package com.example.servicemanager.feature_app_domain.repository
 
 import com.example.core.util.Resource
+import com.example.servicemanager.feature_app_domain.model.CachedSignature
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.InspectionState
@@ -11,6 +12,13 @@ import com.example.servicemanager.feature_app_domain.model.UserType
 import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
+
+    /* ***** Sync ******************************************************************************* */
+    suspend fun getCachedSignatureList(): Resource<List<CachedSignature>>
+    suspend fun syncSignature(signature: CachedSignature): Resource<String>
+    suspend fun deleteCachedSignature(signatureId: String): Resource<String>
+    suspend fun insertCachedSignature(cachedSignature: CachedSignature): Resource<String>
+
 
     /* ***** Signatures ************************************************************************* */
     fun getSignature(signatureId: String): Flow<Resource<ByteArray>>
@@ -29,7 +37,6 @@ interface AppRepository {
     suspend fun updateTechnician(technician: Technician): Resource<String>
     suspend fun createTechnician(technician: Technician): Resource<String>
     suspend fun createTechnicianWithId(technician: Technician): Resource<String>
-
     suspend fun deleteTechnician(technicianId: String): Resource<String>
 
     /* ***** EstStates ************************************************************************** */
@@ -37,7 +44,6 @@ interface AppRepository {
     suspend fun updateEstState(estState: EstState): Resource<String>
     suspend fun createEstState(estState: EstState): Resource<String>
     suspend fun createEstStateWithId(estState: EstState): Resource<String>
-
     suspend fun deleteEstState(estStateId: String): Resource<String>
 
 
@@ -46,7 +52,6 @@ interface AppRepository {
     suspend fun updateInspectionState(inspectionState: InspectionState): Resource<String>
     suspend fun createInspectionState(inspectionState: InspectionState): Resource<String>
     suspend fun createInspectionStateWithId(inspectionState: InspectionState): Resource<String>
-
     suspend fun deleteInspectionState(inspectionStateId: String): Resource<String>
 
 
@@ -55,7 +60,6 @@ interface AppRepository {
     suspend fun updateRepairState(repairState: RepairState): Resource<String>
     suspend fun createRepairState(repairState: RepairState): Resource<String>
     suspend fun createRepairStateWithId(repairState: RepairState): Resource<String>
-
     suspend fun deleteRepairState(repairStateId: String): Resource<String>
 
 

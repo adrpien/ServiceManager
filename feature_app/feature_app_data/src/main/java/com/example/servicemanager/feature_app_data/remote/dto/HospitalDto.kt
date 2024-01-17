@@ -1,6 +1,6 @@
 package com.example.servicemanager.feature_app_data.remote.dto
 
-import com.example.servicemanager.feature_app_data.local.entities.HospitalEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.HospitalEntity
 
 data class HospitalDto(
     val hospitalId: String,

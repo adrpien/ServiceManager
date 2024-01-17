@@ -56,4 +56,7 @@
     <string name="user_fetched">User fetched</string>
     <string name="user_type_list_fetched">UserType list fetched</string>
     <string name="device_list_fetching_error">Device list fetching error</string>
+    <string name="locally_cashed_list">Locally cashed list</string>
+    <string name="cached_signatures_fetching_success">Cached signatures fetching success</string>
+    <string name="cached_signature_deleted">Cached signature deleted</string>
 </resources>

@@ -72,35 +72,49 @@ class InspectionDetailsViewModel @Inject constructor(
                     when (result.resourceState) {
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.StringResource(
-                                R.string.unknown_error)))
-                            // TODO Here you should cache inspection, use broadcast receiver or something
-
+                            if(result.data == "CONNECTION_ERROR") {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                                appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                            }
                         }
                         ResourceState.SUCCESS -> {
-                            result.data?.let { inspection ->
+                            result.data?.let { inspectionId ->
                                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection =  inspection
+                                    inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
                                 )
                             }
-
+                            appUseCases.saveSignature(
+                                inspectionDetailsState.value.inspection.inspectionId,
+                                bitmapToByteArray(inspectionDetailsState.value.signature)
+                            )
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                         }
                     }
                 }
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.saveSignature(
-                        inspectionDetailsState.value.inspection.inspectionId,
-                        bitmapToByteArray(inspectionDetailsState.value.signature)
-                    )
-                }
+
             }
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
-                }
-                viewModelScope.launch(Dispatchers.IO) {
-                    appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                    val result = inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
+                    when (result.resourceState) {
+                        ResourceState.LOADING -> Unit
+                        ResourceState.ERROR -> {
+                            if(result.data == "CONNECTION_ERROR") {
+                                appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                            }
+                        }
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { inspectionId ->
+                                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                    inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
+                                )
+                            }
+                            appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+
+                        }
+                    }
                 }
             }
             is InspectionDetailsEvent.SetIsInEditMode -> {
@@ -132,12 +146,30 @@ class InspectionDetailsViewModel @Inject constructor(
                                         )
                                     _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
                                     inspectionDetailsIsLoading = false
-                                    result.data?.let {  fetchSignature(it) }
+                                    result.data?.let {
+                                        fetchSignature(it)
+                                    }
                                     setIsLoadingStatus()
                                 }
                             }
-                            ResourceState.LOADING -> Unit
-                            ResourceState.ERROR -> Unit
+                            ResourceState.LOADING -> {
+                                result.data?.let { inspection ->
+                                    _inspectionDetailsState.value =
+                                        _inspectionDetailsState.value.copy(
+                                            inspection = inspection
+                                        )
+                                    _eventFlow.emit(UiEvent.UpdateTextFields(inspection))
+                                    inspectionDetailsIsLoading = true
+                                    result.data?.let {
+                                        fetchSignature(it)
+                                    }
+                                    setIsLoadingStatus()
+                                }
+                            }
+                            ResourceState.ERROR -> {
+                                inspectionDetailsIsLoading = false
+                                setIsLoadingStatus()
+                            }
                         }
                     }
             }
@@ -167,7 +199,14 @@ class InspectionDetailsViewModel @Inject constructor(
                             }
                         }
 
-                        ResourceState.LOADING -> Unit
+                        ResourceState.LOADING -> {
+                            result.data?.let { signature ->
+                                _inspectionDetailsState.value =
+                                    _inspectionDetailsState.value.copy(
+                                        signature = byteArrayToBitmap(signature)
+                                    )
+                            }
+                        }
                         ResourceState.ERROR -> Unit
                     }
                 }
@@ -189,8 +228,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                hospitalList = list,
+                            )
+                            hospitalListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        hospitalListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -211,8 +261,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                inspectionStateList = list,
+                            )
+                            inspectionStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        inspectionStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -233,8 +294,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                estStateList = list,
+                            )
+                            estStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        estStateListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }
@@ -255,8 +327,19 @@ class InspectionDetailsViewModel @Inject constructor(
                             setIsLoadingStatus()
                         }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
+                    ResourceState.LOADING -> {
+                        result.data?.let { list ->
+                            _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
+                                technicianList = list,
+                            )
+                            technicianListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        technicianListIsLoading = false
+                        setIsLoadingStatus()
+                    }
                 }
             }
         }

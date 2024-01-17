@@ -6,10 +6,13 @@ import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_inspections_data.R
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
+import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
+import java.net.UnknownHostException
 
 class  InspectionFirebaseApi(
     private val firebaseFirestore: FirebaseFirestore,
@@ -24,7 +27,9 @@ class  InspectionFirebaseApi(
         var inspectionList: List<Inspection> = emptyList()
         val documentReference = firebaseFirestore.collection("inspections")
         val result = documentReference.get()
-        result.await()
+        withTimeout(3000) {
+            result.await()
+        }
         if (result.isSuccessful) {
             inspectionList =  result.result.toObjects(Inspection::class.java)
             Log.d(INSPECTION_FIREBASE_API, "Inspection list fetched")
@@ -40,7 +45,9 @@ class  InspectionFirebaseApi(
         val documentReference = firebaseFirestore.collection("inspections")
             .document(inspectionId)
             val result = documentReference.get()
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 inspection =  result.result.toObject(Inspection::class.java)
                 Log.d(INSPECTION_FIREBASE_API, "Inspection list fetched")
@@ -50,7 +57,7 @@ class  InspectionFirebaseApi(
             }
         return inspection
     }
-    suspend fun createInspection(inspection: Inspection): Resource<Inspection> {
+    suspend fun createInspection(inspection: Inspection): Resource<String> {
         try {
             var documentReference = firebaseFirestore.collection("inspections")
                 .document()
@@ -72,19 +79,21 @@ class  InspectionFirebaseApi(
                 "deviceIn" to inspection.deviceIn
             )
             val result = documentReference.set(map)
-            result.await()
+            withTimeout(3000){
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record created")
                 return Resource(
                     ResourceState.SUCCESS,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.inspection_record_created)
                 )
             } else {
                 Log.d(INSPECTION_FIREBASE_API, "Error creating new inspection record")
                 return Resource(
                     ResourceState.ERROR,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.check_internet_connection)
                 )
             }
@@ -92,13 +101,12 @@ class  InspectionFirebaseApi(
             Log.d(INSPECTION_FIREBASE_API, "Error creating new inspection record")
             return Resource(
                 ResourceState.ERROR,
-                inspection,
+                null,
                 UiText.StringResource(R.string.check_internet_connection)
             )
         }
     }
-    suspend fun updateInspection(inspection: Inspection): Resource<Inspection> {
-        // TODO Caching mechanism in updateInspection fun for InspectionFirebaseApi
+    suspend fun updateInspection(inspection: Inspection): Resource<String> {
         try {
             var map = mapOf<String, String>(
                 "inspectionId" to inspection.inspectionId,
@@ -119,26 +127,34 @@ class  InspectionFirebaseApi(
             )
             val documentReference = firebaseFirestore.collection("inspections").document(inspection.inspectionId)
             val result = documentReference.update(map)
-            result.await()
+            withTimeout(3000) {
+                result.await()
+            }
             if (result.isSuccessful) {
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record updated")
                 return Resource(
                     ResourceState.SUCCESS,
-                    inspection,
+                    inspection.inspectionId,
                     UiText.StringResource(R.string.inspection_record_updated)
                 )
             } else {
                 Log.d(INSPECTION_FIREBASE_API, "Inspection record update error")
                 return Resource(
                     ResourceState.ERROR,
-                    inspection,
+                    "CONNECTION_ERROR",
                     UiText.StringResource(R.string.check_internet_connection)
                 )
             }
-        } catch (e: FirebaseFirestoreException) {
+        } catch (e: Exception) {
             return Resource(
                 ResourceState.ERROR,
-                inspection,
+                "CONNECTION_ERROR",
+                UiText.StringResource(R.string.check_internet_connection)
+            )
+        } catch (e: UnknownHostException) {
+            return Resource(
+                ResourceState.ERROR,
+                "CONNECTION_ERROR",
                 UiText.StringResource(R.string.check_internet_connection)
             )
         }

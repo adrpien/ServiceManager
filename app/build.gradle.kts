@@ -96,8 +96,6 @@ dependencies {
     implementation(project(Modules.androidTest))
     implementation(project(Modules.sharedPreferences))
     implementation(project(Modules.logger))
-    implementation(project(Modules.cachingData))
-    implementation(project(Modules.cachingDomain))
 
     // AndroidX
     implementation(AndroidX.coreKtx)

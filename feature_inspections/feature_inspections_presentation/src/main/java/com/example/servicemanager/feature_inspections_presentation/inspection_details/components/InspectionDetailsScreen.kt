@@ -197,6 +197,7 @@ fun InspectionDetailsScreen(
                 }
 
                 is UiEvent.NavigateTo -> {
+                    navHostController.popBackStack()
                     navHostController.navigate(event.route + "/{userId}")
                 }
 
@@ -234,8 +235,6 @@ fun InspectionDetailsScreen(
                                 )
                             )
                         }
-                        navHostController.popBackStack(Screen.InspectionDetailsScreen.route + "/{inspectionId}", true )
-                        navHostController.navigate(Screen.InspectionListScreen.route + "/{userId}")
                     } else {
                         viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(!isInEditMode))
                     }
@@ -512,8 +511,8 @@ fun InspectionDetailsScreen(
                 enabled = isInEditMode,
                 shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colorScheme.primary,
-                    disabledBackgroundColor =  MaterialTheme.colorScheme.primary
+                    backgroundColor = MaterialTheme.colorScheme.secondary,
+                    disabledBackgroundColor =  MaterialTheme.colorScheme.secondary
                 ),
                 border = BorderStroke(
                     width = 1.dp,

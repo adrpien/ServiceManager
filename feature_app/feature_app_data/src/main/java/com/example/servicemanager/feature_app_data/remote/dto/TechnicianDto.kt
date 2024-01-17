@@ -1,6 +1,6 @@
 package com.example.servicemanager.feature_app_data.remote.dto
 
-import com.example.servicemanager.feature_app_data.local.entities.TechnicianEntity
+import com.example.servicemanager.feature_app_data.local.room.entities.TechnicianEntity
 
 data class TechnicianDto(
     val technicianId: String,

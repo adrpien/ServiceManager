@@ -4,7 +4,6 @@ package com.example.servicemanager.feature_inspections_data.mappers
 import com.example.servicemanager.feature_inspections_data.local.entities.InspectionEntity
 import com.example.servicemanager.feature_inspections_data.remote.dto.InspectionDto
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
-import java.util.*
 
 fun Inspection.toInspectionEntity(): InspectionEntity {
     return InspectionEntity(
@@ -21,7 +20,8 @@ fun Inspection.toInspectionEntity(): InspectionEntity {
         deviceManufacturer = deviceManufacturer,
         deviceModel = deviceModel,
         deviceSn = deviceSn,
-        deviceIn = deviceIn
+        deviceIn = deviceIn,
+        signatureId = signatureId
     )
 }
 
@@ -39,7 +39,7 @@ fun Inspection.toInspectionDto(): InspectionDto {
         deviceName = deviceName,
         deviceManufacturer = deviceManufacturer,
         deviceModel = deviceModel,
-        deviceSN = deviceSn,
-        deviceIN = deviceIn
+        deviceSn = deviceSn,
+        deviceIn = deviceIn,
     )
 }

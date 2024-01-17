@@ -12,16 +12,17 @@ import javax.inject.Inject
 class SaveInspection @Inject constructor (
     private val repository: InspectionRepository
 ) {
-    suspend operator fun invoke(inspection: Inspection): Resource<Inspection> {
+    suspend operator fun invoke(inspection: Inspection): Resource<String> {
         try {
-            if (inspection.deviceSn.isNotEmpty() && inspection.deviceIn.isNotEmpty()) {
-                return repository.insertInspection(inspection)
-            } else if (inspection.inspectionDate.any{ !it.isDigit() }) {
+            if (inspection.inspectionDate.any{ !it.isDigit() }) {
                 return Resource(
                     ResourceState.ERROR,
                     null,
                     UiText.StringResource(R.string.wrong_date_format)
                 )
+            }
+            if (inspection.deviceSn != "" && inspection.deviceIn != "") {
+                return repository.insertInspection(inspection)
             } else {
                 return Resource(
                     ResourceState.ERROR,

@@ -2,7 +2,6 @@ package com.example.servicemanager.feature_inspections_data.dependency_injection
 
 import android.app.Application
 import androidx.room.Room
-import com.example.caching_domain.use_cases.CachingUseCases
 import com.example.logger.AppLogger
 import com.example.servicemanager.feature_inspections_data.local.InspectionDatabase
 import com.example.servicemanager.feature_inspections_data.remote.InspectionFirebaseApi
@@ -50,7 +49,6 @@ object InspectionDataModule {
         inspectionDatabase: InspectionDatabase,
         inspectionFirebaseApi: InspectionFirebaseApi,
         appLogger: AppLogger<Any>,
-        cachingUseCases: CachingUseCases
     ): InspectionRepository {
         return InspectionRepositoryImplementation(
             inspectionDatabase.inspectionDatabaseDao,
