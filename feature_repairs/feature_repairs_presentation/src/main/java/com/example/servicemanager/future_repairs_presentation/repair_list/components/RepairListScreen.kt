@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,7 +38,7 @@ fun RepairListScreen(
     ) {
 
 
-    val repairListState = viewModel.repairListState
+    val repairListState = viewModel.repairListState.collectAsState()
 
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = repairListState.value.isRefreshing

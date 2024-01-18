@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +43,7 @@ fun InspectionListScreen(
     ) {
 
     val context = LocalContext.current
-    val inspectionListState = viewModel.inspectionListState
+    val inspectionListState = viewModel.inspectionListState.collectAsState()
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = inspectionListState.value.isRefreshing
     )
@@ -205,7 +206,7 @@ fun InspectionListScreen(
                             hospital = "All"
                         )
                         val hospitalNameList = itemList.map { it.hospital }
-                        val accessedHospitalIdList = viewModel.inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }.hospitals
+                        val accessedHospitalIdList = inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }.hospitals
 
                         itemList = itemList.filter { hospital ->
                             accessedHospitalIdList.contains(hospital.hospitalId)

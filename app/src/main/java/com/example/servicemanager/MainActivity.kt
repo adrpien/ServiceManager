@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.servicemanager.navigation.LoginNavigation
+import com.example.servicemanager.navigation.MainScreenNavigation
 import com.example.servicemanager.network_connection.RequestNetworkObserver
 import com.example.servicemanager.theme.ServiceManagerTheme
 import com.example.shared_preferences.AppPreferences
@@ -71,10 +72,10 @@ class MainActivity (
 /* ******************************** Content ***************************************************** */
         setContent {
             ServiceManagerTheme(appPreferences) {
-                LoginNavigation()
+                // LoginNavigation()
 
                 // Only for testing
-                // MainScreenNavigation("itMTZFY1praZQW8Z7EZjfl0Zj8R2")
+                MainScreenNavigation("itMTZFY1praZQW8Z7EZjfl0Zj8R2")
             }
 
         }

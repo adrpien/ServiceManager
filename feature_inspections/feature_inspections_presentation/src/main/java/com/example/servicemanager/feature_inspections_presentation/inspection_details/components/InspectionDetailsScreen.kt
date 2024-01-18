@@ -59,12 +59,12 @@ fun InspectionDetailsScreen(
     val context: Context = LocalContext.current
 
     /* ********************** STATES **************************************************************** */
-    val inspectionDetailsState = viewModel.inspectionDetailsState
-    val hospitalList = viewModel.inspectionDetailsState.value.hospitalList
-    val estStateList = viewModel.inspectionDetailsState.value.estStateList
-    val inspectionStateList = viewModel.inspectionDetailsState.value.inspectionStateList
-    val technicianList = viewModel.inspectionDetailsState.value.technicianList
-    val isInEditMode = viewModel.inspectionDetailsState.value.isInEditMode
+    val inspectionDetailsState = viewModel.inspectionDetailsState.collectAsState()
+    val hospitalList = inspectionDetailsState.value.hospitalList
+    val estStateList = inspectionDetailsState.value.estStateList
+    val inspectionStateList = inspectionDetailsState.value.inspectionStateList
+    val technicianList = inspectionDetailsState.value.technicianList
+    val isInEditMode = inspectionDetailsState.value.isInEditMode
 
     /* ********************** DIALOGS *************************************************************** */
     val inspectionDateDialogState = rememberMaterialDialogState()
@@ -516,7 +516,7 @@ fun InspectionDetailsScreen(
                 ),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = if (viewModel.inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    color = if (inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
                 )
             ) {
                 Image(
@@ -571,38 +571,6 @@ fun InspectionDetailsScreen(
                 },
                 title = stringResource(R.string.inspection_date)
             )
-
-            // TODO extract MaterialDialog to separate composable
-            /*MaterialDialog(
-                dialogState = signatureDialogState,
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true
-                ),
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                buttons = {
-                    positiveButton(
-                        text = stringResource(R.string.confirm),
-                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
-                    ) {}
-                    negativeButton(
-                        text = stringResource(R.string.cancel),
-                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
-                    )
-                }
-            ) {
-                customView {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        SignatureArea() { bitmap ->
-                            viewModel.onEvent(InspectionDetailsEvent.UpdateSignatureState(bitmap))
-                        }
-                    }
-                }
-            }*/
             SignatureDialog(
                 signatureDialogState = signatureDialogState,
             ) {

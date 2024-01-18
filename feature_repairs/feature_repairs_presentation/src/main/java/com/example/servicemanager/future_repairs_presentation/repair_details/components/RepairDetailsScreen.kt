@@ -47,6 +47,7 @@ import com.example.core_ui.components.signature.SignatureArea
 import com.example.feature_repairs_presentation.R
 import androidx.compose.material3.SnackbarHostState
 import com.example.core.util.Dimensions
+import com.example.core_ui.components.alert_dialogs.SignatureDialog
 import com.example.core_ui.components.snackbar.AppSnackbar
 
 
@@ -61,7 +62,7 @@ fun RepairDetailsScreen(
     val context: Context = LocalContext.current
 
 /* ********************** STATES **************************************************************** */
-    val repairDetailsState = viewModel.repairDetailsState
+    val repairDetailsState = viewModel.repairDetailsState.collectAsState()
     val hospitalList = repairDetailsState.value.hospitalList
     val estStateList = repairDetailsState.value.estStateList
     val repairStateList = repairDetailsState.value.repairStateList
@@ -801,44 +802,8 @@ fun RepairDetailsScreen(
                 )
             }
             // TODO Need to unificate styles of all dialogs
-            MaterialDialog(
-                dialogState = signatureDialogState,
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true
-                ),
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                shape = MaterialTheme.shapes.medium,
-                buttons = {
-                    positiveButton(
-                        text = stringResource(R.string.confirm),
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
-                    )
-                    negativeButton(
-                        text = stringResource(R.string.cancel),
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
-                    )
-                }
-            ) {
-                customView {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primary),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            SignatureArea() { bitmap ->
-                                viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(bitmap))
-                            }
-                        }
-                    }
-                }
+            SignatureDialog(signatureDialogState = signatureDialogState) {
+                viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(it))
             }
         }
     }

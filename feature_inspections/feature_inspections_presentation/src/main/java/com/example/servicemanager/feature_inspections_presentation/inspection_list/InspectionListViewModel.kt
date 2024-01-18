@@ -17,8 +17,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,10 +40,8 @@ class InspectionListViewModel @Inject constructor(
 
     private var searchJob: Job? = null
 
-    private var getInspectionListJob: Job? = null
-
-    private val _inspectionListState = mutableStateOf(InspectionListState())
-    val inspectionListState: State<InspectionListState> = _inspectionListState
+    private val _inspectionListState = MutableStateFlow(InspectionListState())
+    val inspectionListState: StateFlow<InspectionListState> = _inspectionListState
 
     private lateinit var currentUserId: String
 
@@ -157,35 +158,39 @@ class InspectionListViewModel @Inject constructor(
     ) {
             inspectionListIsLoading = true
             setIsLoadingStatus()
-            viewModelScope.launch(Dispatchers.Main) {
+            viewModelScope.launch(Dispatchers.IO) {
             inspectionsUseCases.getInspectionList(
                 searchQuery = searchQuery,
                 fetchFromApi = fetchFromApi,
                 inspectionOrderType = inspectionOrderType,
                 hospitalFilter = hospitalFilter
             ).collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                inspectionList = list
-                            )
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    inspectionList = list
+                                )
+                                inspectionListIsLoading = false
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    inspectionList = list
+                                )
+                            }
+                            inspectionListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             inspectionListIsLoading = false
                             setIsLoadingStatus()
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                inspectionList = list
-                            )
-                        }
-                        inspectionListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        inspectionListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -193,30 +198,34 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchHospitalList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getHospitalList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                hospitalList = list,
-                            )
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    hospitalList = list,
+                                )
+                                hospitalListIsLoading = false
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    hospitalList = list,
+                                )
+                            }
+                            hospitalListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             hospitalListIsLoading = false
                             setIsLoadingStatus()
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                hospitalList = list,
-                            )
-                        }
-                        hospitalListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        hospitalListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -224,30 +233,34 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchInspectionStateList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getInspectionStateList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                inspectionStateList = list,
-                            )
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    inspectionStateList = list,
+                                )
+                                inspectionStateListIsLoading = false
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    inspectionStateList = list,
+                                )
+                            }
+                            inspectionStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             inspectionStateListIsLoading = false
                             setIsLoadingStatus()
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                inspectionStateList = list,
-                            )
-                        }
-                        inspectionStateListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        inspectionStateListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -255,30 +268,34 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchEstStateList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getEstStateList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                estStateList = list,
-                            )
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    estStateList = list,
+                                )
+                                estStateListIsLoading = false
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    estStateList = list,
+                                )
+                            }
+                            estStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             estStateListIsLoading = false
                             setIsLoadingStatus()
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                estStateList = list,
-                            )
-                        }
-                        estStateListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        estStateListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -286,30 +303,34 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchTechnicianList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getTechnicianList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                technicianList = list,
-                            )
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    technicianList = list,
+                                )
+                                technicianListIsLoading = false
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _inspectionListState.value = _inspectionListState.value.copy(
+                                    technicianList = list,
+                                )
+                            }
+                            technicianListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             technicianListIsLoading = false
                             setIsLoadingStatus()
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _inspectionListState.value = _inspectionListState.value.copy(
-                                technicianList = list,
-                            )
-                        }
-                        technicianListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        technicianListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -317,27 +338,33 @@ class InspectionListViewModel @Inject constructor(
     }
 
     private fun fetchUserTypeList() {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getUserTypeList().collect() { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let {
-                            _inspectionListState.value = _inspectionListState.value.copy(userTypeList = it)
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let {
+                                _inspectionListState.value =
+                                    _inspectionListState.value.copy(userTypeList = it)
+                                userTypeListIsLoading = false
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let {
+                                _inspectionListState.value =
+                                    _inspectionListState.value.copy(userTypeList = it)
+
+                            }
+                            userTypeListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             userTypeListIsLoading = false
                             setIsLoadingStatus()
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let {
-                            _inspectionListState.value = _inspectionListState.value.copy(userTypeList = it)
-
-                        }
-                        userTypeListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        userTypeListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -367,7 +394,7 @@ class InspectionListViewModel @Inject constructor(
     // TODO need tyo handle somehow error state are other stuff
     private fun fetchUser() {
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getUser(currentUserId).collect() { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {

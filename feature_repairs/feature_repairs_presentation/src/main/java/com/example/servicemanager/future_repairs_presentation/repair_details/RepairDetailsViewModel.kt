@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,8 +39,8 @@ class RepairDetailsViewModel @Inject constructor(
 
     private var currentRepairId: String? = null
 
-    private val _repairDetailsState = mutableStateOf(RepairDetailsState())
-    val repairDetailsState: State<RepairDetailsState> = _repairDetailsState
+    private val _repairDetailsState = MutableStateFlow(RepairDetailsState())
+    val repairDetailsState: StateFlow<RepairDetailsState> = _repairDetailsState
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -69,19 +70,19 @@ class RepairDetailsViewModel @Inject constructor(
                     val result = repairUseCases.saveRepair(repairDetailsState.value.repair)
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                             result.data?.let { repairId ->
                                 _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
-                                    appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
+                            appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+
                         }
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
                             if (result.data == "CONNECTION_ERROR") {
                                 _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
-                                appUseCases.saveSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
+                            appUseCases.saveSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
                             _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
                         }
                     }
@@ -126,35 +127,36 @@ class RepairDetailsViewModel @Inject constructor(
         setIsLoadingStatus()
         currentRepairId = savedStateHandle.get<String?>("repairId")
         if (currentRepairId != "0") {
-            viewModelScope.launch(Dispatchers.Main) {
+            viewModelScope.launch(Dispatchers.IO) {
                 repairUseCases
                     .getRepair(repairId = currentRepairId.toString())
                     .collect { result ->
-                        when (result.resourceState) {
-                            ResourceState.SUCCESS -> {
-                                result.data?.let { repair ->
-
-                                    _repairDetailsState.value =
-                                        _repairDetailsState.value.copy(
-                                            repair = repair,
-                                        )
-                                    _eventFlow.emit(UiEvent.UpdateTextFields(repair))
-                                    fetchSignature(repair)
+                        withContext(Dispatchers.Main) {
+                            when (result.resourceState) {
+                                ResourceState.SUCCESS -> {
+                                    result.data?.let { repair ->
+                                        _repairDetailsState.value =
+                                            _repairDetailsState.value.copy(
+                                                repair = repair,
+                                            )
+                                        _eventFlow.emit(UiEvent.UpdateTextFields(repair))
+                                        fetchSignature(repair)
+                                    }
+                                    repairIsLoading = false
+                                    setIsLoadingStatus()
                                 }
-                                repairIsLoading = false
-                                setIsLoadingStatus()
-                            }
-                            ResourceState.LOADING -> {
-                                result.data?.let { repair ->
-                                    _repairDetailsState.value =
-                                        _repairDetailsState.value.copy(
-                                            repair = repair,)
-                                    _eventFlow.emit(UiEvent.UpdateTextFields(repair))
+                                ResourceState.LOADING -> {
+                                    result.data?.let { repair ->
+                                        _repairDetailsState.value =
+                                            _repairDetailsState.value.copy(
+                                                repair = repair,)
+                                        _eventFlow.emit(UiEvent.UpdateTextFields(repair))
+                                    }
+                                    repairIsLoading = true
+                                    setIsLoadingStatus()
                                 }
-                                repairIsLoading = true
-                                setIsLoadingStatus()
+                                ResourceState.ERROR -> Unit
                             }
-                            ResourceState.ERROR -> Unit
                         }
                     }
             }
@@ -169,59 +171,67 @@ class RepairDetailsViewModel @Inject constructor(
         }
     }
     private fun fetchSignature(repair: Repair) {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases
                 .getSignature(repair.signatureId)
                 .collect { result ->
-                    when (result.resourceState) {
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { signature ->
-                                _repairDetailsState.value =
-                                    _repairDetailsState.value.copy(
-                                        signature = byteArrayToBitmap(signature)
-                                    )
+                    withContext(Dispatchers.Main) {
+                        when (result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                result.data?.let { signature ->
+                                    _repairDetailsState.value =
+                                        _repairDetailsState.value.copy(
+                                            signature = byteArrayToBitmap(signature)
+                                        )
+                                }
                             }
-                        }
-                        ResourceState.LOADING -> {
-                            result.data?.let { signature ->
-                                _repairDetailsState.value =
-                                    _repairDetailsState.value.copy(
-                                        signature = byteArrayToBitmap(signature)
-                                    )
+
+                            ResourceState.LOADING -> {
+                                result.data?.let { signature ->
+                                    _repairDetailsState.value =
+                                        _repairDetailsState.value.copy(
+                                            signature = byteArrayToBitmap(signature)
+                                        )
+                                }
                             }
+
+                            ResourceState.ERROR -> Unit
                         }
-                        ResourceState.ERROR -> Unit
                     }
                 }
         }
     }
     private fun fetchHospitalList() {
-            viewModelScope.launch(Dispatchers.Main) {
+            viewModelScope.launch(Dispatchers.IO) {
             hospitalListIsLoading = true
             setIsLoadingStatus()
             appUseCases.getHospitalList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                hospitalListIsLoading = false
+                                setIsLoadingStatus()
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    hospitalList = list,
+                                )
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    hospitalList = list,
+                                )
+                                hospitalListIsLoading = true
+                                setIsLoadingStatus()
+                            }
+                        }
+
+                        ResourceState.ERROR -> {
                             hospitalListIsLoading = false
                             setIsLoadingStatus()
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                hospitalList = list,
-                            )
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                hospitalList = list,
-                            )
-                            hospitalListIsLoading = true
-                            setIsLoadingStatus()
-                        }
-                    }
-                    ResourceState.ERROR -> {
-                        hospitalListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -230,31 +240,35 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchRepairStateList() {
         repairStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getRepairStateList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                repairStateListIsLoading = false
+                                setIsLoadingStatus()
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    repairStateList = list,
+                                )
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    repairStateList = list,
+                                )
+                            }
+                            repairStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             repairStateListIsLoading = false
                             setIsLoadingStatus()
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                repairStateList = list,
-                            )
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                repairStateList = list,
-                            )
-                        }
-                        repairStateListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        repairStateListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -263,30 +277,34 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchEstStateList() {
         estStateListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getEstStateList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                estStateListIsLoading = false
+                                setIsLoadingStatus()
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    estStateList = list,
+                                )
+                            }
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    estStateList = list,
+                                )
+                            }
+                            estStateListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
                             estStateListIsLoading = false
                             setIsLoadingStatus()
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                estStateList = list,
-                            )
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                estStateList = list,
-                            )
-                        }
-                        estStateListIsLoading = true
-                        setIsLoadingStatus()
-                    }
-                    ResourceState.ERROR -> {
-                        estStateListIsLoading = false
-                        setIsLoadingStatus()
                     }
                 }
             }
@@ -295,30 +313,34 @@ class RepairDetailsViewModel @Inject constructor(
     private fun fetchTechnicianList() {
         technicianListIsLoading = true
         setIsLoadingStatus()
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getTechnicianList().collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            technicianListIsLoading = false
-                            setIsLoadingStatus()
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                technicianList = list,
-                            )
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                technicianListIsLoading = false
+                                setIsLoadingStatus()
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    technicianList = list,
+                                )
+                            }
                         }
-                    }
-                    ResourceState.LOADING -> {
-                        result.data?.let { list ->
-                            technicianListIsLoading = false
-                            setIsLoadingStatus()
-                            _repairDetailsState.value = _repairDetailsState.value.copy(
-                                technicianList = list,
-                            )
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                technicianListIsLoading = false
+                                setIsLoadingStatus()
+                                _repairDetailsState.value = _repairDetailsState.value.copy(
+                                    technicianList = list,
+                                )
+                            }
                         }
-                    }
-                    ResourceState.ERROR -> {
-                        estStateListIsLoading = false
-                        setIsLoadingStatus()
+
+                        ResourceState.ERROR -> {
+                            estStateListIsLoading = false
+                            setIsLoadingStatus()
+                        }
                     }
                 }
             }
