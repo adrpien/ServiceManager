@@ -35,5 +35,6 @@
     <string name="manage_inspection_state_list">Manage InspectionState list</string>
     <string name="manage_est_state_list">Manage EstState list</string>
     <string name="manage_technician_list">Manage Technician list</string>
+    <string name="ok">Ok\n</string>
 
 </resources>

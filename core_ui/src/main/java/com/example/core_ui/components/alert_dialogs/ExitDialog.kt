@@ -3,7 +3,6 @@
 package com.example.core_ui.components.alert_dialogs
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -50,7 +49,10 @@ fun ExitAlertDialog(
             .fillMaxWidth()
             .padding(16.dp))
         {
-            Text(text = stringResource(R.string.do_you_want_save_changes))
+            Text(
+                text = stringResource(R.string.do_you_want_save_changes),
+                color = MaterialTheme.colorScheme.onSecondary
+            )
         }
     }
 }

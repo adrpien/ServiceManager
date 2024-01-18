@@ -63,11 +63,7 @@ class MainActivity (
         requestNetworkObserver(
             activity = this,
             onLost = null,
-            onAvailable = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    // TODO Signatures Synchronization
-                }
-            }
+            onAvailable = null
         )
 /* ******************************** Content ***************************************************** */
         setContent {

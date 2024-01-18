@@ -36,6 +36,7 @@ import com.example.feature_home_presentation.home.HomeEvent
 import com.example.feature_home_presentation.home.HomeViewModel
 import com.example.feature_home_presentation.home.UiEvent
 import com.example.servicemanager.feature_home_domain.model.Profile
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,9 +49,7 @@ fun HomeScreen(
 
     val homeState = viewModel.homeState.collectAsState()
 
-    val showAboutDialog = remember {
-        mutableStateOf(false)
-    }
+    val aboutDialogState = rememberMaterialDialogState()
 
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
@@ -83,7 +82,7 @@ fun HomeScreen(
         icon = Icons.Default.Info,
         text = UiText.StringResource(R.string.about)
     ) {
-        showAboutDialog.value = true
+        aboutDialogState.show()
     }
 
     val menuItems = listOf(
@@ -133,7 +132,8 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            val profilePicture = Helper.drawableToByteArray(context.getDrawable(R.drawable.default_profile_picture)!!
+            val profilePicture = Helper.drawableToByteArray(
+                context.getDrawable(R.drawable.default_profile_picture)!!
             )
 
             ProfileSection(
@@ -148,15 +148,7 @@ fun HomeScreen(
                     MenuItem(menuItemState = item)
                 }
             }
-        }
-
-        if(showAboutDialog.value) {
-            AboutAlertDialog(
-                title = UiText.StringResource(R.string.about),
-                context = context,
-                onConfirm = { showAboutDialog.value = false },
-                onDismissRequest = { showAboutDialog.value = false }
-            )
+            AboutDialog(aboutAlertDialogState = aboutDialogState)
         }
     }
 }

@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 class ImportInspectionsFromFile @Inject constructor () {
     // TODO Write test for ImportInspectionsFromFile
+    // TODO Enhance this use case
     operator fun invoke(inputStream: InputStream): Flow<Resource<List<Inspection>>> = flow {
         emit(
             Resource(

@@ -26,4 +26,5 @@
     <string name="wrong_file_format">Zły format pliku</string>
     <string name="records_found">Znalezione rekordy</string>
     <string name="import_records">Importuj rekordy</string>
+    <string name="ok">Ok\n</string>
 </resources>

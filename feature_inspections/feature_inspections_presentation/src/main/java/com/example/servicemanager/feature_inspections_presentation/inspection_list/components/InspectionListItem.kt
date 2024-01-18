@@ -80,7 +80,7 @@ fun InspectionListItem(
             Row(
                 horizontalArrangement = Arrangement.Start
             ) {
-                // TODO Animation and onClick listeners for deviceSn and deviceIn
+                // TODO Enhance click animation and onClick listeners for deviceSn and deviceIn
                 Text(
                     text = stringResource(R.string.sn_number_short) + ": " + inspection.deviceSn,
                     fontSize = 16.sp,
