@@ -1,4 +1,4 @@
-package com.example.core_ui.components.other
+package com.example.core_ui.components.alert_dialogs
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

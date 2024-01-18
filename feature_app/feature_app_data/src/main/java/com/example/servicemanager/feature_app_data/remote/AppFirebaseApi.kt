@@ -32,7 +32,6 @@ class  AppFirebaseApi(
     /* ********************************* SIGNATURES ********************************************* */
     suspend fun uploadSignature(signatureId: String, signatureBytes: ByteArray): Resource<String>  {
         try {
-            // TODO Caching mechanism in uploadSignature fun for AppFirebaseApi implementation
             Log.d(APP_FIREBASE_API, "Signature uploading started")
             val documentReference = firebaseStorage.getReference("signatures")
                 .child("${signatureId}.jpg")

@@ -23,13 +23,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Dimensions
 import com.example.core.util.Helper.Companion.toDp
-import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultDateButton
-import com.example.core_ui.components.other.DefaultDatePickerDialog
+import com.example.core_ui.components.alert_dialogs.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
+import com.example.core_ui.components.alert_dialogs.SignatureDialog
 import com.example.core_ui.components.signature.SignatureArea
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_inspections_presentation.R
@@ -573,7 +573,7 @@ fun InspectionDetailsScreen(
             )
 
             // TODO extract MaterialDialog to separate composable
-            MaterialDialog(
+            /*MaterialDialog(
                 dialogState = signatureDialogState,
                 properties = DialogProperties(
                     dismissOnBackPress = true,
@@ -602,6 +602,11 @@ fun InspectionDetailsScreen(
                         }
                     }
                 }
+            }*/
+            SignatureDialog(
+                signatureDialogState = signatureDialogState,
+            ) {
+                viewModel.onEvent(InspectionDetailsEvent.UpdateSignatureState(it))
             }
         }
     }

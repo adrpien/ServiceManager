@@ -23,7 +23,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Helper.Companion.toDp
-import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
@@ -42,14 +41,13 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import com.example.core_ui.components.other.DefaultDatePickerDialog
+import com.example.core_ui.components.alert_dialogs.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.signature.SignatureArea
 import com.example.feature_repairs_presentation.R
 import androidx.compose.material3.SnackbarHostState
 import com.example.core.util.Dimensions
 import com.example.core_ui.components.snackbar.AppSnackbar
-import kotlinx.coroutines.Dispatchers
 
 
 @Composable
