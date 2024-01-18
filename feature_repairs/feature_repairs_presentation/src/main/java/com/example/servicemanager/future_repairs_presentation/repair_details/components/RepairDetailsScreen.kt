@@ -16,17 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Helper.Companion.toDp
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
-import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.servicemanager.feature_app_domain.model.EstState
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.model.RepairState
@@ -34,8 +31,6 @@ import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsEvent
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel.*
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -43,10 +38,10 @@ import java.time.LocalDate
 import java.time.ZoneId
 import com.example.core_ui.components.alert_dialogs.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
-import com.example.core_ui.components.signature.SignatureArea
 import com.example.feature_repairs_presentation.R
 import androidx.compose.material3.SnackbarHostState
 import com.example.core.util.Dimensions
+import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.alert_dialogs.SignatureDialog
 import com.example.core_ui.components.snackbar.AppSnackbar
 
@@ -85,10 +80,7 @@ fun RepairDetailsScreen(
         mutableStateOf(LocalDate.now())
     }
 
-    val showExitDialog = remember {
-        mutableStateOf(false)
-    }
-
+    val exitDialogState = rememberMaterialDialogState()
     val signatureDialogState = rememberMaterialDialogState()
 
 /* ********************** OTHERS **************************************************************** */
@@ -202,7 +194,7 @@ fun RepairDetailsScreen(
 /* ********************** BACK HANDLER  ********************************************************* */
 
     BackHandler(isInEditMode) {
-        showExitDialog.value = true
+        exitDialogState.show()
     }
 
 /* ********************** UI EVENTS HANDLING  *************************************************** */
@@ -774,34 +766,27 @@ fun RepairDetailsScreen(
                         ZoneId.systemDefault()
                     ).toLocalDate()
             )
-            if (showExitDialog.value) {
-                ExitAlertDialog(
-                    title = stringResource(R.string.save) + "?",
-                    contentText = stringResource(R.string.do_you_want_save_changes),
-                    onConfirm = {
-                        if (showExitDialog.value) {
-                            if (repairDetailsState.value.repair.repairId != "0") {
-                                viewModel.onEvent(
-                                    RepairDetailsEvent.UpdateRepair(
-                                        repairDetailsState.value.repair
-                                    )
-                                )
-                            } else {
-                                viewModel.onEvent(
-                                    RepairDetailsEvent.SaveRepair(
-                                        repairDetailsState.value.repair
-                                    )
-                                )
-                            }
-                        }
-                        navHostController.popBackStack()
 
-                    },
-                    onDismiss = { showExitDialog.value = false },
-                    onDismissRequest = { showExitDialog.value = false }
-                )
-            }
-            // TODO Need to unificate styles of all dialogs
+            ExitAlertDialog(
+                exitAlertDialogState = exitDialogState,
+                onConfirm = {
+                    if (repairDetailsState.value.repair.repairId != "0") {
+                        viewModel.onEvent(
+                            RepairDetailsEvent.UpdateRepair(
+                                repairDetailsState.value.repair
+                            )
+                        )
+                    } else {
+                        viewModel.onEvent(
+                            RepairDetailsEvent.SaveRepair(
+                                repairDetailsState.value.repair
+                            )
+                        )
+                    }
+                            },
+                onDismiss = {
+                    exitDialogState.hide()
+                })
             SignatureDialog(signatureDialogState = signatureDialogState) {
                 viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(it))
             }

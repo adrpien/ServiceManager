@@ -15,10 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Dimensions
@@ -30,7 +28,6 @@ import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.alert_dialogs.SignatureDialog
-import com.example.core_ui.components.signature.SignatureArea
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.EstState
@@ -40,8 +37,6 @@ import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel.*
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -71,9 +66,7 @@ fun InspectionDetailsScreen(
     val inspectionDateState = remember {
         mutableStateOf(LocalDate.now())
     }
-    val showExitDialog = remember {
-        mutableStateOf(false)
-    }
+    val exitDialogState = rememberMaterialDialogState()
     val signatureDialogState = rememberMaterialDialogState()
 
     /* ********************** OTHERS **************************************************************** */
@@ -155,7 +148,8 @@ fun InspectionDetailsScreen(
     }
 
     BackHandler(isInEditMode) {
-        showExitDialog.value = true
+        // showExitDialog.value = true
+        exitDialogState.show()
     }
 
     LaunchedEffect(key1 = true) {
@@ -528,34 +522,30 @@ fun InspectionDetailsScreen(
                     contentDescription = stringResource(R.string.signature)
                 )
             }
-            if(showExitDialog.value) {
-                ExitAlertDialog(
-                    title = stringResource(R.string.save) + "?",
-                    contentText = stringResource(R.string.do_you_want_save_changes),
-                    onConfirm = {
-                        if (showExitDialog.value) {
-                            if (inspectionDetailsState.value.inspection.inspectionId != "0") {
-                                viewModel.onEvent(
-                                    InspectionDetailsEvent.UpdateInspection(
-                                        inspectionDetailsState.value.inspection
-                                    )
-                                )
-                            } else {
-                                viewModel.onEvent(
-                                    InspectionDetailsEvent.SaveInspection(
-                                        inspectionDetailsState.value.inspection
-                                    )
-                                )
-                            }
-                        }
-                        viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
-                        navHostController.popBackStack()
+            ExitAlertDialog(
+                exitAlertDialogState = exitDialogState,
+                onConfirm = {
+                    if (inspectionDetailsState.value.inspection.inspectionId != "0") {
+                        viewModel.onEvent(
+                            InspectionDetailsEvent.UpdateInspection(
+                                inspectionDetailsState.value.inspection
+                            )
+                        )
+                    } else {
+                        viewModel.onEvent(
+                            InspectionDetailsEvent.SaveInspection(
+                                inspectionDetailsState.value.inspection
+                            )
+                        )
+                    }
+                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
+                    navHostController.popBackStack()
 
-                    },
-                    onDismiss = { showExitDialog.value = false },
-                    onDismissRequest = { showExitDialog.value = false }
-                )
-            }
+                },
+                onDismiss = {
+                    exitDialogState.hide()
+                }
+            )
             DefaultDatePickerDialog(
                 dialogState = inspectionDateDialogState,
                 onClick = {

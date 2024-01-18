@@ -8,4 +8,5 @@
     <string name="today">Today</string>
     <string name="dismiss">Dismiss</string>
     <string name="delete_hospital">Delete hospital</string>
+    <string name="do_you_want_save_changes">Do you want to save changes?</string>
 </resources>

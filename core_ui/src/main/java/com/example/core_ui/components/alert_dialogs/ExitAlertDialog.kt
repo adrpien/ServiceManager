@@ -1,55 +1,56 @@
+@file:JvmName("ExitAlertDialogKt")
+
 package com.example.core_ui.components.alert_dialogs
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
+import com.example.core_ui.R
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.MaterialDialogState
 
 @Composable
 fun ExitAlertDialog(
-    modifier: Modifier = Modifier,
-    title: String,
-    contentText: String,
+    exitAlertDialogState: MaterialDialogState,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
-    onDismissRequest: () -> Unit
 ) {
-        AlertDialog(
-            shape = MaterialTheme.shapes.medium,
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary,
-            textContentColor = MaterialTheme.colorScheme.onSecondary,
-            onDismissRequest = onDismissRequest ,
-            title = { Text(text = title) },
-            text = { Text(text = contentText) },
-            confirmButton = {
-                Button(
-                    shape = MaterialTheme.shapes.medium,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onSecondary,
-                        contentColor = MaterialTheme.colorScheme.secondary
-                    ),
-                    onClick = { onConfirm() },
-                ) {
-                    Text(
-                        text = "Confirm",
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = { onDismiss() },
-                    shape = MaterialTheme.shapes.medium,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onSecondary,
-                        contentColor = MaterialTheme.colorScheme.secondary
-                    ),
-                ) {
-                    Text(
-                        text = "Dissmiss",
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                }
+    MaterialDialog(
+        dialogState = exitAlertDialogState,
+        properties = DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = true
+        ),
+        backgroundColor = MaterialTheme.colorScheme.primary,
+        buttons = {
+            positiveButton(
+                text = stringResource(R.string.confirm),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
+            ) {
+                onConfirm()
             }
-        )
+            negativeButton(
+                text = stringResource(R.string.cancel),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSecondary)
+            )
+            {
+                onDismiss()
+            }
+        }
+    ) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp))
+        {
+            Text(text = stringResource(R.string.do_you_want_save_changes))
+        }
+    }
 }
