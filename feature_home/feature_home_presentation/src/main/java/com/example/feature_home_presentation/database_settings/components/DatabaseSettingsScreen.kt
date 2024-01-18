@@ -15,11 +15,11 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddToPhotos
 import androidx.compose.material.icons.filled.AdminPanelSettings
-import androidx.compose.material.icons.filled.LocalHospital
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,7 +56,7 @@ fun DatabaseSettingsScreen(
     val context = LocalContext.current
     val activity = (LocalContext.current as? Activity)
 
-    val state = viewModel.databaseSettings
+    val state = viewModel.databaseSettingsState.collectAsState()
 
     val importInspectionsLoadingMaterialDialogState = rememberMaterialDialogState()
     val importInspectionsLoadingDialogState = remember {

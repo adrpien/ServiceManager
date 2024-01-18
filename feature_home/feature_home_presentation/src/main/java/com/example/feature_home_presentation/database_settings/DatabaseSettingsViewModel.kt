@@ -1,8 +1,5 @@
 package com.example.feature_home_presentation.database_settings
 
-import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,8 +13,9 @@ import com.example.servicemanager.feature_inspections_domain.use_cases.Inspectio
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,8 +27,8 @@ class DatabaseSettingsViewModel @Inject constructor(
     private val inspectionUseCases: InspectionUseCases
 ): ViewModel() {
 
-    private var _databaseSettingsState = mutableStateOf<DatabaseSettingsState>(DatabaseSettingsState())
-    val databaseSettings: State<DatabaseSettingsState> = _databaseSettingsState
+    private var _databaseSettingsState = MutableStateFlow<DatabaseSettingsState>(DatabaseSettingsState())
+    val databaseSettingsState: StateFlow<DatabaseSettingsState> = _databaseSettingsState
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -97,8 +95,7 @@ class DatabaseSettingsViewModel @Inject constructor(
                             }
                             ResourceState.ERROR -> Unit
                             ResourceState.LOADING -> {
-                                //_eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(R.string.unknown_error)))
-                            }
+                             }
                         }
                     }
                 }

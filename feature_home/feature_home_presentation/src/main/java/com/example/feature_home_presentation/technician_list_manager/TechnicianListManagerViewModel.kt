@@ -11,6 +11,8 @@ import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,8 +23,8 @@ class TechnicianListManagerViewModel @Inject constructor(
     private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
-    private val _TechnicianListState = mutableStateOf<List<Technician>>(emptyList())
-    val technicianListState: State<List<Technician>?> = _TechnicianListState
+    private val _TechnicianListState = MutableStateFlow<List<Technician>>(emptyList())
+    val technicianListState: StateFlow<List<Technician>?> = _TechnicianListState
 
     var lastDeletedTechnician: Technician? = null
 

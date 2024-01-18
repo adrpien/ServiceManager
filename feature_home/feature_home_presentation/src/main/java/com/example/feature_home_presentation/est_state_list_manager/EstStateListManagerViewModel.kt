@@ -11,8 +11,11 @@ import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,8 +24,8 @@ class EstStateListManagerViewModel @Inject constructor(
     private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
-    private val _estStateListState = mutableStateOf<List<EstState>>(emptyList())
-    val estStateListState: State<List<EstState>?> = _estStateListState
+    private val _estStateListState = MutableStateFlow<List<EstState>>(emptyList())
+    val estStateListState: StateFlow<List<EstState>?> = _estStateListState
 
     var lastDeletedEstState: EstState? = null
 
@@ -81,16 +84,18 @@ class EstStateListManagerViewModel @Inject constructor(
 
     private fun fetchEstStateList(){
         var estStateList: List<EstState>? = null
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getEstStateList().collect() { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { list ->
-                            _estStateListState.value = list
+                withContext(Dispatchers.Main) {
+                    when(result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _estStateListState.value = list
+                            }
                         }
+                        ResourceState.ERROR -> Unit
+                        ResourceState.LOADING -> Unit
                     }
-                    ResourceState.ERROR -> Unit
-                    ResourceState.LOADING -> Unit
                 }
             }
         }

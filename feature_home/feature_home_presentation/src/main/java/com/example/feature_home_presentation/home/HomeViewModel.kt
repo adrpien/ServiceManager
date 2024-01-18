@@ -13,6 +13,8 @@ import com.example.servicemanager.feature_authentication_domain.use_cases.Authen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,8 +28,8 @@ class HomeViewModel @Inject constructor(
 
     private var userId = ""
 
-    private val _homeState = mutableStateOf(HomeState())
-    val homeState: State<HomeState> = _homeState
+    private val _homeState = MutableStateFlow(HomeState())
+    val homeState: StateFlow<HomeState> = _homeState
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()

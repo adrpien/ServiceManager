@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -41,7 +42,7 @@ fun AppSettingsScreen(
 
     val context = LocalContext.current
 
-    val appSettingsState = viewModel.appSettingsScreenState
+    val appSettingsState = viewModel.appSettingsScreenState.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -62,7 +63,7 @@ fun RepairStateListManagerScreen(
 
     val context = LocalContext.current
 
-    val repairStateList = viewModel.repairStateListState.value
+    val repairStateList = viewModel.repairStateListState.collectAsState().value
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()

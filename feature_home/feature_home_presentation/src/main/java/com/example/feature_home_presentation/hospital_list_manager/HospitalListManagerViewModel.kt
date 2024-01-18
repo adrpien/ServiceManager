@@ -11,6 +11,8 @@ import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectIndexed
@@ -23,8 +25,8 @@ class HospitalListManagerViewModel @Inject constructor(
     private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
-    private val _hospitalListState = mutableStateOf<List<Hospital>>(emptyList())
-    val hospitalListState: State<List<Hospital>?> = _hospitalListState
+    private val _hospitalListState = MutableStateFlow<List<Hospital>>(emptyList())
+    val hospitalListState: StateFlow<List<Hospital>?> = _hospitalListState
 
     var lastDeletedHospital: Hospital? = null
 

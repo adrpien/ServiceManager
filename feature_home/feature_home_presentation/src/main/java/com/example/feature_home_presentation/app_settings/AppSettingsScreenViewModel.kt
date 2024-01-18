@@ -13,6 +13,8 @@ import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +26,8 @@ class AppSettingsScreenViewModel @Inject constructor(
     private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
-    private val _appSettingsScreenState = mutableStateOf(AppSettingsScreenState())
-    val appSettingsScreenState: State<AppSettingsScreenState> = _appSettingsScreenState
+    private val _appSettingsScreenState = MutableStateFlow(AppSettingsScreenState())
+    val appSettingsScreenState: StateFlow<AppSettingsScreenState> = _appSettingsScreenState
 
 
     private var _eventFlow = MutableSharedFlow<UiEvent>()

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -62,7 +63,7 @@ fun TechnicianListManagerScreen(
 
     val context = LocalContext.current
 
-    val technicianList = viewModel.technicianListState.value
+    val technicianList = viewModel.technicianListState.collectAsState().value
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()

@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,6 +46,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
 
+    val homeState = viewModel.homeState.collectAsState()
 
     val showAboutDialog = remember {
         mutableStateOf(false)
@@ -138,7 +140,7 @@ fun HomeScreen(
                 profile = Profile(
                     profilePicture = profilePicture,
                     pointsThisMonth = 15,
-                    user = viewModel.homeState.value.user
+                    user = homeState.value.user
                 )
             )
             LazyColumn() {
