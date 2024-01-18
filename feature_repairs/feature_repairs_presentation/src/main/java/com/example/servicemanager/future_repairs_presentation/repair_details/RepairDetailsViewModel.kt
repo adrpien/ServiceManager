@@ -53,6 +53,7 @@ class RepairDetailsViewModel @Inject constructor(
         fetchTechnicianList()
     }
 
+    //  TODO Optimize Save and update record, app is very unresponsive
     fun onEvent(repairDetailsEvent: RepairDetailsEvent) {
         when(repairDetailsEvent) {
             is RepairDetailsEvent.UpdateRepairState -> {

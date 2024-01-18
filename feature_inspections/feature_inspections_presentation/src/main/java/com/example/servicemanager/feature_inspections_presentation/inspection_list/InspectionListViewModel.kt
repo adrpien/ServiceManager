@@ -58,6 +58,7 @@ class InspectionListViewModel @Inject constructor(
         fetchInspectionList(fetchFromApi = true)
     }
 
+    //  TODO Optimize Save and update record, app is very unresponsive
     fun onEvent(event: InspectionListEvent) {
         when(event) {
             is InspectionListEvent.OnSearchQueryChange -> {
@@ -392,6 +393,7 @@ class InspectionListViewModel @Inject constructor(
     }
 
     // TODO need to implement handling error state
+    // TODO User limitations to implement
     private fun fetchUser() {
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
         viewModelScope.launch(Dispatchers.IO) {

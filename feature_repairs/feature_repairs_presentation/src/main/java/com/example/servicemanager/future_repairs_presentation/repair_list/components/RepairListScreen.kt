@@ -139,6 +139,7 @@ fun RepairListScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         items(repairListState.value.repairList.size) { index ->
+                            // TODO Sn or In onClick (copy to clipboard) to implement
                             RepairListItem(
                                 modifier = Modifier
                                     .fillMaxWidth()

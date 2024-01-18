@@ -36,9 +36,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun InspectionListScreen(
-    userId: String?,
     navHostController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel: InspectionListViewModel = hiltViewModel(),
     ) {
 
