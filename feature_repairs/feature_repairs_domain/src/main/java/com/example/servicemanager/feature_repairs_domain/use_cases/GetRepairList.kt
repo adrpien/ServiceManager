@@ -21,20 +21,21 @@ class GetRepairList @Inject constructor (
         fetchFromApi: Boolean = false
     ): Flow<Resource<List<Repair>>> {
         return if(fetchFromApi == false) {
-            repository.getRepairListFromLocal().map { resource ->
-                resource.copy(
-                    data = resource.data
-                        ?.filter { repair ->
-                            repair.toString().lowercase().contains(searchQuery.lowercase())
-                        }
-                        ?.filter {
-                            if (hospitalFilter?.hospitalId == "0") {
-                                true
-                            } else {
-                            it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)}
-                        }
-                        ?.orderRepairList(repairOrderType)
-                )
+            flow<Resource<List<Repair>>> {
+                val resource = repository.getRepairListFromLocal()
+                    resource.copy(
+                        data = resource.data
+                            ?.filter { repair ->
+                                repair.toString().lowercase().contains(searchQuery.lowercase())
+                            }
+                            ?.filter {
+                                if (hospitalFilter?.hospitalId == "0") {
+                                    true
+                                } else {
+                                    it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)}
+                            }
+                            ?.orderRepairList(repairOrderType)
+                    )
             }
         } else {
             repository.getRepairList().map { resource ->

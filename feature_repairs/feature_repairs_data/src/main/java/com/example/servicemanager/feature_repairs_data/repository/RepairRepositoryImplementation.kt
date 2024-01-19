@@ -109,16 +109,15 @@ class  RepairRepositoryImplementation(
         return repairFirebaseApi.updateRepair(repair)
     }
 
-    override fun getRepairListFromLocal(): Flow<Resource<List<Repair>>> = flow {
+    override suspend fun getRepairListFromLocal(): Resource<List<Repair>>{
 
         var repairList: List<Repair> = repairDatabaseDao.getRepairList().map { it.toRepair() }
-        emit(
-            Resource(
-                ResourceState.SUCCESS,
-                repairList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
+        return Resource(
+            ResourceState.SUCCESS,
+            repairList,
+            UiText.StringResource(R.string.locally_cached_list)
         )
+
     }
 
 }

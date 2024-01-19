@@ -6,13 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepairRepository {
 
-
     /* ***** Repairs **************************************************************************** */
     fun getRepair(repairId: String): Flow<Resource<Repair>>
     fun getRepairList(): Flow<Resource<List<Repair>>>
     suspend fun insertRepair (repair: Repair): Resource<String>
     suspend fun updateRepair (repair: Repair): Resource<String>
-    fun getRepairListFromLocal(): Flow<Resource<List<Repair>>>
-
-
+    suspend fun getRepairListFromLocal(): Resource<List<Repair>>
 }
