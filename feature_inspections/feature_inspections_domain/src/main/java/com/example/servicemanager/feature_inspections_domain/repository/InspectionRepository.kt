@@ -12,9 +12,7 @@ interface InspectionRepository {
     fun getInspectionList(): Flow<Resource<List<Inspection>>>
     suspend fun insertInspection(inspection: Inspection): Resource<String>
     suspend fun updateInspection(inspection: Inspection): Resource<String>
-
-    // TODO Get rid of the flow
-    fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>>
+    suspend fun getInspectionListFromLocal(): Resource<List<Inspection>>
 
 }
 

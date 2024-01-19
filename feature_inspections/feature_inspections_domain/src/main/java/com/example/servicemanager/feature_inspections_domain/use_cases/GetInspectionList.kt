@@ -22,13 +22,15 @@ class GetInspectionList @Inject constructor (
         fetchFromApi: Boolean = false
     ): Flow<Resource<List<Inspection>>> {
         return if(fetchFromApi == false) {
-            repository.getInspectionListFromLocal().map { resource ->
+            flow<Resource<List<Inspection>>> { val resource = repository.getInspectionListFromLocal()
                 resource.copy(
                     data = resource.data
                         ?.filter { inspection ->
                             inspection.toString().lowercase().contains(searchQuery.lowercase())
                         }
-                        ?.filter { it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId) }
+                        ?.filter {
+                            it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)
+                        }
                         ?.orderInspectionList(inspectionOrderType)
                 )
             }

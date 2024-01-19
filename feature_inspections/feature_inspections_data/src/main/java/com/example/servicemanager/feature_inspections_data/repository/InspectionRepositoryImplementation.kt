@@ -106,15 +106,12 @@ class  InspectionRepositoryImplementation(
         return inspectionFirebaseApi.updateInspection(inspection)
     }
 
-    // TODO Get rid of flow
-    override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
-        var inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
-        emit(
-            Resource(
-                ResourceState.SUCCESS,
-                inspectionList,
-                UiText.StringResource(R.string.locally_cached_list)
-            )
+    override suspend  fun getInspectionListFromLocal(): Resource<List<Inspection>> {
+        val inspectionList: List<Inspection> = inspectionDatabaseDao.getInspectionList().map { it.toInspection() }
+        return Resource(
+            ResourceState.SUCCESS,
+            inspectionList,
+            UiText.StringResource(R.string.locally_cached_list)
         )
     }
 
