@@ -176,14 +176,12 @@ fun InspectionListScreen(
                                 onInPress = {
                                     viewModel.onEvent(InspectionListEvent.CopyToClipboard(
                                         string = it,
-                                        context = context
                                     )
                                     )
                                 },
                                 onSnPress = {
                                     viewModel.onEvent(InspectionListEvent.CopyToClipboard(
                                         string = it,
-                                        context = context
                                     )
                                     )
 

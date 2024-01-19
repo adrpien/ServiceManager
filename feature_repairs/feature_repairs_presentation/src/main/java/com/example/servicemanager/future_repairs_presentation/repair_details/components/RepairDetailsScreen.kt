@@ -48,9 +48,7 @@ import com.example.core_ui.components.snackbar.AppSnackbar
 
 @Composable
 fun RepairDetailsScreen(
-    repairId: String?,
     navHostController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel: RepairDetailsViewModel = hiltViewModel(),
 ) {
 

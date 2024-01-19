@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DefaultButton(
-    modifier: Modifier = Modifier,
     title: String,
     onClick: () -> Unit,
 ) {

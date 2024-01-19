@@ -13,5 +13,5 @@ sealed class InspectionListEvent {
     object  ToggleSortSectionVisibility : InspectionListEvent()
     object  ToggleHospitalFilterSectionVisibility : InspectionListEvent()
     data class  ToggleOrderMonotonicity(val inspectionOrderType: InspectionOrderType) : InspectionListEvent()
-    data class CopyToClipboard(val string: String, val context: Context) :  InspectionListEvent()
+    data class CopyToClipboard(val string: String) :  InspectionListEvent()
 }

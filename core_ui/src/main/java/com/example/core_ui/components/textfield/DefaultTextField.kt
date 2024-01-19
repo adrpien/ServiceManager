@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultTextField(
-    modifier: Modifier = Modifier,
     onValueChanged: (String) -> Unit,
     state: MutableState<DefaultTextFieldState>,
 ) {

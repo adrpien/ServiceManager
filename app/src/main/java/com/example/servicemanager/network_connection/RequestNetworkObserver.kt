@@ -19,7 +19,6 @@ class RequestNetworkObserver @Inject constructor (
 ) {
 
     operator fun invoke(
-        activity: Activity,
         onLost: (() -> Unit)?,
         onAvailable: (() -> Unit)?
     ) {

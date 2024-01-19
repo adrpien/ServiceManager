@@ -35,8 +35,6 @@ import com.example.feature_home_presentation.app_settings.UiEvent
 
 @Composable
 fun AppSettingsScreen(
-    navHostController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel: AppSettingsScreenViewModel = hiltViewModel(),
 ) {
 

@@ -40,13 +40,13 @@ class RepairStateListManagerViewModel @Inject constructor(
             is RepairStateListManagerEvent.AddRepairState -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = appUseCases.createRepairState(repairStateListManagerEvent.repairState)
-                        when(result.resourceState) {
-                            ResourceState.ERROR -> Unit
-                            ResourceState.LOADING -> Unit
-                            ResourceState.SUCCESS -> {
-                                fetchRepairStateList()
-                            }
+                    when(result.resourceState) {
+                        ResourceState.ERROR -> Unit
+                        ResourceState.LOADING -> Unit
+                        ResourceState.SUCCESS -> {
+                            fetchRepairStateList()
                         }
+                    }
                     }
                 }
             is RepairStateListManagerEvent.DeleteRepairState -> {
@@ -109,5 +109,6 @@ sealed class RepairStateListManagerEvent {
     data class DeleteRepairState(val repairState: RepairState): RepairStateListManagerEvent()
     data class AddRepairState(val repairState: RepairState): RepairStateListManagerEvent()
     data class RevertRepairState(val repairState: RepairState): RepairStateListManagerEvent()
+
     data class ChangeOrder(val repairStateList: List<RepairState>): RepairStateListManagerEvent()
 }

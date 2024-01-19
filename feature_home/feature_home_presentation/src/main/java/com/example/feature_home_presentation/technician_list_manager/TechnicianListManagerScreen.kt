@@ -57,7 +57,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun TechnicianListManagerScreen(
-    navHostController: NavHostController,
     viewModel: TechnicianListManagerViewModel = hiltViewModel(),
 ) {
 

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -25,7 +26,6 @@ import com.example.core.util.Helper.Companion.toDp
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SignatureArea(
-    modifier: Modifier = Modifier,
     pathColor: Color = Color.Black,
     updateImageBitmap: (Bitmap) -> Unit,
 ) {
@@ -46,10 +46,10 @@ fun SignatureArea(
 
 
     val lastTouchX = remember {
-        mutableStateOf(0f)
+        mutableFloatStateOf(0f)
     }
     val lastTouchY = remember {
-        mutableStateOf(0f)
+        mutableFloatStateOf(0f)
     }
 
     val path = remember {

@@ -57,7 +57,7 @@ fun LoginScreen(
     }
 
     LaunchedEffect(key1 = true) {
-        viewModel.onEvent(UserLoginEvent.GetCurrentUser())
+        viewModel.onEvent(UserLoginEvent.GetCurrentUser)
     }
 
     LaunchedEffect(true) {

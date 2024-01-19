@@ -45,9 +45,7 @@ import java.time.ZoneId
 
 @Composable
 fun InspectionDetailsScreen(
-    inspectionId: String?,
     navHostController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel: InspectionDetailsViewModel = hiltViewModel(),
 ) {
 

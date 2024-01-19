@@ -42,7 +42,6 @@ object AppDataModule {
     @Provides
     @Singleton
     fun provideAppFirebaseApi(
-        firebaseAuth: FirebaseAuth,
         firebaseFirestore: FirebaseFirestore,
         firebaseStorage: FirebaseStorage
     ): AppFirebaseApi {

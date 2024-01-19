@@ -57,7 +57,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun RepairStateListManagerScreen(
-    navHostController: NavHostController,
     viewModel: RepairStateListManagerViewModel = hiltViewModel(),
 ) {
 

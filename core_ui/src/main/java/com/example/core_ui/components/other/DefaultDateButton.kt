@@ -13,7 +13,6 @@ import com.example.core.util.Helper
 
 @Composable
 fun DefaultDateButton(
-    modifier: Modifier = Modifier,
     dateLong: Long,
     onClick: () -> Unit,
     enabled: Boolean,

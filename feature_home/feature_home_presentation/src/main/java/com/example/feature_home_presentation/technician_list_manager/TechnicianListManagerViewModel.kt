@@ -1,13 +1,10 @@
 package com.example.feature_home_presentation.technician_list_manager
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class TechnicianListManagerViewModel @Inject constructor(
     private val appUseCases: AppUseCases,
-    private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
     private val _TechnicianListState = MutableStateFlow<List<Technician>>(emptyList())
@@ -35,11 +31,11 @@ class TechnicianListManagerViewModel @Inject constructor(
         fetchTechnicianList()
     }
 
-    fun onEvent(TechnicianListManagerEvent: TechnicianListManagerEvent) {
-        when (TechnicianListManagerEvent) {
+    fun onEvent(technicianListManagerEvent: TechnicianListManagerEvent) {
+        when (technicianListManagerEvent) {
             is TechnicianListManagerEvent.AddTechnician -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = appUseCases.createTechnician(TechnicianListManagerEvent.technician)
+                    val result = appUseCases.createTechnician(technicianListManagerEvent.technician)
                     when(result.resourceState) {
                         ResourceState.ERROR -> Unit
                         ResourceState.LOADING -> Unit
@@ -51,13 +47,13 @@ class TechnicianListManagerViewModel @Inject constructor(
                 }
             is TechnicianListManagerEvent.DeleteTechnician -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val result = appUseCases.deleteTechnician(TechnicianListManagerEvent.technician)
+                    val result = appUseCases.deleteTechnician(technicianListManagerEvent.technician)
                     when(result.resourceState) {
                         ResourceState.ERROR -> Unit
                         ResourceState.SUCCESS -> {
                             fetchTechnicianList()
                             _eventFlow.emit(UiEvent.ShowSnackbar("Revert delete"))
-                            lastDeletedTechnician = TechnicianListManagerEvent.technician
+                            lastDeletedTechnician = technicianListManagerEvent.technician
                         }
                         ResourceState.LOADING -> Unit
                     }
@@ -67,7 +63,7 @@ class TechnicianListManagerViewModel @Inject constructor(
             is TechnicianListManagerEvent.ChangeOrder -> Unit
             is TechnicianListManagerEvent.RevertTechnician -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                val result = appUseCases.createTechnicianWithId(TechnicianListManagerEvent.technician)
+                val result = appUseCases.createTechnicianWithId(technicianListManagerEvent.technician)
                     when(result.resourceState){
                         ResourceState.ERROR -> Unit
                         ResourceState.SUCCESS -> {
@@ -82,7 +78,7 @@ class TechnicianListManagerViewModel @Inject constructor(
     }
 
     private fun fetchTechnicianList(){
-        var TechnicianList: List<Technician>? = null
+        var technicianList: List<Technician>? = null
         viewModelScope.launch(Dispatchers.Main) {
             appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
@@ -109,5 +105,6 @@ sealed class TechnicianListManagerEvent {
     data class DeleteTechnician(val technician: Technician): TechnicianListManagerEvent()
     data class AddTechnician(val technician: Technician): TechnicianListManagerEvent()
     data class RevertTechnician(val technician: Technician): TechnicianListManagerEvent()
+    // TODO Changing order to implement
     data class ChangeOrder(val technicianList: List<Technician>): TechnicianListManagerEvent()
 }

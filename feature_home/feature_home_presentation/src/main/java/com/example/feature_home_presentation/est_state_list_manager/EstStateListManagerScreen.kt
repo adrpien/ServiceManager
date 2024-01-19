@@ -57,7 +57,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun EstStateListManagerScreen(
-    navHostController: NavHostController,
     viewModel: EstStateListManagerViewModel = hiltViewModel(),
 ) {
 

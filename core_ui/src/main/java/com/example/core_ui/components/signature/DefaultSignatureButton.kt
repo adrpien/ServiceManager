@@ -17,7 +17,6 @@ import java.time.ZoneId
 
 @Composable
 fun DefaultSignatureButton(
-    modifier: Modifier = Modifier,
     dateInMillis: Long,
     title: String,
     onClick: (String) -> Unit,
