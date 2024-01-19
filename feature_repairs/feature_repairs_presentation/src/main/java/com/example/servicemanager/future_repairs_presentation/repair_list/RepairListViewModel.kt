@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
+import com.example.core.util.UiText
+import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
@@ -13,8 +15,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -38,7 +42,8 @@ class RepairListViewModel @Inject constructor(
     val _repairListState = MutableStateFlow(RepairListState())
     val repairListState: StateFlow<RepairListState> = _repairListState
 
-
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         fetchHospitalList()
@@ -126,6 +131,15 @@ class RepairListViewModel @Inject constructor(
                     searchQuery = repairListState.value.searchQuery,
                     hospitalFilter = repairListState.value.hospital
                 )
+            }
+
+            is RepairListEvent.CopyToClipboard -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    appUseCases.copyToClipboard(
+                        string = event.string,
+                    )
+                    _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.copied_to_clipboard)))
+                }
             }
         }
     }
@@ -338,10 +352,10 @@ class RepairListViewModel @Inject constructor(
     }
 
     // TODO Fetching user to implement
-    // TODO User limitations to implement
+    // xTODO User limitations to implement
 
 
-    sealed class UIEvent {
-        data class ShowSnackbar(val message: String): UIEvent()
+    sealed class UiEvent {
+        data class ShowSnackbar(val message: UiText): UiEvent()
     }
 }

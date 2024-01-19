@@ -12,4 +12,7 @@ sealed class RepairListEvent {
     object  ToggleSortSectionVisibility : RepairListEvent()
     object  ToggleHospitalFilterSectionVisibility : RepairListEvent()
     data class  ToggleOrderMonotonicity(val repairOrderType: RepairOrderType) : RepairListEvent()
+    data class CopyToClipboard(val string: String) :  RepairListEvent()
+
+
 }

@@ -1,9 +1,13 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,15 +21,16 @@ import com.example.servicemanager.feature_app_domain.model.RepairState
 import com.example.servicemanager.feature_app_domain.model.Technician
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 
-@Preview
 @Composable
 fun RepairListItem(
     modifier: Modifier = Modifier,
     repair: Repair = Repair(),
     hospitalList: List<Hospital> = emptyList(),
     technicianList: List<Technician> = emptyList(),
-    repairStateList: List<RepairState> = emptyList()
-) {
+    repairStateList: List<RepairState> = emptyList(),
+    onInClickListener: (String) -> Unit,
+    onSnClickListener: (String) -> Unit
+    ) {
     Card(
         modifier = modifier
             .padding(
@@ -82,6 +87,16 @@ fun RepairListItem(
             Row(
                 horizontalArrangement = Arrangement.Start
             ) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clickable {
+                            onSnClickListener(repair.deviceSn)
+                        },
+                    tint = MaterialTheme.colorScheme.onSecondary
+                )
                 Text(
                     text = stringResource(R.string.serial_number_short) +": " + repair.deviceSn,
                     fontSize = 16.sp,
@@ -91,7 +106,16 @@ fun RepairListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
-
+                )
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clickable {
+                            onInClickListener(repair.deviceIn)
+                        },
+                    tint = MaterialTheme.colorScheme.onSecondary
                 )
                 Text(
                     text = stringResource(R.string.inventory_number_short) + ": " + repair.deviceIn,
@@ -102,7 +126,6 @@ fun RepairListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
-
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))

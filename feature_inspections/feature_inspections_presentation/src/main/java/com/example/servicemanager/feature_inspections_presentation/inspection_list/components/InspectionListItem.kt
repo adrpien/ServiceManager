@@ -3,8 +3,11 @@ package com.example.servicemanager.feature_inspections_presentation.inspection_l
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -80,6 +83,16 @@ fun InspectionListItem(
             Row(
                 horizontalArrangement = Arrangement.Start
             ) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clickable {
+                            onSnPress(inspection.deviceSn)
+                        },
+                    tint = MaterialTheme.colorScheme.onSecondary
+                )
                 // TODO Enhance click animation and onClick listeners for deviceSn and deviceIn
                 Text(
                     text = stringResource(R.string.sn_number_short) + ": " + inspection.deviceSn,
@@ -90,10 +103,16 @@ fun InspectionListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
+                )
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
                         .clickable {
-                            onSnPress(inspection.deviceSn)
-                        }
-
+                            onInPress(inspection.deviceIn)
+                        },
+                    tint = MaterialTheme.colorScheme.onSecondary
                 )
                 Text(
                     text = stringResource(R.string.inventory_number_short) + ": " + inspection.deviceIn,
@@ -104,10 +123,6 @@ fun InspectionListItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
-                        .clickable {
-                            onInPress(inspection.deviceIn)
-                        }
-
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))

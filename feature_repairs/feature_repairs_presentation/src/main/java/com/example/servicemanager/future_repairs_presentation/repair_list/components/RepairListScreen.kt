@@ -12,9 +12,12 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,13 +31,16 @@ import com.example.servicemanager.future_repairs_presentation.repair_list.Repair
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.launch
 
 @Composable
 fun RepairListScreen(
     navHostController: NavHostController,
     viewModel: RepairListViewModel = hiltViewModel(),
     ) {
+    val context = LocalContext.current
 
+    val coroutineScope = rememberCoroutineScope()
 
     val repairListState = viewModel.repairListState.collectAsState()
 
@@ -42,6 +48,21 @@ fun RepairListScreen(
         isRefreshing = repairListState.value.isRefreshing
     )
     val scaffoldState = rememberScaffoldState()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collect { event ->
+            when(event) {
+                is RepairListViewModel.UiEvent.ShowSnackbar -> {
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = event.message.asString(context),
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     Scaffold(
         floatingActionButton = {
@@ -137,7 +158,6 @@ fun RepairListScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         items(repairListState.value.repairList.size) { index ->
-                            // TODO Sn or In onClick (copy to clipboard) to implement
                             RepairListItem(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -151,8 +171,13 @@ fun RepairListScreen(
                                 repair = repairListState.value.repairList[index],
                                 hospitalList = repairListState.value.hospitalList,
                                 technicianList = repairListState.value.technicianList,
-                                repairStateList = repairListState.value.repairStateList
-
+                                repairStateList = repairListState.value.repairStateList,
+                                onSnClickListener = {
+                                    viewModel.onEvent(RepairListEvent.CopyToClipboard(it))
+                                },
+                                onInClickListener = {
+                                    viewModel.onEvent(RepairListEvent.CopyToClipboard(it))
+                                }
                             )
                         }
 
