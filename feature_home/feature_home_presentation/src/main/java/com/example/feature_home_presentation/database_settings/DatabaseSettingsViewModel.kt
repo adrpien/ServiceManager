@@ -37,7 +37,7 @@ class DatabaseSettingsViewModel @Inject constructor(
         when(event) {
             is DatabaseSettingsEvent.ImportInspections -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    homeUseCases.importInspectionsFromFile(event.inputStream).collect() { result ->
+                    homeUseCases.importInspectionsFromFile(event.inputStream).collect { result ->
                         when(result.resourceState) {
                             ResourceState.ERROR -> {
                                 _eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(
@@ -88,7 +88,7 @@ class DatabaseSettingsViewModel @Inject constructor(
 
             DatabaseSettingsEvent.SaveInspections -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    homeUseCases.saveInspections(_databaseSettingsState.value.importedInspectionList).collect() { result ->
+                    homeUseCases.saveInspections(_databaseSettingsState.value.importedInspectionList).collect { result ->
                         when(result.resourceState) {
                             ResourceState.SUCCESS -> {
                                 _eventFlow.emit(UiEvent.ShowSnackbar(result.message ?: UiText.StringResource(R.string.unknown_error)))
@@ -104,7 +104,7 @@ class DatabaseSettingsViewModel @Inject constructor(
     }
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class Navigate(val screen: Screen): UiEvent()
     data class ShowSnackbar(val message: UiText): UiEvent()
     object ShowImportInspectionsDialog: UiEvent()

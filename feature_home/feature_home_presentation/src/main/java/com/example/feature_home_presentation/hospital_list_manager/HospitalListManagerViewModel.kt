@@ -86,7 +86,7 @@ class HospitalListManagerViewModel @Inject constructor(
     private fun fetchHospitalList(){
         var hospitalList: List<Hospital>? = null
         viewModelScope.launch(Dispatchers.Main) {
-            appUseCases.getHospitalList().collect() { result ->
+            appUseCases.getHospitalList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -103,11 +103,11 @@ class HospitalListManagerViewModel @Inject constructor(
 
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: String): UiEvent()
 }
 
-sealed class HospitalListManagerEvent() {
+sealed class HospitalListManagerEvent {
     data class DeleteHospital(val hospital: Hospital): HospitalListManagerEvent()
     data class AddHospital(val hospital: Hospital): HospitalListManagerEvent()
     data class RevertHospital(val hospital: Hospital): HospitalListManagerEvent()

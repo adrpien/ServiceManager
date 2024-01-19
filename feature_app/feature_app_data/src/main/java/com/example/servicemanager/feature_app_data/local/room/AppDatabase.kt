@@ -26,7 +26,7 @@ import com.example.servicemanager.feature_app_data.local.room.entities.UserTypeE
     version = 1
 )
 @TypeConverters(TypeConverterList::class)
-abstract class AppDatabase() : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
 
     abstract val appDatabaseDao: AppDatabaseDao

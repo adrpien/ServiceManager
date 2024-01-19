@@ -17,8 +17,8 @@ object SharedPreferencesModule {
     @Singleton
     fun providePreferences(
         app: Application,
-    ): com.example.shared_preferences.AppPreferences {
-        return com.example.shared_preferences.AppPreferencesImplementation(
+    ): AppPreferences {
+        return AppPreferencesImplementation(
             app.applicationContext
         )
     }

@@ -11,7 +11,7 @@ import com.example.servicemanager.feature_inspections_data.local.entities.Inspec
     ],
     version = 1
 )
-abstract class InspectionDatabase() : RoomDatabase() {
+abstract class InspectionDatabase : RoomDatabase() {
 
 
     abstract val inspectionDatabaseDao: InspectionDatabaseDao

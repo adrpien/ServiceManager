@@ -5,5 +5,4 @@ import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class DatabaseSettingsState(
     val importedInspectionList: List<Inspection> = emptyList(),
-    ) {
-}
+    )

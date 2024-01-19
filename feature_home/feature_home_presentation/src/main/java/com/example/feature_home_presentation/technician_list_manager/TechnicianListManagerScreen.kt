@@ -136,7 +136,7 @@ fun TechnicianListManagerScreen(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    LazyColumn() {
+                    LazyColumn {
                         if (technicianList != null) {
                             items(technicianList.size, key = { it }) { index ->
                                 ManagerListItem(

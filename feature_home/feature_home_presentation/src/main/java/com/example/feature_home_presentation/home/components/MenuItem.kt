@@ -35,7 +35,7 @@ fun MenuItem(
         elevation = 4.dp,
         backgroundColor = MaterialTheme.colorScheme.primary
     ) {
-        Column() {
+        Column {
             Button(
                 modifier = Modifier
                     .fillMaxWidth()

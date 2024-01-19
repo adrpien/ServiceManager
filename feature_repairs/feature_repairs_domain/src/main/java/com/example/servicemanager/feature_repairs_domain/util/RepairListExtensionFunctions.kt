@@ -2,7 +2,7 @@ package com.example.servicemanager.feature_repairs_domain.util
 
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 
-class RepairListExtensionFunctions() {
+class RepairListExtensionFunctions {
 
     companion object {
 

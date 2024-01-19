@@ -30,7 +30,7 @@ class UserLoginViewModel @Inject constructor(
         when(userLoginEvent){
             is UserLoginEvent.Authenticate -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    authenticationUseCases.authenticate(userLoginEvent.mail, userLoginEvent.password).collect() { result ->
+                    authenticationUseCases.authenticate(userLoginEvent.mail, userLoginEvent.password).collect { result ->
                         when(result.resourceState) {
                             ResourceState.LOADING -> Unit
                             ResourceState.ERROR -> {
@@ -74,7 +74,7 @@ class UserLoginViewModel @Inject constructor(
     }
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class Authenticate(val userId: String): UiEvent()
     data class ShowSnackbar(val messege: UiText): UiEvent()
 }

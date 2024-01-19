@@ -128,7 +128,7 @@ fun RepairListScreen(
                     )
                 }
             }
-            Box() {
+            Box {
                 SwipeRefresh(
                     state = swipeRefreshState,
                     onRefresh = {

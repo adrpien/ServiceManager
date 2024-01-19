@@ -9,5 +9,4 @@ data class BottomNavigationItem(
     val route: Screen,
     val icon: ImageVector,
     val badgeCount: Int = 0
-) {
-}
+)

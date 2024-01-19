@@ -93,7 +93,7 @@ fun HomeScreen(
     )
     
     LaunchedEffect(key1 = true) {
-        viewModel.eventFlow.collect() { event ->
+        viewModel.eventFlow.collect { event ->
             when(event) {
                 is UiEvent.Navigate -> {
                     navHostController.navigate(event.screen.route)
@@ -143,7 +143,7 @@ fun HomeScreen(
                     user = homeState.value.user
                 )
             )
-            LazyColumn() {
+            LazyColumn {
                 items(menuItems) { item ->
                     MenuItem(menuItemState = item)
                 }

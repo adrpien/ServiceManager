@@ -136,7 +136,7 @@ fun EstStateListManagerScreen(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    LazyColumn() {
+                    LazyColumn {
                         if (estStateList != null) {
                             items(estStateList.size, key = { it }) { index ->
                                 ManagerListItem(

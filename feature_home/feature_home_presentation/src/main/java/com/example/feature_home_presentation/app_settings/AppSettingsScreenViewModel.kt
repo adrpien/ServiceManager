@@ -83,6 +83,6 @@ class AppSettingsScreenViewModel @Inject constructor(
     }
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: UiText): UiEvent()
 }

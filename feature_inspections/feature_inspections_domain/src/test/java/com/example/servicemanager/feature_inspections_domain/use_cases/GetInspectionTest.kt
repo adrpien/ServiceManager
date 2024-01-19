@@ -34,7 +34,7 @@ class GetInspectionTest {
         }
         val data: Inspection = result.data ?: inspection("0")
 
-        assertThat(data?.inspectionId).isEqualTo("3")
+        assertThat(data.inspectionId).isEqualTo("3")
     }
 
     @Test

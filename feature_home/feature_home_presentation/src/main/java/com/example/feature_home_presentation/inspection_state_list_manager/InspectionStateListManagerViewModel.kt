@@ -84,7 +84,7 @@ class InspectionStateListManagerViewModel @Inject constructor(
     private fun fetchInspectionStateList(){
         var inspectionStateList: List<InspectionState>? = null
         viewModelScope.launch(Dispatchers.Main) {
-            appUseCases.getInspectionStateList().collect() { result ->
+            appUseCases.getInspectionStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -101,11 +101,11 @@ class InspectionStateListManagerViewModel @Inject constructor(
 
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: String): UiEvent()
 }
 
-sealed class InspectionStateListManagerEvent() {
+sealed class InspectionStateListManagerEvent {
     data class DeleteInspectionState(val inspectionState: InspectionState): InspectionStateListManagerEvent()
     data class AddInspectionState(val inspectionState: InspectionState): InspectionStateListManagerEvent()
     data class RevertInspectionState(val inspectionState: InspectionState): InspectionStateListManagerEvent()

@@ -129,8 +129,7 @@ fun RepairListItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = (stringResource(R.string.state) + ": " + repairStateList.find { repair.repairStateId == it.repairStateId }?.repairState)
-                        ?: "",
+                    text = (stringResource(R.string.state) + ": " + repairStateList.find { repair.repairStateId == it.repairStateId }?.repairState),
                     fontSize = 16.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

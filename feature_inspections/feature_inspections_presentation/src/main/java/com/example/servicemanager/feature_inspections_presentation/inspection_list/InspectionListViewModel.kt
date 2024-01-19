@@ -340,7 +340,7 @@ class InspectionListViewModel @Inject constructor(
 
     private fun fetchUserTypeList() {
         viewModelScope.launch(Dispatchers.IO) {
-            appUseCases.getUserTypeList().collect() { result ->
+            appUseCases.getUserTypeList().collect { result ->
                 withContext(Dispatchers.Main) {
                     when (result.resourceState) {
                         ResourceState.SUCCESS -> {
@@ -397,7 +397,7 @@ class InspectionListViewModel @Inject constructor(
     private fun fetchUser() {
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
         viewModelScope.launch(Dispatchers.IO) {
-            appUseCases.getUser(currentUserId).collect() { result ->
+            appUseCases.getUser(currentUserId).collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { user ->
@@ -413,6 +413,6 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 }
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: UiText): UiEvent()
 }

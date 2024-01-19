@@ -35,7 +35,7 @@ fun ProfileSection(
         elevation = 4.dp,
         backgroundColor = MaterialTheme.colorScheme.primary
     ) {
-        Row() {
+        Row {
             val bitmap = Helper.byteArrayToBitmap(profile.profilePicture)
             Image(
                 bitmap = bitmap.asImageBitmap(),

@@ -51,7 +51,7 @@ fun AppSettingsScreen(
 
 
     LaunchedEffect(key1 = true) {
-        viewModel.eventFlow.collect(){ event ->
+        viewModel.eventFlow.collect { event ->
             when(event) {
                 is UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(message = event.message.asString(context))

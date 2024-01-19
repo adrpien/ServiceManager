@@ -84,7 +84,7 @@ class TechnicianListManagerViewModel @Inject constructor(
     private fun fetchTechnicianList(){
         var TechnicianList: List<Technician>? = null
         viewModelScope.launch(Dispatchers.Main) {
-            appUseCases.getTechnicianList().collect() { result ->
+            appUseCases.getTechnicianList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -101,11 +101,11 @@ class TechnicianListManagerViewModel @Inject constructor(
 
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: String): UiEvent()
 }
 
-sealed class TechnicianListManagerEvent() {
+sealed class TechnicianListManagerEvent {
     data class DeleteTechnician(val technician: Technician): TechnicianListManagerEvent()
     data class AddTechnician(val technician: Technician): TechnicianListManagerEvent()
     data class RevertTechnician(val technician: Technician): TechnicianListManagerEvent()

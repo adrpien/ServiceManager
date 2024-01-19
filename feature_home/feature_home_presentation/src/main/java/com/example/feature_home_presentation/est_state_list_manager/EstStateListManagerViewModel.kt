@@ -85,7 +85,7 @@ class EstStateListManagerViewModel @Inject constructor(
     private fun fetchEstStateList(){
         var estStateList: List<EstState>? = null
         viewModelScope.launch(Dispatchers.IO) {
-            appUseCases.getEstStateList().collect() { result ->
+            appUseCases.getEstStateList().collect { result ->
                 withContext(Dispatchers.Main) {
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
@@ -104,11 +104,11 @@ class EstStateListManagerViewModel @Inject constructor(
 
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: String): UiEvent()
 }
 
-sealed class EstStateListManagerEvent() {
+sealed class EstStateListManagerEvent {
     data class DeleteEstState(val estState: EstState): EstStateListManagerEvent()
     data class AddEstState(val estState: EstState): EstStateListManagerEvent()
     data class RevertEstState(val estState: EstState): EstStateListManagerEvent()

@@ -136,7 +136,7 @@ fun HospitalListManagerScreen(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    LazyColumn() {
+                    LazyColumn {
                         if (hospitalList != null) {
                             items(hospitalList.size, key = { it }) { index ->
                                 ManagerListItem(

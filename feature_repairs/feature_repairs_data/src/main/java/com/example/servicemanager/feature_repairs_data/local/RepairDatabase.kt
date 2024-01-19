@@ -11,7 +11,7 @@ import com.example.servicemanager.feature_repairs_data.local.entities.RepairEnti
     ],
     version = 1
 )
-abstract class RepairDatabase() : RoomDatabase() {
+abstract class RepairDatabase : RoomDatabase() {
 
 
     abstract val repairDatabaseDao: RepairDatabaseDao

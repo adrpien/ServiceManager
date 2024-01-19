@@ -163,7 +163,7 @@ fun DatabaseSettingsScreen(
 
 
     LaunchedEffect(key1 = true) {
-        viewModel.eventFlow.collect() { event ->
+        viewModel.eventFlow.collect { event ->
             when(event) {
                 is UiEvent.Navigate -> {
                     navHostController.navigate(event.screen.route)
@@ -224,7 +224,7 @@ fun DatabaseSettingsScreen(
 
             val profilePicture = Helper.drawableToByteArray(context.getDrawable(R.drawable.default_profile_picture)!!
             )
-            LazyColumn() {
+            LazyColumn {
                 items(menuItems) { item ->
                     MenuItem(menuItemState = item)
                 }

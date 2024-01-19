@@ -26,6 +26,4 @@ data class InspectionListState(
         InspectionOrderMonotonicity.Ascending),
     val hospital: Hospital? = null,
     val userTypeList: List<UserType> = emptyList()
-) {
-
-}
+)

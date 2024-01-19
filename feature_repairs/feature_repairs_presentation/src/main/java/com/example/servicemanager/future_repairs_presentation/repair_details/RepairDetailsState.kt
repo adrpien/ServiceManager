@@ -18,6 +18,4 @@ data class RepairDetailsState(
     val technicianList: List<Technician> = emptyList(),
     val estStateList: List<EstState> = emptyList(),
     val signature: Bitmap = Bitmap.createBitmap(Dimensions.signatureWidth, Dimensions.signatureHeight, Bitmap.Config.ARGB_8888)
-    ) {
-
-}
+    )

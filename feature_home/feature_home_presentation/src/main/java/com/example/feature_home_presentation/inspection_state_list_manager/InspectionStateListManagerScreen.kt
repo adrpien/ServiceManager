@@ -140,7 +140,7 @@ fun InspectionStateListManagerScreen(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    LazyColumn() {
+                    LazyColumn {
                         if (inspectionStateList != null) {
                             items(inspectionStateList.size, key = { it }) { index ->
                                 ManagerListItem(

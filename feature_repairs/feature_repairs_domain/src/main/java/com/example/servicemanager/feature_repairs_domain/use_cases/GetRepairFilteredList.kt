@@ -24,15 +24,15 @@ class GetRepairFilteredList @Inject constructor (
             resourceState = ResourceState.SUCCESS,
             data = repairList
                 .filter { repair ->
-                repair.toString().lowercase().contains(searchQuery.lowercase())
+                    repair.toString().lowercase().contains(searchQuery.lowercase())
                 }
-                ?.filter {
+                .filter {
                     if (hospitalFilter?.hospitalId == "0") {
                         true
                     } else {
                         it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)}
                 }
-                ?.orderRepairList(repairOrderType),
+                .orderRepairList(repairOrderType),
             message = null
             )
         }

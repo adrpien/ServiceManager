@@ -26,7 +26,7 @@ fun DefaultTextField(
     onValueChanged: (String) -> Unit,
     state: MutableState<DefaultTextFieldState>,
 ) {
-    Column() {
+    Column {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()

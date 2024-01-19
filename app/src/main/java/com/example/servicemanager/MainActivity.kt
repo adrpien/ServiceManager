@@ -28,8 +28,7 @@ import javax.inject.Inject
 // TODO Finish app testing
 
 @AndroidEntryPoint
-class MainActivity (
-) : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var appPreferences: AppPreferences

@@ -14,7 +14,7 @@ class SaveInspections @Inject constructor (
     private val repository: InspectionRepository
 ) {
     suspend operator fun invoke(inspectionList: List<Inspection>): Flow<Resource<String>> = flow {
-        inspectionList.forEachIndexed() { index, inspection ->
+        inspectionList.forEachIndexed { index, inspection ->
             var isSuccessful = true
             val result = repository.insertInspection(inspection)
             when(result.resourceState) {

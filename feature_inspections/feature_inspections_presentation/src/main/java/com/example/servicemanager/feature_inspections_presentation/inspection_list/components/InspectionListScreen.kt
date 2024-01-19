@@ -148,7 +148,7 @@ fun InspectionListScreen(
                     .background(MaterialTheme.colorScheme.onSecondary)
             )
 
-            Box() {
+            Box {
                 SwipeRefresh(
                     state = swipeRefreshState,
                     onRefresh = {

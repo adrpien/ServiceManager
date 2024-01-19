@@ -4,14 +4,14 @@ sealed class CacheOperationType(val operationName: String) {
     companion object {
         fun getCacheOperationType(string: String): CacheOperationType {
             when(string) {
-                CacheOperationType.Update().operationName -> {
-                    return CacheOperationType.Update()
+                Update().operationName -> {
+                    return Update()
                 }
-                CacheOperationType.Insert().operationName -> {
-                    return CacheOperationType.Insert()
+                Insert().operationName -> {
+                    return Insert()
                 }
             }
-        return CacheOperationType.Insert()
+        return Insert()
         }
     }
 

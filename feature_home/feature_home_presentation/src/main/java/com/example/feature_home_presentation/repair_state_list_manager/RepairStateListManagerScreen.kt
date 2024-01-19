@@ -136,7 +136,7 @@ fun RepairStateListManagerScreen(
                     verticalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxHeight()
                 ) {
-                    LazyColumn() {
+                    LazyColumn {
                         if (repairStateList != null) {
                             items(repairStateList.size, key = { it }) { index ->
                                 ManagerListItem(

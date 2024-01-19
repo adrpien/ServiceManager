@@ -16,6 +16,4 @@ data class InspectionDetailsState(
     val technicianList: List<Technician> = emptyList(),
     val estStateList: List<EstState> = emptyList(),
     val signature: Bitmap = Bitmap.createBitmap(400, 200, Bitmap.Config.ARGB_8888)
-    ) {
-
-}
+    )

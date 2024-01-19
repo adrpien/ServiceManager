@@ -23,6 +23,4 @@ data class RepairListState(
     val isHospitalFilterSectionVisible: Boolean = false,
     val repairOrderType: RepairOrderType = RepairOrderType.State(RepairOrderMonotonicity.Ascending),
     val hospital: Hospital? = null,
-) {
-
-}
+)

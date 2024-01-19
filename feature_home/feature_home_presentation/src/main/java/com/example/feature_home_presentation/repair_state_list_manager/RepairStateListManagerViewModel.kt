@@ -84,7 +84,7 @@ class RepairStateListManagerViewModel @Inject constructor(
     private fun fetchRepairStateList(){
         var repairStateList: List<RepairState>? = null
         viewModelScope.launch(Dispatchers.Main) {
-            appUseCases.getRepairStateList().collect() { result ->
+            appUseCases.getRepairStateList().collect { result ->
                 when(result.resourceState) {
                     ResourceState.SUCCESS -> {
                         result.data?.let { list ->
@@ -101,11 +101,11 @@ class RepairStateListManagerViewModel @Inject constructor(
 
 }
 
-sealed class UiEvent() {
+sealed class UiEvent {
     data class ShowSnackbar(val message: String): UiEvent()
 }
 
-sealed class RepairStateListManagerEvent() {
+sealed class RepairStateListManagerEvent {
     data class DeleteRepairState(val repairState: RepairState): RepairStateListManagerEvent()
     data class AddRepairState(val repairState: RepairState): RepairStateListManagerEvent()
     data class RevertRepairState(val repairState: RepairState): RepairStateListManagerEvent()

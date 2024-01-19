@@ -2,7 +2,7 @@ package com.example.servicemanager.feature_inspections_domain.util
 
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
-class InspectionListExtensionFunctions() {
+class InspectionListExtensionFunctions {
 
     companion object {
 

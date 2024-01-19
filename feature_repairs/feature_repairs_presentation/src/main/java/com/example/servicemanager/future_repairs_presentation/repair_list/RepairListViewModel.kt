@@ -341,7 +341,7 @@ class RepairListViewModel @Inject constructor(
     // TODO User limitations to implement
 
 
-    sealed class UIEvent() {
+    sealed class UIEvent {
         data class ShowSnackbar(val message: String): UIEvent()
     }
 }

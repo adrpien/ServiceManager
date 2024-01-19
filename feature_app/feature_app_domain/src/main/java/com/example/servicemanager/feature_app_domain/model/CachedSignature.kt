@@ -7,6 +7,4 @@ data class CachedSignature(
     val signatureId: String = "",
     val operationType: CacheOperationType = CacheOperationType.Insert(),
     val uri: Uri = Uri.EMPTY
-){
-
-}
+)

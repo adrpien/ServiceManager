@@ -41,7 +41,7 @@ fun <T> DefaultSelectionSection(
                 .padding(start = 4.dp, end = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemList.forEachIndexed() { index, item ->
+            itemList.forEachIndexed { index, item ->
                 DefaultRadioButton(
                     title = nameList[index],
                     selected = item.toString() == selectedItem.toString(),
