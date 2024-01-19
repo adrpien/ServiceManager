@@ -38,6 +38,8 @@ fun AppSettingsScreen(
     viewModel: AppSettingsScreenViewModel = hiltViewModel(),
 ) {
 
+    val appSettingsScreenState = viewModel.appSettingsScreenState.collectAsState()
+
     val context = LocalContext.current
 
     val appSettingsState = viewModel.appSettingsScreenState.collectAsState()
@@ -110,9 +112,9 @@ fun AppSettingsScreen(
                 color = MaterialTheme.colorScheme.onSecondary
             )
             DefaultSelectionSection(
-                itemList = viewModel.appSettingsScreenState.value.dateFormattingTypeList,
-                nameList = viewModel.appSettingsScreenState.value.dateFormattingTypeList.map { it.formatting },
-                selectedItem = viewModel.appSettingsScreenState.value.dateFormattingType,
+                itemList = appSettingsScreenState.value.dateFormattingTypeList,
+                nameList = appSettingsScreenState.value.dateFormattingTypeList.map { it.formatting },
+                selectedItem = appSettingsScreenState.value.dateFormattingType,
                 onItemChanged = {
                                 viewModel.onEvent(AppSettingsScreenEvent.SetDateFormattingType(it))
                 },

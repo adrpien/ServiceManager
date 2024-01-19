@@ -14,7 +14,6 @@ class FirebaseLogger<T>(
         firebaseAnalytics.logEvent(eventLogType.logId, params)
     }
 
-    // TODO logEvent in Logger should be suspend function
     override suspend fun logEvent(
         eventLogType: EventLogType,
         message: String,

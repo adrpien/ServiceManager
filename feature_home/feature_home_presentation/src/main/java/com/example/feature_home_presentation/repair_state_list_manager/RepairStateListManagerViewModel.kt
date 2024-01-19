@@ -20,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RepairStateListManagerViewModel @Inject constructor(
     private val appUseCases: AppUseCases,
-    private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
     private val _repairStateListState = MutableStateFlow<List<RepairState>>(emptyList())

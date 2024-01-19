@@ -49,7 +49,6 @@ import java.io.InputStream
 // TODO Add MaterialDialog for showing saving inspections progress
 @Composable
 fun DatabaseSettingsScreen(
-    modifier: Modifier = Modifier,
     navHostController: NavHostController,
     viewModel: DatabaseSettingsViewModel = hiltViewModel(),
 ){

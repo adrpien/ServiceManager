@@ -22,7 +22,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HospitalListManagerViewModel @Inject constructor(
     private val appUseCases: AppUseCases,
-    private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
     private val _hospitalListState = MutableStateFlow<List<Hospital>>(emptyList())

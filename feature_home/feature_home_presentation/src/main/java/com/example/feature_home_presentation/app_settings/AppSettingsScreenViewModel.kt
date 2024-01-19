@@ -23,7 +23,6 @@ import javax.inject.Inject
 class AppSettingsScreenViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
     private val appUseCases: AppUseCases,
-    private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
     private val _appSettingsScreenState = MutableStateFlow(AppSettingsScreenState())

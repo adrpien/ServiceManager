@@ -21,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class EstStateListManagerViewModel @Inject constructor(
     private val appUseCases: AppUseCases,
-    private val homeUseCases: HomeUseCases
 ): ViewModel() {
 
     private val _estStateListState = MutableStateFlow<List<EstState>>(emptyList())

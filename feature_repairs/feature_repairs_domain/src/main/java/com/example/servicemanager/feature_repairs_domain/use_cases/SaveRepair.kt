@@ -13,8 +13,21 @@ class SaveRepair @Inject constructor (
     private val repository: RepairRepository
 ) {
 
-    // TODO opening date should not be bigger tha repairing date and returning date should be bigger than repairing date
     suspend operator fun invoke(repair: Repair): Resource<String> {
+        if (repair.openingDate > repair.closingDate) {
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.closing_date_can_not_be_before_opening_date)
+            )
+        }
+        if (repair.repairingDate > repair.closingDate) {
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.closing_date_can_not_be_before_opening_date)
+            )
+        }
         return try {
             if (repair.deviceSn != "" && repair.deviceIn != "") {
                 repository.insertRepair(repair)

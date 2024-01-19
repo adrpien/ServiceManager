@@ -20,7 +20,7 @@ object LoggerModule {
     @Provides
     @Singleton
     fun provideAppLogger(firebaseAnalytics: FirebaseAnalytics): AppLogger<Any> {
-        return FirebaseLogger<Any>(firebaseAnalytics = firebaseAnalytics)
+        return FirebaseLogger(firebaseAnalytics = firebaseAnalytics)
     }
 
 }

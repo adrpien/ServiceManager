@@ -239,8 +239,7 @@ fun RepairDetailsScreen(
                     coroutineScope.launch {
                         val result = scaffoldState.snackbarHostState.showSnackbar(
                             message = event.messege.asString(context),
-                            actionLabel = "Ok",
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Short,
                         )
                     }
                 }

@@ -23,8 +23,6 @@ import javax.inject.Inject
 class DatabaseSettingsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val homeUseCases: HomeUseCases,
-    private val appUseCases: AppUseCases,
-    private val inspectionUseCases: InspectionUseCases
 ): ViewModel() {
 
     private var _databaseSettingsState = MutableStateFlow<DatabaseSettingsState>(DatabaseSettingsState())

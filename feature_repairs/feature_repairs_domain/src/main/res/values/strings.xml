@@ -4,4 +4,6 @@
     <string name="repair_update_unknown_error">Unknown error</string>
     <string name="unknown_error">Unknown error</string>
     <string name="textfields_device_sn_and_device_in_are_empty">Textfields Sn and In are empty</string>
+    <string name="closing_date_can_not_be_before_opening_date">Closing date can not be before opening date</string>
+    <string name="repairing_date_can_not_be_before_opening_date">Repairing date can not be before opening date</string>
 </resources>
