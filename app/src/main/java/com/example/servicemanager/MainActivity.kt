@@ -60,7 +60,6 @@ class MainActivity : ComponentActivity() {
 
 /* ******************************** Network observer ******************************************** */
         requestNetworkObserver(
-            activity = this,
             onLost = null,
             onAvailable = null
         )

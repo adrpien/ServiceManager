@@ -42,7 +42,6 @@ fun MainScreenNavigationContent(
         ){
             InspectionListScreen(
                 navHostController = navHostController,
-                userId = userId
             )
         }
 
@@ -59,7 +58,6 @@ fun MainScreenNavigationContent(
         ){
             InspectionDetailsScreen(
                 navHostController = navHostController,
-                inspectionId = it.arguments?.getString("inspectionId") ?: "0"
             )
         }
 
@@ -75,7 +73,6 @@ fun MainScreenNavigationContent(
         ){
             RepairListScreen(
                 navHostController = navHostController,
-                userId = userId
             )
         }
 
@@ -91,7 +88,6 @@ fun MainScreenNavigationContent(
         ){
             RepairDetailsScreen(
                 navHostController = navHostController,
-                repairId = it.arguments?.getString("repairId") ?: "0"
             )
         }
 
@@ -107,7 +103,6 @@ fun MainScreenNavigationContent(
         ){
             HomeScreen(
                 navHostController = navHostController,
-                userId = userId
             )
         }
 
@@ -115,7 +110,6 @@ fun MainScreenNavigationContent(
             route = Screen.AppSettingsScreen.route
         ) {
             AppSettingsScreen(
-                navHostController = navHostController
             )
         }
 
@@ -131,7 +125,6 @@ fun MainScreenNavigationContent(
             route = Screen.HospitalListManagerScreen.route
         ) {
             HospitalListManagerScreen(
-                navHostController = navHostController
             )
         }
 
@@ -139,7 +132,6 @@ fun MainScreenNavigationContent(
             route = Screen.EstStateListManagerScreen.route
         ) {
             EstStateListManagerScreen(
-                navHostController = navHostController
             )
         }
 
@@ -147,7 +139,6 @@ fun MainScreenNavigationContent(
             route = Screen.HospitalListManagerScreen.route
         ) {
             HospitalListManagerScreen(
-                navHostController = navHostController
             )
         }
 
@@ -155,7 +146,6 @@ fun MainScreenNavigationContent(
             route = Screen.InspectionStateListManagerScreen.route
         ) {
             InspectionStateListManagerScreen(
-                navHostController = navHostController
             )
         }
 
@@ -163,14 +153,12 @@ fun MainScreenNavigationContent(
             route = Screen.RepairStateListManagerScreen.route
         ) {
             RepairStateListManagerScreen(
-                navHostController = navHostController
             )
         }
         composable(
             route = Screen.TechnicianListManagerScreen.route
         ) {
             TechnicianListManagerScreen(
-                navHostController = navHostController
             )
         }
     }
