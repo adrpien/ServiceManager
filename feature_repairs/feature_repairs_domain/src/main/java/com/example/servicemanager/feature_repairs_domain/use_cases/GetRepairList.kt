@@ -23,7 +23,7 @@ class GetRepairList @Inject constructor (
         return if(fetchFromApi == false) {
             flow<Resource<List<Repair>>> {
                 val resource = repository.getRepairListFromLocal()
-                    resource.copy(
+                    emit(resource.copy(
                         data = resource.data
                             ?.filter { repair ->
                                 repair.toString().lowercase().contains(searchQuery.lowercase())
@@ -35,7 +35,7 @@ class GetRepairList @Inject constructor (
                                     it.hospitalId == (hospitalFilter?.hospitalId ?: it.hospitalId)}
                             }
                             ?.orderRepairList(repairOrderType)
-                    )
+                    ))
             }
         } else {
             repository.getRepairList().map { resource ->
