@@ -93,7 +93,6 @@ fun InspectionListItem(
                         },
                     tint = MaterialTheme.colorScheme.onSecondary
                 )
-                // TODO Enhance click animation and onClick listeners for deviceSn and deviceIn
                 Text(
                     text = stringResource(R.string.sn_number_short) + ": " + inspection.deviceSn,
                     fontSize = 16.sp,

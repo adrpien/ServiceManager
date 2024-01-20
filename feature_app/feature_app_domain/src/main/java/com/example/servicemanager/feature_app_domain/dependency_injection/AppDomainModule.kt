@@ -37,6 +37,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.technicians.Delet
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.UpdateTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.CreateUserType
+import com.example.servicemanager.feature_app_domain.use_cases.user_types.CreateUserTypeWithId
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.DeleteUserType
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.GetUserTypeList
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.UpdateUserType
@@ -95,7 +96,8 @@ object AppDomainModule {
             createInspectionStateWithId = CreateInspectionStateWithId(repository),
             createRepairStateWithId = CreateRepairStateWithId(repository),
             createTechnicianWithId = CreateTechnicianWithId(repository),
-            syncData = SyncData(repository)
+            syncData = SyncData(repository),
+            createUserTypeWithId = CreateUserTypeWithId(repository)
         )
     }
 

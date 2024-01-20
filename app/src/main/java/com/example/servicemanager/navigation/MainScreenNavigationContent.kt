@@ -15,6 +15,7 @@ import com.example.feature_home_presentation.hospital_list_manager.HospitalListM
 import com.example.feature_home_presentation.inspection_state_list_manager.InspectionStateListManagerScreen
 import com.example.feature_home_presentation.repair_state_list_manager.RepairStateListManagerScreen
 import com.example.feature_home_presentation.technician_list_manager.TechnicianListManagerScreen
+import com.example.feature_home_presentation.technician_list_manager.UserTypeListManagerScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.components.InspectionDetailsScreen
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.components.InspectionListScreen
 import com.example.servicemanager.future_repairs_presentation.repair_details.components.RepairDetailsScreen
@@ -160,6 +161,11 @@ fun MainScreenNavigationContent(
         ) {
             TechnicianListManagerScreen(
             )
+        }
+        composable(
+            route = Screen.UserTypeListManagerScreen.route
+        ) {
+            UserTypeListManagerScreen()
         }
     }
 }

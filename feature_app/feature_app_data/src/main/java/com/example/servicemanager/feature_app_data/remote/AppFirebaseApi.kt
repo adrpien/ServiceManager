@@ -745,12 +745,10 @@ class  AppFirebaseApi(
     }
 
     suspend fun updateUserType(userType: UserType): Resource<String> {
-        val hospitals = userType.hospitals.toString()
-        val map: Map<String, String> = mapOf(
+        val map = hashMapOf(
             "userTypeId" to userType.userTypeId,
             "userTypeName" to userType.userTypeName,
-            "hospitals" to hospitals // Can be like this?
-            // TODO How to pass list of hospitals in here
+            "hospitals" to userType.hospitals,
         )
         val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
         val result = documentReference.update(map)
@@ -810,6 +808,44 @@ class  AppFirebaseApi(
         }
 
     }
+    suspend fun createUserTypeWithId(userType: UserType): Resource<String> {
+        try {
+            val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
+            val map: Map<String, String> = mapOf(
+                "userTypeId" to userType.userTypeId,
+                "userTypeName" to userType.userTypeName,
+                "hospitals" to userType.hospitals.toString()
+                // TODO How to pass list of hospitals in here
+            )
+            val result = documentReference.set(map)
+            withTimeout(3000) {
+                result.await()
+            }
+            if (result.isSuccessful) {
+                Log.d(APP_FIREBASE_API, "UserType record create success")
+                return Resource(
+                    ResourceState.SUCCESS,
+                    null,
+                    UiText.StringResource(R.string.usertype_create_success)
+                )
+            } else {
+                Log.d(APP_FIREBASE_API, "UserType record create error")
+                return Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.usertype_create_error)
+                )
+            }
+        } catch (e: FirebaseFirestoreException) {
+            return Resource(
+                ResourceState.ERROR,
+                null,
+                UiText.StringResource(R.string.check_internet_connection)
+            )
+        }
+
+    }
+
     suspend fun deleteUserType(userTypeId: String): Resource<String> {
         try {
             val documentReference = firebaseFirestore.collection("user_types").document(userTypeId)

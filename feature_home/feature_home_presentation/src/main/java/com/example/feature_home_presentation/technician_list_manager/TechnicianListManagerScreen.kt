@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.core.util.UiText
 import com.example.core_ui.components.list_manager.ManagerActionListItem
 import com.example.core_ui.components.list_manager.ManagerListItem

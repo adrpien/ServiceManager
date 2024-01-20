@@ -2,6 +2,7 @@ package com.example.core.util
 
 
 sealed class Screen(val route: String){
+    object UserTypeListManagerScreen: Screen(NavigationRoutes.ROUTE_USER_TYPE_LIST_MANAGER_SCREEN)
     object InspectionStateListManagerScreen: Screen(NavigationRoutes.ROUTE_INSPECTION_STATE_LIST_MANAGER_SCREEN)
     object RepairStateListManagerScreen: Screen(NavigationRoutes.ROUTE_REPAIR_STATE_LIST_MANAGER_SCREEN)
     object EstStateListManagerScreen: Screen(NavigationRoutes.ROUTE_EST_STATE_LIST_MANAGER_SCREEN)

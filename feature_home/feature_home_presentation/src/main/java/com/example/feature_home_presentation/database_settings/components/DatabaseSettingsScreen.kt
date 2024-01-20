@@ -151,13 +151,23 @@ fun DatabaseSettingsScreen(
         }
     }
 
+    val manageUserTypeListMenuItemState = MenuItemState(
+        icon = Icons.Default.AdminPanelSettings,
+        text = UiText.StringResource(R.string.manage_user_type_list)
+    ) {
+        coroutineScope.launch {
+            navHostController.navigate(Screen.UserTypeListManagerScreen.route)
+        }
+    }
+
     val menuItems = listOf(
         addInspectionListMenuItemState,
         manageHospitalListMenuItemState,
         manageTechnicianListMenuItemState,
         manageEstStateListMenuItemState,
         manageInspectionStateListMenuItemState,
-        manageRepairStateListMenuItemState
+        manageRepairStateListMenuItemState,
+        manageUserTypeListMenuItemState
     )
 
 

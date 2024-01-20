@@ -32,6 +32,7 @@ import com.example.servicemanager.feature_app_domain.use_cases.technicians.Delet
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.GetTechnicianList
 import com.example.servicemanager.feature_app_domain.use_cases.technicians.UpdateTechnician
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.CreateUserType
+import com.example.servicemanager.feature_app_domain.use_cases.user_types.CreateUserTypeWithId
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.DeleteUserType
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.GetUserTypeList
 import com.example.servicemanager.feature_app_domain.use_cases.user_types.UpdateUserType
@@ -69,6 +70,7 @@ data class AppUseCases(
     val getUser: GetUser,
     val getUserTypeList: GetUserTypeList,
     val createUserType: CreateUserType,
+    val createUserTypeWithId: CreateUserTypeWithId,
     val updateUserType: UpdateUserType,
     val deleteUserType: DeleteUserType,
     val copyToClipboard: CopyToClipboard,

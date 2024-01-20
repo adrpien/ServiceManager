@@ -71,6 +71,8 @@ interface AppRepository {
     fun getUserTypeList(): Flow<Resource<List<UserType>>>
     suspend fun updateUserType(userType: UserType): Resource<String>
     suspend fun createUserType(userType: UserType): Resource<String>
+    suspend fun createUserTypeWithId(userType: UserType): Resource<String>
+
     suspend fun deleteUserType(userTypeId: String): Resource<String>
 
 

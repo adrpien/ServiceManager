@@ -2,6 +2,7 @@ package com.example.core.util
 
 
 object NavigationRoutes {
+    const val ROUTE_USER_TYPE_LIST_MANAGER_SCREEN = "user_type_list_manager"
     const val ROUTE_REPAIR_STATE_LIST_MANAGER_SCREEN = "repair_state_list_manager"
     const val ROUTE_INSPECTION_STATE_LIST_MANAGER_SCREEN = "inspection_state_list_manager"
     const val ROUTE_HOSPITAL_LIST_MANAGER_SCREEN = "hospital_list_manager"

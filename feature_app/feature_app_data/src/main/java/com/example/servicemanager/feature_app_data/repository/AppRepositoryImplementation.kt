@@ -582,6 +582,13 @@ class  AppRepositoryImplementation(
         return firebaseApi.createUserType(userType)
     }
 
+    override suspend fun createUserTypeWithId(userType: UserType): Resource<String> {
+        if (userType.userTypeId == ""){
+            throw IllegalArgumentException("userTypeId can not be empty")
+        }
+        return firebaseApi.createUserTypeWithId(userType)
+    }
+
     override suspend fun deleteUserType(userTypeId: String): Resource<String> {
         if (userTypeId == ""){
             throw IllegalArgumentException("userTypeId can not be empty")
