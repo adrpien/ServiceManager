@@ -600,7 +600,7 @@ class  AppRepositoryImplementation(
         if (userType.userTypeId == ""){
             throw IllegalArgumentException("userTypeId can not be empty")
         }
-        return updateUserType(userType)
+        return firebaseApi.updateUserType(userType)
     }
 
 

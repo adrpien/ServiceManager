@@ -74,13 +74,6 @@ fun UserTypeManagerListItem(
                         color = MaterialTheme.colorScheme.onSecondary,
                         textAlign = TextAlign.Start
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = userType.hospitals.toString().trim(']', '['),
-                        fontSize = 8.sp,
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        textAlign = TextAlign.Start
-                    )
                 }
                 IconButton(
                     onClick = onDeleteClick

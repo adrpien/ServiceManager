@@ -3,12 +3,17 @@ package com.example.feature_home_presentation.technician_list_manager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxColors
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.rememberScaffoldState
@@ -29,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
@@ -70,6 +76,7 @@ fun UserTypeListManagerScreen(
     ) }
 
     val userTypeListState = viewModel.userTypeListState.collectAsState()
+    val hospitalListState = viewModel.hospitalListState.collectAsState()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collect { event ->
@@ -160,7 +167,7 @@ fun UserTypeListManagerScreen(
                 dismissOnBackPress = true,
                 dismissOnClickOutside = true
             ),
-            backgroundColor = MaterialTheme.colorScheme.primary,
+            backgroundColor = MaterialTheme.colorScheme.secondary,
             shape = MaterialTheme.shapes.medium,
             buttons = {
                 positiveButton(
@@ -188,7 +195,7 @@ fun UserTypeListManagerScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primary),
+                        .background(MaterialTheme.colorScheme.secondary),
                     contentAlignment = Alignment.Center
                 ) {
                     Column {
@@ -198,8 +205,40 @@ fun UserTypeListManagerScreen(
                                 userTypeNameState.value = userTypeNameState.value.copy(value = string)
                                 userTypeState.value = userTypeState.value.copy( userTypeName =  string)
                             },
-                            state = userTypeNameState
+                            state = userTypeNameState,
                         )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = UiText.StringResource(R.string.hospital_permission).asString(context),
+                            color = MaterialTheme.colorScheme.onSecondary
+                            )
+                        for (hospital in hospitalListState.value) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Checkbox(
+                                    checked = userTypeState.value.hospitals.contains(hospital.hospitalId),
+                                    onCheckedChange = {
+                                        if(userTypeState.value.hospitals.contains(hospital.hospitalId)) {
+                                         userTypeState.value = userTypeState.value.copy(hospitals = userTypeState.value.hospitals.minus(hospital.hospitalId))
+                                        } else {
+                                            userTypeState.value = userTypeState.value.copy(hospitals = userTypeState.value.hospitals.plus(hospital.hospitalId))
+                                        }
+                                    },
+                                    colors = CheckboxDefaults.colors(
+                                        checkmarkColor = MaterialTheme.colorScheme.onPrimary,
+                                        checkedColor = MaterialTheme.colorScheme.primary,
+                                        uncheckedColor = MaterialTheme.colorScheme.primary,
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = hospital.hospital,
+                                    color = MaterialTheme.colorScheme.onSecondary
+                                )
+                            }
+
+                        }
                     }
                 }
             }
