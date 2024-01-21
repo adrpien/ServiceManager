@@ -25,7 +25,8 @@ class UserTypeListManagerViewModel @Inject constructor(
     private val _userTypeListState = MutableStateFlow<List<UserType>>(emptyList())
     val userTypeListState: StateFlow<List<UserType>> = _userTypeListState
 
-    private val _userTypeState = MutableStateFlow(UserType())
+    private val _hospitalListState = MutableStateFlow<List<Hospital>>(emptyList())
+    val hospitalListState: StateFlow<List<Hospital>> = _hospitalListState
 
     var lastDeleteUserType: UserType? = null
 
@@ -34,6 +35,7 @@ class UserTypeListManagerViewModel @Inject constructor(
 
     init {
         fetchUserTypeList()
+        fetchHospitalList()
     }
 
     fun onEvent(userTypeManagerEvent: UserTypeManagerEvent) {
@@ -58,9 +60,9 @@ class UserTypeListManagerViewModel @Inject constructor(
                     when(result.resourceState) {
                         ResourceState.ERROR -> Unit
                         ResourceState.SUCCESS -> {
-                            fetchUserTypeList()
                             _eventFlow.emit(UiEvent.ShowSnackBar(UiText.StringResource(R.string.revert_delete)))
                             lastDeleteUserType = userTypeManagerEvent.userType
+                            fetchUserTypeList()
                         }
                         ResourceState.LOADING -> Unit
                     }
@@ -70,17 +72,27 @@ class UserTypeListManagerViewModel @Inject constructor(
                  viewModelScope.launch(Dispatchers.IO) {
                      appUseCases.createUserTypeWithId(userTypeManagerEvent.userType)
                      lastDeleteUserType = null
+                     fetchUserTypeList()
+
                  }
             }
             is UserTypeManagerEvent.UpdateUserType -> {
-                _userTypeState.value = userTypeManagerEvent.userType
+                viewModelScope.launch(Dispatchers.IO) {
+                    val result = appUseCases.updateUserType(userTypeManagerEvent.userType)
+                    when(result.resourceState) {
+                        ResourceState.ERROR -> Unit
+                        ResourceState.SUCCESS -> {
+                            fetchUserTypeList()
+                        }
+                        ResourceState.LOADING -> Unit
+                    }
+                }
             }
         }
     }
 
 
     private fun fetchUserTypeList() {
-        var userTypeList: List<UserType>? = null
         viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getUserTypeList().collect { result ->
                 when(result.resourceState) {
@@ -90,6 +102,22 @@ class UserTypeListManagerViewModel @Inject constructor(
                             _userTypeListState.value = list
                         }
                     }
+                    ResourceState.LOADING -> Unit
+                }
+            }
+        }
+    }
+
+    private fun fetchHospitalList(){
+        viewModelScope.launch(Dispatchers.Main) {
+            appUseCases.getHospitalList().collect { result ->
+                when(result.resourceState) {
+                    ResourceState.SUCCESS -> {
+                        result.data?.let { list ->
+                            _hospitalListState.value = list
+                        }
+                    }
+                    ResourceState.ERROR -> Unit
                     ResourceState.LOADING -> Unit
                 }
             }

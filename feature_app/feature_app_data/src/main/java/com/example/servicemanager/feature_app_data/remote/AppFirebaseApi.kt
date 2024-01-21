@@ -773,12 +773,11 @@ class  AppFirebaseApi(
     }
     suspend fun createUserType(userType: UserType): Resource<String> {
         try {
-            val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
-            val map: Map<String, String> = mapOf(
+            val documentReference = firebaseFirestore.collection("user_types").document()
+            val map = hashMapOf(
                 "userTypeId" to documentReference.id,
                 "userTypeName" to userType.userTypeName,
-                "hospitals" to userType.hospitals.toString()
-                // TODO How to pass list of hospitals in here
+                "hospitals" to userType.hospitals
             )
             val result = documentReference.set(map)
             withTimeout(3000) {
@@ -811,11 +810,10 @@ class  AppFirebaseApi(
     suspend fun createUserTypeWithId(userType: UserType): Resource<String> {
         try {
             val documentReference = firebaseFirestore.collection("user_types").document(userType.userTypeId)
-            val map: Map<String, String> = mapOf(
+            val map = hashMapOf(
                 "userTypeId" to userType.userTypeId,
                 "userTypeName" to userType.userTypeName,
-                "hospitals" to userType.hospitals.toString()
-                // TODO How to pass list of hospitals in here
+                "hospitals" to userType.hospitals
             )
             val result = documentReference.set(map)
             withTimeout(3000) {

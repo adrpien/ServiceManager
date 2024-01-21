@@ -71,7 +71,7 @@ fun TechnicianListManagerScreen(
     }
 
     val addTechnicianDialogState = rememberMaterialDialogState()
-    val addTechnicianState = remember { mutableStateOf(DefaultTextFieldState(hint = "Technician name")) }
+    val technicianState = remember { mutableStateOf(DefaultTextFieldState(hint = "Technician name")) }
 
 
     LaunchedEffect(key1 = true) {
@@ -177,10 +177,10 @@ fun TechnicianListManagerScreen(
                                 viewModel.onEvent(TechnicianListManagerEvent.AddTechnician(
                                     Technician(
                                         technicianId = "0",
-                                        name = addTechnicianState.value.value
+                                        name = technicianState.value.value
                                     )
                                 ))
-                                addTechnicianState.value = addTechnicianState.value.copy(value = "")
+                                technicianState.value = technicianState.value.copy(value = "")
                             }
                         )
                         negativeButton(
@@ -189,7 +189,7 @@ fun TechnicianListManagerScreen(
                                 color = MaterialTheme.colorScheme.onSecondary
                             ),
                             onClick = {
-                                addTechnicianState.value = addTechnicianState.value.copy(value = "")
+                                technicianState.value = technicianState.value.copy(value = "")
                             }
                         )
                     }
@@ -205,10 +205,10 @@ fun TechnicianListManagerScreen(
                                 Spacer(modifier = Modifier.height(8.dp))
                                 DefaultTextField(
                                     onValueChanged = { string ->
-                                        addTechnicianState.value =
-                                            addTechnicianState.value.copy(value = string)
+                                        technicianState.value =
+                                            technicianState.value.copy(value = string)
                                     },
-                                    state = addTechnicianState
+                                    state = technicianState
                                 )
                             }
                         }

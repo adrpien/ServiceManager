@@ -1,9 +1,11 @@
 package com.example.feature_home_presentation.technician_list_manager
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,21 +24,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.util.UiText
 import com.example.core_ui.components.list_manager.ManagerActionListItem
 import com.example.core_ui.components.snackbar.AppSnackbar
+import com.example.core_ui.components.textfield.DefaultTextField
+import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.feature_home_presentation.R
 import com.example.feature_home_presentation.user_type_list_manager.UiEvent
 import com.example.feature_home_presentation.user_type_list_manager.UserTypeListManagerViewModel
 import com.example.feature_home_presentation.user_type_list_manager.UserTypeManagerEvent
-import com.example.feature_home_presentation.user_type_list_manager.components.UserTypeDialog
 import com.example.feature_home_presentation.user_type_list_manager.components.UserTypeManagerListItem
 import com.example.servicemanager.feature_app_domain.model.UserType
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 
@@ -50,13 +59,16 @@ fun UserTypeListManagerScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
-    val snackbarHostState = remember {
-        SnackbarHostState()
-    }
 
     val userTypeState = remember {
         mutableStateOf(UserType())
     }
+    val userTypeNameState = remember { mutableStateOf(
+        DefaultTextFieldState(
+            hint = "UserType name",
+        )
+    ) }
+
     val userTypeListState = viewModel.userTypeListState.collectAsState()
 
     LaunchedEffect(key1 = true) {
@@ -64,7 +76,10 @@ fun UserTypeListManagerScreen(
             when(event) {
                 is UiEvent.ShowSnackBar ->
                     coroutineScope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(event.message.asString(context))
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = event.message.asString(context),
+                            actionLabel = UiText.StringResource(R.string.revert_delete).asString(context)
+                        )
                     }
             }
         }
@@ -74,10 +89,11 @@ fun UserTypeListManagerScreen(
         scaffoldState = scaffoldState,
         snackbarHost = {
             SnackbarHost(
-                hostState = snackbarHostState
+                hostState = scaffoldState.snackbarHostState,
             ) {
                 AppSnackbar(
-                    data = it) {
+                    data = it,
+                    ) {
                     val lastDeleteUserType = viewModel.lastDeleteUserType
                     if(lastDeleteUserType != null) {
                         viewModel.onEvent(UserTypeManagerEvent.RevertUserType(lastDeleteUserType))
@@ -89,6 +105,7 @@ fun UserTypeListManagerScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.secondary)
                 .padding(padding)
                 .padding(8.dp)
         ) {
@@ -119,6 +136,7 @@ fun UserTypeListManagerScreen(
                             },
                             onItemClick = {
                                 userTypeState.value = userTypeListState.value[index]
+                                userTypeNameState.value = userTypeNameState.value.copy( value = userTypeListState.value[index].userTypeName )
                                 userTypeDialogState.show()
                             }
                         )
@@ -128,20 +146,61 @@ fun UserTypeListManagerScreen(
                             icon = Icons.Default.Add,
                             iconDescription = stringResource(id = R.string.add),
                         ) {
+                            userTypeNameState.value = userTypeNameState.value.copy(value = "")
                             userTypeState.value = UserType(userTypeId = "0")
                             userTypeDialogState.show()
                         }
                     }
                 }
             }
-            UserTypeDialog(
-                userType = userTypeState.value,
-                userTypeDialogState = userTypeDialogState
-            ) { userType ->
-                if(userType.userTypeId == "0") {
-                    viewModel.onEvent(UserTypeManagerEvent.AddUserType(userType))
-                } else {
-                    viewModel.onEvent(UserTypeManagerEvent.UpdateUserType(userType))
+        }
+        MaterialDialog(
+            dialogState = userTypeDialogState,
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true
+            ),
+            backgroundColor = MaterialTheme.colorScheme.primary,
+            shape = MaterialTheme.shapes.medium,
+            buttons = {
+                positiveButton(
+                    text = stringResource(R.string.confirm),
+                    textStyle = TextStyle(
+                        color = MaterialTheme.colorScheme.onSecondary
+                    ),
+                    onClick = {
+                        if(userTypeState.value.userTypeId == "0") {
+                            viewModel.onEvent(UserTypeManagerEvent.AddUserType(userTypeState.value))
+                        } else {
+                            viewModel.onEvent(UserTypeManagerEvent.UpdateUserType(userTypeState.value))
+                        }
+                    }
+                )
+                negativeButton(
+                    text = stringResource(R.string.cancel),
+                    textStyle = TextStyle(
+                        color = MaterialTheme.colorScheme.onSecondary
+                    ),
+                )
+            }
+        ) {
+            customView {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.primary),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        DefaultTextField(
+                            onValueChanged = { string ->
+                                userTypeNameState.value = userTypeNameState.value.copy(value = string)
+                                userTypeState.value = userTypeState.value.copy( userTypeName =  string)
+                            },
+                            state = userTypeNameState
+                        )
+                    }
                 }
             }
         }

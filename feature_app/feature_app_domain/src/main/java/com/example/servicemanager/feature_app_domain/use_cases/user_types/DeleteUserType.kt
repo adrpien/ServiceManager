@@ -14,7 +14,7 @@ class DeleteUserType @Inject constructor (
 
     suspend operator fun invoke(userType: UserType): Resource<String> {
         return try {
-            repository.deleteHospital(userType.userTypeId)
+            repository.deleteUserType(userType.userTypeId)
         } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,

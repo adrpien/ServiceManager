@@ -38,7 +38,10 @@ fun UserTypeDialog(
         mutableStateOf(userType)
     }
 
-    val userTypeNameTextFieldState = remember { mutableStateOf(DefaultTextFieldState(hint = "UserType name")) }
+    val userTypeNameTextFieldState = remember { mutableStateOf(DefaultTextFieldState(
+        hint = "UserType name",
+        value = userType.userTypeName
+    )) }
 
     MaterialDialog(
         dialogState = userTypeDialogState,
