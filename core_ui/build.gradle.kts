@@ -11,4 +11,5 @@ android {
 dependencies{
     implementation(project(Modules.core))
     implementation("com.google.android.material:material:1.11.0")
+    implementation(project(Modules.featureAppDomain))
 }

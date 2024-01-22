@@ -28,7 +28,7 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_li
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.example.core.util.Screen
-import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.core_ui.components.other.HospitalSelectionSection
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.UiEvent
@@ -198,30 +198,42 @@ fun InspectionListScreen(
                     ) {
 
 
-                        var itemList = inspectionListState.value.hospitalList + Hospital(
+                        var items = inspectionListState.value.hospitalList + Hospital(
                             hospitalId = "0",
                             hospital = "All"
                         )
-                        val hospitalNameList = itemList.map { it.hospital }
-                        val accessedHospitalIdList = inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }.hospitals
 
-                        itemList = itemList.filter { hospital ->
-                            accessedHospitalIdList.contains(hospital.hospitalId)
+                        var itemMap: MutableMap<Hospital, Boolean> = mutableMapOf<Hospital, Boolean>()
+                        items.forEach { hospital ->
+                            itemMap.put(hospital, inspectionListState.value.userTypeList.contains(inspectionListState.value.userType)
+                            )
                         }
 
-                        DefaultSelectionSection(
-                            itemList = itemList,
-                            nameList = hospitalNameList,
+                        HospitalSelectionSection(
+                            itemList = itemMap,
                             selectedItem = inspectionListState.value.hospital ?: Hospital(),
                             onItemChanged = {
                                 viewModel.onEvent(
                                     InspectionListEvent.FilterInspectionListByHospital(
-                                        hospital = it
+                                       hospital = it
                                     )
                                 )
-                            },
-                            enabled = true
+                            }
                         )
+
+//                        DefaultSelectionSection(
+//                            itemList = itemList,
+//                            nameList = hospitalNameList,
+//                            selectedItem = inspectionListState.value.hospital ?: Hospital(),
+//                            onItemChanged = {
+//                                viewModel.onEvent(
+//                                    InspectionListEvent.FilterInspectionListByHospital(
+//                                        hospital = it
+//                                    )
+//                                )
+//                            },
+//                            enabled = true
+//                        )
                     }
 
                     this@Column.AnimatedVisibility(

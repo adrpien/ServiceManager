@@ -37,6 +37,7 @@ class InspectionListViewModel @Inject constructor(
     private var technicianListIsLoading = true
     private var inspectionStateListIsLoading = true
     private var userTypeListIsLoading = true
+    private var userIsLoading = true
 
     private var searchJob: Job? = null
 
@@ -48,6 +49,8 @@ class InspectionListViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    val userType = inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }
+
     init {
         fetchUser()
         fetchHospitalList()
@@ -56,6 +59,21 @@ class InspectionListViewModel @Inject constructor(
         fetchInspectionStateList()
         fetchEstStateList()
         fetchInspectionList(fetchFromApi = true)
+        setUserType()
+    }
+
+    private fun setUserType() {
+        viewModelScope.launch {
+            var trigger = true
+            while (trigger){
+                if (userTypeListIsLoading == false && userIsLoading == false){
+                    _inspectionListState.value = _inspectionListState.value.copy(userType = userType)
+                    trigger = false
+                } else {
+                    delay(200)
+                }
+            }
+        }
     }
 
     //  TODO Optimize Save and update record, app is very unresponsive
@@ -403,7 +421,7 @@ class InspectionListViewModel @Inject constructor(
                         result.data?.let { user ->
                             _inspectionListState.value = _inspectionListState.value.copy(user = user )
                         }
-
+                        userIsLoading == false
                     }
                     ResourceState.LOADING -> Unit
                     ResourceState.ERROR -> Unit

@@ -12,6 +12,7 @@ import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class InspectionListState(
     val user: User = User(),
+    val userType: UserType = UserType(),
     val inspectionList: List<Inspection> = emptyList(),
     val hospitalList: List<Hospital> = emptyList(),
     val inspectionStateList: List<InspectionState> = emptyList(),
