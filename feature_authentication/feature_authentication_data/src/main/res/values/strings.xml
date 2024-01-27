@@ -6,4 +6,5 @@
     <string name="to_many_login_attemps_try_again_later">To many login attemps, try again later</string>
     <string name="current_user_logged_in">Current user logged in</string>
     <string name="current_user_not_logged_in">Current user not logged in</string>
+    <string name="check_internet_connection">Check internet connection</string>
 </resources>

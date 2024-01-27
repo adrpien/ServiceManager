@@ -4,12 +4,15 @@ import com.example.core.util.Resource
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_authentication_data.R
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
 
 class UserFirebaseApi(
     val firebaseAuth: FirebaseAuth,
@@ -21,9 +24,10 @@ class UserFirebaseApi(
         var userId: String? = null
         try {
             val reference = firebaseAuth.signInWithEmailAndPassword(mail, password)
-            val result = reference.await()
-            userId = result.user?.uid
-            if (result.user?.isEmailVerified == true) {
+            var result: AuthResult? = null
+            result = reference.await()
+            userId = result?.user?.uid
+            if (result?.user?.isEmailVerified == true) {
                 emit(
                     Resource(
                         ResourceState.SUCCESS,
@@ -55,6 +59,14 @@ class UserFirebaseApi(
                     ResourceState.ERROR,
                     userId,
                     UiText.StringResource(R.string.to_many_login_attemps_try_again_later)
+                )
+            )
+        } catch (e: FirebaseNetworkException) {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    userId,
+                    UiText.StringResource(R.string.check_internet_connection)
                 )
             )
         }

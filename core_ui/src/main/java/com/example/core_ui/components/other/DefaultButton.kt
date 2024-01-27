@@ -24,7 +24,7 @@ fun DefaultButton(
         onClick =  onClick,
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary
         ),
         border = BorderStroke(
