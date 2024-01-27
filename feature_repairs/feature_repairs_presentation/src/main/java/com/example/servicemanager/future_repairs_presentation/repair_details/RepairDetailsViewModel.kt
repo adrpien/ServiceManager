@@ -53,7 +53,6 @@ class RepairDetailsViewModel @Inject constructor(
         fetchTechnicianList()
     }
 
-    //  TODO Optimize Save and update record, app is very unresponsive
     fun onEvent(repairDetailsEvent: RepairDetailsEvent) {
         when(repairDetailsEvent) {
             is RepairDetailsEvent.UpdateRepairState -> {
@@ -68,6 +67,7 @@ class RepairDetailsViewModel @Inject constructor(
             }
             is RepairDetailsEvent.SaveRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
+                    _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                     val result = repairUseCases.saveRepair(repairDetailsState.value.repair)
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
@@ -75,13 +75,10 @@ class RepairDetailsViewModel @Inject constructor(
                                 _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
                             }
                             appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
-
                         }
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
                             if (result.data == "CONNECTION_ERROR") {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                                 appUseCases.saveSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
                             _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
@@ -91,11 +88,11 @@ class RepairDetailsViewModel @Inject constructor(
             }
             is RepairDetailsEvent.UpdateRepair -> {
                 viewModelScope.launch(Dispatchers.Main) {
+                    _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                     val result = repairUseCases.updateRepair(repairDetailsState.value.repair)
                     when(result.resourceState) {
                         ResourceState.ERROR -> {
                             if (result.data == "CONNECTION_ERROR") {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                                 appUseCases.updateSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
                             _eventFlow.emit(UiEvent.ShowSnackBar(
@@ -108,7 +105,6 @@ class RepairDetailsViewModel @Inject constructor(
                                 appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
                             appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                         }
                         ResourceState.LOADING -> Unit
                     }

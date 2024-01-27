@@ -49,7 +49,6 @@ class InspectionListViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    val userType = inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }
 
     init {
         fetchUser()
@@ -67,6 +66,7 @@ class InspectionListViewModel @Inject constructor(
             var trigger = true
             while (trigger){
                 if (userTypeListIsLoading == false && userIsLoading == false){
+                    val userType = inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }
                     _inspectionListState.value = _inspectionListState.value.copy(userType = userType)
                     trigger = false
                 } else {
@@ -76,7 +76,6 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 
-    //  TODO Optimize Save and update record, app is very unresponsive
     fun onEvent(event: InspectionListEvent) {
         when(event) {
             is InspectionListEvent.OnSearchQueryChange -> {
@@ -113,7 +112,6 @@ class InspectionListViewModel @Inject constructor(
                     hospitalFilter = inspectionListState.value.hospital
                 )
             }
-
             is InspectionListEvent.ToggleSortSectionVisibility -> {
                 _inspectionListState.value = _inspectionListState.value.copy(
                     isSortSectionVisible = !_inspectionListState.value.isSortSectionVisible
@@ -124,7 +122,6 @@ class InspectionListViewModel @Inject constructor(
                     )
                 }
             }
-
             is InspectionListEvent.ToggleOrderMonotonicity -> {
                 _inspectionListState.value = _inspectionListState.value.copy(
                     inspectionOrderType = event.inspectionOrderType
@@ -156,7 +153,6 @@ class InspectionListViewModel @Inject constructor(
                     hospitalFilter = inspectionListState.value.hospital
                 )
             }
-
             is InspectionListEvent.CopyToClipboard -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     appUseCases.copyToClipboard(

@@ -61,22 +61,20 @@ class InspectionDetailsViewModel @Inject constructor(
                     inspection = inspectionDetailsEvent.inspection
                 )
             }
-
             is InspectionDetailsEvent.UpdateSignatureState -> {
                 _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
                     signature = inspectionDetailsEvent.signature
                 )
             }
-
             is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
+                    _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                     val result =
                         inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection)
                     when (result.resourceState) {
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
                             if(result.data == "CONNECTION_ERROR") {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                                 appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                             }
                         }
@@ -90,7 +88,6 @@ class InspectionDetailsViewModel @Inject constructor(
                                 inspectionDetailsState.value.inspection.inspectionId,
                                 bitmapToByteArray(inspectionDetailsState.value.signature)
                             )
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                         }
                     }
                 }
@@ -98,13 +95,13 @@ class InspectionDetailsViewModel @Inject constructor(
             }
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
+                    _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route)) // Added here
                     val result = inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
                     when (result.resourceState) {
                         ResourceState.LOADING -> Unit
                         ResourceState.ERROR -> {
                             if(result.data == "CONNECTION_ERROR") {
                                 appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                             }
                         }
                         ResourceState.SUCCESS -> {
@@ -114,8 +111,6 @@ class InspectionDetailsViewModel @Inject constructor(
                                 )
                             }
                             appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
-                            _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
-
                         }
                     }
                 }
