@@ -26,7 +26,7 @@ class GetInspectionList @Inject constructor (
                 emit(resource.copy(
                     data = resource.data
                         ?.filter { inspection: Inspection ->
-                            accessedHospitalIdList.contains(inspection.inspectionId)
+                            accessedHospitalIdList.contains(inspection.hospitalId)
                         }
                         ?.filter { inspection ->
                             inspection.toString().lowercase().contains(searchQuery.lowercase())
@@ -42,6 +42,9 @@ class GetInspectionList @Inject constructor (
             repository.getInspectionList().map { resource ->
                 resource.copy(
                     data = resource.data
+                        ?.filter { inspection: Inspection ->
+                            accessedHospitalIdList.contains(inspection.hospitalId)
+                        }
                         ?.filter { inspection ->
                             inspection.toString().lowercase().contains(searchQuery.lowercase())
                         }
