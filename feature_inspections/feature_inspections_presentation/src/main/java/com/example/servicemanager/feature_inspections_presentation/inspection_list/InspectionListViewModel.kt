@@ -51,14 +51,14 @@ class InspectionListViewModel @Inject constructor(
 
 
     init {
-        fetchUser()
-        fetchHospitalList()
         fetchUserTypeList()
+        fetchUser()
+        setUserType()
+        fetchHospitalList()
         fetchTechnicianList()
         fetchInspectionStateList()
         fetchEstStateList()
         fetchInspectionList(fetchFromApi = true)
-        setUserType()
     }
 
     private fun setUserType() {
@@ -66,8 +66,10 @@ class InspectionListViewModel @Inject constructor(
             var trigger = true
             while (trigger){
                 if (userTypeListIsLoading == false && userIsLoading == false){
-                    val userType = inspectionListState.value.userTypeList.first { it.userTypeId == inspectionListState.value.user.userType }
-                    _inspectionListState.value = _inspectionListState.value.copy(userType = userType)
+                    val userType = inspectionListState.value.userTypeList.find { it.userTypeId == inspectionListState.value.user.userType }
+                    userType?.let {
+                        _inspectionListState.value = _inspectionListState.value.copy(userType = userType)
+                    }
                     trigger = false
                 } else {
                     delay(200)
@@ -174,41 +176,52 @@ class InspectionListViewModel @Inject constructor(
             inspectionListIsLoading = true
             setIsLoadingStatus()
             viewModelScope.launch(Dispatchers.IO) {
-            inspectionsUseCases.getInspectionList(
-                searchQuery = searchQuery,
-                fetchFromApi = fetchFromApi,
-                inspectionOrderType = inspectionOrderType,
-                hospitalFilter = hospitalFilter
-            ).collect { result ->
-                withContext(Dispatchers.Main) {
-                    when (result.resourceState) {
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { list ->
-                                _inspectionListState.value = _inspectionListState.value.copy(
-                                    inspectionList = list
-                                )
-                                inspectionListIsLoading = false
-                                setIsLoadingStatus()
+                var trigger = true
+                while (trigger) {
+                    if (userTypeListIsLoading == false && userIsLoading == false) {
+                        inspectionsUseCases.getInspectionList(
+                            searchQuery = searchQuery,
+                            fetchFromApi = fetchFromApi,
+                            inspectionOrderType = inspectionOrderType,
+                            hospitalFilter = hospitalFilter,
+                            accessedHospitalIdList = inspectionListState.value.userType.hospitals
+                        ).collect { result ->
+                            withContext(Dispatchers.Main) {
+                                when (result.resourceState) {
+                                    ResourceState.SUCCESS -> {
+                                        result.data?.let { list ->
+                                            _inspectionListState.value =
+                                                _inspectionListState.value.copy(
+                                                    inspectionList = list
+                                                )
+                                            inspectionListIsLoading = false
+                                            setIsLoadingStatus()
+                                        }
+                                    }
+
+                                    ResourceState.LOADING -> {
+                                        result.data?.let { list ->
+                                            _inspectionListState.value =
+                                                _inspectionListState.value.copy(
+                                                    inspectionList = list
+                                                )
+                                        }
+                                        inspectionListIsLoading = true
+                                        setIsLoadingStatus()
+                                    }
+
+                                    ResourceState.ERROR -> {
+                                        inspectionListIsLoading = false
+                                        setIsLoadingStatus()
+                                    }
+                                }
                             }
                         }
-
-                        ResourceState.LOADING -> {
-                            result.data?.let { list ->
-                                _inspectionListState.value = _inspectionListState.value.copy(
-                                    inspectionList = list
-                                )
-                            }
-                            inspectionListIsLoading = true
-                            setIsLoadingStatus()
-                        }
-
-                        ResourceState.ERROR -> {
-                            inspectionListIsLoading = false
-                            setIsLoadingStatus()
-                        }
+                        trigger = false
+                    } else {
+                        delay(200)
                     }
                 }
-            }
         }
     }
 
@@ -361,9 +374,9 @@ class InspectionListViewModel @Inject constructor(
                             result.data?.let {
                                 _inspectionListState.value =
                                     _inspectionListState.value.copy(userTypeList = it)
-                                userTypeListIsLoading = false
-                                setIsLoadingStatus()
                             }
+                            userTypeListIsLoading = false
+                            setIsLoadingStatus()
                         }
 
                         ResourceState.LOADING -> {
@@ -393,7 +406,8 @@ class InspectionListViewModel @Inject constructor(
             !estStateListIsLoading &&
             !technicianListIsLoading &&
             !inspectionStateListIsLoading &&
-            !userTypeListIsLoading
+            !userTypeListIsLoading &&
+            !userIsLoading
         ){
             _inspectionListState.value = _inspectionListState.value.copy(
                 isLoading = false
@@ -412,18 +426,29 @@ class InspectionListViewModel @Inject constructor(
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
         viewModelScope.launch(Dispatchers.IO) {
             appUseCases.getUser(currentUserId).collect { result ->
-                when(result.resourceState) {
-                    ResourceState.SUCCESS -> {
-                        result.data?.let { user ->
-                            _inspectionListState.value = _inspectionListState.value.copy(user = user )
+                withContext(Dispatchers.Main){
+                    when(result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { user ->
+                                _inspectionListState.value = _inspectionListState.value.copy(user = user )
+                            }
+                            userIsLoading = false
+                            setIsLoadingStatus()
                         }
-                        userIsLoading == false
+                        ResourceState.LOADING -> {
+                            result.data?.let { user ->
+                                _inspectionListState.value = _inspectionListState.value.copy(user = user )
+                            }
+                            userIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                        ResourceState.ERROR -> {
+                            userIsLoading = false
+                            setIsLoadingStatus()
+                        }
                     }
-                    ResourceState.LOADING -> Unit
-                    ResourceState.ERROR -> Unit
                 }
             }
-
         }
     }
 }

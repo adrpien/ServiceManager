@@ -17,14 +17,17 @@ class GetInspectionList @Inject constructor (
     operator fun invoke(
         hospitalFilter: Hospital? = null,
         searchQuery: String = "",
-        inspectionOrderType: InspectionOrderType = InspectionOrderType.State(
-            InspectionOrderMonotonicity.Ascending),
-        fetchFromApi: Boolean = false
+        inspectionOrderType: InspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending),
+        fetchFromApi: Boolean = false,
+        accessedHospitalIdList: List<String> = emptyList()
     ): Flow<Resource<List<Inspection>>> {
         return if(fetchFromApi == false) {
-            flow<Resource<List<Inspection>>> { val resource = repository.getInspectionListFromLocal()
+            flow { val resource = repository.getInspectionListFromLocal()
                 emit(resource.copy(
                     data = resource.data
+                        ?.filter { inspection: Inspection ->
+                            accessedHospitalIdList.contains(inspection.inspectionId)
+                        }
                         ?.filter { inspection ->
                             inspection.toString().lowercase().contains(searchQuery.lowercase())
                         }

@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                 // LoginNavigation()
 
                 // Only for testing
-                MainScreenNavigation("cfHe435VFDacZkYPp7pa")
+                MainScreenNavigation("23YCWsqHYSHyU6JEFU24")
             }
 
         }
