@@ -18,13 +18,17 @@ class GetRepairList @Inject constructor (
         hospitalFilter: Hospital? = null,
         searchQuery: String = "",
         repairOrderType: RepairOrderType = RepairOrderType.State(RepairOrderMonotonicity.Ascending),
-        fetchFromApi: Boolean = false
+        fetchFromApi: Boolean = false,
+        accessedHospitalIdList: List<String> = emptyList()
     ): Flow<Resource<List<Repair>>> {
         return if(fetchFromApi == false) {
             flow<Resource<List<Repair>>> {
                 val resource = repository.getRepairListFromLocal()
                 emit(resource.copy(
                     data = resource.data
+                        ?.filter { repair: Repair ->
+                            accessedHospitalIdList.contains(repair.hospitalId)
+                        }
                         ?.filter { repair ->
                             repair.toString().lowercase().contains(searchQuery.lowercase())
                         }
@@ -41,6 +45,9 @@ class GetRepairList @Inject constructor (
             repository.getRepairList().map { resource ->
                 resource.copy(
                     data = resource.data
+                        ?.filter { repair: Repair ->
+                            accessedHospitalIdList.contains(repair.hospitalId)
+                        }
                         ?.filter { repair ->
                             repair.toString().lowercase().contains(searchQuery.lowercase())
                         }

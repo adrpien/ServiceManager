@@ -152,7 +152,7 @@ class InspectionListViewModel @Inject constructor(
                     fetchFromApi = false,
                     inspectionOrderType = inspectionListState.value.inspectionOrderType,
                     searchQuery = inspectionListState.value.searchQuery,
-                    hospitalFilter = inspectionListState.value.hospital
+                    hospitalFilter = if(event.hospital.hospitalId != "0") inspectionListState.value.hospital else null
                 )
             }
             is InspectionListEvent.CopyToClipboard -> {

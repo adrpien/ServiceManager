@@ -206,9 +206,9 @@ fun InspectionListScreen(
 
                         var itemMap: MutableMap<Hospital, Boolean> = mutableMapOf<Hospital, Boolean>()
                         items.forEach { hospital ->
-                            val isEnabled = inspectionListState.value.userType.hospitals.contains(hospital.hospitalId)
-                            itemMap.put(hospital, isEnabled
-                            )
+                            var isEnabled = inspectionListState.value.userType.hospitals.contains(hospital.hospitalId)
+                            if(hospital.hospitalId == "0") isEnabled = true
+                            itemMap.put(hospital, isEnabled)
                         }
 
                         HospitalSelectionSection(

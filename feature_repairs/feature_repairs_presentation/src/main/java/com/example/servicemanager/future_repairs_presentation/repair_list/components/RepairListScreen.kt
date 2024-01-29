@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Screen
 import com.example.core_ui.components.other.DefaultSelectionSection
+import com.example.core_ui.components.other.HospitalSelectionSection
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.model.Hospital
@@ -188,14 +189,21 @@ fun RepairListScreen(
                     enter = fadeIn() + slideInVertically(),
                     exit = fadeOut() + slideOutVertically()
                 ) {
-                    val itemList = repairListState.value.hospitalList + Hospital(
+
+                    var items = repairListState.value.hospitalList + Hospital(
                         hospitalId = "0",
-                        hospital = stringResource(R.string.all)
+                        hospital = "All"
                     )
-                    val nameList = itemList.map { it.hospital }
-                    DefaultSelectionSection(
-                        itemList = itemList,
-                        nameList = nameList,
+
+                    var itemMap: MutableMap<Hospital, Boolean> = mutableMapOf<Hospital, Boolean>()
+                    items.forEach { hospital ->
+                        var isEnabled = repairListState.value.userType.hospitals.contains(hospital.hospitalId)
+                        if(hospital.hospitalId == "0") isEnabled = true
+                        itemMap.put(hospital, isEnabled)
+                    }
+
+                    HospitalSelectionSection(
+                        itemList = itemMap,
                         selectedItem = repairListState.value.hospital ?: Hospital(),
                         onItemChanged = {
                             viewModel.onEvent(
@@ -203,8 +211,7 @@ fun RepairListScreen(
                                     hospital = it
                                 )
                             )
-                        },
-                        enabled = true
+                        }
                     )
                 }
                 this@Column.AnimatedVisibility(
