@@ -2,6 +2,7 @@ package com.example.servicemanager.future_repairs_presentation.repair_list
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RepairListViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val repairsUseCases: RepairUseCases,
     private val appUseCases: AppUseCases
 ): ViewModel() {
@@ -34,6 +36,10 @@ class RepairListViewModel @Inject constructor(
     private var estStateListIsLoading = true
     private var technicianListIsLoading = true
     private var repairStateListIsLoading = true
+    private var userTypeListIsLoading = true
+    private var userIsLoading = true
+
+    private lateinit var currentUserId: String
 
     private var searchJob: Job? = null
 
@@ -46,6 +52,9 @@ class RepairListViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
+        fetchUserTypeList()
+        fetchUser()
+        setUserType()
         fetchHospitalList()
         fetchTechnicianList()
         fetchRepairStateList()
@@ -352,8 +361,86 @@ class RepairListViewModel @Inject constructor(
     }
 
     // TODO Fetching user to implement
-    // xTODO User limitations to implement
+    private fun fetchUser() {
+        currentUserId = savedStateHandle.get<String>("userId") ?: "0"
+        viewModelScope.launch(Dispatchers.IO) {
+            appUseCases.getUser(currentUserId).collect { result ->
+                withContext(Dispatchers.Main){
+                    when(result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { user ->
+                                _repairListState.value = _repairListState.value.copy(user = user )
+                            }
+                            userIsLoading = false
+                            setIsLoadingStatus()
+                        }
+                        ResourceState.LOADING -> {
+                            result.data?.let { user ->
+                                _repairListState.value = _repairListState.value.copy(user = user )
+                            }
+                            userIsLoading = true
+                            setIsLoadingStatus()
+                        }
+                        ResourceState.ERROR -> {
+                            userIsLoading = false
+                            setIsLoadingStatus()
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private fun fetchUserTypeList() {
+        viewModelScope.launch(Dispatchers.IO) {
+            appUseCases.getUserTypeList().collect { result ->
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let {
+                                _repairListState.value =
+                                    _repairListState.value.copy(userTypeList = it)
+                            }
+                            userTypeListIsLoading = false
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.LOADING -> {
+                            result.data?.let {
+                                _repairListState.value =
+                                    _repairListState.value.copy(userTypeList = it)
+
+                            }
+                            userTypeListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
+                            userTypeListIsLoading = false
+                            setIsLoadingStatus()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUserType() {
+        viewModelScope.launch {
+            var trigger = true
+            while (trigger){
+                if (userTypeListIsLoading == false && userIsLoading == false){
+                    val userType = repairListState.value.userTypeList.find { it.userTypeId == repairListState.value.user.userType }
+                    userType?.let {
+                        _repairListState.value = _repairListState.value.copy(userType = userType)
+                    }
+                    trigger = false
+                } else {
+                    delay(200)
+                }
+            }
+        }
+    }
 
     sealed class UiEvent {
         data class ShowSnackbar(val message: UiText): UiEvent()

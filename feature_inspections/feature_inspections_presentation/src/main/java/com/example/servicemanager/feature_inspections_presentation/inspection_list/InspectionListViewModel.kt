@@ -420,8 +420,6 @@ class InspectionListViewModel @Inject constructor(
         }
     }
 
-    // TODO need to implement handling error state
-    // TODO User limitations to implement
     private fun fetchUser() {
         currentUserId = savedStateHandle.get<String>("userId") ?: "0"
         viewModelScope.launch(Dispatchers.IO) {

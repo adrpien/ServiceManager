@@ -222,20 +222,6 @@ fun InspectionListScreen(
                                 )
                             }
                         )
-
-//                        DefaultSelectionSection(
-//                            itemList = itemList,
-//                            nameList = hospitalNameList,
-//                            selectedItem = inspectionListState.value.hospital ?: Hospital(),
-//                            onItemChanged = {
-//                                viewModel.onEvent(
-//                                    InspectionListEvent.FilterInspectionListByHospital(
-//                                        hospital = it
-//                                    )
-//                                )
-//                            },
-//                            enabled = true
-//                        )
                     }
 
                     this@Column.AnimatedVisibility(
