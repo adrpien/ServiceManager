@@ -8,8 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-
+import com.google.android.material.color.MaterialColors
 
 
 @Composable
@@ -26,7 +27,8 @@ fun DefaultRadioButton(
     ) {
         Button(
             modifier = Modifier
-                .padding(4.dp),
+                .padding(4.dp)
+                .alpha(if(isClickable) 1.0f else 0.5f),
             onClick = onClick,
             shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(
@@ -42,7 +44,8 @@ fun DefaultRadioButton(
         ) {
             Text(
                 text = title,
-                color = if(selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                color = if(selected) MaterialTheme.colorScheme.onPrimary
+                else MaterialTheme.colorScheme.onSecondary
             )
         }
     }

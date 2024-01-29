@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -205,7 +206,8 @@ fun InspectionListScreen(
 
                         var itemMap: MutableMap<Hospital, Boolean> = mutableMapOf<Hospital, Boolean>()
                         items.forEach { hospital ->
-                            itemMap.put(hospital, inspectionListState.value.userTypeList.contains(inspectionListState.value.userType)
+                            val isEnabled = inspectionListState.value.userType.hospitals.contains(hospital.hospitalId)
+                            itemMap.put(hospital, isEnabled
                             )
                         }
 
@@ -265,4 +267,5 @@ fun InspectionListScreen(
         }
     }
 }
+
 
