@@ -36,7 +36,7 @@ fun MainScreenNavigationContent(
             arguments = listOf(
                 navArgument(name = "userId") {
                     type = NavType.StringType
-                    defaultValue = "0"
+                    defaultValue = userId
                     nullable = false
                 }
             )
@@ -67,7 +67,7 @@ fun MainScreenNavigationContent(
             arguments = listOf(
                 navArgument(name = "userId") {
                     type = NavType.StringType
-                    defaultValue = "0"
+                    defaultValue = userId
                     nullable = false
                 }
             )
@@ -97,7 +97,7 @@ fun MainScreenNavigationContent(
             arguments = listOf(
                 navArgument(name = "userId") {
                     type = NavType.StringType
-                    defaultValue = "0"
+                    defaultValue = userId
                     nullable = false
                 }
             )

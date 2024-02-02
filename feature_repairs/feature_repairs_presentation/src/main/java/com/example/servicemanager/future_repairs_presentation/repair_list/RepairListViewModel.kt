@@ -38,8 +38,10 @@ class RepairListViewModel @Inject constructor(
     private var repairStateListIsLoading = true
     private var userTypeListIsLoading = true
     private var userIsLoading = true
+    private var userTypeIsLoading = true
 
     private lateinit var currentUserId: String
+
 
     private var searchJob: Job? = null
 
@@ -51,14 +53,18 @@ class RepairListViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    companion object {
+        private const val FETCH_DELAY = 200L
+    }
+
     init {
-        fetchUserTypeList()
-        fetchUser()
-        setUserType()
         fetchHospitalList()
         fetchTechnicianList()
         fetchRepairStateList()
         fetchEstStateList()
+        fetchUserTypeList()
+        fetchUser()
+        setUserType()
         fetchRepairList(fetchFromApi = true)
     }
 
@@ -165,7 +171,11 @@ class RepairListViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 var trigger = true
                 while (trigger) {
-                    if (userTypeListIsLoading == false && userIsLoading == false) {
+                    if (
+                        !userTypeListIsLoading &&
+                        !userIsLoading &&
+                        !userTypeIsLoading
+                        ) {
                         repairsUseCases.getRepairList(
                             searchQuery = searchQuery,
                             fetchFromApi = fetchFromApi,
@@ -204,7 +214,7 @@ class RepairListViewModel @Inject constructor(
                         }
                         trigger = false
                     } else {
-                        delay(200)
+                        delay(FETCH_DELAY)
                     }
                 }
             }
@@ -358,7 +368,9 @@ class RepairListViewModel @Inject constructor(
             !technicianListIsLoading &&
             !repairStateListIsLoading &&
             !userIsLoading &&
-            !userTypeListIsLoading
+            !userTypeListIsLoading &&
+            !userTypeIsLoading
+
         ){
             _repairListState.value = _repairListState.value.copy(
                 isLoading = false
@@ -379,14 +391,14 @@ class RepairListViewModel @Inject constructor(
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
                             result.data?.let { user ->
-                                _repairListState.value = _repairListState.value.copy(user = user )
+                                _repairListState.value = _repairListState.value.copy( user = user )
                             }
                             userIsLoading = false
                             setIsLoadingStatus()
                         }
                         ResourceState.LOADING -> {
                             result.data?.let { user ->
-                                _repairListState.value = _repairListState.value.copy(user = user )
+                                _repairListState.value = _repairListState.value.copy( user = user )
                             }
                             userIsLoading = true
                             setIsLoadingStatus()
@@ -445,8 +457,10 @@ class RepairListViewModel @Inject constructor(
                         _repairListState.value = _repairListState.value.copy(userType = userType)
                     }
                     trigger = false
+                    userTypeIsLoading = false
+                    setIsLoadingStatus()
                 } else {
-                    delay(200)
+                    delay(FETCH_DELAY)
                 }
             }
         }

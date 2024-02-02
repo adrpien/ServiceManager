@@ -41,11 +41,6 @@ class UserLoginViewModel @Inject constructor(
                                         )
                             }
                             ResourceState.SUCCESS -> {
-                                if (result.data != null) {
-                                    _userLoginState.value = _userLoginState.value.copy(
-                                        userId = result.data.toString()
-                                    )
-                                }
                                 _eventFlow.emit(UiEvent.Authenticate(_userLoginState.value.userId))
                             }
                         }
@@ -63,6 +58,7 @@ class UserLoginViewModel @Inject constructor(
                     val result = authenticationUseCases.getCurrentUser()
                     when(result.resourceState) {
                         ResourceState.SUCCESS -> {
+                            _userLoginState.value = userLoginState.value.copy(userId = result.data ?: "0")
                             _eventFlow.emit(UiEvent.Authenticate(result.data ?: "0"))
                         }
                         ResourceState.ERROR -> Unit

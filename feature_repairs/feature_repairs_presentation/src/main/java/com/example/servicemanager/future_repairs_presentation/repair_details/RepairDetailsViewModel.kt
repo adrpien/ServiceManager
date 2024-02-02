@@ -46,11 +46,11 @@ class RepairDetailsViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        fetchRepair()
         fetchHospitalList()
         fetchEstStateList()
         fetchRepairStateList()
         fetchTechnicianList()
+        fetchRepair()
     }
 
     fun onEvent(repairDetailsEvent: RepairDetailsEvent) {

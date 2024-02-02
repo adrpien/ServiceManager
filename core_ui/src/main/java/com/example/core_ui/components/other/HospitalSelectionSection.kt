@@ -16,7 +16,7 @@ import com.example.servicemanager.feature_app_domain.model.Hospital
 fun HospitalSelectionSection(
     modifier: Modifier = Modifier,
     itemList: Map<Hospital, Boolean>,
-    selectedItem: Hospital,
+    selectedItem: Hospital = itemList.toList().last().first,
     onItemChanged: (Hospital) -> Unit,
 ) {
 

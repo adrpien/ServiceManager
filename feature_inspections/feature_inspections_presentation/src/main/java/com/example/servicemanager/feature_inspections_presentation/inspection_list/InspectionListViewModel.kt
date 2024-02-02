@@ -38,6 +38,7 @@ class InspectionListViewModel @Inject constructor(
     private var inspectionStateListIsLoading = true
     private var userTypeListIsLoading = true
     private var userIsLoading = true
+    private var userTypeIsLoading = true
 
     private var searchJob: Job? = null
 
@@ -49,15 +50,18 @@ class InspectionListViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    companion object {
+        private const val FETCH_DELAY = 200L
+    }
 
     init {
-        fetchUserTypeList()
-        fetchUser()
-        setUserType()
         fetchHospitalList()
         fetchTechnicianList()
         fetchInspectionStateList()
         fetchEstStateList()
+        fetchUserTypeList()
+        fetchUser()
+        setUserType()
         fetchInspectionList(fetchFromApi = true)
     }
 
@@ -70,9 +74,11 @@ class InspectionListViewModel @Inject constructor(
                     userType?.let {
                         _inspectionListState.value = _inspectionListState.value.copy(userType = userType)
                     }
+                    userTypeIsLoading = false
+                    setIsLoadingStatus()
                     trigger = false
                 } else {
-                    delay(200)
+                    delay(FETCH_DELAY)
                 }
             }
         }
@@ -178,7 +184,11 @@ class InspectionListViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 var trigger = true
                 while (trigger) {
-                    if (userTypeListIsLoading == false && userIsLoading == false) {
+                    if (
+                        !userTypeListIsLoading &&
+                        !userIsLoading &&
+                        !userTypeIsLoading
+                        ) {
                         inspectionsUseCases.getInspectionList(
                             searchQuery = searchQuery,
                             fetchFromApi = fetchFromApi,
@@ -219,7 +229,7 @@ class InspectionListViewModel @Inject constructor(
                         }
                         trigger = false
                     } else {
-                        delay(200)
+                        delay(FETCH_DELAY)
                     }
                 }
         }
@@ -407,8 +417,9 @@ class InspectionListViewModel @Inject constructor(
             !technicianListIsLoading &&
             !inspectionStateListIsLoading &&
             !userTypeListIsLoading &&
-            !userIsLoading
-        ){
+            !userIsLoading &&
+            !userTypeListIsLoading
+                ){
             _inspectionListState.value = _inspectionListState.value.copy(
                 isLoading = false
             )

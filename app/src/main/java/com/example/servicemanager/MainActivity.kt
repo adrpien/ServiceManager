@@ -66,10 +66,11 @@ class MainActivity : ComponentActivity() {
 /* ******************************** Content ***************************************************** */
         setContent {
             ServiceManagerTheme(appPreferences) {
-                // LoginNavigation()
+
+                LoginNavigation()
 
                 // Only for testing
-                MainScreenNavigation("23YCWsqHYSHyU6JEFU24")
+                // MainScreenNavigation("23YCWsqHYSHyU6JEFU24")
             }
 
         }

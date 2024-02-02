@@ -47,11 +47,11 @@ class InspectionDetailsViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        fetchInspection()
         fetchHospitalList()
         fetchEstStateList()
         fetchInspectionStateList()
         fetchTechnicianList()
+        fetchInspection()
     }
 
     fun onEvent(inspectionDetailsEvent: InspectionDetailsEvent) {

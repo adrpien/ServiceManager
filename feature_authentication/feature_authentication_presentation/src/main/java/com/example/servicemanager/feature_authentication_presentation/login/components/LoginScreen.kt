@@ -84,7 +84,6 @@ fun LoginScreen(
             SnackbarHost(hostState = scaffoldState.snackbarHostState) {
                 AppSnackbar(
                     data = it,
-                    // can be mutableState here, but for me like this is ok
                     onActionClick = {
                         it.dismiss()
                     }
