@@ -542,7 +542,8 @@ fun InspectionDetailsScreen(
 
                 },
                 onDismiss = {
-                    exitDialogState.hide()
+                    viewModel.onEvent(InspectionDetailsEvent.SetIsInEditMode(false))
+                    navHostController.popBackStack()
                 }
             )
             DefaultDatePickerDialog(

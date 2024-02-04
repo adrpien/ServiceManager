@@ -19,6 +19,7 @@ class  UserRepositoryImplementation(
     return userFirebaseApi.authenticate(mail, password)
     }
 
+    // TODO need to repair issue with handling offline situations
     override suspend fun getCurrentUser(): Resource<String> {
         var data: String
         data = userFirebaseApi.getCurrentUser() ?: "0"

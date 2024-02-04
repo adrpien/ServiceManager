@@ -77,6 +77,7 @@ class InspectionDetailsViewModel @Inject constructor(
                             if(result.data == "CONNECTION_ERROR") {
                                 appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                             }
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
                         }
                         ResourceState.SUCCESS -> {
                             result.data?.let { inspectionId ->
@@ -103,6 +104,7 @@ class InspectionDetailsViewModel @Inject constructor(
                             if(result.data == "CONNECTION_ERROR") {
                                 appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
                             }
+                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
                         }
                         ResourceState.SUCCESS -> {
                             result.data?.let { inspectionId ->

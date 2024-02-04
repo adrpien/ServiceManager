@@ -780,9 +780,12 @@ fun RepairDetailsScreen(
                             )
                         )
                     }
+                    viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))
+                    navHostController.popBackStack()
                             },
                 onDismiss = {
-                    exitDialogState.hide()
+                    viewModel.onEvent(RepairDetailsEvent.SetIsInEditMode(false))
+                    navHostController.popBackStack()
                 })
             SignatureDialog(signatureDialogState = signatureDialogState) {
                 viewModel.onEvent(RepairDetailsEvent.UpdateSignatureState(it))
