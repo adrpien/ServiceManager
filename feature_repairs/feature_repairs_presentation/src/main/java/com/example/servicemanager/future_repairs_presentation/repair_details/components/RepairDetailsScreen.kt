@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.Today
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -65,17 +66,31 @@ fun RepairDetailsScreen(
 /* ********************** DIALOGS *************************************************************** */
     val repairingDateDialogState = rememberMaterialDialogState()
     val repairingDateState = remember {
-        mutableStateOf(LocalDate.now())
+        mutableStateOf(
+        Instant.ofEpochMilli(repairDetailsState.value.repair.repairingDate.toLong())
+            .atZone(
+                ZoneId.systemDefault()
+            ).toLocalDate()
+        )
     }
 
     val openingDateDialogState = rememberMaterialDialogState()
     val openingDateState = remember {
-        mutableStateOf(LocalDate.now())
+        mutableStateOf(Instant.ofEpochMilli(repairDetailsState.value.repair.openingDate.toLong())
+            .atZone(
+                ZoneId.systemDefault()
+            ).toLocalDate()
+        )
     }
 
     val returningDateDialogState = rememberMaterialDialogState()
     val returningDateState = remember {
-        mutableStateOf(LocalDate.now())
+        mutableStateOf(
+            Instant.ofEpochMilli(repairDetailsState.value.repair.closingDate.toLong())
+                .atZone(
+                    ZoneId.systemDefault()
+                ).toLocalDate()
+        )
     }
 
     val exitDialogState = rememberMaterialDialogState()
@@ -318,13 +333,40 @@ fun RepairDetailsScreen(
         ) {
 
 /* ********************** OPENING DATE  ********************************************************* */
-
-            DefaultDateButton(
-                dateLong = repairDetailsState.value.repair.openingDate.toLong(),
-                onClick = { openingDateDialogState.show() },
-                enabled = isInEditMode,
-                precedingTextSource = R.string.opening_date
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DefaultDateButton(
+                    modifier = Modifier.weight(1f),
+                    dateLong = repairDetailsState.value.repair.openingDate.toLong(),
+                    onClick = { openingDateDialogState.show() },
+                    enabled = isInEditMode,
+                    precedingTextSource = R.string.opening_date
+                )
+                Icon(
+                    imageVector = Icons.Default.Today,
+                    contentDescription = "Today",
+                    modifier = if (repairDetailsState.value.isInEditMode) {
+                        Modifier
+                            .padding(end = 8.dp)
+                            .clickable {
+                                viewModel.onEvent(
+                                    RepairDetailsEvent.UpdateRepairState(
+                                        repairDetailsState.value.repair.copy(
+                                            openingDate = System.currentTimeMillis().toString()
+                                        )
+                                    )
+                                )
+                            }
+                    } else {
+                        Modifier.padding(end = 8.dp)
+                    }
+                        .padding(end = 8.dp),
+                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                )
+            }
 
             /* ********************** PICKUP TECHNICIAN  **************************************************** */
 
@@ -565,13 +607,40 @@ fun RepairDetailsScreen(
             )
 
             /* ********************** REPAIRING DATE  ******************************************************* */
-
-            DefaultDateButton(
-                dateLong = repairDetailsState.value.repair.repairingDate.toLong(),
-                onClick = { repairingDateDialogState.show() },
-                enabled = isInEditMode,
-                precedingTextSource = R.string.repairing_date
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DefaultDateButton(
+                    modifier = Modifier.weight(1f),
+                    dateLong = repairDetailsState.value.repair.repairingDate.toLong(),
+                    onClick = { repairingDateDialogState.show() },
+                    enabled = isInEditMode,
+                    precedingTextSource = R.string.repairing_date
+                )
+                Icon(
+                    imageVector = Icons.Default.Today,
+                    contentDescription = "Today",
+                    modifier = if (repairDetailsState.value.isInEditMode) {
+                        Modifier
+                            .padding(end = 8.dp)
+                            .clickable {
+                                viewModel.onEvent(
+                                    RepairDetailsEvent.UpdateRepairState(
+                                        repairDetailsState.value.repair.copy(
+                                            repairingDate = System.currentTimeMillis().toString()
+                                        )
+                                    )
+                                )
+                            }
+                    } else {
+                        Modifier.padding(end = 8.dp)
+                    }
+                        .padding(end = 8.dp),
+                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                )
+            }
 
             /* ********************** RESULT  *************************************************************** */
             Text(
@@ -653,13 +722,40 @@ fun RepairDetailsScreen(
             )
 
             /* ********************** RETURNING DATE  **************************************************** */
-
-            DefaultDateButton(
-                dateLong = repairDetailsState.value.repair.closingDate.toLong(),
-                onClick = { returningDateDialogState.show() },
-                enabled = isInEditMode,
-                precedingTextSource = R.string.returning_date
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DefaultDateButton(
+                    modifier = Modifier.weight(1f),
+                    dateLong = repairDetailsState.value.repair.closingDate.toLong(),
+                    onClick = { returningDateDialogState.show() },
+                    enabled = isInEditMode,
+                    precedingTextSource = R.string.returning_date
+                )
+                Icon(
+                    imageVector = Icons.Default.Today,
+                    contentDescription = "Today",
+                    modifier = if (repairDetailsState.value.isInEditMode) {
+                        Modifier
+                            .padding(end = 8.dp)
+                            .clickable {
+                                viewModel.onEvent(
+                                    RepairDetailsEvent.UpdateRepairState(
+                                        repairDetailsState.value.repair.copy(
+                                            closingDate = System.currentTimeMillis().toString()
+                                        )
+                                    )
+                                )
+                            }
+                    } else {
+                        Modifier.padding(end = 8.dp)
+                    }
+                        .padding(end = 8.dp),
+                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                )
+            }
 
             /* ********************** RECIPIENT  ******************************************************** */
 

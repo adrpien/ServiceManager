@@ -1,7 +1,13 @@
 package com.example.core_ui.components.alert_dialogs
 
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.window.DialogProperties
@@ -11,6 +17,7 @@ import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.DatePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import java.time.LocalDate
+import java.util.Locale
 
 @Composable
 fun DefaultDatePickerDialog(
@@ -21,6 +28,8 @@ fun DefaultDatePickerDialog(
 
 ) {
 
+    var selectedDate by remember { mutableStateOf(initialDate) }
+
     MaterialDialog(
         dialogState = dialogState,
         properties = DialogProperties(
@@ -29,20 +38,14 @@ fun DefaultDatePickerDialog(
         ),
         backgroundColor = MaterialTheme.colorScheme.secondary,
         buttons = {
-            button(
-                text = stringResource(R.string.today),
-                onClick = {
-                    // TODO DefaultDatePickerDialog "Today" onClick
-                },
-                textStyle = TextStyle(
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            )
             positiveButton(
                 text = stringResource(R.string.confirm),
                 textStyle = TextStyle(
                     color = MaterialTheme.colorScheme.onSecondary
-                )
+                ),
+                onClick = {
+                    onClick(selectedDate)
+                }
                 )
             negativeButton(
                 text = stringResource(R.string.cancel),
@@ -62,13 +65,15 @@ fun DefaultDatePickerDialog(
                 dateInactiveTextColor = MaterialTheme.colorScheme.primary,
                 dateInactiveBackgroundColor = MaterialTheme.colorScheme.onSecondary
             ),
+            locale = Locale.getDefault(),
             initialDate = initialDate,
             title = title,
+            waitForPositiveButton = false,
             allowedDateValidator = { localDate ->
                 localDate < LocalDate.now()
             },
         ){
-            onClick(it)
+            selectedDate = it
         }
     }
 

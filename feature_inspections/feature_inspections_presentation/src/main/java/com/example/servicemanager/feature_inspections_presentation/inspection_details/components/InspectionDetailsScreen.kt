@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.Today
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +41,7 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_de
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel.*
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -62,7 +65,12 @@ fun InspectionDetailsScreen(
     /* ********************** DIALOGS *************************************************************** */
     val inspectionDateDialogState = rememberMaterialDialogState()
     val inspectionDateState = remember {
-        mutableStateOf(LocalDate.now())
+        mutableStateOf(
+            Instant.ofEpochMilli(inspectionDetailsState.value.inspection.inspectionDate.toLong())
+            .atZone(
+                ZoneId.systemDefault()
+            ).toLocalDate()
+        )
     }
     val exitDialogState = rememberMaterialDialogState()
     val signatureDialogState = rememberMaterialDialogState()
@@ -479,12 +487,41 @@ fun InspectionDetailsScreen(
                 },
                 enabled = isInEditMode
             )
-            DefaultDateButton(
-                dateLong = inspectionDetailsState.value.inspection.inspectionDate.toLong(),
-                onClick = { inspectionDateDialogState.show() },
-                enabled = isInEditMode,
-                precedingTextSource = R.string.inspection_date
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DefaultDateButton(
+                    modifier = Modifier.weight(1f),
+                    dateLong = inspectionDetailsState.value.inspection.inspectionDate.toLong(),
+                    onClick = { inspectionDateDialogState.show() },
+                    enabled = isInEditMode,
+                    precedingTextSource = R.string.inspection_date
+                )
+                Icon(
+                    imageVector = Icons.Default.Today,
+                    contentDescription = "Today",
+                    modifier = if (inspectionDetailsState.value.isInEditMode) {
+                        Modifier
+                            .padding(end = 8.dp)
+                            .clickable {
+                                viewModel.onEvent(
+                                    InspectionDetailsEvent.UpdateInspectionState(
+                                        inspectionDetailsState.value.inspection.copy(
+                                            inspectionDate = System.currentTimeMillis().toString()
+                                        )
+                                    )
+                                )
+                            }
+                    } else {
+                        Modifier.padding(end = 8.dp)
+                    }
+                        .padding(end = 8.dp),
+                    tint = if (inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                )
+            }
+
             DefaultTextField(
                 onValueChanged = { string ->
                     recipient.value = recipient.value.copy(value = string)
@@ -559,7 +596,8 @@ fun InspectionDetailsScreen(
                         )
                     )
                 },
-                title = stringResource(R.string.inspection_date)
+                title = stringResource(R.string.inspection_date),
+                initialDate = inspectionDateState.value
             )
             SignatureDialog(
                 signatureDialogState = signatureDialogState,

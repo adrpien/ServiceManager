@@ -1,7 +1,6 @@
 package com.example.core_ui.components.other
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,14 +12,14 @@ import com.example.core.util.Helper
 
 @Composable
 fun DefaultDateButton(
+    modifier: Modifier = Modifier,
     dateLong: Long,
     onClick: () -> Unit,
     enabled: Boolean,
     precedingTextSource: Int
 ) {
     androidx.compose.material.Button(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .padding(8.dp),
         onClick = onClick,
         enabled = enabled,
