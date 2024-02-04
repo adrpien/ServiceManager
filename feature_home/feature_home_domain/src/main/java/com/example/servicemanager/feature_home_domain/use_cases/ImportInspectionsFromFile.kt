@@ -20,7 +20,7 @@ class ImportInspectionsFromFile @Inject constructor () {
     operator fun invoke(inputStream: InputStream): Flow<Resource<List<Inspection>>> = flow {
         emit(
             Resource(
-                ResourceState.SUCCESS,
+                ResourceState.LOADING,
                 null,
                 UiText.StringResource(R.string.importing_initiation))
         )
@@ -31,22 +31,24 @@ class ImportInspectionsFromFile @Inject constructor () {
             inputStream.use { fileInputStream ->
                 val workbook = XSSFWorkbook(fileInputStream)
                 val sheet = workbook.getSheetAt(0)
-                for(i in 1 until sheet.physicalNumberOfRows){
+                for (i in 1 .. sheet.physicalNumberOfRows - 1) {
                     val row = sheet.getRow(i)
                     val cellIterator = row.cellIterator()
-                    for (i in 0..listOfKeys.size-1){
-                        val cellValue = getStringCellValue(cellIterator.next())
-                        mapOfData.set(listOfKeys[i], cellValue)
+                    if (cellIterator.hasNext()) {
+                        for (j in 0..listOfKeys.size-1){
+                            val cellValue = getStringCellValue(cellIterator.next())
+                            mapOfData.set(listOfKeys[j], cellValue)
+                        }
+                        val inspection = mapToObject(mapOfData, Inspection::class)
+                        data.add(inspection)
+                        emit(
+                            Resource(
+                                ResourceState.LOADING,
+                                data,
+                                UiText.StringResource(R.string.found_records)
+                            )
+                        )
                     }
-                    val inspection = mapToObject(mapOfData, Inspection::class)
-                    data.add(inspection)
-                    emit(
-                        Resource(
-                            ResourceState.LOADING,
-                            data,
-                            UiText.StringResource(R.string.found_records)
-                    )
-                    )
                 }
                 workbook.close()
                 fileInputStream.close()

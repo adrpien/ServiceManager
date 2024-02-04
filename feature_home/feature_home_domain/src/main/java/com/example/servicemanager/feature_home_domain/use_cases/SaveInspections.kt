@@ -14,8 +14,8 @@ class SaveInspections @Inject constructor (
     private val repository: InspectionRepository
 ) {
     suspend operator fun invoke(inspectionList: List<Inspection>): Flow<Resource<String>> = flow {
+        var isSuccessful = true
         inspectionList.forEachIndexed { index, inspection ->
-            var isSuccessful = true
             val result = repository.insertInspection(inspection)
             when(result.resourceState) {
                 ResourceState.SUCCESS -> {
@@ -37,24 +37,23 @@ class SaveInspections @Inject constructor (
                 }
                 ResourceState.LOADING -> Unit
             }
-            if (isSuccessful){
-                emit(
-                    Resource(
-                        ResourceState.SUCCESS,
-                        null,
-                        UiText.StringResource(com.example.feature_home_domain.R.string.saving_inspections_finished_successfully)
-                    )
+        }
+        if (isSuccessful){
+            emit(
+                Resource(
+                    ResourceState.SUCCESS,
+                    null,
+                    UiText.StringResource(com.example.feature_home_domain.R.string.saving_inspections_finished_successfully)
                 )
-            } else {
-                emit(
-                    Resource(
-                        ResourceState.ERROR,
-                        null,
-                        UiText.StringResource(com.example.feature_home_domain.R.string.saving_inspections_error)
-                    )
+            )
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(com.example.feature_home_domain.R.string.saving_inspections_error)
                 )
-            }
-
+            )
         }
     }
 }

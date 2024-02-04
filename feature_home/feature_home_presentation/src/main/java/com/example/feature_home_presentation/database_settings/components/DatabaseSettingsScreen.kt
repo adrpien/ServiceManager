@@ -202,9 +202,8 @@ fun DatabaseSettingsScreen(
                     )
                 }
 
-                UiEvent.HideImportInspectionsDialogs -> {
+                UiEvent.HideImportInspectionsLoadingDialogs -> {
                     importInspectionsLoadingMaterialDialogState.hide()
-                    importInspectionMaterialDialogState.hide()
                 }
             }
         }
