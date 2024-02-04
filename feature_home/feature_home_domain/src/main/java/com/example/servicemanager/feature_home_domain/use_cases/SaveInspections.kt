@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-// TODO iteration should be  moved to repository, isSuccesful does not work as should (should bo out of forEach brakcets)
 class SaveInspections @Inject constructor (
     private val repository: InspectionRepository
 ) {
