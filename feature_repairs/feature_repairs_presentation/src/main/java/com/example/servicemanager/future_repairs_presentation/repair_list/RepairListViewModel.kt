@@ -65,7 +65,6 @@ class RepairListViewModel @Inject constructor(
         fetchUserTypeList()
         fetchUser()
         setUserType()
-        fetchRepairList(fetchFromApi = true)
     }
 
     fun onEvent(event: RepairListEvent) {
@@ -159,65 +158,52 @@ class RepairListViewModel @Inject constructor(
         }
     }
 
-
     private fun fetchRepairList(
         searchQuery: String = _repairListState.value.searchQuery.lowercase(),
         fetchFromApi: Boolean = false,
         repairOrderType: RepairOrderType = _repairListState.value.repairOrderType,
         hospitalFilter: Hospital? = null
     ) {
-            repairListIsLoading = true
-            setIsLoadingStatus()
-            viewModelScope.launch(Dispatchers.IO) {
-                var trigger = true
-                while (trigger) {
-                    if (
-                        !userTypeListIsLoading &&
-                        !userIsLoading &&
-                        !userTypeIsLoading
-                        ) {
-                        repairsUseCases.getRepairList(
-                            searchQuery = searchQuery,
-                            fetchFromApi = fetchFromApi,
-                            repairOrderType = repairOrderType,
-                            hospitalFilter = hospitalFilter,
-                            accessedHospitalIdList = repairListState.value.userType.hospitals
-                        ).collect { result ->
-                            withContext(Dispatchers.Main) {
-                                when (result.resourceState) {
-                                    ResourceState.SUCCESS -> {
-                                        result.data?.let { list ->
-                                            _repairListState.value = _repairListState.value.copy(
-                                                repairList = list
-                                            )
-                                            repairListIsLoading = false
-                                            setIsLoadingStatus()
-                                        }
-                                    }
-
-                                    ResourceState.LOADING -> {
-                                        result.data?.let { list ->
-                                            _repairListState.value = _repairListState.value.copy(
-                                                repairList = list
-                                            )
-                                        }
-                                        repairListIsLoading = true
-                                        setIsLoadingStatus()
-                                    }
-
-                                    ResourceState.ERROR -> {
-                                        repairListIsLoading = false
-                                        setIsLoadingStatus()
-                                    }
-                                }
+        repairListIsLoading = true
+        setIsLoadingStatus()
+        viewModelScope.launch(Dispatchers.IO) {
+            repairsUseCases.getRepairList(
+                searchQuery = searchQuery,
+                fetchFromApi = fetchFromApi,
+                repairOrderType = repairOrderType,
+                hospitalFilter = hospitalFilter,
+                accessedHospitalIdList = repairListState.value.userType.hospitals
+            ).collect { result ->
+                withContext(Dispatchers.Main) {
+                    when (result.resourceState) {
+                        ResourceState.SUCCESS -> {
+                            result.data?.let { list ->
+                                _repairListState.value = _repairListState.value.copy(
+                                    repairList = list
+                                )
+                                repairListIsLoading = false
+                                setIsLoadingStatus()
                             }
                         }
-                        trigger = false
-                    } else {
-                        delay(FETCH_DELAY)
+
+                        ResourceState.LOADING -> {
+                            result.data?.let { list ->
+                                _repairListState.value = _repairListState.value.copy(
+                                    repairList = list
+                                )
+                            }
+                            repairListIsLoading = true
+                            setIsLoadingStatus()
+                        }
+
+                        ResourceState.ERROR -> {
+                            repairListIsLoading = false
+                            setIsLoadingStatus()
+                        }
                     }
                 }
             }
+        }
     }
 
     private fun fetchHospitalList() {
@@ -456,6 +442,7 @@ class RepairListViewModel @Inject constructor(
                     userType?.let {
                         _repairListState.value = _repairListState.value.copy(userType = userType)
                     }
+                    fetchRepairList(fetchFromApi = true)
                     trigger = false
                     userTypeIsLoading = false
                     setIsLoadingStatus()
