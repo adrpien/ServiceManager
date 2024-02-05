@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-// TODO Clean up ap dependencies
 // TODO Add app documentation, readme, test data
 // TODO Finish app testing
 

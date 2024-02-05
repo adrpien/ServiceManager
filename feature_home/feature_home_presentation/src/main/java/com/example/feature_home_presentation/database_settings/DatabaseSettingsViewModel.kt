@@ -1,5 +1,6 @@
 package com.example.feature_home_presentation.database_settings
 
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,8 @@ import com.example.core.util.Screen
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.R
 import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
+import com.example.servicemanager.feature_inspections_domain.model.Inspection
+import com.example.servicemanager.feature_inspections_domain.util.InspectionListExtensionFunctions.Companion.verifyInspectionList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -52,11 +55,14 @@ class DatabaseSettingsViewModel @Inject constructor(
                                         _databaseSettingsState.value = _databaseSettingsState.value.copy(
                                             importedInspectionList = list
                                         )
+                                        val verificationSuccess = list.verifyInspectionList()
                                         _eventFlow.emit(UiEvent.HideImportInspectionsLoadingDialogs)
-                                        if (databaseSettingsState.value.importedInspectionList.isNotEmpty()) {
-                                            _eventFlow.emit(UiEvent.ShowImportInspectionsDialog)
-                                        } else {
+                                        if (!verificationSuccess) {
+                                            _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.wrong_data_format)))
+                                        } else if(databaseSettingsState.value.importedInspectionList.isEmpty()){
                                             _eventFlow.emit(UiEvent.ShowSnackbar(UiText.StringResource(R.string.no_records_found)))
+                                        } else {
+                                            _eventFlow.emit(UiEvent.ShowImportInspectionsDialog)
                                         }
                                     }
                                 }
@@ -92,6 +98,16 @@ class DatabaseSettingsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun verifyInspectionList(inspectionList: List<Inspection>): Boolean {
+        inspectionList.forEachIndexed() { index, inspection ->
+            // verifying conditions
+            if (inspection.deviceSn.isEmpty() && inspection.deviceIn.isEmpty()) return false
+            if (!inspection.inspectionDate.isDigitsOnly()) return false
+
+        }
+        return true
     }
 }
 

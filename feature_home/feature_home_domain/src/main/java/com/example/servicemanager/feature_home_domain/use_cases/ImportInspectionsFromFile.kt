@@ -16,7 +16,6 @@ import java.io.InputStream
 import javax.inject.Inject
 
 class ImportInspectionsFromFile @Inject constructor () {
-    // TODO Enhance this use case
     operator fun invoke(inputStream: InputStream): Flow<Resource<List<Inspection>>> = flow {
         emit(
             Resource(

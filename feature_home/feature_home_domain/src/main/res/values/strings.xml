@@ -11,5 +11,7 @@
     <string name="saving_inspections_finished_successfully">Saving inspections finished successfully</string>
     <string name="saving_inspections_error">Saving inspections error</string>
     <string name="saved_x_inspections">Saved %1$s inspections</string>
+    <string name="wrong_data_format">Wrong data format</string>
+    <string name="data_verification_failed">Data verification failed</string>
 
 </resources>

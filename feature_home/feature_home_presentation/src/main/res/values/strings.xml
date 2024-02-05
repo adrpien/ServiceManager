@@ -41,5 +41,6 @@
     <string name="manage_user_type_list">Manage UserType list</string>
     <string name="hospital_permission">Hospital permission</string>
     <string name="no_records_found">No records found</string>
+    <string name="wrong_data_format">Wrong data format</string>
 
 </resources>
