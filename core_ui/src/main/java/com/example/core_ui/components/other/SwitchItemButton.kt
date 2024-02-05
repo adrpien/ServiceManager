@@ -32,11 +32,11 @@ fun SwitchItem(
             .padding(8.dp)
             .fillMaxWidth()
             .border(
-                BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondary),
+                BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
                 MaterialTheme.shapes.medium
             )
             .clip(shape = MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colorScheme.primary),
+            .background(MaterialTheme.colorScheme.secondary),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -54,8 +54,8 @@ fun SwitchItem(
                 checked = isChecked,
                 onCheckedChange = onCheckedChanged,
                 colors = SwitchDefaults.colors(
-                    checkedBorderColor = MaterialTheme.colorScheme.primary,
-                    uncheckedBorderColor = MaterialTheme.colorScheme.primary,
+                    checkedBorderColor = MaterialTheme.colorScheme.onSecondary,
+                    uncheckedBorderColor = MaterialTheme.colorScheme.onSecondary,
                     checkedThumbColor = MaterialTheme.colorScheme.onSecondary,
                     uncheckedThumbColor = MaterialTheme.colorScheme.onSecondary,
                     uncheckedTrackColor = MaterialTheme.colorScheme.secondary,
