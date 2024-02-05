@@ -38,7 +38,7 @@ class ImportInspectionsFromFile @Inject constructor () {
                             val cellValue = getStringCellValue(cellIterator.next())
                             mapOfData.set(listOfKeys[j], cellValue)
                         }
-                        val inspection = mapToObject(mapOfData, Inspection::class)
+                        val inspection = mapToObject(mapOfData, Inspection::class).copy(inspectionId = "0")
                         data.add(inspection)
                         emit(
                             Resource(
