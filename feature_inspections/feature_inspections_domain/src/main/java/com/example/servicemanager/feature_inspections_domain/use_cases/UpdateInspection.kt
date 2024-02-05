@@ -14,7 +14,23 @@ class UpdateInspection @Inject constructor (
 
     suspend operator fun invoke(inspection: Inspection): Resource<String> {
         return try {
-            repository.updateInspection(inspection)
+            if (inspection.inspectionDate.any{ !it.isDigit() }) {
+                return Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.wrong_date_format)
+                )
+            }
+            if (inspection.deviceSn != "" && inspection.deviceIn != "") {
+                return repository.updateInspection(inspection)
+            } else {
+                return Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.textfields_device_sn_and_device_in_are_empty)
+                )
+            }
+
         } catch (e: IllegalArgumentException) {
             Resource(
                 ResourceState.ERROR,

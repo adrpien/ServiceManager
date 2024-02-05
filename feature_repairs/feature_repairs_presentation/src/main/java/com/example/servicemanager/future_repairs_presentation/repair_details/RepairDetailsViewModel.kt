@@ -10,6 +10,7 @@ import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
 import com.example.core.util.Screen
 import com.example.core.util.UiText
+import com.example.feature_repairs_presentation.R
 import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
@@ -67,46 +68,63 @@ class RepairDetailsViewModel @Inject constructor(
             }
             is RepairDetailsEvent.SaveRepair -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
                     val result = repairUseCases.saveRepair(repairDetailsState.value.repair)
-                    when(result.resourceState) {
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { repairId ->
-                                _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
+                    withContext(Dispatchers.Main) {
+                        when (result.resourceState) {
+                            ResourceState.SUCCESS -> {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                                result.data?.let { repairId ->
+                                    _repairDetailsState.value = _repairDetailsState.value.copy(
+                                        repair = _repairDetailsState.value.repair.copy(repairId = repairId)
+                                    )
+                                }
+                                appUseCases.saveSignature(
+                                    repairDetailsState.value.repair.repairId,
+                                    bitmapToByteArray(repairDetailsState.value.signature)
+                                )
                             }
-                            appUseCases.saveSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
-                        }
-                        ResourceState.LOADING -> Unit
-                        ResourceState.ERROR -> {
-                            if (result.data == "CONNECTION_ERROR") {
-                                appUseCases.saveSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
+
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> {
+                                if (result.data == "CONNECTION_ERROR") {
+                                    appUseCases.saveSignature(
+                                        repairDetailsState.value.repair.signatureId,
+                                        bitmapToByteArray(repairDetailsState.value.signature)
+                                    )
+                                }
+                                _eventFlow.emit(
+                                    UiEvent.ShowSnackBar(
+                                        result.message ?: UiText.DynamicString("Uknown error")
+                                    )
+                                )
                             }
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
                         }
                     }
                 }
             }
             is RepairDetailsEvent.UpdateRepair -> {
-                viewModelScope.launch(Dispatchers.Main) {
-                    _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                viewModelScope.launch(Dispatchers.IO) {
                     val result = repairUseCases.updateRepair(repairDetailsState.value.repair)
-                    when(result.resourceState) {
-                        ResourceState.ERROR -> {
-                            if (result.data == "CONNECTION_ERROR") {
-                                appUseCases.updateSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
+                    withContext(Dispatchers.Main) {
+                        when(result.resourceState) {
+                            ResourceState.ERROR -> {
+                                if (result.data == "CONNECTION_ERROR") {
+                                    appUseCases.updateSignature(repairDetailsState.value.repair.signatureId, bitmapToByteArray(repairDetailsState.value.signature))
+                                }
+                                _eventFlow.emit(UiEvent.ShowSnackBar(
+                                    result.message ?: UiText.DynamicString("Unknown error")
+                                ))
                             }
-                            _eventFlow.emit(UiEvent.ShowSnackBar(
-                                result.message ?: UiText.DynamicString("Unknown error")
-                            ))
-                        }
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { repairId ->
-                                _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
-                                appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))
+                            ResourceState.SUCCESS -> {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                                result.data?.let { repairId ->
+                                    _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
+                                    appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))
+                                }
+                                appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
                             }
-                            appUseCases.updateSignature(repairDetailsState.value.repair.repairId, bitmapToByteArray(repairDetailsState.value.signature))
+                            ResourceState.LOADING -> Unit
                         }
-                        ResourceState.LOADING -> Unit
                     }
                 }
             }

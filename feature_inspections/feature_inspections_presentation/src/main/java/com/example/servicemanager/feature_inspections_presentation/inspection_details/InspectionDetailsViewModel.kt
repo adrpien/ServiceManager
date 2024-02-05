@@ -68,27 +68,40 @@ class InspectionDetailsViewModel @Inject constructor(
             }
             is InspectionDetailsEvent.SaveInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
                     val result =
                         inspectionUseCases.saveInspection(inspectionDetailsState.value.inspection)
-                    when (result.resourceState) {
-                        ResourceState.LOADING -> Unit
-                        ResourceState.ERROR -> {
-                            if(result.data == "CONNECTION_ERROR") {
-                                appUseCases.saveSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
-                            }
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
-                        }
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { inspectionId ->
-                                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
+                    withContext(Dispatchers.Main) {
+                        when (result.resourceState) {
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> {
+                                if (result.data == "CONNECTION_ERROR") {
+                                    appUseCases.saveSignature(
+                                        inspectionDetailsState.value.inspection.inspectionId,
+                                        bitmapToByteArray(inspectionDetailsState.value.signature)
+                                    )
+                                }
+                                _eventFlow.emit(
+                                    UiEvent.ShowSnackBar(
+                                        result.message ?: UiText.DynamicString("Uknown error")
+                                    )
                                 )
                             }
-                            appUseCases.saveSignature(
-                                inspectionDetailsState.value.inspection.inspectionId,
-                                bitmapToByteArray(inspectionDetailsState.value.signature)
-                            )
+
+                            ResourceState.SUCCESS -> {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                                result.data?.let { inspectionId ->
+                                    _inspectionDetailsState.value =
+                                        _inspectionDetailsState.value.copy(
+                                            inspection = _inspectionDetailsState.value.inspection.copy(
+                                                inspectionId = inspectionId
+                                            )
+                                        )
+                                }
+                                appUseCases.saveSignature(
+                                    inspectionDetailsState.value.inspection.inspectionId,
+                                    bitmapToByteArray(inspectionDetailsState.value.signature)
+                                )
+                            }
                         }
                     }
                 }
@@ -96,23 +109,40 @@ class InspectionDetailsViewModel @Inject constructor(
             }
             is InspectionDetailsEvent.UpdateInspection -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route)) // Added here
-                    val result = inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
-                    when (result.resourceState) {
-                        ResourceState.LOADING -> Unit
-                        ResourceState.ERROR -> {
-                            if(result.data == "CONNECTION_ERROR") {
-                                appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
-                            }
-                            _eventFlow.emit(UiEvent.ShowSnackBar(result.message ?: UiText.DynamicString("Uknown error")))
-                        }
-                        ResourceState.SUCCESS -> {
-                            result.data?.let { inspectionId ->
-                                _inspectionDetailsState.value = _inspectionDetailsState.value.copy(
-                                    inspection =  _inspectionDetailsState.value.inspection.copy(inspectionId = inspectionId)
+                    val result =
+                        inspectionUseCases.updateInspection(inspectionDetailsState.value.inspection)
+                    withContext(Dispatchers.Main) {
+                        when (result.resourceState) {
+                            ResourceState.LOADING -> Unit
+                            ResourceState.ERROR -> {
+                                if (result.data == "CONNECTION_ERROR") {
+                                    appUseCases.updateSignature(
+                                        inspectionDetailsState.value.inspection.inspectionId,
+                                        bitmapToByteArray(inspectionDetailsState.value.signature)
+                                    )
+                                }
+                                _eventFlow.emit(
+                                    UiEvent.ShowSnackBar(
+                                        result.message ?: UiText.DynamicString("Uknown error")
+                                    )
                                 )
                             }
-                            appUseCases.updateSignature(inspectionDetailsState.value.inspection.inspectionId, bitmapToByteArray(inspectionDetailsState.value.signature))
+
+                            ResourceState.SUCCESS -> {
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route)) // Added here
+                                result.data?.let { inspectionId ->
+                                    _inspectionDetailsState.value =
+                                        _inspectionDetailsState.value.copy(
+                                            inspection = _inspectionDetailsState.value.inspection.copy(
+                                                inspectionId = inspectionId
+                                            )
+                                        )
+                                }
+                                appUseCases.updateSignature(
+                                    inspectionDetailsState.value.inspection.inspectionId,
+                                    bitmapToByteArray(inspectionDetailsState.value.signature)
+                                )
+                            }
                         }
                     }
                 }
