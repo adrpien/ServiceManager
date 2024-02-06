@@ -165,7 +165,8 @@ fun RepairListScreen(
                                     .clickable {
                                         navHostController.navigate(
                                             Screen.RepairDetailsScreen.withArgs(
-                                                repairListState.value.repairList[index].repairId
+                                                repairListState.value.repairList[index].repairId,
+                                                repairListState.value.user.userId
                                             )
                                         )
                                     },

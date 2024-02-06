@@ -72,7 +72,8 @@ class RepairDetailsViewModel @Inject constructor(
                     withContext(Dispatchers.Main) {
                         when (result.resourceState) {
                             ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                                val userId = savedStateHandle.get<String?>("userId") ?: "0"
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.withArgs(userId)))
                                 result.data?.let { repairId ->
                                     _repairDetailsState.value = _repairDetailsState.value.copy(
                                         repair = _repairDetailsState.value.repair.copy(repairId = repairId)
@@ -116,7 +117,8 @@ class RepairDetailsViewModel @Inject constructor(
                                 ))
                             }
                             ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.route))
+                                val userId = savedStateHandle.get<String?>("userId") ?: "0"
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.RepairListScreen.withArgs(userId)))
                                 result.data?.let { repairId ->
                                     _repairDetailsState.value = _repairDetailsState.value.copy(repair = _repairDetailsState.value.repair.copy(repairId = repairId))
                                     appUseCases.saveSignature(repairId, bitmapToByteArray(repairDetailsState.value.signature))

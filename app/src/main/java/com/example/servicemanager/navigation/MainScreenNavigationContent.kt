@@ -47,11 +47,16 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}",
+            route = Screen.InspectionDetailsScreen.route + "/{inspectionId}" + "/{userId}",
             arguments = listOf(
                 navArgument(name = "inspectionId") {
                     type = NavType.StringType
                     defaultValue = "0"
+                    nullable = false
+                },
+                navArgument(name = "userId") {
+                    type = NavType.StringType
+                    defaultValue = userId
                     nullable = false
                 }
 
@@ -78,11 +83,16 @@ fun MainScreenNavigationContent(
         }
 
         composable(
-            route = Screen.RepairDetailsScreen.route + "/{repairId}",
+            route = Screen.RepairDetailsScreen.route + "/{repairId}" + "/{userId}",
             arguments = listOf(
                 navArgument(name = "repairId") {
                     type = NavType.StringType
                     defaultValue = "0"
+                    nullable = false
+                },
+                navArgument(name = "userId") {
+                    type = NavType.StringType
+                    defaultValue = userId
                     nullable = false
                 }
             )

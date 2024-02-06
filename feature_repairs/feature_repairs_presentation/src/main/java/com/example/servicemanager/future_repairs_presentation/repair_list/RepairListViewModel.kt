@@ -434,7 +434,7 @@ class RepairListViewModel @Inject constructor(
     }
 
     private fun setUserType() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             var trigger = true
             while (trigger){
                 if (userTypeListIsLoading == false && userIsLoading == false){
@@ -442,10 +442,11 @@ class RepairListViewModel @Inject constructor(
                     userType?.let {
                         _repairListState.value = _repairListState.value.copy(userType = userType)
                     }
-                    fetchRepairList(fetchFromApi = true)
                     trigger = false
                     userTypeIsLoading = false
                     setIsLoadingStatus()
+                    fetchRepairList(fetchFromApi = true)
+
                 } else {
                     delay(FETCH_DELAY)
                 }

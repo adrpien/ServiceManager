@@ -166,7 +166,8 @@ fun InspectionListScreen(
                                     .clickable {
                                         navHostController.navigate(
                                             Screen.InspectionDetailsScreen.withArgs(
-                                                inspectionListState.value.inspectionList[index].inspectionId
+                                                inspectionListState.value.inspectionList[index].inspectionId,
+                                                inspectionListState.value.user.userId
                                             )
                                         )
                                     },

@@ -261,7 +261,7 @@ fun RepairDetailsScreen(
                 }
                 is UiEvent.NavigateTo -> {
                     navHostController.popBackStack()
-                    navHostController.navigate(event.route + "/{userId}")
+                    navHostController.navigate(event.route)
                 }
                 is UiEvent.SetFieldsIsEditable -> {
                     deviceName.value = deviceName.value.copy(clickable = event.value)

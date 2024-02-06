@@ -88,7 +88,8 @@ class InspectionDetailsViewModel @Inject constructor(
                             }
 
                             ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route))
+                                val userId = savedStateHandle.get<String?>("userId") ?: "0"
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.withArgs(userId)))
                                 result.data?.let { inspectionId ->
                                     _inspectionDetailsState.value =
                                         _inspectionDetailsState.value.copy(
@@ -129,7 +130,8 @@ class InspectionDetailsViewModel @Inject constructor(
                             }
 
                             ResourceState.SUCCESS -> {
-                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.route)) // Added here
+                                val userId = savedStateHandle.get<String?>("userId") ?: "0"
+                                _eventFlow.emit(UiEvent.NavigateTo(Screen.InspectionListScreen.withArgs(userId)))
                                 result.data?.let { inspectionId ->
                                     _inspectionDetailsState.value =
                                         _inspectionDetailsState.value.copy(

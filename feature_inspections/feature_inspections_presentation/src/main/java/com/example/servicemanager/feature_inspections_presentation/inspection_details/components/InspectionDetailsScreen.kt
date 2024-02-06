@@ -199,7 +199,7 @@ fun InspectionDetailsScreen(
 
                 is UiEvent.NavigateTo -> {
                     navHostController.popBackStack()
-                    navHostController.navigate(event.route + "/{userId}")
+                    navHostController.navigate(event.route)
                 }
 
                 is UiEvent.SetFieldsIsEditable -> {
