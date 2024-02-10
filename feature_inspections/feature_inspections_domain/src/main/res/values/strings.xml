@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="get_inspection_unknown_error">Unknown error</string>
-    <string name="textfields_device_sn_and_device_in_are_empty">Field Sn or In is empty</string>
+    <string name="sn_and_in_can_not_be_empty">Sn or in can not be empty</string>
     <string name="inspection_update_unknown_error">Unknown error</string>
     <string name="unknown_error">Unknown error</string>
     <string name="wrong_date_format">Wrong date format</string>

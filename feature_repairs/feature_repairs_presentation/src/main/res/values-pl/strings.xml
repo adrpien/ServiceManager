@@ -7,8 +7,8 @@
     <string name="all">Wszystkie</string>
     <string name="state">Stan</string>
     <string name="date">Data</string>
-    <string name="serial_number_short">ns</string>
-    <string name="inventory_number_short">ni</string>
+    <string name="serial_number_short">sn</string>
+    <string name="inventory_number_short">in</string>
     <string name="localization">Lokalizacja</string>
     <string name="name">Imię</string>
     <string name="manufacturer">Producent</string>

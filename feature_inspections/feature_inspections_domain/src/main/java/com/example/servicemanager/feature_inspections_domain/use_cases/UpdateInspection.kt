@@ -27,7 +27,7 @@ class UpdateInspection @Inject constructor (
                 return Resource(
                     ResourceState.ERROR,
                     null,
-                    UiText.StringResource(R.string.textfields_device_sn_and_device_in_are_empty)
+                    UiText.StringResource(R.string.sn_and_in_can_not_be_empty)
                 )
             }
 

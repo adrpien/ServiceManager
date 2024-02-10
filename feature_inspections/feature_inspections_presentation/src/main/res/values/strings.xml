@@ -4,8 +4,8 @@
     <string name="hospital">Hospital</string>
     <string name="state">State</string>
     <string name="date">Date</string>
-    <string name="sn_number_short">Sn</string>
-    <string name="inventory_number_short">In</string>
+    <string name="sn_number_short">sn</string>
+    <string name="inventory_number_short">in</string>
     <string name="localization">Localization</string>
     <string name="name">Name</string>
     <string name="manufacturer">Manufacturer</string>
@@ -19,8 +19,8 @@
     <string name="edit">Edit</string>
     <string name="device">Device</string>
     <string name="result">Result</string>
-    <string name="eststate">EstState</string>
-    <string name="inspectionstate">InspectionState</string>
+    <string name="eststate">Electrical safety test state</string>
+    <string name="inspectionstate">Inspection state</string>
     <string name="technician">Technician</string>
     <string name="inspection_date">Inspection date</string>
     <string name="signature">Signature</string>
