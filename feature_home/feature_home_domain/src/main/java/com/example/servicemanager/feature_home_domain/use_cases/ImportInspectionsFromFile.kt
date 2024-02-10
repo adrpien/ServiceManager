@@ -21,7 +21,7 @@ class ImportInspectionsFromFile @Inject constructor () {
             Resource(
                 ResourceState.LOADING,
                 null,
-                UiText.StringResource(R.string.importing_initiation))
+                UiText.StringResource(R.string.importing_initiatialization))
         )
         val listOfKeys = Inspection.listOfProperties
         val mapOfData: MutableMap<String, String> = mutableMapOf<String, String>()

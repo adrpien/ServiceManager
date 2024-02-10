@@ -78,8 +78,8 @@ dependencies {
     // Modules
     implementation(project(Modules.core))
     implementation(project(Modules.coreUi))
-    implementation(project(Modules.featureAppData))
-    implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.commonData))
+    implementation(project(Modules.commonDomain))
     implementation(project(Modules.featureAuthenticationDomain))
     implementation(project(Modules.featureAuthenticationData))
     implementation(project(Modules.featureAuthenticationPresentation))
