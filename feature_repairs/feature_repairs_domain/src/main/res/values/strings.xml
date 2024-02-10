@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="textfields_devicesn_or_devicein_is_empty">Field Sn or In is empty</string>
-    <string name="repair_update_unknown_error">Unknown error</string>
+    <string name="sn_or_in_is_empty">sn or in is empty</string>
+    <string name="repair_update_unknown_error">Record update unknown error</string>
     <string name="unknown_error">Unknown error</string>
-    <string name="textfields_device_sn_and_device_in_are_empty">Textfields Sn and In are empty</string>
+    <string name="device_sn_and_device_can_not_be_empty">Serial number and inventory number can not be empty</string>
     <string name="closing_date_can_not_be_before_opening_date">Closing date can not be before opening date</string>
     <string name="repairing_date_can_not_be_before_opening_date">Repairing date can not be before opening date</string>
 </resources>
