@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="locally_cached_list">Locally cached list</string>
-    <string name="device_list_fetching_finished">Device list fetching finished</string>
-    <string name="inspection_state_list_fetching_finished">Inspection state list fetching finished</string>
-    <string name="user_fetching_finished">User fetching finished</string>
-    <string name="user_fetching_error">User fetching error</string>
-    <string name="user_types_list_fetching_finished">User types list fetching finished</string>
-    <string name="hospital_list_updated">Hospital list updated</string>
-    <string name="hospital_list_update_error">Hospital list update error</string>
-    <string name="hospital_updated">Hospital_updated\n</string>
-    <string name="hospital_update_error">Hospital update error</string>
-    <string name="hospital_created">Hospital created</string>
-    <string name="hospital_create_error">Hospital create error</string>
-    <string name="hospital_update_success">Hospital update success</string>
-    <string name="hospital_delete_success">Hospital delete success</string>
-    <string name="hospital_delete_error">Hospital delete error</string>
-    <string name="technician_update_error">Technician update error</string>
-    <string name="technician_update_success">Technician update success</string>
-    <string name="technician_create_error">Technician create error</string>
-    <string name="technician_create_success">Technician create error</string>
-    <string name="technician_delete_success">Technician delete success</string>
-    <string name="technician_delete_error">Technician delete</string>
-    <string name="eststate_update_success">EstState update success</string>
-    <string name="eststate_update_error">EstState update error</string>
-    <string name="eststate_create_success">EstState create success</string>
-    <string name="eststate_create_error">EstState create errror</string>
-    <string name="eststate_delete_success">EstState delete success</string>
-    <string name="eststate_delete_error">EstState delete error</string>
-    <string name="repairstate_update_success">RepairState update success</string>
-    <string name="repairstate_update_error">RepairState update error</string>
-    <string name="repairstate_create_success">RepairState create success</string>
-    <string name="repairstate_create_error">RepairState create error</string>
-    <string name="repairstate_delete_success">RepairState delete success</string>
-    <string name="repairstate_delete_error">RepairState delete error</string>
-    <string name="inspectionstate_update_success">InspectionState update success</string>
-    <string name="inspectionstate_update_error">InspectionState update error</string>
-    <string name="inspectionstate_create_success">InspectionState create success</string>
-    <string name="inspectionstate_create_error">InspectionState create error</string>
-    <string name="inspectionstate_delete_success">InspectionState delete success</string>
-    <string name="inspectionstate_delete_error">InspectionState delete error</string>
-    <string name="usertype_update_error">UserType update error</string>
-    <string name="usertype_update_success">UserType udpate success</string>
-    <string name="usertype_create_success">UserType create success</string>
-    <string name="usertype_create_error">UserType create error</string>
-    <string name="usertype_delete_error">UserType delete error</string>
-    <string name="usertype_delete_success">UserType delete success</string>
+    <string name="locally_cached_list" translatable="false">Locally cached list</string>
+    <string name="device_list_fetching_finished" translatable="false">Device list fetching finished</string>
+    <string name="inspection_state_list_fetching_finished" translatable="false">Inspection state list fetching finished</string>
+    <string name="user_fetching_finished" translatable="false">User fetching finished</string>
+    <string name="user_fetching_error" translatable="false">User fetching error</string>
+    <string name="user_types_list_fetching_finished" translatable="false">User types list fetching finished</string>
+    <string name="hospital_list_updated" translatable="false">Hospital list updated</string>
+    <string name="hospital_list_update_error" translatable="false">Hospital list update error</string>
+    <string name="hospital_updated" translatable="false">Hospital_updated</string>
+    <string name="hospital_update_error" translatable="false">Hospital update error</string>
+    <string name="hospital_created" translatable="false">Hospital created</string>
+    <string name="hospital_create_error" translatable="false">Hospital create error</string>
+    <string name="hospital_update_success" translatable="false">Hospital update success</string>
+    <string name="hospital_delete_success" translatable="false">Hospital delete success</string>
+    <string name="hospital_delete_error" translatable="false">Hospital delete error</string>
+    <string name="technician_update_error" translatable="false">Technician update error</string>
+    <string name="technician_update_success" translatable="false">Technician update success</string>
+    <string name="technician_create_error" translatable="false">Technician create error</string>
+    <string name="technician_create_success" translatable="false">Technician create error</string>
+    <string name="technician_delete_success" translatable="false">Technician delete success</string>
+    <string name="technician_delete_error" translatable="false">Technician delete</string>
+    <string name="eststate_update_success" translatable="false">EstState update success</string>
+    <string name="eststate_update_error" translatable="false">EstState update error</string>
+    <string name="eststate_create_success" translatable="false">EstState create success</string>
+    <string name="eststate_create_error" translatable="false">EstState create errror</string>
+    <string name="eststate_delete_success" translatable="false">EstState delete success</string>
+    <string name="eststate_delete_error" translatable="false">EstState delete error</string>
+    <string name="repairstate_update_success" translatable="false">RepairState update success</string>
+    <string name="repairstate_update_error" translatable="false">RepairState update error</string>
+    <string name="repairstate_create_success" translatable="false">RepairState create success</string>
+    <string name="repairstate_create_error" translatable="false">RepairState create error</string>
+    <string name="repairstate_delete_success" translatable="false">RepairState delete success</string>
+    <string name="repairstate_delete_error" translatable="false">RepairState delete error</string>
+    <string name="inspectionstate_update_success" translatable="false">InspectionState update success</string>
+    <string name="inspectionstate_update_error" translatable="false">InspectionState update error</string>
+    <string name="inspectionstate_create_success" translatable="false">InspectionState create success</string>
+    <string name="inspectionstate_create_error" translatable="false">InspectionState create error</string>
+    <string name="inspectionstate_delete_success" translatable="false">InspectionState delete success</string>
+    <string name="inspectionstate_delete_error" translatable="false">InspectionState delete error</string>
+    <string name="usertype_update_error" translatable="false">UserType update error</string>
+    <string name="usertype_update_success" translatable="false">UserType udpate success</string>
+    <string name="usertype_create_success" translatable="false">UserType create success</string>
+    <string name="usertype_create_error" translatable="false">UserType create error</string>
+    <string name="usertype_delete_error" translatable="false">UserType delete error</string>
+    <string name="usertype_delete_success" translatable="false">UserType delete success</string>
     <string name="unknown_error">Unknown error</string>
-    <string name="upload_signature_success">Upload signature success</string>
-    <string name="check_internet_connection">Check internet connection</string>
-    <string name="hospital_list_fetched">Hospital list fetched</string>
-    <string name="technician_list_fetched">Technician list fetched</string>
-    <string name="est_state_list_fetched">EstState list fetched</string>
-    <string name="repair_state_list_fetched">RepairState list fetched</string>
-    <string name="inspection_state_list_fetched">Inspection state list fetched</string>
-    <string name="user_fetched">User fetched</string>
-    <string name="user_type_list_fetched">UserType list fetched</string>
-    <string name="device_list_fetching_error">Device list fetching error</string>
-    <string name="locally_cashed_list">Locally cashed list</string>
-    <string name="cached_signatures_fetching_success">Cached signatures fetching success</string>
-    <string name="cached_signature_deleted">Cached signature deleted</string>
+    <string name="upload_signature_success" translatable="false">Upload signature success</string>
+    <string name="check_internet_connection" translatable="false">Check internet connection</string>
+    <string name="hospital_list_fetched" translatable="false">Hospital list fetched</string>
+    <string name="technician_list_fetched" translatable="false">Technician list fetched</string>
+    <string name="est_state_list_fetched" translatable="false">EstState list fetched</string>
+    <string name="repair_state_list_fetched" translatable="false">RepairState list fetched</string>
+    <string name="inspection_state_list_fetched" translatable="false">Inspection state list fetched</string>
+    <string name="user_fetched" translatable="false">User fetched</string>
+    <string name="user_type_list_fetched" translatable="false">UserType list fetched</string>
+    <string name="device_list_fetching_error" translatable="false">Device list fetching error</string>
+    <string name="locally_cashed_list" translatable="false">Locally cashed list</string>
+    <string name="cached_signatures_fetching_success" translatable="false">Cached signatures fetching success</string>
+    <string name="cached_signature_deleted" translatable="false">Cached signature deleted</string>
 </resources>

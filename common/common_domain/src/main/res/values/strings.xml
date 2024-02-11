@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="get_signature_unknown_error">Get signature unknown error</string>
-    <string name="update_signature_unknown_error">Update signature unknown error</string>
-    <string name="hospital_update_unknown_error">Hospital update unknown error</string>
-    <string name="hospital_create_unknown_error">Hospital create unknown error</string>
-    <string name="hospital_name_can_not_be_empty">Hospital name can not be empty</string>
-    <string name="hospital_delete_unknown_error">Hospital delete unknown error</string>
-    <string name="eststate_name_can_not_be_empty">EstState name can not be empty</string>
-    <string name="eststate_update_unknown_error">EstState update unknown error</string>
-    <string name="eststate_delete_unknown_error">EstState unknown error</string>
-    <string name="inspection_state_delete_unknown_error">Inspection state delete unknown error</string>
-    <string name="inspection_state_name_can_not_be_empty">Inspection state name can not be empty</string>
-    <string name="inspection_state_update_unknown_error">Inspection State update unknown error</string>
-    <string name="repair_state_name_can_not_be_empty">Repair state can not be empty</string>
-    <string name="repair_state_delete_unknown_error">Repair state delete unknown error</string>
-    <string name="repair_state_update_unknown_error">Repair state update unknown error</string>
-    <string name="technician_name_can_not_be_empty">Technician name can not be mpty</string>
-    <string name="technician_update_unknown_error">Technician update unknown error</string>
-    <string name="technician_delete_unknown_error">Technician delete unknown error</string>
-    <string name="usertype_name_can_not_be_empty">UserType name can not be empty</string>
-    <string name="usertype_delete_unknown_error">UserType delete unknown error</string>
-    <string name="usertype_update_unknown_error">UserType update unknown error</string>
-    <string name="unknown_error">Unknown error</string>
-    <string name="syncing_data_error">Syncing data error</string>
-    <string name="syncing_data_success">Syncing data success</string>
+    <string name="get_signature_unknown_error" translatable="false">Get signature unknown error</string>
+    <string name="update_signature_unknown_error" translatable="false">Update signature unknown error</string>
+    <string name="hospital_update_unknown_error" translatable="false">Hospital update unknown error</string>
+    <string name="hospital_create_unknown_error" translatable="false">Hospital create unknown error</string>
+    <string name="hospital_name_can_not_be_empty" translatable="false">Hospital name can not be empty</string>
+    <string name="hospital_delete_unknown_error" translatable="false">Hospital delete unknown error</string>
+    <string name="eststate_name_can_not_be_empty" translatable="false">EstState name can not be empty</string>
+    <string name="eststate_update_unknown_error" translatable="false">EstState update unknown error</string>
+    <string name="eststate_delete_unknown_error" translatable="false">EstState unknown error</string>
+    <string name="inspection_state_delete_unknown_error" translatable="false">Inspection state delete unknown error</string>
+    <string name="inspection_state_name_can_not_be_empty" translatable="false">Inspection state name can not be empty</string>
+    <string name="inspection_state_update_unknown_error" translatable="false">Inspection State update unknown error</string>
+    <string name="repair_state_name_can_not_be_empty" translatable="false">Repair state can not be empty</string>
+    <string name="repair_state_delete_unknown_error" translatable="false">Repair state delete unknown error</string>
+    <string name="repair_state_update_unknown_error" translatable="false">Repair state update unknown error</string>
+    <string name="technician_name_can_not_be_empty" translatable="false">Technician name can not be mpty</string>
+    <string name="technician_update_unknown_error" translatable="false">Technician update unknown error</string>
+    <string name="technician_delete_unknown_error" translatable="false">Technician delete unknown error</string>
+    <string name="usertype_name_can_not_be_empty" translatable="false">UserType name can not be empty</string>
+    <string name="usertype_delete_unknown_error" translatable="false">UserType delete unknown error</string>
+    <string name="usertype_update_unknown_error" translatable="false">UserType update unknown error</string>
+    <string name="unknown_error" translatable="false">Unknown error</string>
+    <string name="syncing_data_error" translatable="false">Syncing data error</string>
+    <string name="syncing_data_success" translatable="false">Syncing data success</string>
 </resources>
