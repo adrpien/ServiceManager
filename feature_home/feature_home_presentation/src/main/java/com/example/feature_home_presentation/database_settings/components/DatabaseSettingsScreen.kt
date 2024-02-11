@@ -153,7 +153,7 @@ fun DatabaseSettingsScreen(
 
     val manageUserTypeListMenuItemState = MenuItemState(
         icon = Icons.Default.AdminPanelSettings,
-        text = UiText.StringResource(R.string.manage_user_type_list)
+        text = UiText.StringResource(R.string.manage_users_permission)
     ) {
         coroutineScope.launch {
             navHostController.navigate(Screen.UserTypeListManagerScreen.route)

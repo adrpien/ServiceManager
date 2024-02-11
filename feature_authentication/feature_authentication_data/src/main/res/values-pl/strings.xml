@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="authentication_successful">Zalogowano pomyślnie</string>
+    <string name="e_mail_not_verified">Nie zweryfikowany adres e-mail</string>
+    <string name="incorrect_e_mail_or_password">Niepoprawny e-mail lub hasło</string>
+    <string name="to_many_login_attemps_try_again_later">Zbyt wiele prób, spróbuj ponownie później</string>
+    <string name="current_user_logged_in">Użytkownik zalogowany</string>
+    <string name="current_user_not_logged_in">Użytkownik nie zalogowany</string>
+    <string name="check_internet_connection">Sprawdź połączenie internetowe</string>
+</resources>

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="repair_record_created">Utworzono rekord naprawy</string>
-    <string name="repair_record_creation_error">Błąd, nie utworzono rekordu naprawy</string>
+    <string name="repair_record_creation_error">Błąd utworzenia rekordu naprawy</string>
     <string name="repair_record_updated">Rekord naprawy zaktualizowany</string>
-    <string name="repair_record_update_error">Błąd, nie zaktualizowano rekordu naprawy</string>
-    <string name="locally_cached_list">Locally cached - lista napraw</string>
-    <string name="repair_list_fetching_finished">Pobieranie listy napraw zostało zakończone</string>
-    <string name="locally_cached_record">Locally cached - rekord naprawy</string>
-    <string name="repair_record_fetching_finished">Pobieranie lrekordu naprawy zostało zakończone</string>
+    <string name="repair_record_update_error">Błąd aktualizacji rekordu naprawy</string>
+    <string name="locally_cached_list">Locally cached list</string>
+    <string name="repair_list_fetching_finished">Zakończono pobieranie listy napraw</string>
+    <string name="locally_cached_record">Locally cached record</string>
+    <string name="repair_record_fetching_finished">Zakończono pobieranie rekordu naprawy</string>
+    <string name="repair_record_fetching_error">Błąd pobierania rekordu naprawy</string>
+    <string name="check_internet_connection">Sprawdź połączenie internetowe</string>
 </resources>

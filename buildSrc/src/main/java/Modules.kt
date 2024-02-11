@@ -4,8 +4,8 @@ object Modules {
     const val core = ":core"
     const val coreUi = ":core_ui"
 
-    const val test = ":common:test"
-    const val androidTest = ":common:android_test"
+    const val test = ":test:test"
+    const val androidTest = ":test:android_test"
 
     const val sharedPreferences = ":shared_preferences"
 
@@ -23,9 +23,9 @@ object Modules {
     const val featureAuthenticationDomain = ":feature_authentication:feature_authentication_domain"
     const val featureAuthenticationPresentation = ":feature_authentication:feature_authentication_presentation"
 
-    const val featureAppData = ":feature_app:feature_app_data"
-    const val featureAppDomain = ":feature_app:feature_app_domain"
-    const val featureAppPresentation = ":feature_app:feature_app_presentation"
+    const val commonData = ":common:common_data"
+    const val commonDomain = ":common:common_domain"
+    const val commonPresentation = ":common:common_presentation"
 
     const val featureHomeData = ":feature_home:feature_home_data"
     const val featureHomeDomain = ":feature_home:feature_home_domain"

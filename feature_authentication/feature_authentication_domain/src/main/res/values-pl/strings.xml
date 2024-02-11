@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="e_mail_or_password_is_empty">E-mail lub hasło jest puste</string>
+</resources>

@@ -13,6 +13,6 @@ dependencies{
     implementation(project(Modules.coreUi))
     implementation(project(Modules.sharedPreferences))
     implementation(project(Modules.logger))
-    implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.commonDomain))
     implementation(project(Modules.featureInspectionsDomain))
 }

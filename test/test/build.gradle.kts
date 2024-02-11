@@ -10,7 +10,7 @@ android {
 }
 dependencies{
     implementation(project(Modules.core))
-    implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.commonDomain))
     implementation(project(Modules.featureInspectionsDomain))
     implementation(project(Modules.featureRepairsDomain))
 }

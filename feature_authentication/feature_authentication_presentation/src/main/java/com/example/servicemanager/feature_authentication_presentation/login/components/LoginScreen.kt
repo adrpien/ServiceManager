@@ -140,7 +140,7 @@ fun LoginScreen(
                     text = "mail: adrpien@gmail.com"
                 )
                 Text(
-                    text = "password: test12345"
+                    text = "password: test12"
                 )
 
             }

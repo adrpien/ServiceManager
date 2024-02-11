@@ -26,5 +26,21 @@
     <string name="wrong_file_format">Zły format pliku</string>
     <string name="records_found">Znalezione rekordy</string>
     <string name="import_records">Importuj rekordy</string>
-    <string name="ok">Ok\n</string>
+    <string name="technician_list">Lista serwisantów</string>
+    <string name="est_state_list">Lista stanów testu bezpieczeństwa elektrycznego</string>
+    <string name="repair_state_list">Lista stanów naprawy</string>
+    <string name="inspection_state_list">Lista stanów przeglądów</string>
+    <string name="manage_repair_list">Zarządzaj listą napraw</string>
+    <string name="manage_repair_state_list">Zarządzaj listą stanów naprawy</string>
+    <string name="manage_inspection_state_list">Zarządzaj listą stanów przeglądu</string>
+    <string name="manage_est_state_list">Zarządzaj listą stanów testu bezpieczeństwa elektrycznego</string>
+    <string name="manage_technician_list">Zarządaj listą serwisantów</string>
+    <string name="ok">Ok</string>
+    <string name="revert_delete">Cofnij usunięcie</string>
+    <string name="user_type_list">Uprawnienia użytkowników</string>
+    <string name="manage_users_permission">Zarządzaj uprawnieniami użytkowników</string>
+    <string name="hospital_permission">Uprawnienia</string>
+    <string name="no_records_found">Nie znalezionio rekordów</string>
+    <string name="wrong_data_format">Zły format daty</string>
+    <string name="exit">Wyjście</string>
 </resources>

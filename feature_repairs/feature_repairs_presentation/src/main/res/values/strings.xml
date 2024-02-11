@@ -7,8 +7,8 @@
     <string name="all">All</string>
     <string name="state">State</string>
     <string name="date">Date</string>
-    <string name="serial_number_short">Sn</string>
-    <string name="inventory_number_short">In</string>
+    <string name="serial_number_short">sn</string>
+    <string name="inventory_number_short">in</string>
     <string name="localization">Localization</string>
     <string name="name">Name</string>
     <string name="manufacturer">Manufacturer</string>
@@ -24,9 +24,9 @@
     <string name="repairing_technician">Repairing technician</string>
     <string name="repairing_date">Repairing date</string>
     <string name="result">Result</string>
-    <string name="eststate">EstState</string>
-    <string name="repairstate">RepairState</string>
-    <string name="return_technician">Return technician</string>
+    <string name="eststate">Electrical safety test state</string>
+    <string name="repairstate">Repair state</string>
+    <string name="return_technician">Returning technician</string>
     <string name="returning_date">Returning date</string>
     <string name="opening_date">Opening Date</string>
     <string name="save">Save</string>

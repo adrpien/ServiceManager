@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="log_out">Log out</string>
-    <string name="database_settings">Database settings\n</string>
+    <string name="database_settings">Database settings</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="dark_mode">Dark mode</string>
@@ -27,20 +27,21 @@
     <string name="records_found">Records found</string>
     <string name="import_records">Importuj</string>
     <string name="technician_list">Technician list</string>
-    <string name="est_state_list">EstState list</string>
-    <string name="repair_state_list">RepairState list</string>
-    <string name="inspection_state_list">InspectionState list</string>
+    <string name="est_state_list">Electrical safety test state list</string>
+    <string name="repair_state_list">Repair state list</string>
+    <string name="inspection_state_list">Inspection state list</string>
     <string name="manage_repair_list">Manage repair list</string>
-    <string name="manage_repair_state_list">Manage RepairState list</string>
-    <string name="manage_inspection_state_list">Manage InspectionState list</string>
-    <string name="manage_est_state_list">Manage EstState list</string>
+    <string name="manage_repair_state_list">Manage repair state list</string>
+    <string name="manage_inspection_state_list">Manage inspection state list</string>
+    <string name="manage_est_state_list">Manage electrical safety test state list</string>
     <string name="manage_technician_list">Manage Technician list</string>
-    <string name="ok">Ok\n</string>
+    <string name="ok">Ok</string>
     <string name="revert_delete">Revert delete</string>
-    <string name="user_type_list">UserType list</string>
-    <string name="manage_user_type_list">Manage UserType list</string>
+    <string name="user_type_list">Users premission list</string>
+    <string name="manage_users_permission">Manage users premission</string>
     <string name="hospital_permission">Hospital permission</string>
     <string name="no_records_found">No records found</string>
     <string name="wrong_data_format">Wrong data format</string>
+    <string name="exit">Exit</string>
 
 </resources>
