@@ -37,7 +37,7 @@ fun InspectionListItem(
         modifier = modifier
             .padding(8.dp),
         elevation = 4.dp,
-        backgroundColor = MaterialTheme.colorScheme.primary
+        backgroundColor = MaterialTheme.colorScheme.secondary
     ) {
         Column(
             modifier = Modifier

@@ -42,7 +42,7 @@ fun RepairListItem(
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
-        backgroundColor = MaterialTheme.colorScheme.primary
+        backgroundColor = MaterialTheme.colorScheme.secondary
     ) {
         Column(
             modifier = Modifier

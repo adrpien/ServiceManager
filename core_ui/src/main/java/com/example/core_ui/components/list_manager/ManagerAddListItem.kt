@@ -58,7 +58,7 @@ fun ManagerActionListItem(
                 modifier = Modifier.fillMaxWidth().padding(8.dp),
                 shape = MaterialTheme.shapes.medium,
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.secondary,
                     contentColor = MaterialTheme.colorScheme.onSecondary
                 ),
             ) {

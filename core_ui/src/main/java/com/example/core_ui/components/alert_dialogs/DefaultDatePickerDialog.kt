@@ -60,10 +60,10 @@ fun DefaultDatePickerDialog(
                 headerBackgroundColor = MaterialTheme.colorScheme.secondary,
                 headerTextColor = MaterialTheme.colorScheme.onSecondary,
                 calendarHeaderTextColor = MaterialTheme.colorScheme.onSecondary,
-                dateActiveBackgroundColor = MaterialTheme.colorScheme.secondary,
-                dateActiveTextColor = MaterialTheme.colorScheme.onSecondary,
-                dateInactiveTextColor = MaterialTheme.colorScheme.primary,
-                dateInactiveBackgroundColor = MaterialTheme.colorScheme.onSecondary
+                dateActiveBackgroundColor = MaterialTheme.colorScheme.primary,
+                dateActiveTextColor = MaterialTheme.colorScheme.onPrimary,
+                dateInactiveTextColor = MaterialTheme.colorScheme.onPrimary,
+                dateInactiveBackgroundColor = MaterialTheme.colorScheme.secondary
             ),
             locale = Locale.getDefault(),
             initialDate = initialDate,

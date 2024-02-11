@@ -1,4 +1,4 @@
-package com.example.core_ui.components.alert_dialogs
+package com.example.core_ui.components.signature
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Box
@@ -32,7 +32,7 @@ fun SignatureDialog(
             dismissOnBackPress = true,
             dismissOnClickOutside = true
         ),
-        backgroundColor = MaterialTheme.colorScheme.secondary,
+        backgroundColor = MaterialTheme.colorScheme.primary,
         buttons = {
             positiveButton(
                 text = stringResource(R.string.confirm),

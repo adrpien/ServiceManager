@@ -41,9 +41,9 @@ private val DarkColorPalette = darkColorScheme(
 
 private val LightColorPalette = lightColorScheme(
     primary = Teal,
-    onPrimary = DarkTeal,
+    onPrimary = VeryDarkTeal,
     secondary = LightTeal,
-    onSecondary = VeryDarkTeal
+    onSecondary = DarkTeal
 )
 
 @Composable

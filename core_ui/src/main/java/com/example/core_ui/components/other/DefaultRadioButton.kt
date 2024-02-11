@@ -32,9 +32,8 @@ fun DefaultRadioButton(
             onClick = onClick,
             shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondary,
-
+                containerColor = if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                disabledContainerColor = if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
             ),
             border = BorderStroke(
                 width = 1.dp,
@@ -44,8 +43,7 @@ fun DefaultRadioButton(
         ) {
             Text(
                 text = title,
-                color = if(selected) MaterialTheme.colorScheme.onPrimary
-                else MaterialTheme.colorScheme.onSecondary
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

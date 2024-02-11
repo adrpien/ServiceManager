@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Today
@@ -29,7 +28,7 @@ import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
-import com.example.core_ui.components.alert_dialogs.SignatureDialog
+import com.example.core_ui.components.signature.SignatureDialog
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_inspections_presentation.R
 import com.example.servicemanager.feature_app_domain.model.EstState
@@ -42,7 +41,6 @@ import com.example.servicemanager.feature_inspections_presentation.inspection_de
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 
 

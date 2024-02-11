@@ -35,7 +35,6 @@ import com.example.servicemanager.future_repairs_presentation.repair_details.Rep
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import com.example.core_ui.components.alert_dialogs.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
@@ -43,9 +42,8 @@ import com.example.feature_repairs_presentation.R
 import androidx.compose.material3.SnackbarHostState
 import com.example.core.util.Dimensions
 import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
-import com.example.core_ui.components.alert_dialogs.SignatureDialog
+import com.example.core_ui.components.signature.SignatureDialog
 import com.example.core_ui.components.snackbar.AppSnackbar
-import kotlinx.coroutines.Dispatchers
 
 
 @Composable
