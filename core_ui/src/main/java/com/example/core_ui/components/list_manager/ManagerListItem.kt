@@ -70,7 +70,7 @@ fun ManagerListItem(
                     containerColor = MaterialTheme.colorScheme.secondary,
                     contentColor = MaterialTheme.colorScheme.onSecondary
                 ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary)
             ) {
                 Row(
                     modifier = Modifier

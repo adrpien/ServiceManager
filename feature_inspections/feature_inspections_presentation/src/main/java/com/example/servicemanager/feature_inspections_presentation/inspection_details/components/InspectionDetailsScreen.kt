@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Today
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -282,11 +283,11 @@ fun InspectionDetailsScreen(
             Text(
                 text = stringResource(R.string.device),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -349,18 +350,18 @@ fun InspectionDetailsScreen(
             Text(
                 text = stringResource(id = R.string.localization),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier,
                 text = stringResource(R.string.hospital) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
             DefaultSelectionSection(
                 itemList = hospitalList,
@@ -406,18 +407,18 @@ fun InspectionDetailsScreen(
             Text(
                 text = stringResource(R.string.result),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 modifier = Modifier,
                 text = stringResource(R.string.eststate) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
 
             DefaultSelectionSection(
@@ -442,7 +443,7 @@ fun InspectionDetailsScreen(
             Text(
                 modifier = Modifier,
                 text = stringResource(R.string.inspectionstate) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
             DefaultSelectionSection(
                 itemList = inspectionStateList,
@@ -465,7 +466,7 @@ fun InspectionDetailsScreen(
             Text(
                 modifier = Modifier,
                 text = stringResource(R.string.technician) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(isInEditMode) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.primary
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -516,7 +517,7 @@ fun InspectionDetailsScreen(
                         Modifier.padding(end = 8.dp)
                     }
                         .padding(end = 8.dp),
-                    tint = if (inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    tint = if (inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -544,7 +545,7 @@ fun InspectionDetailsScreen(
                 ),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = if (inspectionDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    color = if (isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
             ) {
                 Image(
