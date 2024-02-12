@@ -12,7 +12,7 @@ dependencies{
     implementation(project(Modules.core))
     implementation(project(Modules.sharedPreferences))
     implementation(project(Modules.logger))
-    implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.commonDomain))
     implementation(project(Modules.featureAuthenticationDomain))
 
 }

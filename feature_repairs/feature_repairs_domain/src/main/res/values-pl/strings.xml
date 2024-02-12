@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="textfields_devicesn_or_devicein_is_empty">Pole Sn lub In jest puste</string>
-    <string name="repair_update_unknown_error">Nieznany błąd</string>
+    <string name="sn_or_in_is_empty">Numer seryjny lub numer inwentarzowy jest pusty</string>
+    <string name="repair_update_unknown_error">Nieznany błąd aktualizacji rekordu</string>
+    <string name="unknown_error">Nieznany błąd</string>
+    <string name="device_sn_and_device_can_not_be_empty">Numer seryjny i numer inwentarzowy nie mogą być puste</string>
+    <string name="closing_date_can_not_be_before_opening_date">Data zakonczenia nie może być przed data otwarcia</string>
+    <string name="repairing_date_can_not_be_before_opening_date">Data naprawy nie może być przed data otwarcia</string>
 </resources>

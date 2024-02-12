@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unknown_error">Nieznany błąd</string>
+    <string name="password">Hasło</string>
+    <string name="mail">Mail</string>
+    <string name="authenticate">Loguj</string>
+</resources>

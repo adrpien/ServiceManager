@@ -1,5 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -42,7 +43,8 @@ fun RepairListItem(
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
-        backgroundColor = MaterialTheme.colorScheme.primary
+        backgroundColor = MaterialTheme.colorScheme.secondary,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
     ) {
         Column(
             modifier = Modifier

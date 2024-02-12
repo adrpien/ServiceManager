@@ -8,4 +8,5 @@
     <string name="today">Dzisiaj</string>
     <string name="dismiss">Anuluj</string>
     <string name="delete_hospital">Usuń szpital</string>
+    <string name="do_you_want_save_changes">Chcesz zapisać zmiany?</string>
 </resources>

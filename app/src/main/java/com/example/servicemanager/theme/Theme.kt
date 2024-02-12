@@ -18,18 +18,32 @@ import com.example.shared_preferences.AppPreferencesImplementation
 private val LocalMyColors = compositionLocalOf {
     DarkColorPalette
 }
-private val DarkColorPalette = darkColorScheme(
-    primary = DarkTeal,
-    onPrimary = VeryLightTeal,
-    secondary = MediumTeal,
-    onSecondary = LightTeal,
+/*private val DarkColorPalette = darkColorScheme(
+    primary = DarkGreen,
+    onPrimary = VeryLightGreen,
+    secondary = MediumGreen,
+    onSecondary = LightGreen,
 )
 
 private val LightColorPalette = lightColorScheme(
-    primary = VeryLightTeal,
-    onPrimary = DarkTeal,
+    primary = VeryLightGreen,
+    onPrimary = DarkGreen,
+    secondary = LightGreen,
+    onSecondary = MediumGreen
+)*/
+
+private val DarkColorPalette = darkColorScheme(
+    primary = VeryDarkTeal,
+    onPrimary = LightTeal,
+    secondary = DarkTeal,
+    onSecondary = Teal,
+)
+
+private val LightColorPalette = lightColorScheme(
+    primary = Teal,
+    onPrimary = VeryDarkTeal,
     secondary = LightTeal,
-    onSecondary = MediumTeal
+    onSecondary = DarkTeal
 )
 
 @Composable

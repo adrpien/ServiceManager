@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_list.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -37,7 +38,8 @@ fun InspectionListItem(
         modifier = modifier
             .padding(8.dp),
         elevation = 4.dp,
-        backgroundColor = MaterialTheme.colorScheme.primary
+        backgroundColor = MaterialTheme.colorScheme.secondary,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
     ) {
         Column(
             modifier = Modifier

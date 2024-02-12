@@ -18,8 +18,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +35,6 @@ import com.example.feature_home_presentation.home.HomeViewModel
 import com.example.feature_home_presentation.home.UiEvent
 import com.example.servicemanager.feature_home_domain.model.Profile
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
-import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -55,9 +52,9 @@ fun HomeScreen(
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
-    val logOutMenuItemState = MenuItemState(
+    val exitMenuItemState = MenuItemState(
         icon = Icons.Default.Logout,
-        text = UiText.StringResource(R.string.log_out)
+        text = UiText.StringResource(R.string.exit)
     ) {
         viewModel.onEvent(HomeEvent.LogOut)
     }
@@ -87,7 +84,7 @@ fun HomeScreen(
         databaseSettingMenuItemState,
         appSettingMenuItemState,
         aboutMenuItemState,
-        logOutMenuItemState,
+        exitMenuItemState,
     )
     
     LaunchedEffect(key1 = true) {

@@ -14,7 +14,7 @@ dependencies{
     implementation(project(Modules.sharedPreferences))
     implementation(project(Modules.logger))
     implementation(project(Modules.featureInspectionsDomain))
-    implementation(project(Modules.featureAppDomain))
+    implementation(project(Modules.commonDomain))
     implementation(project(Modules.featureHomeDomain))
     implementation(project(Modules.featureAuthenticationDomain))
 }

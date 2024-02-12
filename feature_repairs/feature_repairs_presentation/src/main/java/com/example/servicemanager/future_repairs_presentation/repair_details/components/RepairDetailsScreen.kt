@@ -35,7 +35,6 @@ import com.example.servicemanager.future_repairs_presentation.repair_details.Rep
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import com.example.core_ui.components.alert_dialogs.DefaultDatePickerDialog
 import com.example.core_ui.components.other.DefaultSelectionSection
@@ -43,9 +42,8 @@ import com.example.feature_repairs_presentation.R
 import androidx.compose.material3.SnackbarHostState
 import com.example.core.util.Dimensions
 import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
-import com.example.core_ui.components.alert_dialogs.SignatureDialog
+import com.example.core_ui.components.signature.SignatureDialog
 import com.example.core_ui.components.snackbar.AppSnackbar
-import kotlinx.coroutines.Dispatchers
 
 
 @Composable
@@ -365,7 +363,7 @@ fun RepairDetailsScreen(
                         Modifier.padding(end = 8.dp)
                     }
                         .padding(end = 8.dp),
-                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -373,7 +371,8 @@ fun RepairDetailsScreen(
 
             Text(
                 text = stringResource(R.string.pickup_technician) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+
             )
 
             DefaultSelectionSection(
@@ -397,11 +396,11 @@ fun RepairDetailsScreen(
             Text(
                 text = stringResource(R.string.device),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -475,11 +474,11 @@ fun RepairDetailsScreen(
             Text(
                 text = stringResource(R.string.localization),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -488,7 +487,7 @@ fun RepairDetailsScreen(
             Text(
                 modifier = Modifier,
                 text = stringResource(id = R.string.hospital) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             DefaultSelectionSection(
                 itemList = hospitalList,
@@ -537,11 +536,11 @@ fun RepairDetailsScreen(
             Text(
                 text = stringResource(id = R.string.repair),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(2.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -588,7 +587,7 @@ fun RepairDetailsScreen(
             /* ********************** REPAIRING TECHNICIAN  ************************************************* */
             Text(
                 text = stringResource(R.string.repairing_technician) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -639,7 +638,7 @@ fun RepairDetailsScreen(
                         Modifier.padding(end = 8.dp)
                     }
                         .padding(end = 8.dp),
-                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -647,11 +646,11 @@ fun RepairDetailsScreen(
             Text(
                 text = stringResource(R.string.result),
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Divider(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(2.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -659,7 +658,8 @@ fun RepairDetailsScreen(
             /* ********************** EST STATE  ************************************************************ */
             Text(
                 text = stringResource(R.string.eststate) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+
             )
             DefaultSelectionSection(
                 itemList = estStateList,
@@ -681,7 +681,8 @@ fun RepairDetailsScreen(
             /* ********************** REPAIRING STATE  ****************************************************** */
             Text(
                 text = stringResource(R.string.repairstate) + ": ",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+
             )
             DefaultSelectionSection(
                 itemList = repairStateList,
@@ -703,7 +704,7 @@ fun RepairDetailsScreen(
             /* ********************** RETURN TECHNICIAN  **************************************************** */
             Text(
                 text = stringResource(R.string.return_technician) + ":",
-                color = MaterialTheme.colorScheme.onSecondary
+                color = if(repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
             )
             DefaultSelectionSection(
                 itemList = technicianList,
@@ -754,7 +755,7 @@ fun RepairDetailsScreen(
                         Modifier.padding(end = 8.dp)
                     }
                         .padding(end = 8.dp),
-                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    tint = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -789,7 +790,7 @@ fun RepairDetailsScreen(
                 ),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = if (isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                    color = if (repairDetailsState.value.isInEditMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                 )
             ) {
                 Image(

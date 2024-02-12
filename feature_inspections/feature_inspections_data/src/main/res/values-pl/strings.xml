@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="inspection_record_created">Utworzonu rekord przeglądu</string>
-    <string name="error_creating_new_inspection_record">Błąd, nie utworzono rekordu przeglądu</string>
+    <string name="inspection_record_created">Utworzono rekord przeglądu</string>
+    <string name="error_creating_new_inspection_record">Błąd utworzenia rekordu przeglądu</string>
     <string name="inspection_record_updated">Zaktualizowano rekord przeglądu</string>
-    <string name="update_inspection_error">Błąd, nie zaktualizowano rekordu przeglądu</string>
-    <string name="locally_cached_list">Locally cached - lista przeglądów</string>
+    <string name="update_inspection_error">Błąd aktualizacji rekordu przeglądu</string>
+    <string name="locally_cached_list">Locally cached list</string>
     <string name="inspection_list_fetching_finished">Pobrano listę przeglądów</string>
-    <string name="locally_cached_record">Locally cached - rekord przeglądu</string>
+    <string name="locally_cached_record">Locally cached record</string>
     <string name="inspection_record_fetching_finished">Pobrano rekord przeglądu</string>
-    <string name="inspection_record_fetching_error">Błąd, nie pobrano rekordu przeglądu</string>
+    <string name="inspection_record_fetching_error">Błąd pobierania rekordu przeglądu</string>
+    <string name="unknown_error">Nienznany błąd</string>
+    <string name="check_internet_connection">Sprawdź połączenie internetowe</string>
 </resources>

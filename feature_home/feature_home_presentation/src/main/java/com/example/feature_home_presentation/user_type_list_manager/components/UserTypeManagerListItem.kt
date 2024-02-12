@@ -1,5 +1,6 @@
 package com.example.feature_home_presentation.user_type_list_manager.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,9 +50,10 @@ fun UserTypeManagerListItem(
                 },
             shape = MaterialTheme.shapes.medium,
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.secondary,
                 contentColor = MaterialTheme.colorScheme.onSecondary
-            )
+            ),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary)
         ) {
             Row(
                 modifier = Modifier

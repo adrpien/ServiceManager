@@ -26,7 +26,7 @@ fun ImportInspectionsMaterialDialog(
             dismissOnBackPress = true,
             dismissOnClickOutside = true
         ),
-        backgroundColor = MaterialTheme.colorScheme.secondary,
+        backgroundColor = MaterialTheme.colorScheme.primary,
         buttons = {
             positiveButton(
                 text = stringResource(R.string.import_records),
