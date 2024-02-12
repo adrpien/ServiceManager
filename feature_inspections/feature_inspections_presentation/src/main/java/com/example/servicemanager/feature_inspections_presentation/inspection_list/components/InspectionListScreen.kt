@@ -67,7 +67,7 @@ fun InspectionListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs("0"))
+                    navHostController.navigate(Screen.InspectionDetailsScreen.withArgs("0", inspectionListState.value.user.userId))
                 },
                 backgroundColor = MaterialTheme.colorScheme.primary
             )

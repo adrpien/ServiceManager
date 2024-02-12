@@ -69,7 +69,7 @@ fun RepairListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navHostController.navigate(Screen.RepairDetailsScreen.withArgs("0"))
+                    navHostController.navigate(Screen.RepairDetailsScreen.withArgs("0", repairListState.value.user.userId))
                 },
                 backgroundColor = MaterialTheme.colorScheme.primary
             )
