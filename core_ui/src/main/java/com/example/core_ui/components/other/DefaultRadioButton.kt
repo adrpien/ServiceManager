@@ -27,25 +27,24 @@ fun DefaultRadioButton(
     ) {
         Button(
             modifier = Modifier
-                .padding(4.dp)
-                .alpha(if(isClickable) 1.0f else 0.5f),
+                .padding(4.dp),
             onClick = onClick,
             shape = MaterialTheme.shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary,
-                disabledContainerColor = MaterialTheme.colorScheme.secondary,
-
+                containerColor = if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                disabledContainerColor = if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                disabledContentColor = if(selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                contentColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
             ),
             border = BorderStroke(
                 width = 1.dp,
-                color = if(selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
+                color = if(isClickable) MaterialTheme.colorScheme.onSecondary else if(selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
             ),
             enabled = isClickable
         ) {
             Text(
                 text = title,
-                color = if(selected) MaterialTheme.colorScheme.onPrimary
-                else MaterialTheme.colorScheme.onSecondary
+                color = if(isClickable) MaterialTheme.colorScheme.onSecondary else if(selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
             )
         }
     }

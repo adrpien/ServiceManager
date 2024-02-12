@@ -1,5 +1,6 @@
 package com.example.feature_home_presentation.home.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.components.menu.MenuItemState
 
@@ -33,7 +35,8 @@ fun MenuItem(
             ),
         shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
-        backgroundColor = MaterialTheme.colorScheme.primary
+        backgroundColor = MaterialTheme.colorScheme.secondary,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
     ) {
         Column {
             Button(
@@ -42,7 +45,7 @@ fun MenuItem(
                     .height(100.dp),
                 shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.secondary,
                     contentColor = MaterialTheme.colorScheme.onSecondary
                 ),
                 onClick = menuItemState.onClick
@@ -56,7 +59,8 @@ fun MenuItem(
                     )
                     Text(
                         text = menuItemState.text.asString(context),
-                        modifier = Modifier
+                        modifier = Modifier,
+                        textAlign = TextAlign.Center
                     )
                 }
             }

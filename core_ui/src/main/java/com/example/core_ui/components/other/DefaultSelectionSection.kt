@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -27,13 +28,13 @@ fun <T> DefaultSelectionSection(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.secondary)
             .border(
                 BorderStroke(
-                width = 1.dp,
-                color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary
-            ),
-                MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colorScheme.secondary)
+                    width = 1.dp,
+                    color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary),
+                MaterialTheme.shapes.medium
+            )
             .horizontalScroll(scrollState),
     ) {
         Row(
