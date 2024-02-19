@@ -12,14 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxColors
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -34,13 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.util.UiText
-import com.example.core_ui.components.list_manager.ManagerActionListItem
+import com.example.core_ui.components.list_manager.ManagerAddListItem
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
@@ -149,7 +146,7 @@ fun UserTypeListManagerScreen(
                         )
                     }
                     item {
-                        ManagerActionListItem(
+                        ManagerAddListItem(
                             icon = Icons.Default.Add,
                             iconDescription = stringResource(id = R.string.add),
                         ) {
