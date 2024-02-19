@@ -28,7 +28,7 @@ fun ExitAlertDialog(
             dismissOnBackPress = true,
             dismissOnClickOutside = true
         ),
-        backgroundColor = MaterialTheme.colorScheme.primary,
+        backgroundColor = MaterialTheme.colorScheme.secondary,
         buttons = {
             positiveButton(
                 text = stringResource(R.string.confirm),

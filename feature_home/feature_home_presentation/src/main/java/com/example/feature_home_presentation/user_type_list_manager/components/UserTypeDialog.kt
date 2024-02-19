@@ -49,7 +49,7 @@ fun UserTypeDialog(
             dismissOnBackPress = true,
             dismissOnClickOutside = true
         ),
-        backgroundColor = MaterialTheme.colorScheme.primary,
+        backgroundColor = MaterialTheme.colorScheme.secondary,
         shape = MaterialTheme.shapes.medium,
         buttons = {
             positiveButton(

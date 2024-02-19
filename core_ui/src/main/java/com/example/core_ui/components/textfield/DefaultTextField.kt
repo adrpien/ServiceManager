@@ -53,8 +53,8 @@ fun DefaultTextField(
                 unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
                 disabledLabelColor = MaterialTheme.colorScheme.primary,
                 cursorColor = MaterialTheme.colorScheme.onPrimary,
-                focusedBorderColor = MaterialTheme.colorScheme.onSecondary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
+                focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onPrimary,
                 disabledBorderColor = MaterialTheme.colorScheme.primary
             )
         )

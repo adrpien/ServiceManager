@@ -40,9 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.core.util.UiText
-import com.example.core_ui.components.list_manager.ManagerActionListItem
+import com.example.core_ui.components.list_manager.ManagerAddListItem
 import com.example.core_ui.components.list_manager.ManagerListItem
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.core_ui.components.textfield.DefaultTextField
@@ -150,7 +149,7 @@ fun RepairStateListManagerScreen(
                                 }
                             }
                             item {
-                                ManagerActionListItem(
+                                ManagerAddListItem(
                                     icon = Icons.Default.Add,
                                     iconDescription = stringResource(id = R.string.add),
                                 ) {
@@ -166,7 +165,7 @@ fun RepairStateListManagerScreen(
                         dismissOnBackPress = true,
                         dismissOnClickOutside = true
                     ),
-                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    backgroundColor = MaterialTheme.colorScheme.secondary,
                     shape = MaterialTheme.shapes.medium,
                     buttons = {
                         positiveButton(
@@ -199,7 +198,7 @@ fun RepairStateListManagerScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary),
+                                .background(MaterialTheme.colorScheme.secondary),
                             contentAlignment = Alignment.Center
                         ) {
                             Column {
