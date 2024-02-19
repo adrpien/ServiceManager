@@ -110,7 +110,7 @@ fun InspectionListScreen(
                     value = inspectionListState.value.searchQuery,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         placeholderColor = MaterialTheme.colorScheme.onSecondary,
-                        focusedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                        focusedBorderColor = MaterialTheme.colorScheme.onSecondary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.onSecondary,
                         textColor = MaterialTheme.colorScheme.onPrimary,
                         cursorColor = MaterialTheme.colorScheme.onSecondary

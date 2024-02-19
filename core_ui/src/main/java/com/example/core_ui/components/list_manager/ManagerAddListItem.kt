@@ -24,12 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun ManagerActionListItem(
+fun ManagerAddListItem(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     iconDescription: String,
