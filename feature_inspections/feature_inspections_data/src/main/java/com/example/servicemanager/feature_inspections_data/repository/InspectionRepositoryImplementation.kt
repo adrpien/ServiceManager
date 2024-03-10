@@ -45,6 +45,14 @@ class  InspectionRepositoryImplementation(
                     UiText.StringResource(R.string.inspection_list_fetching_finished)
                 )
             )
+        } else {
+            emit(
+                Resource(
+                    ResourceState.ERROR,
+                    null,
+                    UiText.StringResource(R.string.inspection_list_fetching_error)
+                )
+            )
         }
     }
 

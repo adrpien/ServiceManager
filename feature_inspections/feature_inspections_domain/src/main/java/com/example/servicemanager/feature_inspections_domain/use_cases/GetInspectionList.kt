@@ -22,7 +22,8 @@ class GetInspectionList @Inject constructor (
         accessedHospitalIdList: List<String> = emptyList()
     ): Flow<Resource<List<Inspection>>> {
         return if(fetchFromApi == false) {
-            flow { val resource = repository.getInspectionListFromLocal()
+            flow {
+                val resource = repository.getInspectionListFromLocal()
                 emit(resource.copy(
                     data = resource.data
                         ?.filter { inspection: Inspection ->

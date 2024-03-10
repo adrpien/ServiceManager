@@ -28,7 +28,7 @@ class GetInspectionTest {
     @Test
     fun `GetInspection properly fetches valid data`() = runBlocking {
         val inspection3 = inspection("3")
-        saveInspection(inspection3).first { it.resourceState == ResourceState.SUCCESS }
+        saveInspection(inspection3)
         val result = getInspection("3").first {
             it.resourceState == ResourceState.SUCCESS
         }
@@ -40,7 +40,7 @@ class GetInspectionTest {
     @Test
     fun `GetInspection return ERROR ResourceState when id is empty`() = runBlocking {
         val inspection = inspection("")
-        saveInspection(inspection).first { it.resourceState == ResourceState.SUCCESS }
+        saveInspection(inspection)
         val result = getInspection("").first {
             it.resourceState == ResourceState.ERROR
         }

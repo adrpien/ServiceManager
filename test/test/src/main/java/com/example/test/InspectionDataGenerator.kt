@@ -1,5 +1,6 @@
 package com.example.test
 
+import com.example.servicemanager.feature_app_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import java.util.Calendar
 
@@ -36,6 +37,7 @@ fun inspection(
         deviceIn = "000",
         )
 }
+
 
 fun inspectionPassed(
     inspectionId: String,

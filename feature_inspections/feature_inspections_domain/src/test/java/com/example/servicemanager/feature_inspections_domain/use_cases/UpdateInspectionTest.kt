@@ -38,8 +38,8 @@ class UpdateInspectionTest {
             comment = "2"
         )
 
-        saveInspection(inspection1).collect { }
-        updateInspection(inspection2).collect { }
+        saveInspection(inspection1)
+        updateInspection(inspection2)
 
         val result = getInspection("1").first {
             it.resourceState == ResourceState.SUCCESS

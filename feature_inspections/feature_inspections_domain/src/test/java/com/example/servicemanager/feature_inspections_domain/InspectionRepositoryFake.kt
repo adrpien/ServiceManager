@@ -6,6 +6,7 @@ import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class InspectionRepositoryFake : InspectionRepository {
 
@@ -23,6 +24,7 @@ class InspectionRepositoryFake : InspectionRepository {
     }
 
     override fun getInspectionList(): Flow<Resource<List<Inspection>>> = flow {
+        emit(Resource(ResourceState.LOADING))
         if (shouldReturnError) {
             emit(Resource(ResourceState.ERROR))
         } else {
@@ -51,11 +53,11 @@ class InspectionRepositoryFake : InspectionRepository {
         }
     }
 
-    override fun getInspectionListFromLocal(): Flow<Resource<List<Inspection>>> = flow {
-        if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR))
+    override suspend fun getInspectionListFromLocal(): Resource<List<Inspection>> {
+        return if (shouldReturnError) {
+            Resource<List<Inspection>>(ResourceState.ERROR, null)
         } else {
-            emit(Resource(ResourceState.SUCCESS, inspectionList))
+            Resource(ResourceState.SUCCESS, inspectionList)
         }
     }
 
