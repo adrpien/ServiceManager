@@ -57,11 +57,10 @@ class  InspectionRepositoryImplementation(
     }
 
     override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow{
-        if (inspectionId == ""){
-            throw IllegalArgumentException("inspectionId can not be empty")
-        }
-        var inspection: Inspection
-        inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
+        if (inspectionId == "") throw IllegalArgumentException("inspectionId can not be empty")
+        var inspection: Inspection?
+        inspection = inspectionDatabaseDao.getInspection(inspectionId)?.toInspection()
+        if (inspection == null) throw NoSuchElementException()
         emit(
             Resource(
                 ResourceState.LOADING,
@@ -73,7 +72,7 @@ class  InspectionRepositoryImplementation(
         if(record != null) {
             inspectionDatabaseDao.deleteInspection(inspectionId)
             inspectionDatabaseDao.insertInspection(record.toInspectionEntity())
-            inspection = inspectionDatabaseDao.getInspection(inspectionId).toInspection()
+            inspection = inspectionDatabaseDao.getInspection(inspectionId)?.toInspection()
             emit(
                 Resource(
                     ResourceState.SUCCESS,

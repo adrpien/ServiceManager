@@ -15,12 +15,21 @@ class InspectionRepositoryFake : InspectionRepository {
     private val inspectionList: MutableList<Inspection> = mutableListOf()
 
     override fun getInspection(inspectionId: String): Flow<Resource<Inspection>> = flow {
-        if (shouldReturnError) {
-            emit(Resource(ResourceState.ERROR))
-        } else {
+        if (inspectionId != "") {
             val inspection = inspectionList.find { it.inspectionId == inspectionId }
-            emit(Resource(ResourceState.SUCCESS, inspection))
+            emit(Resource(ResourceState.LOADING, inspection))
+            if (shouldReturnError) {
+                emit(Resource(ResourceState.ERROR))
+            } else if(inspection == null ) {
+                emit(Resource(ResourceState.ERROR))
+            } else {
+                emit(Resource(ResourceState.SUCCESS, inspection))
+            }
+
+        } else {
+            emit(Resource(ResourceState.ERROR))
         }
+
     }
 
     override fun getInspectionList(): Flow<Resource<List<Inspection>>> = flow {

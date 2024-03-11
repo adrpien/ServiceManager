@@ -27,6 +27,16 @@ class GetInspection @Inject constructor (
                     )
                 )
             }
+        } catch (e: NoSuchElementException) {
+            flow {
+                emit(
+                    Resource(
+                        ERROR,
+                        Inspection(),
+                        UiText.StringResource(R.string.unknown_error)
+                    )
+                )
+            }
         }
     }
 }

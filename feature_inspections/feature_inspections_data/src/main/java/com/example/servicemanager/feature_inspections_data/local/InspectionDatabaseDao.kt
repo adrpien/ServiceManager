@@ -12,7 +12,7 @@ interface InspectionDatabaseDao {
 
     @Transaction
     @Query("SELECT * FROM inspectionentity WHERE inspectionId LIKE :inspectionId")
-    suspend fun getInspection(inspectionId: String): InspectionEntity
+    suspend fun getInspection(inspectionId: String): InspectionEntity?
 
     @Query("SELECT * FROM inspectionentity")
     suspend fun getInspectionList(): List<InspectionEntity>
