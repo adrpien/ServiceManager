@@ -24,7 +24,7 @@ class InspectionRepositoryFake : InspectionRepository {
     }
 
     override fun getInspectionList(): Flow<Resource<List<Inspection>>> = flow {
-        emit(Resource(ResourceState.LOADING))
+        emit(Resource(ResourceState.LOADING, inspectionList))
         if (shouldReturnError) {
             emit(Resource(ResourceState.ERROR))
         } else {

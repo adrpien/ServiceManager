@@ -53,8 +53,6 @@ class GetInspectionListTest {
         updateInspection = UpdateInspection(inspectionRepositoryFake)
         saveInspection = SaveInspection(inspectionRepositoryFake)
     }
-
-/*
     @Test
     fun `inspectionOrderType argument properly order by hospital`() = runTest {
         val hospital3 = hospitalDluga()
@@ -71,14 +69,19 @@ class GetInspectionListTest {
         advanceUntilIdle()
 
         val result = getInspectionList(
-            inspectionOrderType = InspectionOrderType.Hospital(InspectionOrderMonotonicity.Ascending)
-        )
-            .first {
-                it.resourceState == ResourceState.SUCCESS
-            }
-        val data: List<Inspection> = result.data ?: emptyList()
+            inspectionOrderType = InspectionOrderType.Hospital(InspectionOrderMonotonicity.Ascending),
+            accessedHospitalIdList = listOf(
+                hospital1.hospitalId,
+                hospital2.hospitalId,
+                hospital3.hospitalId
 
-        assertThat(inspection3).isEqualTo(data[0])
+            )
+
+        ).test {
+            val result = awaitItem().data ?: emptyList()
+            assertThat(result[0]).isEqualTo(inspection3)
+            awaitComplete()
+        }
     }
     @Test
     fun `inspectionOrderType argument properly order by state`() = runTest {
@@ -92,18 +95,17 @@ class GetInspectionListTest {
         advanceUntilIdle()
 
         val result = getInspectionList(
-            inspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending)
-        )
-            .first {
-                it.resourceState == ResourceState.SUCCESS
-            }
-        val data: List<Inspection> = result.data ?: emptyList()
+            inspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending),
+            accessedHospitalIdList = listOf("")
+        ).test {
+            val emission1 = awaitItem()
+            assertThat(emission1.data?.get(0)).isEqualTo(inspection3)
+            awaitComplete()
+        }
 
-        assertThat(inspection3).isEqualTo(data[0])
     }
-
     @Test
-    fun `inspectionOrderType argument properly order by date`() = runBlocking<Unit> {
+    fun `inspectionOrderType argument properly order by date`() = runTest {
         val inspection1 = inspection("1", inspectionDate = "1670799600000") // 2022/12/12
         val inspection2 = inspection("2", inspectionDate = "1697061600000") // 2023/10/12
         val inspection3 = inspection("3", inspectionDate = "1633989600000") // 2021/10/12
@@ -111,22 +113,19 @@ class GetInspectionListTest {
         saveInspection(inspection1)
         saveInspection(inspection2)
         saveInspection(inspection3)
+        advanceUntilIdle()
 
         val result = getInspectionList(
-            inspectionOrderType = InspectionOrderType.Date(InspectionOrderMonotonicity.Ascending)
-        )
-            .first {
-                it.resourceState == ResourceState.SUCCESS
-            }
-        val data: List<Inspection> = result.data ?: emptyList()
-
-        assertThat(inspection3).isEqualTo(data[0])
-        assertThat(inspection1).isEqualTo(data[1])
-        assertThat(inspection2).isEqualTo(data[2])
+            inspectionOrderType = InspectionOrderType.Date(InspectionOrderMonotonicity.Ascending),
+            accessedHospitalIdList = listOf("")
+        ).test {
+            val result = awaitItem().data ?: emptyList()
+            assertThat(result[0]).isEqualTo(inspection3)
+            awaitComplete()
+        }
     }
-
     @Test
-    fun `hospitalFilter argument properly filters out inspectionList`() = runBlocking {
+    fun `hospitalFilter argument properly filters out inspectionList`() = runTest {
         val hospital1 = hospitalDluga()
         val hospital2 = hospitalORSK()
 
@@ -137,17 +136,19 @@ class GetInspectionListTest {
         saveInspection(inspection2)
 
         val result = getInspectionList(
-            hospitalFilter = hospital1
-        )
-            .first {
-                it.resourceState == ResourceState.SUCCESS
-            }
-        val data: List<Inspection> = result.data ?: emptyList()
+            hospitalFilter = hospital1,
+            accessedHospitalIdList = listOf(
+                hospital1.hospitalId,
+                hospital2.hospitalId
+            )
+        ).test {
+            val result = awaitItem().data ?: emptyList()
+            assertThat(result).contains(inspection1)
+            assertThat(result).doesNotContain(inspection2)
+            awaitComplete()
+        }
 
-        assertThat(data).contains(inspection1)
-        assertThat(data).doesNotContain(inspection2)
-    }*/
-
+    }
     @Test
     fun `searchQuery argument properly filters out inspectionList`() = runTest {
 
@@ -171,5 +172,30 @@ class GetInspectionListTest {
             assertThat(result).contains(inspection2)
             awaitComplete()
         }
+    }
+    @Test
+    fun `accessedHospitalFilter argument properly filters out inspectionList`() = runTest {
+        val hospital1 = hospitalDluga()
+        val hospital2 = hospitalORSK()
+
+        val inspection1 = inspection("1", hospitalId = hospital1.hospitalId)
+        val inspection2 = inspection("2", hospitalId = hospital2.hospitalId)
+
+        saveInspection(inspection1)
+        saveInspection(inspection2)
+        advanceUntilIdle()
+
+        val result = getInspectionList(
+            hospitalFilter = hospital1,
+            accessedHospitalIdList = listOf(
+                hospital1.hospitalId,
+            )
+        ).test {
+            val result = awaitItem().data ?: emptyList()
+            assertThat(result).contains(inspection1)
+            assertThat(result).doesNotContain(inspection2)
+            awaitComplete()
+        }
+
     }
 }
