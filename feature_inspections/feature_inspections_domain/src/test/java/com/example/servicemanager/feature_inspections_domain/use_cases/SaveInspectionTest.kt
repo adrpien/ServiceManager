@@ -1,5 +1,6 @@
 package com.example.servicemanager.feature_inspections_domain.use_cases
 
+import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.example.core.util.ResourceState
@@ -43,7 +44,6 @@ class SaveInspectionTest {
         )
 
         val resultState = saveInspection(inspection).resourceState
-        // ()
         assertThat(resultState).isEqualTo(ResourceState.ERROR)
     }
 
@@ -51,7 +51,7 @@ class SaveInspectionTest {
     inspectionDate is parsed to Long later and should contains only digits
      */
     @Test
-    fun `saveInspection returns ERROR when inspections date contains not digits`() = runBlocking {
+    fun `saveInspection returns ERROR when inspections date contains not digits`() = runTest {
         val inspection = inspection(
             inspectionId = "1",
             inspectionDate = "1R32455"
@@ -59,5 +59,21 @@ class SaveInspectionTest {
 
         val resultState = saveInspection(inspection).resourceState
         assertThat(resultState).isEqualTo(ResourceState.ERROR)
+    }
+
+    @Test
+    fun `saveInspection returns SUCCESS when inspection record is correct`() = runTest {
+        val inspection = inspection(
+            inspectionId = "1",
+            comment = "test_comment"
+        )
+        val resultState = saveInspection(inspection).resourceState
+        assertThat(resultState).isEqualTo(ResourceState.SUCCESS)
+        val result = getInspection("1").test {
+            val emission1 = awaitItem()
+            val emission2 = awaitItem()
+            assertThat(emission2.data?.comment).isEqualTo("test_comment")
+            awaitComplete()
+        }
     }
 }

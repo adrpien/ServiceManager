@@ -7,6 +7,7 @@ import com.example.servicemanager.feature_inspections_domain.InspectionRepositor
 import com.example.test.test_data_generators.inspection
 import com.example.test.util.MainCoroutineExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
