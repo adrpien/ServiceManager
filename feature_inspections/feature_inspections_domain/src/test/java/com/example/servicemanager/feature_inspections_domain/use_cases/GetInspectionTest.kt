@@ -40,7 +40,6 @@ class GetInspectionTest {
     fun `GetInspection properly fetches existing data`() = runTest {
         val inspection3 = inspection("3")
         saveInspection(inspection3)
-        advanceUntilIdle()
         val result = getInspection(inspection3.inspectionId).test {
             val emission1 = awaitItem()
             val emission2 = awaitItem()

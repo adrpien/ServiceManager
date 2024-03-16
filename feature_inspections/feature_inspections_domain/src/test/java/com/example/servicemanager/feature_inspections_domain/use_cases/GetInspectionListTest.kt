@@ -62,7 +62,6 @@ class GetInspectionListTest {
         saveInspection(inspection1)
         saveInspection(inspection2)
         saveInspection(inspection3)
-        advanceUntilIdle()
 
         val result = getInspectionList(
             inspectionOrderType = InspectionOrderType.Hospital(InspectionOrderMonotonicity.Ascending),
@@ -88,7 +87,6 @@ class GetInspectionListTest {
         saveInspection(inspection1)
         saveInspection(inspection2)
         saveInspection(inspection3)
-        advanceUntilIdle()
 
         val result = getInspectionList(
             inspectionOrderType = InspectionOrderType.State(InspectionOrderMonotonicity.Ascending),
@@ -166,7 +164,6 @@ class GetInspectionListTest {
         saveInspection(inspection2)
         saveInspection(inspection3)
         saveInspection(inspection4)
-        advanceUntilIdle()
 
         getInspectionList(
             searchQuery = "pompa",
@@ -188,7 +185,6 @@ class GetInspectionListTest {
 
         saveInspection(inspection1)
         saveInspection(inspection2)
-        advanceUntilIdle()
 
         val result = getInspectionList(
             hospitalFilter = hospital1,

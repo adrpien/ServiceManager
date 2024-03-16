@@ -46,7 +46,6 @@ class UpdateInspectionTest {
         val updatedInspection = inspection.copy(comment = "updated_comment")
         saveInspection(inspection)
         updateInspection(updatedInspection)
-        advanceUntilIdle()
 
         val result = getInspection("1").test {
             val emission1 = awaitItem()
