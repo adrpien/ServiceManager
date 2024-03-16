@@ -1,15 +1,12 @@
 package com.example.feature_home_presentation.app_settings
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shared_preferences.AppPreferences
 import com.example.core.util.DateFormattingType
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.R
-import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
+import com.example.servicemanager.common_domain.use_cases.AppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

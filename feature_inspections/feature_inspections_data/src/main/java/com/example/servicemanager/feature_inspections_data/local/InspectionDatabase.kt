@@ -9,7 +9,8 @@ import com.example.servicemanager.feature_inspections_data.local.entities.Inspec
     entities = [
         InspectionEntity::class,
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class InspectionDatabase : RoomDatabase() {
 

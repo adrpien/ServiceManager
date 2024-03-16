@@ -9,7 +9,8 @@ import com.example.servicemanager.feature_repairs_data.local.entities.RepairEnti
     entities = [
         RepairEntity::class,
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class RepairDatabase : RoomDatabase() {
 

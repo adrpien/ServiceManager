@@ -25,10 +25,10 @@ import com.example.core.util.Helper.Companion.toDp
 import com.example.core_ui.components.other.DefaultDateButton
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
-import com.example.servicemanager.feature_app_domain.model.EstState
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.RepairState
-import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.common_domain.model.EstState
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.RepairState
+import com.example.servicemanager.common_domain.model.Technician
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsEvent
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel
 import com.example.servicemanager.future_repairs_presentation.repair_details.RepairDetailsViewModel.*

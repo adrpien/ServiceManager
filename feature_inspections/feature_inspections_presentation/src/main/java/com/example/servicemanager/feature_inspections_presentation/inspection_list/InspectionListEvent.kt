@@ -1,8 +1,7 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_list
 
-import android.content.Context
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.Hospital
 
 sealed class InspectionListEvent {
 

@@ -1,21 +1,16 @@
 package com.example.feature_home_presentation.hospital_list_manager
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
-import com.example.servicemanager.feature_home_domain.use_cases.HomeUseCases
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.use_cases.AppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

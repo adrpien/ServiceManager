@@ -60,7 +60,6 @@ class  InspectionRepositoryImplementation(
         if (inspectionId == "") throw IllegalArgumentException("inspectionId can not be empty")
         var inspection: Inspection?
         inspection = inspectionDatabaseDao.getInspection(inspectionId)?.toInspection()
-        if (inspection == null) throw NoSuchElementException()
         emit(
             Resource(
                 ResourceState.LOADING,
@@ -81,13 +80,7 @@ class  InspectionRepositoryImplementation(
                 )
             )
         } else {
-            emit(
-                Resource(
-                    ResourceState.ERROR,
-                    inspection,
-                    UiText.StringResource(R.string.inspection_record_fetching_error)
-                )
-            )
+            throw NoSuchElementException()
         }
     }
 

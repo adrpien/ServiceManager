@@ -13,13 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.feature_repairs_presentation.R
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.RepairState
-import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.RepairState
+import com.example.servicemanager.common_domain.model.Technician
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 
 @Composable

@@ -7,7 +7,7 @@ plugins {
 apply(from = "$rootDir/domain-module.gradle")
 
 android {
-    namespace = "com.example.feature_app_domain"
+    namespace = "com.example.common_domain"
 }
 dependencies{
     implementation(project(Modules.core))

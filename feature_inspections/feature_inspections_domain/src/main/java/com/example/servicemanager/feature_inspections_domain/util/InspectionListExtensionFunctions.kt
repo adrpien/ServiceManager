@@ -8,7 +8,7 @@ class InspectionListExtensionFunctions {
     companion object {
 
         fun List<Inspection>.verifyInspectionList(): Boolean {
-            this.forEachIndexed() { index, inspection ->
+            this.forEachIndexed() { _, inspection ->
                 // verifying conditions
                 if (inspection.deviceSn.isEmpty() && inspection.deviceIn.isEmpty()) return false
                 if (!inspection.inspectionDate.isDigitsOnly()) return false

@@ -23,11 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.core.util.Screen
-import com.example.core_ui.components.other.DefaultSelectionSection
 import com.example.core_ui.components.other.HospitalSelectionSection
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_repairs_presentation.R
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.Hospital
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListEvent
 import com.example.servicemanager.future_repairs_presentation.repair_list.RepairListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh

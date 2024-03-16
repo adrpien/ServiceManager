@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.sp
 import com.example.core.util.DateFormattingType
 import com.example.core.util.Helper.Companion.getDateString
 import com.example.feature_inspections_presentation.R
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.InspectionState
-import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.InspectionState
+import com.example.servicemanager.common_domain.model.Technician
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 @Composable

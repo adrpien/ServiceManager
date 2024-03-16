@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.R
-import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.common_domain.model.UserType
 
 @Composable
 fun UserTypeManagerListItem(

@@ -6,7 +6,7 @@ import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 import com.example.servicemanager.feature_repairs_domain.model.Repair
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.Hospital
 import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
 import com.example.servicemanager.feature_repairs_domain.util.RepairListExtensionFunctions.Companion.orderRepairList
 import javax.inject.Inject

@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_home_presentation.R
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.UserType
-import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.UserType
+import com.example.servicemanager.common_domain.use_cases.AppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

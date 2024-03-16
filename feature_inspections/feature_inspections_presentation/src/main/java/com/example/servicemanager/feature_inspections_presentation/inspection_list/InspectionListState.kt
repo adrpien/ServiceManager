@@ -2,12 +2,12 @@ package com.example.servicemanager.feature_inspections_presentation.inspection_l
 
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
-import com.example.servicemanager.feature_app_domain.model.EstState
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.InspectionState
-import com.example.servicemanager.feature_app_domain.model.Technician
-import com.example.servicemanager.feature_app_domain.model.User
-import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.common_domain.model.EstState
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.InspectionState
+import com.example.servicemanager.common_domain.model.Technician
+import com.example.servicemanager.common_domain.model.User
+import com.example.servicemanager.common_domain.model.UserType
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class InspectionListState(

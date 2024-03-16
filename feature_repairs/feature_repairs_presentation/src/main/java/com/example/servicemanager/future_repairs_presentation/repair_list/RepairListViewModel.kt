@@ -1,15 +1,13 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.util.ResourceState
 import com.example.core.util.UiText
 import com.example.feature_repairs_presentation.R
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 import com.example.servicemanager.feature_repairs_domain.use_cases.RepairUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel

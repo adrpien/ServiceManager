@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,9 +19,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.feature_home_presentation.R
-import com.example.feature_home_presentation.technician_list_manager.TechnicianListManagerEvent
-import com.example.servicemanager.feature_app_domain.model.Technician
-import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.common_domain.model.UserType
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.customView

@@ -3,30 +3,24 @@ package com.example.servicemanager.feature_inspections_domain.use_cases
 import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.contains
-import assertk.assertions.containsExactly
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
-import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections_domain.InspectionRepositoryFake
-import com.example.test.inspection
-import com.example.test.inspectionFailed
-import com.example.test.inspectionPassed
-import com.example.servicemanager.feature_inspections_domain.model.Inspection
+import com.example.test.test_data_generators.inspection
+import com.example.test.test_data_generators.inspectionFailed
+import com.example.test.test_data_generators.inspectionPassed
 import com.example.servicemanager.feature_inspections_domain.repository.InspectionRepository
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderMonotonicity
 import com.example.servicemanager.feature_inspections_domain.util.InspectionOrderType
-import com.example.servicemanager.feature_inspections_domain.util.MainCoroutineExtension
-import com.example.test.hospitalDluga
-import com.example.test.hospitalORSK
+import com.example.test.test_data_generators.hospitalDluga
+import com.example.test.test_data_generators.hospitalORSK
+import com.example.test.util.MainCoroutineExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.RegisterExtension
 
 // @ExtendWith(MainCoroutineExtension::class)
@@ -45,6 +39,7 @@ class GetInspectionListTest {
         @RegisterExtension
         val mainCoroutineExtension = MainCoroutineExtension()
     }
+
     @BeforeEach
     fun setUp() {
         inspectionRepositoryFake = InspectionRepositoryFake()
@@ -53,6 +48,7 @@ class GetInspectionListTest {
         updateInspection = UpdateInspection(inspectionRepositoryFake)
         saveInspection = SaveInspection(inspectionRepositoryFake)
     }
+
     @Test
     fun `inspectionOrderType argument properly order by hospital`() = runTest {
         val hospital3 = hospitalDluga()
@@ -106,9 +102,18 @@ class GetInspectionListTest {
     }
     @Test
     fun `inspectionOrderType argument properly order by date`() = runTest {
-        val inspection1 = inspection("1", inspectionDate = "1670799600000") // 2022/12/12
-        val inspection2 = inspection("2", inspectionDate = "1697061600000") // 2023/10/12
-        val inspection3 = inspection("3", inspectionDate = "1633989600000") // 2021/10/12
+        val inspection1 = inspection(
+            "1",
+            inspectionDate = "1670799600000"
+        ) // 2022/12/12
+        val inspection2 = inspection(
+            "2",
+            inspectionDate = "1697061600000"
+        ) // 2023/10/12
+        val inspection3 = inspection(
+            "3",
+            inspectionDate = "1633989600000"
+        ) // 2021/10/12
 
         saveInspection(inspection1)
         saveInspection(inspection2)

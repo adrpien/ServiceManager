@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Today
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -32,10 +31,10 @@ import com.example.core_ui.components.alert_dialogs.ExitAlertDialog
 import com.example.core_ui.components.signature.SignatureDialog
 import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.feature_inspections_presentation.R
-import com.example.servicemanager.feature_app_domain.model.EstState
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.InspectionState
-import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.common_domain.model.EstState
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.InspectionState
+import com.example.servicemanager.common_domain.model.Technician
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel
 import com.example.servicemanager.feature_inspections_presentation.inspection_details.InspectionDetailsViewModel.*

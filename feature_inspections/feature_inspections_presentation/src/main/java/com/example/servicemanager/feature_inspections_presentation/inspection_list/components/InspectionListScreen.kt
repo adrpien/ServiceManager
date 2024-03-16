@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.Hospital
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListEvent
 import com.example.servicemanager.feature_inspections_presentation.inspection_list.InspectionListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh

@@ -9,11 +9,11 @@ import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.repository.RepairRepository
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
-import com.example.test.hospitalDluga
-import com.example.test.hospitalORSK
-import com.example.test.repairDiagnosed
-import com.example.test.repairFinished
-import com.example.test.repairRepaired
+import com.example.test.data_generators.hospitalDluga
+import com.example.test.data_generators.hospitalORSK
+import com.example.test.data_generators.repairDiagnosed
+import com.example.test.data_generators.repairFinished
+import com.example.test.data_generators.repairRepaired
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
@@ -37,25 +37,25 @@ class GetRepairListMockKTest {
     private lateinit var getRepair: GetRepair
 
 
-    private val repair1 = repairFinished(
+    private val repair1 = com.example.test.data_generators.repairFinished(
         repairId = "1",
-        hospitalId = hospitalORSK().hospitalId,
+        hospitalId = com.example.test.data_generators.hospitalORSK().hospitalId,
         repairingDate = LocalDate.of(2022, 4, 8).toEpochDay().toString(),
         comment = "test_comment"
     )
-    private val repair2 = repairRepaired(
+    private val repair2 = com.example.test.data_generators.repairRepaired(
         repairId = "2",
-        hospitalId = hospitalDluga().hospitalId,
+        hospitalId = com.example.test.data_generators.hospitalDluga().hospitalId,
         repairingDate = LocalDate.of(2023, 9, 21).toEpochDay().toString(),
     )
-    private val repair3 = repairRepaired(
+    private val repair3 = com.example.test.data_generators.repairRepaired(
         repairId = "3",
-        hospitalId = hospitalORSK().hospitalId,
+        hospitalId = com.example.test.data_generators.hospitalORSK().hospitalId,
         repairingDate = LocalDate.of(2020, 6, 1).toEpochDay().toString(),
     )
-    private val repair4 = repairDiagnosed(
+    private val repair4 = com.example.test.data_generators.repairDiagnosed(
         repairId = "4",
-        hospitalId = hospitalORSK().hospitalId,
+        hospitalId = com.example.test.data_generators.hospitalORSK().hospitalId,
         repairingDate = LocalDate.of(2023, 2, 24).toEpochDay().toString(),
     )
 
@@ -160,7 +160,7 @@ class GetRepairListMockKTest {
         }
 
         val result = getRepairList(
-            hospitalFilter = hospitalDluga()
+            hospitalFilter = com.example.test.data_generators.hospitalDluga()
         ).first { it.resourceState == ResourceState.SUCCESS }
 
         val data: List<Repair> = result.data ?: emptyList()

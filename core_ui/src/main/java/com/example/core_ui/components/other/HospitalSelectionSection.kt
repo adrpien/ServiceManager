@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.Hospital
 
 @Composable
 fun HospitalSelectionSection(

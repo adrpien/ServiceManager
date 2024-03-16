@@ -1,12 +1,12 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list
 
 
-import com.example.servicemanager.feature_app_domain.model.EstState
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.RepairState
-import com.example.servicemanager.feature_app_domain.model.Technician
-import com.example.servicemanager.feature_app_domain.model.User
-import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.common_domain.model.EstState
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.RepairState
+import com.example.servicemanager.common_domain.model.Technician
+import com.example.servicemanager.common_domain.model.User
+import com.example.servicemanager.common_domain.model.UserType
 import com.example.servicemanager.feature_repairs_domain.model.Repair
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderMonotonicity
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType

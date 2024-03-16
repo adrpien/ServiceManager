@@ -1,10 +1,10 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_details
 
 import android.graphics.Bitmap
-import com.example.servicemanager.feature_app_domain.model.EstState
-import com.example.servicemanager.feature_app_domain.model.Hospital
-import com.example.servicemanager.feature_app_domain.model.InspectionState
-import com.example.servicemanager.feature_app_domain.model.Technician
+import com.example.servicemanager.common_domain.model.EstState
+import com.example.servicemanager.common_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.InspectionState
+import com.example.servicemanager.common_domain.model.Technician
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 
 data class InspectionDetailsState(

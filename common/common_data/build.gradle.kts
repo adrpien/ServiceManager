@@ -6,7 +6,7 @@ plugins {
 apply(from = "$rootDir/data-module.gradle")
 
 android {
-    namespace = "com.example.feature_app_data"
+    namespace = "com.example.common_data"
 }
 dependencies{
     implementation(project(Modules.core))

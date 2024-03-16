@@ -47,7 +47,7 @@ import com.example.core_ui.components.snackbar.AppSnackbar
 import com.example.core_ui.components.textfield.DefaultTextField
 import com.example.core_ui.components.textfield.DefaultTextFieldState
 import com.example.feature_home_presentation.R
-import com.example.servicemanager.feature_app_domain.model.InspectionState
+import com.example.servicemanager.common_domain.model.InspectionState
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState

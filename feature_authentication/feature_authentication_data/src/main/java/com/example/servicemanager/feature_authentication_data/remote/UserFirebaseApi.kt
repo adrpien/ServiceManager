@@ -24,7 +24,7 @@ class UserFirebaseApi(
         var userId: String? = null
         try {
             val reference = firebaseAuth.signInWithEmailAndPassword(mail, password)
-            var result: AuthResult? = null
+            var result: AuthResult?
             result = reference.await()
             userId = result?.user?.uid
             if (result?.user?.isEmailVerified == true) {

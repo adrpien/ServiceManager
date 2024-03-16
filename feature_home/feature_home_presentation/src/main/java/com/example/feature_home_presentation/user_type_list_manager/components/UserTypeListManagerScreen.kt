@@ -46,7 +46,7 @@ import com.example.feature_home_presentation.user_type_list_manager.UiEvent
 import com.example.feature_home_presentation.user_type_list_manager.UserTypeListManagerViewModel
 import com.example.feature_home_presentation.user_type_list_manager.UserTypeManagerEvent
 import com.example.feature_home_presentation.user_type_list_manager.components.UserTypeManagerListItem
-import com.example.servicemanager.feature_app_domain.model.UserType
+import com.example.servicemanager.common_domain.model.UserType
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.customView
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState

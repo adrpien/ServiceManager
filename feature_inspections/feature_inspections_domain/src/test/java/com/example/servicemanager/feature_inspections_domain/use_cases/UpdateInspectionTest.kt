@@ -1,23 +1,32 @@
 package com.example.servicemanager.feature_inspections_domain.use_cases
 
+import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.example.core.util.ResourceState
 import com.example.servicemanager.feature_inspections_domain.InspectionRepositoryFake
-import com.example.test.inspection
-import com.example.servicemanager.feature_inspections_domain.model.Inspection
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
-
+import com.example.test.test_data_generators.inspection
+import com.example.test.util.MainCoroutineExtension
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.RegisterExtension
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UpdateInspectionTest {
 
     private lateinit var inspectionRepositoryFake: InspectionRepositoryFake
     private lateinit var updateInspection: UpdateInspection
     private lateinit var saveInspection: SaveInspection
     private lateinit var getInspection: GetInspection
+
+    companion object{
+        @JvmField
+        @RegisterExtension
+        val mainCoroutineExtension = MainCoroutineExtension()
+    }
+
 
     @BeforeEach
     fun setUp() {
@@ -28,26 +37,22 @@ class UpdateInspectionTest {
     }
 
     @Test
-    fun `UpdateInspection properly updates data`() = runBlocking {
+    fun `UpdateInspection properly updates data`() = runTest {
 
-        val inspection1 = inspection(
+        val inspection = inspection(
             inspectionId = "1",
-            comment = "1")
-        val inspection2 = inspection(
-            inspectionId = "1",
-            comment = "2"
+            comment = "saved_comment"
         )
+        val updatedInspection = inspection.copy(comment = "updated_comment")
+        saveInspection(inspection)
+        updateInspection(updatedInspection)
+        advanceUntilIdle()
 
-        saveInspection(inspection1)
-        updateInspection(inspection2)
-
-        val result = getInspection("1").first {
-            it.resourceState == ResourceState.SUCCESS
+        val result = getInspection("1").test {
+            val emission1 = awaitItem()
+            val emission2 = awaitItem()
+            assertThat(emission2.data?.comment).isEqualTo("updated_comment")
+            awaitComplete()
         }
-        val data: Inspection = result.data ?: inspection("0")
-
-        assertThat(data.inspectionId).isEqualTo("1")
-        assertThat(data.comment).isEqualTo("2")
-
     }
 }

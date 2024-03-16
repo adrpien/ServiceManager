@@ -1,6 +1,6 @@
 package com.example.servicemanager.future_repairs_presentation.repair_list
 
-import com.example.servicemanager.feature_app_domain.model.Hospital
+import com.example.servicemanager.common_domain.model.Hospital
 import com.example.servicemanager.feature_repairs_domain.util.RepairOrderType
 
 sealed class RepairListEvent {

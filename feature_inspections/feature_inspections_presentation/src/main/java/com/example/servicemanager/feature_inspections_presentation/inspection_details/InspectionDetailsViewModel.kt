@@ -1,7 +1,5 @@
 package com.example.servicemanager.feature_inspections_presentation.inspection_details
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,8 +8,7 @@ import com.example.core.util.Helper.Companion.bitmapToByteArray
 import com.example.core.util.ResourceState
 import com.example.core.util.Screen
 import com.example.core.util.UiText
-import com.example.feature_inspections_presentation.R
-import com.example.servicemanager.feature_app_domain.use_cases.AppUseCases
+import com.example.servicemanager.common_domain.use_cases.AppUseCases
 import com.example.servicemanager.feature_inspections_domain.use_cases.InspectionUseCases
 import com.example.servicemanager.feature_inspections_domain.model.Inspection
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +17,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
